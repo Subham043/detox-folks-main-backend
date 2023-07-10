@@ -1,0 +1,21 @@
+
+/*# sourceMappingURL=custom.min.css.map */
+@import url('./image-previewer.css');
+@import url('./bootstrap.min.css');
+@import url('./icons.min.css');
+@import url('./iziToast.min.css');
+@import url('./choices.min.css');
+@import url('./quill.snow.css');
+@import url('./app.min.css');
+
+.invalid-message {
+    color: red;
+}
+#description_quill{
+    min-height: 200px;
+}
+
+.auth-logo img{
+    height: 200px;
+    object-fit: contain;
+}
