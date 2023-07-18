@@ -113,6 +113,14 @@
                             </li>
                             @endcan
 
+                            @can('list categories')
+                            <li class="nav-item">
+                                <a class="nav-link menu-link {{strpos(url()->current(),route('category.paginate.get')) !== false ? 'active' : ''}}" href="{{route('category.paginate.get')}}">
+                                    <i class="ri-collage-line"></i> <span data-key="t-widgets">Categories</span>
+                                </a>
+                            </li>
+                            @endcan
+
                             <li class="nav-item">
                                 <a class="nav-link menu-link {{strpos(url()->current(),'home-page') !== false ? 'active' : ''}}" href="#sidebarDashboards1" data-bs-toggle="collapse" role="button"
                                     aria-expanded="{{strpos(url()->current(),'home-page') !== false ? 'true' : 'false'}}" aria-controls="sidebarDashboards1">

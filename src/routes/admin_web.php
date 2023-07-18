@@ -16,6 +16,10 @@ use App\Modules\Blog\Controllers\BlogCreateController;
 use App\Modules\Blog\Controllers\BlogDeleteController;
 use App\Modules\Blog\Controllers\BlogPaginateController;
 use App\Modules\Blog\Controllers\BlogUpdateController;
+use App\Modules\Category\Controllers\CategoryCreateController;
+use App\Modules\Category\Controllers\CategoryDeleteController;
+use App\Modules\Category\Controllers\CategoryPaginateController;
+use App\Modules\Category\Controllers\CategoryUpdateController;
 use App\Modules\Counter\Controllers\CounterCreateController;
 use App\Modules\Counter\Controllers\CounterDeleteController;
 use App\Modules\Counter\Controllers\CounterPaginateController;
@@ -176,6 +180,15 @@ Route::middleware(['auth'])->group(function () {
 
         });
 
+    });
+
+    Route::prefix('/category')->group(function () {
+        Route::get('/', [CategoryPaginateController::class, 'get', 'as' => 'category.paginate.get'])->name('category.paginate.get');
+        Route::get('/create', [CategoryCreateController::class, 'get', 'as' => 'category.create.get'])->name('category.create.get');
+        Route::post('/create', [CategoryCreateController::class, 'post', 'as' => 'category.create.post'])->name('category.create.post');
+        Route::get('/update/{id}', [CategoryUpdateController::class, 'get', 'as' => 'category.update.get'])->name('category.update.get');
+        Route::post('/update/{id}', [CategoryUpdateController::class, 'post', 'as' => 'category.update.post'])->name('category.update.post');
+        Route::get('/delete/{id}', [CategoryDeleteController::class, 'get', 'as' => 'category.delete.get'])->name('category.delete.get');
     });
 
     Route::post('/text-editor-image', [TextEditorImageController::class, 'post', 'as' => 'texteditor_image.post'])->name('texteditor_image.post');
