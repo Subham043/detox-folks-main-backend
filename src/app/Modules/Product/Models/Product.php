@@ -4,6 +4,7 @@ namespace App\Modules\Product\Models;
 
 use App\Modules\Authentication\Models\User;
 use App\Modules\Category\Models\Category;
+use App\Modules\SubCategory\Models\SubCategory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -82,6 +83,11 @@ class Product extends Model implements Sitemapable
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'product_categories', 'product_id', 'category_id');
+    }
+
+    public function sub_categories()
+    {
+        return $this->belongsToMany(SubCategory::class, 'product_sub_categories', 'product_id', 'sub_category_id');
     }
 
     public function user()

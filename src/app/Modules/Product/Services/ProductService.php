@@ -78,6 +78,12 @@ class ProductService
         return $product;
     }
 
+    public function save_sub_categories(Product $product, array $data): Product
+    {
+        $product->sub_categories()->sync($data);
+        return $product;
+    }
+
 }
 
 class CommonFilter implements Filter

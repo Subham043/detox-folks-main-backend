@@ -37,6 +37,11 @@ class ProductCreateController extends Controller
             if($request->category && count($request->category)>0){
                 $this->productService->save_categories($product, $request->category);
             }
+            if($request->sub_category && count($request->sub_category)>0){
+                $this->productService->save_sub_categories($product, $request->sub_category);
+            }else{
+                $this->productService->save_sub_categories($product, []);
+            }
             return response()->json(["message" => "Product created successfully."], 201);
         } catch (\Throwable $th) {
             throw $th;

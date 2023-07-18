@@ -80,6 +80,11 @@ class SubCategory extends Model implements Sitemapable
         return $this->belongsToMany(Category::class, 'category_sub_categories', 'sub_category_id', 'category_id');
     }
 
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_sub_categories', 'sub_category_id', 'product_id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id')->withDefault();

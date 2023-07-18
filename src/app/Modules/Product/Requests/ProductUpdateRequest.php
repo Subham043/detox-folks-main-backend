@@ -27,6 +27,8 @@ class ProductUpdateRequest extends ProductCreateRequest
             'meta_keywords' => 'nullable|string',
             'category' => 'required|array|min:1',
             'category.*' => 'required|numeric|exists:categories,id',
+            'sub_category' => 'nullable|array|min:0',
+            'sub_category.*' => 'nullable|numeric|exists:sub_categories,id',
         ];
     }
 

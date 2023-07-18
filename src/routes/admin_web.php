@@ -16,6 +16,7 @@ use App\Modules\Blog\Controllers\BlogCreateController;
 use App\Modules\Blog\Controllers\BlogDeleteController;
 use App\Modules\Blog\Controllers\BlogPaginateController;
 use App\Modules\Blog\Controllers\BlogUpdateController;
+use App\Modules\Category\Controllers\CategoryApiController;
 use App\Modules\Category\Controllers\CategoryCreateController;
 use App\Modules\Category\Controllers\CategoryDeleteController;
 use App\Modules\Category\Controllers\CategoryPaginateController;
@@ -197,6 +198,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/update/{id}', [CategoryUpdateController::class, 'get', 'as' => 'category.update.get'])->name('category.update.get');
         Route::post('/update/{id}', [CategoryUpdateController::class, 'post', 'as' => 'category.update.post'])->name('category.update.post');
         Route::get('/delete/{id}', [CategoryDeleteController::class, 'get', 'as' => 'category.delete.get'])->name('category.delete.get');
+        Route::post('/api', [CategoryApiController::class, 'post', 'as' => 'category.api.post'])->name('category.api.post');
     });
 
     Route::prefix('/sub-category')->group(function () {

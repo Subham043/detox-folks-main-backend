@@ -78,6 +78,19 @@ class SubCategoryService
         return $sub_category;
     }
 
+    public function get_subcategories(array $data): Collection
+    {
+        return SubCategory::with([
+            'categories' => function($q) use($data) {
+                $q->whereIn('category_id', $data);
+            }
+        ])
+        ->wherehas('categories', function($q) use($data){
+            $q->whereIn('category_id', $data);
+        })
+        ->get();
+    }
+
 }
 
 class CommonFilter implements Filter

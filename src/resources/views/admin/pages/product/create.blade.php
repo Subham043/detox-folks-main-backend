@@ -23,17 +23,20 @@
                         <div class="card-body">
                             <div class="live-preview">
                                 <div class="row gy-4">
-                                    <div class="col-xxl-6 col-md-6">
+                                    <div class="col-xxl-4 col-md-4">
                                         @include('admin.includes.input', ['key'=>'name', 'label'=>'Name', 'value'=>old('name')])
                                     </div>
-                                    <div class="col-xxl-6 col-md-6">
+                                    <div class="col-xxl-4 col-md-4">
                                         @include('admin.includes.input', ['key'=>'slug', 'label'=>'Slug', 'value'=>old('slug')])
+                                    </div>
+                                    <div class="col-xxl-4 col-md-4">
+                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image'])
                                     </div>
                                     <div class="col-xxl-6 col-md-6">
                                         @include('admin.includes.select_multiple', ['key'=>'category', 'label'=>'Categories'])
                                     </div>
                                     <div class="col-xxl-6 col-md-6">
-                                        @include('admin.includes.file_input', ['key'=>'image', 'label'=>'Image'])
+                                        @include('admin.includes.select_multiple', ['key'=>'sub_category', 'label'=>'Sub-Categories'])
                                     </div>
                                     <div class="col-xxl-12 col-md-12">
                                         @include('admin.includes.textarea', ['key'=>'brief_description', 'label'=>'Brief Description', 'value'=>old('brief_description')])
@@ -254,6 +257,11 @@ validation
         },
     },
   ])
+  .addField('#sub_category', [
+    {
+        validator: (value, fields) => true,
+    },
+  ])
   .addField('#meta_title', [
     {
         validator: (value, fields) => true,
@@ -294,6 +302,11 @@ validation
                 formData.append('category[]',document.getElementById('category')[index].value)
             }
         }
+        if(document.getElementById('sub_category')?.length>0){
+            for (let index = 0; index < document.getElementById('sub_category').length; index++) {
+                formData.append('sub_category[]',document.getElementById('sub_category')[index].value)
+            }
+        }
 
         const response = await axios.post('{{route('product.create.post')}}', formData)
         successToast(response.data.message)
@@ -313,6 +326,9 @@ validation
         }
         if(error?.response?.data?.errors?.category){
             validation.showErrors({'#category': error?.response?.data?.errors?.category[0]})
+        }
+        if(error?.response?.data?.errors?.sub_category){
+            validation.showErrors({'#sub_category': error?.response?.data?.errors?.sub_category[0]})
         }
         if(error?.response?.data?.errors?.image){
             validation.showErrors({'#image': error?.response?.data?.errors?.image[0]})
@@ -337,6 +353,14 @@ validation
     }
   });
 
+const subcategoryChoice = new Choices('#sub_category', {
+    choices: [],
+    placeholderValue: 'Select sub-categories',
+    ...CHOICE_CONFIG,
+    shouldSort: false,
+    shouldSortItems: false,
+});
+
 const categoryChoice = new Choices('#category', {
     choices: [
         @foreach($category as $category)
@@ -351,6 +375,35 @@ const categoryChoice = new Choices('#category', {
     shouldSort: false,
     shouldSortItems: false,
 });
+
+document.getElementById('category').addEventListener(
+    'change',
+    async function(event) {
+        subcategoryChoice.clearChoices();
+        subcategoryChoice.clearInput();
+        subcategoryChoice.clearStore();
+        if(document.getElementById('category')?.length>0){
+            try {
+                var formData = new FormData();
+                for (let index = 0; index < document.getElementById('category').length; index++) {
+                    formData.append('category[]',document.getElementById('category')[index].value)
+                }
+                const response = await axios.post('{{route('category.api.post')}}', formData)
+                  if(response.data.sub_categories.length>0){
+                    let data = [];
+                    response.data.sub_categories.forEach((item)=>{
+                        data.push({value: item.id, label: item.name,})
+                    })
+                    subcategoryChoice.setChoices(data);
+                  }
+            }catch (error){
+                if(error?.response?.data?.message){
+                    errorToast(error?.response?.data?.message)
+                }
+            }
+        }
+    }
+);
 
 </script>
 
