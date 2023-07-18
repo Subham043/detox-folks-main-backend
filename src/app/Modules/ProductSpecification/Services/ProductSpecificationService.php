@@ -2,7 +2,6 @@
 
 namespace App\Modules\ProductSpecification\Services;
 
-use App\Http\Services\FileService;
 use App\Modules\ProductSpecification\Models\ProductSpecification;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\QueryBuilder;

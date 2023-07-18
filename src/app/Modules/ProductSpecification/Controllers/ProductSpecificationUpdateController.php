@@ -22,12 +22,12 @@ class ProductSpecificationUpdateController extends Controller
     }
 
     public function post(ProductSpecificationRequest $request, $product_id, $id){
-        $product = $this->productSpecificationService->getByProductIdAndId($product_id, $id);
+        $productSpecification = $this->productSpecificationService->getByProductIdAndId($product_id, $id);
         try {
             //code...
             $this->productSpecificationService->update(
                 $request->validated(),
-                $product
+                $productSpecification
             );
             return response()->json(["message" => "Product Specification updated successfully."], 201);
         } catch (\Throwable $th) {

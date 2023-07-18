@@ -54,6 +54,10 @@ use App\Modules\Product\Controllers\ProductCreateController;
 use App\Modules\Product\Controllers\ProductDeleteController;
 use App\Modules\Product\Controllers\ProductPaginateController;
 use App\Modules\Product\Controllers\ProductUpdateController;
+use App\Modules\ProductPrice\Controllers\ProductPriceCreateController;
+use App\Modules\ProductPrice\Controllers\ProductPriceDeleteController;
+use App\Modules\ProductPrice\Controllers\ProductPricePaginateController;
+use App\Modules\ProductPrice\Controllers\ProductPriceUpdateController;
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationCreateController;
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationDeleteController;
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationPaginateController;
@@ -229,6 +233,14 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/update/{id}', [ProductSpecificationUpdateController::class, 'get', 'as' => 'product_specification.update.get'])->name('product_specification.update.get');
                 Route::post('/update/{id}', [ProductSpecificationUpdateController::class, 'post', 'as' => 'product_specification.update.post'])->name('product_specification.update.post');
                 Route::get('/delete/{id}', [ProductSpecificationDeleteController::class, 'get', 'as' => 'product_specification.delete.get'])->name('product_specification.delete.get');
+            });
+            Route::prefix('/price')->group(function () {
+                Route::get('/', [ProductPricePaginateController::class, 'get', 'as' => 'product_price.paginate.get'])->name('product_price.paginate.get');
+                Route::get('/create', [ProductPriceCreateController::class, 'get', 'as' => 'product_price.create.get'])->name('product_price.create.get');
+                Route::post('/create', [ProductPriceCreateController::class, 'post', 'as' => 'product_price.create.post'])->name('product_price.create.post');
+                Route::get('/update/{id}', [ProductPriceUpdateController::class, 'get', 'as' => 'product_price.update.get'])->name('product_price.update.get');
+                Route::post('/update/{id}', [ProductPriceUpdateController::class, 'post', 'as' => 'product_price.update.post'])->name('product_price.update.post');
+                Route::get('/delete/{id}', [ProductPriceDeleteController::class, 'get', 'as' => 'product_price.delete.get'])->name('product_price.delete.get');
             });
         });
     });

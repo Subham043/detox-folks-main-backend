@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Modules\ProductSpecification\Models;
+namespace App\Modules\ProductPrice\Models;
 
 use App\Modules\Product\Models\Product;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Sitemap\Contracts\Sitemapable;
 use Spatie\Sitemap\Tags\Url;
 
-class ProductSpecification extends Model implements Sitemapable
+class ProductPrice extends Model implements Sitemapable
 {
     use HasFactory, LogsActivity;
 
-    protected $table = 'product_specifications';
+    protected $table = 'product_prices';
 
     /**
      * The attributes that are mass assignable.
@@ -22,12 +23,16 @@ class ProductSpecification extends Model implements Sitemapable
      * @var array<int, string>
      */
     protected $fillable = [
-        'title',
-        'description',
+        'min_quantity',
+        'price',
+        'discount',
         'product_id',
     ];
 
     protected $casts = [
+        'min_quantity' => 'int',
+        'price' => 'float',
+        'discount' => 'float',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
@@ -40,10 +45,10 @@ class ProductSpecification extends Model implements Sitemapable
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->useLogName('product_specifications')
+        ->useLogName('product_prices')
         ->setDescriptionForEvent(
                 function(string $eventName){
-                    $desc = "Product Specification with title ".$this->title." has been {$eventName}";
+                    $desc = "Product with price ".$this->price." has been {$eventName}";
                     $desc .= auth()->user() ? " by ".auth()->user()->name."<".auth()->user()->email.">" : "";
                     return $desc;
                 }
@@ -54,6 +59,6 @@ class ProductSpecification extends Model implements Sitemapable
 
     public function toSitemapTag(): Url | string | array
     {
-        return route('product_specifications_detail.get', $this->slug);
+        return route('product_prices_detail.get', $this->slug);
     }
 }
