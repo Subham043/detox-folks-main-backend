@@ -54,6 +54,10 @@ use App\Modules\Product\Controllers\ProductCreateController;
 use App\Modules\Product\Controllers\ProductDeleteController;
 use App\Modules\Product\Controllers\ProductPaginateController;
 use App\Modules\Product\Controllers\ProductUpdateController;
+use App\Modules\ProductSpecification\Controllers\ProductSpecificationCreateController;
+use App\Modules\ProductSpecification\Controllers\ProductSpecificationDeleteController;
+use App\Modules\ProductSpecification\Controllers\ProductSpecificationPaginateController;
+use App\Modules\ProductSpecification\Controllers\ProductSpecificationUpdateController;
 use App\Modules\SubCategory\Controllers\SubCategoryCreateController;
 use App\Modules\SubCategory\Controllers\SubCategoryDeleteController;
 use App\Modules\SubCategory\Controllers\SubCategoryPaginateController;
@@ -217,6 +221,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/update/{id}', [ProductUpdateController::class, 'get', 'as' => 'product.update.get'])->name('product.update.get');
         Route::post('/update/{id}', [ProductUpdateController::class, 'post', 'as' => 'product.update.post'])->name('product.update.post');
         Route::get('/delete/{id}', [ProductDeleteController::class, 'get', 'as' => 'product.delete.get'])->name('product.delete.get');
+        Route::prefix('/{product_id}')->group(function () {
+            Route::prefix('/specification')->group(function () {
+                Route::get('/', [ProductSpecificationPaginateController::class, 'get', 'as' => 'product_specification.paginate.get'])->name('product_specification.paginate.get');
+                Route::get('/create', [ProductSpecificationCreateController::class, 'get', 'as' => 'product_specification.create.get'])->name('product_specification.create.get');
+                Route::post('/create', [ProductSpecificationCreateController::class, 'post', 'as' => 'product_specification.create.post'])->name('product_specification.create.post');
+                Route::get('/update/{id}', [ProductSpecificationUpdateController::class, 'get', 'as' => 'product_specification.update.get'])->name('product_specification.update.get');
+                Route::post('/update/{id}', [ProductSpecificationUpdateController::class, 'post', 'as' => 'product_specification.update.post'])->name('product_specification.update.post');
+                Route::get('/delete/{id}', [ProductSpecificationDeleteController::class, 'get', 'as' => 'product_specification.delete.get'])->name('product_specification.delete.get');
+            });
+        });
     });
 
     Route::post('/text-editor-image', [TextEditorImageController::class, 'post', 'as' => 'texteditor_image.post'])->name('texteditor_image.post');
