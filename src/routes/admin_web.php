@@ -49,6 +49,10 @@ use App\Modules\HomePage\Banner\Controllers\BannerCreateController;
 use App\Modules\HomePage\Banner\Controllers\BannerDeleteController;
 use App\Modules\HomePage\Banner\Controllers\BannerPaginateController;
 use App\Modules\HomePage\Banner\Controllers\BannerUpdateController;
+use App\Modules\Product\Controllers\ProductCreateController;
+use App\Modules\Product\Controllers\ProductDeleteController;
+use App\Modules\Product\Controllers\ProductPaginateController;
+use App\Modules\Product\Controllers\ProductUpdateController;
 use App\Modules\SubCategory\Controllers\SubCategoryCreateController;
 use App\Modules\SubCategory\Controllers\SubCategoryDeleteController;
 use App\Modules\SubCategory\Controllers\SubCategoryPaginateController;
@@ -202,6 +206,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/update/{id}', [SubCategoryUpdateController::class, 'get', 'as' => 'sub_category.update.get'])->name('sub_category.update.get');
         Route::post('/update/{id}', [SubCategoryUpdateController::class, 'post', 'as' => 'sub_category.update.post'])->name('sub_category.update.post');
         Route::get('/delete/{id}', [SubCategoryDeleteController::class, 'get', 'as' => 'sub_category.delete.get'])->name('sub_category.delete.get');
+    });
+
+    Route::prefix('/product')->group(function () {
+        Route::get('/', [ProductPaginateController::class, 'get', 'as' => 'product.paginate.get'])->name('product.paginate.get');
+        Route::get('/create', [ProductCreateController::class, 'get', 'as' => 'product.create.get'])->name('product.create.get');
+        Route::post('/create', [ProductCreateController::class, 'post', 'as' => 'product.create.post'])->name('product.create.post');
+        Route::get('/update/{id}', [ProductUpdateController::class, 'get', 'as' => 'product.update.get'])->name('product.update.get');
+        Route::post('/update/{id}', [ProductUpdateController::class, 'post', 'as' => 'product.update.post'])->name('product.update.post');
+        Route::get('/delete/{id}', [ProductDeleteController::class, 'get', 'as' => 'product.delete.get'])->name('product.delete.get');
     });
 
     Route::post('/text-editor-image', [TextEditorImageController::class, 'post', 'as' => 'texteditor_image.post'])->name('texteditor_image.post');

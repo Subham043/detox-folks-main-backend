@@ -127,6 +127,14 @@
                             </li>
                             @endcan
 
+                            @can('list products')
+                            <li class="nav-item">
+                                <a class="nav-link menu-link {{strpos(url()->current(),route('product.paginate.get')) !== false ? 'active' : ''}}" href="{{route('product.paginate.get')}}">
+                                    <i class="ri-dropbox-line"></i> <span data-key="t-widgets">Products</span>
+                                </a>
+                            </li>
+                            @endcan
+
                             <li class="nav-item">
                                 <a class="nav-link menu-link {{strpos(url()->current(),'home-page') !== false ? 'active' : ''}}" href="#sidebarDashboards1" data-bs-toggle="collapse" role="button"
                                     aria-expanded="{{strpos(url()->current(),'home-page') !== false ? 'true' : 'false'}}" aria-controls="sidebarDashboards1">
