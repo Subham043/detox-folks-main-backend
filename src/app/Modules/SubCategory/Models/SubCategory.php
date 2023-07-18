@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modules\Category\Models;
+namespace App\Modules\SubCategory\Models;
 
 use App\Modules\Authentication\Models\User;
-use App\Modules\SubCategory\Models\SubCategory;
+use App\Modules\Category\Models\Category;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -12,11 +12,11 @@ use Spatie\Activitylog\LogOptions;
 use Spatie\Sitemap\Contracts\Sitemapable;
 use Spatie\Sitemap\Tags\Url;
 
-class Category extends Model implements Sitemapable
+class SubCategory extends Model implements Sitemapable
 {
     use HasFactory, LogsActivity;
 
-    protected $table = 'categories';
+    protected $table = 'sub_categories';
 
     /**
      * The attributes that are mass assignable.
@@ -42,7 +42,7 @@ class Category extends Model implements Sitemapable
         'updated_at' => 'datetime',
     ];
 
-    public $image_path = 'categories';
+    public $image_path = 'sub_categories';
 
     protected $appends = ['image_link'];
 
@@ -75,9 +75,9 @@ class Category extends Model implements Sitemapable
         );
     }
 
-    public function sub_categories()
+    public function categories()
     {
-        return $this->belongsToMany(SubCategory::class, 'category_sub_categories', 'category_id', 'sub_category_id');
+        return $this->belongsToMany(Category::class, 'category_sub_categories', 'sub_category_id', 'category_id');
     }
 
     public function user()
@@ -88,10 +88,10 @@ class Category extends Model implements Sitemapable
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->useLogName('categories')
+        ->useLogName('sub_categories')
         ->setDescriptionForEvent(
                 function(string $eventName){
-                    $desc = "Category with name ".$this->name." has been {$eventName}";
+                    $desc = "SubCategory with name ".$this->name." has been {$eventName}";
                     $desc .= auth()->user() ? " by ".auth()->user()->name."<".auth()->user()->email.">" : "";
                     return $desc;
                 }
@@ -102,6 +102,6 @@ class Category extends Model implements Sitemapable
 
     public function toSitemapTag(): Url | string | array
     {
-        return route('categories_detail.get', $this->slug);
+        return route('sub_categories_detail.get', $this->slug);
     }
 }

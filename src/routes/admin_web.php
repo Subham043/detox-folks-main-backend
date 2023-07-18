@@ -49,6 +49,10 @@ use App\Modules\HomePage\Banner\Controllers\BannerCreateController;
 use App\Modules\HomePage\Banner\Controllers\BannerDeleteController;
 use App\Modules\HomePage\Banner\Controllers\BannerPaginateController;
 use App\Modules\HomePage\Banner\Controllers\BannerUpdateController;
+use App\Modules\SubCategory\Controllers\SubCategoryCreateController;
+use App\Modules\SubCategory\Controllers\SubCategoryDeleteController;
+use App\Modules\SubCategory\Controllers\SubCategoryPaginateController;
+use App\Modules\SubCategory\Controllers\SubCategoryUpdateController;
 use App\Modules\TextEditorImage\Controllers\TextEditorImageController;
 use Illuminate\Support\Facades\Route;
 
@@ -189,6 +193,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/update/{id}', [CategoryUpdateController::class, 'get', 'as' => 'category.update.get'])->name('category.update.get');
         Route::post('/update/{id}', [CategoryUpdateController::class, 'post', 'as' => 'category.update.post'])->name('category.update.post');
         Route::get('/delete/{id}', [CategoryDeleteController::class, 'get', 'as' => 'category.delete.get'])->name('category.delete.get');
+    });
+
+    Route::prefix('/sub-category')->group(function () {
+        Route::get('/', [SubCategoryPaginateController::class, 'get', 'as' => 'sub_category.paginate.get'])->name('sub_category.paginate.get');
+        Route::get('/create', [SubCategoryCreateController::class, 'get', 'as' => 'sub_category.create.get'])->name('sub_category.create.get');
+        Route::post('/create', [SubCategoryCreateController::class, 'post', 'as' => 'sub_category.create.post'])->name('sub_category.create.post');
+        Route::get('/update/{id}', [SubCategoryUpdateController::class, 'get', 'as' => 'sub_category.update.get'])->name('sub_category.update.get');
+        Route::post('/update/{id}', [SubCategoryUpdateController::class, 'post', 'as' => 'sub_category.update.post'])->name('sub_category.update.post');
+        Route::get('/delete/{id}', [SubCategoryDeleteController::class, 'get', 'as' => 'sub_category.delete.get'])->name('sub_category.delete.get');
     });
 
     Route::post('/text-editor-image', [TextEditorImageController::class, 'post', 'as' => 'texteditor_image.post'])->name('texteditor_image.post');

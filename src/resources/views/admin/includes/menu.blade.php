@@ -119,6 +119,12 @@
                                     <i class="ri-collage-line"></i> <span data-key="t-widgets">Categories</span>
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link menu-link {{strpos(url()->current(),route('sub_category.paginate.get')) !== false ? 'active' : ''}}" href="{{route('sub_category.paginate.get')}}">
+                                    <i class="ri-grid-line"></i> <span data-key="t-widgets">Sub-Categories</span>
+                                </a>
+                            </li>
                             @endcan
 
                             <li class="nav-item">
