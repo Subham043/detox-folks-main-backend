@@ -135,6 +135,14 @@
                             </li>
                             @endcan
 
+                            @can('list coupon')
+                            <li class="nav-item">
+                                <a class="nav-link menu-link {{strpos(url()->current(),route('coupon.paginate.get')) !== false ? 'active' : ''}}" href="{{route('coupon.paginate.get')}}">
+                                    <i class="ri-dropbox-line"></i> <span data-key="t-widgets">Coupons</span>
+                                </a>
+                            </li>
+                            @endcan
+
                             <li class="nav-item">
                                 <a class="nav-link menu-link {{strpos(url()->current(),'home-page') !== false ? 'active' : ''}}" href="#sidebarDashboards1" data-bs-toggle="collapse" role="button"
                                     aria-expanded="{{strpos(url()->current(),'home-page') !== false ? 'true' : 'false'}}" aria-controls="sidebarDashboards1">

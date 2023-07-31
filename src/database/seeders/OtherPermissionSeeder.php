@@ -53,5 +53,11 @@ class OtherPermissionSeeder extends Seeder
         Permission::create(['name' => 'create categories']);
         Permission::create(['name' => 'list categories']);
 
+        //permission for coupon
+        Permission::create(['name' => 'edit coupon']);
+        Permission::create(['name' => 'delete coupon']);
+        Permission::create(['name' => 'create coupon']);
+        Permission::create(['name' => 'list coupon']);
+
     }
 }

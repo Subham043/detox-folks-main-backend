@@ -25,6 +25,10 @@ use App\Modules\Counter\Controllers\CounterCreateController;
 use App\Modules\Counter\Controllers\CounterDeleteController;
 use App\Modules\Counter\Controllers\CounterPaginateController;
 use App\Modules\Counter\Controllers\CounterUpdateController;
+use App\Modules\Coupon\Controllers\CouponCreateController;
+use App\Modules\Coupon\Controllers\CouponDeleteController;
+use App\Modules\Coupon\Controllers\CouponPaginateController;
+use App\Modules\Coupon\Controllers\CouponUpdateController;
 use App\Modules\Partner\Controllers\PartnerCreateController;
 use App\Modules\Partner\Controllers\PartnerDeleteController;
 use App\Modules\Partner\Controllers\PartnerPaginateController;
@@ -216,6 +220,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/update/{id}', [SubCategoryUpdateController::class, 'get', 'as' => 'sub_category.update.get'])->name('sub_category.update.get');
         Route::post('/update/{id}', [SubCategoryUpdateController::class, 'post', 'as' => 'sub_category.update.post'])->name('sub_category.update.post');
         Route::get('/delete/{id}', [SubCategoryDeleteController::class, 'get', 'as' => 'sub_category.delete.get'])->name('sub_category.delete.get');
+    });
+
+    Route::prefix('/coupon')->group(function () {
+        Route::get('/', [CouponPaginateController::class, 'get', 'as' => 'coupon.paginate.get'])->name('coupon.paginate.get');
+        Route::get('/create', [CouponCreateController::class, 'get', 'as' => 'coupon.create.get'])->name('coupon.create.get');
+        Route::post('/create', [CouponCreateController::class, 'post', 'as' => 'coupon.create.post'])->name('coupon.create.post');
+        Route::get('/update/{id}', [CouponUpdateController::class, 'get', 'as' => 'coupon.update.get'])->name('coupon.update.get');
+        Route::post('/update/{id}', [CouponUpdateController::class, 'post', 'as' => 'coupon.update.post'])->name('coupon.update.post');
+        Route::get('/delete/{id}', [CouponDeleteController::class, 'get', 'as' => 'coupon.delete.get'])->name('coupon.delete.get');
     });
 
     Route::prefix('/product')->group(function () {
