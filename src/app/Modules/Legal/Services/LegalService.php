@@ -18,6 +18,11 @@ class LegalService
         return Legal::all();
     }
 
+    public function main_all(): Collection
+    {
+        return Legal::where('is_draft', true)->get();
+    }
+
     public function paginate(Int $total = 10): LengthAwarePaginator
     {
         $query = Legal::latest();
@@ -31,7 +36,7 @@ class LegalService
 
     public function getBySlug(String $slug): Legal|null
     {
-        return Legal::where('slug', $slug)->firstOrFail();
+        return Legal::where('slug', $slug)->where('is_draft', true)->firstOrFail();
     }
 
     public function update(array $data, Legal $legal): Legal

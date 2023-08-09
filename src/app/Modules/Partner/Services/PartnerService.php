@@ -9,7 +9,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Cache;
 use Spatie\QueryBuilder\AllowedFilter;
 
 class PartnerService
@@ -75,9 +74,7 @@ class PartnerService
 
     public function main_all(): Collection
     {
-        return Cache::remember('partner_main', 60*60*24, function(){
-            return Partner::where('is_draft', true)->latest()->get();
-        });
+        return Partner::where('is_draft', true)->latest()->get();
     }
 
 }

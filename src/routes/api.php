@@ -9,7 +9,13 @@ use App\Modules\Authentication\Controllers\UserRegisterController;
 use App\Modules\Authentication\Controllers\VerifyRegisteredUserController;
 use App\Modules\Blog\Controllers\UserBlogDetailController;
 use App\Modules\Blog\Controllers\UserBlogPaginateController;
+use App\Modules\Counter\Controllers\UserCounterAllController;
 use App\Modules\Enquiry\ContactForm\Controllers\ContactFormCreateController;
+use App\Modules\Legal\Controllers\UserLegalAllController;
+use App\Modules\Legal\Controllers\UserLegalDetailController;
+use App\Modules\Partner\Controllers\UserPartnerAllController;
+use App\Modules\Settings\Controllers\General\UserGeneralController;
+use App\Modules\Testimonial\Controllers\UserTestimonialAllController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +47,27 @@ Route::prefix('/email/verify')->group(function () {
 
 Route::prefix('contact-form')->group(function () {
     Route::post('/', [ContactFormCreateController::class, 'post'])->name('user.contact_form.create');
+});
+
+Route::prefix('counter')->group(function () {
+    Route::get('/', [UserCounterAllController::class, 'get'])->name('user.counter.all');
+});
+
+Route::prefix('partner')->group(function () {
+    Route::get('/', [UserPartnerAllController::class, 'get'])->name('user.partner.all');
+});
+
+Route::prefix('testimonial')->group(function () {
+    Route::get('/', [UserTestimonialAllController::class, 'get'])->name('user.testimonial.all');
+});
+
+Route::prefix('legal')->group(function () {
+    Route::get('/', [UserLegalAllController::class, 'get'])->name('user.legal.all');
+    Route::get('/{slug}', [UserLegalDetailController::class, 'get'])->name('user.legal.detail');
+});
+
+Route::prefix('website-detail')->group(function () {
+    Route::get('/', [UserGeneralController::class, 'get'])->name('user.website-detail.all');
 });
 
 Route::prefix('blog')->group(function () {

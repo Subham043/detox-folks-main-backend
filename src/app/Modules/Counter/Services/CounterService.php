@@ -18,6 +18,11 @@ class CounterService
         return Counter::all();
     }
 
+    public function main_all(): Collection
+    {
+        return Counter::where('is_draft', true)->get();
+    }
+
     public function paginate(Int $total = 10): LengthAwarePaginator
     {
         $query = Counter::latest();

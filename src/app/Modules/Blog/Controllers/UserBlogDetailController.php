@@ -18,8 +18,8 @@ class UserBlogDetailController extends Controller
     public function get($slug){
         $blog = $this->blogService->getBySlug($slug);
         return response()->json([
-            'message' => "Enquiry created successfully.",
+            'message' => "Blog recieved successfully.",
             'blog' => UserBlogCollection::make($blog),
-        ], 201);
+        ], 200);
     }
 }
