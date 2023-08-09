@@ -19,6 +19,19 @@ class BlogService
         return Blog::all();
     }
 
+    public function paginateMain(Int $total = 10): LengthAwarePaginator
+    {
+        $query = Blog::where('is_draft', true);
+        return QueryBuilder::for($query)
+                ->defaultSort('id')
+                ->allowedSorts('id', 'name')
+                ->allowedFilters([
+                    AllowedFilter::custom('search', new CommonFilter),
+                ])
+                ->paginate($total)
+                ->appends(request()->query());
+    }
+
     public function paginate(Int $total = 10): LengthAwarePaginator
     {
         $query = Blog::latest();
@@ -33,6 +46,11 @@ class BlogService
     public function getById(Int $id): Blog|null
     {
         return Blog::findOrFail($id);
+    }
+
+    public function getBySlug(String $slug): Blog|null
+    {
+        return Blog::where('slug', $slug)->where('is_draft', true)->firstOrFail();
     }
 
     public function create(array $data): Blog

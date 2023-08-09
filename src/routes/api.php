@@ -7,6 +7,9 @@ use App\Modules\Authentication\Controllers\UserLoginController;
 use App\Modules\Authentication\Controllers\UserPasswordUpdateController;
 use App\Modules\Authentication\Controllers\UserRegisterController;
 use App\Modules\Authentication\Controllers\VerifyRegisteredUserController;
+use App\Modules\Blog\Controllers\UserBlogDetailController;
+use App\Modules\Blog\Controllers\UserBlogPaginateController;
+use App\Modules\Enquiry\ContactForm\Controllers\ContactFormCreateController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +37,15 @@ Route::prefix('auth')->group(function () {
 Route::prefix('/email/verify')->group(function () {
     Route::post('/resend-notification', [VerifyRegisteredUserController::class, 'resend_notification', 'as' => 'resend_notification'])->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
     Route::get('/{id}/{hash}', [VerifyRegisteredUserController::class, 'verify_email', 'as' => 'verify_email'])->middleware(['signed'])->name('verification.verify');
+});
+
+Route::prefix('contact-form')->group(function () {
+    Route::post('/', [ContactFormCreateController::class, 'post'])->name('user.contact_form.create');
+});
+
+Route::prefix('blog')->group(function () {
+    Route::get('/', [UserBlogPaginateController::class, 'get'])->name('user.blog.paginate');
+    Route::get('/{slug}', [UserBlogDetailController::class, 'get'])->name('user.blog.detail');
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
