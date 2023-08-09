@@ -35,8 +35,9 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->routes(function () {
             Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
+                ->prefix('api')->group(function(){
+                    Route::prefix('v1')->group(base_path('routes/api.php'));
+                });
 
             Route::middleware(['web', 'csp.policy'])->group(base_path('routes/web.php'));
             Route::middleware(['web', 'csp.policy', 'custom.headers'])->prefix('admin')->group(base_path('routes/admin_web.php'));

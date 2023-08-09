@@ -36,7 +36,12 @@ class Handler extends ExceptionHandler
 
     public function render($request, HttpException|Throwable $exception)
     {
-        if ($this->isHttpException($exception) && !$request->wantsJson()) {
+        if ($this->isHttpException($exception)) {
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'message' => $exception->getMessage()
+                ], $exception->getStatusCode());
+            }
             return $this->customRender(
                 $exception,
                 $exception->getStatusCode(),
@@ -45,7 +50,12 @@ class Handler extends ExceptionHandler
             );
         }
 
-        if ($exception instanceof MethodNotAllowedHttpException && !$request->wantsJson()) {
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'message' => $exception->getMessage()
+                ], $exception->getStatusCode());
+            }
             return $this->customRender(
                 $exception,
                 Response::HTTP_METHOD_NOT_ALLOWED,
@@ -53,7 +63,12 @@ class Handler extends ExceptionHandler
             );
         }
 
-        if ($exception instanceof ModelNotFoundException && !$request->wantsJson()) {
+        if ($exception instanceof ModelNotFoundException) {
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'message' => "Data not found."
+                ], 404);
+            }
             return $this->customRender(
                 $exception,
                 Response::HTTP_NOT_FOUND,
@@ -61,7 +76,12 @@ class Handler extends ExceptionHandler
             );
         }
 
-        if ($exception instanceof NotFoundHttpException && !$request->wantsJson()) {
+        if ($exception instanceof NotFoundHttpException) {
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'message' => 'Data not found.'
+                ], $exception->getStatusCode());
+            }
             return $this->customRender(
                 $exception,
                 Response::HTTP_NOT_FOUND,
