@@ -30,9 +30,33 @@ class CategoryService
                 ->appends(request()->query());
     }
 
+    public function paginateMain(Int $total = 10): LengthAwarePaginator
+    {
+        $query = Category::with([
+            'sub_categories' => function($q) {
+                $q->where('is_draft', true);
+            }
+        ])->where('is_draft', true)->latest();
+        return QueryBuilder::for($query)
+                ->allowedFilters([
+                    AllowedFilter::custom('search', new CommonFilter),
+                ])
+                ->paginate($total)
+                ->appends(request()->query());
+    }
+
     public function getById(Int $id): Category|null
     {
         return Category::findOrFail($id);
+    }
+
+    public function getBySlug(String $slug): Category|null
+    {
+        return Category::with([
+            'sub_categories' => function($q) {
+                $q->where('is_draft', true);
+            }
+        ])->where('is_draft', true)->where('slug', $slug)->firstOrFail();
     }
 
     public function create(array $data): Category

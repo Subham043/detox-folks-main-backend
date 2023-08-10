@@ -151,6 +151,14 @@
                             </li>
                             @endcan
 
+                            @can('list pages seo')
+                            <li class="nav-item">
+                                <a class="nav-link menu-link {{strpos(url()->current(),route('seo.paginate.get')) !== false ? 'active' : ''}}" href="{{route('seo.paginate.get')}}">
+                                    <i class="ri-ie-line"></i> <span data-key="t-widgets">Seo</span>
+                                </a>
+                            </li>
+                            @endcan
+
                             <li class="nav-item">
                                 <a class="nav-link menu-link {{strpos(url()->current(),'home-page') !== false ? 'active' : ''}}" href="#sidebarDashboards1" data-bs-toggle="collapse" role="button"
                                     aria-expanded="{{strpos(url()->current(),'home-page') !== false ? 'true' : 'false'}}" aria-controls="sidebarDashboards1">

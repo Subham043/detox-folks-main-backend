@@ -9,7 +9,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Cache;
 use Spatie\QueryBuilder\AllowedFilter;
 
 class FeatureService
@@ -74,9 +73,7 @@ class FeatureService
 
     public function main_all(): Collection
     {
-        return Cache::remember('features_main', 60*60*24, function(){
-            return Feature::where('is_draft', true)->get();
-        });
+        return Feature::where('is_draft', true)->get();
     }
 
 }

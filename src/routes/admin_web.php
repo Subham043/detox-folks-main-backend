@@ -71,6 +71,8 @@ use App\Modules\ProductSpecification\Controllers\ProductSpecificationCreateContr
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationDeleteController;
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationPaginateController;
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationUpdateController;
+use App\Modules\Seo\Controllers\SeoPaginateController;
+use App\Modules\Seo\Controllers\SeoUpdateController;
 use App\Modules\SubCategory\Controllers\SubCategoryCreateController;
 use App\Modules\SubCategory\Controllers\SubCategoryDeleteController;
 use App\Modules\SubCategory\Controllers\SubCategoryPaginateController;
@@ -275,6 +277,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/update/{id}', [FeatureUpdateController::class, 'get', 'as' => 'feature.update.get'])->name('feature.update.get');
         Route::post('/update/{id}', [FeatureUpdateController::class, 'post', 'as' => 'feature.update.post'])->name('feature.update.post');
         Route::get('/delete/{id}', [FeatureDeleteController::class, 'get', 'as' => 'feature.delete.get'])->name('feature.delete.get');
+    });
+
+    Route::prefix('/seo')->group(function () {
+        Route::get('/', [SeoPaginateController::class, 'get', 'as' => 'seo.paginate.get'])->name('seo.paginate.get');
+        Route::get('/update/{slug}', [SeoUpdateController::class, 'get', 'as' => 'seo.update.get'])->name('seo.update.get');
+        Route::post('/update/{slug}', [SeoUpdateController::class, 'post', 'as' => 'seo.update.post'])->name('seo.update.post');
     });
 
     Route::post('/text-editor-image', [TextEditorImageController::class, 'post', 'as' => 'texteditor_image.post'])->name('texteditor_image.post');

@@ -30,9 +30,25 @@ class SubCategoryService
                 ->appends(request()->query());
     }
 
+    public function paginateMain(Int $total = 10): LengthAwarePaginator
+    {
+        $query = SubCategory::where('is_draft', true)->latest();
+        return QueryBuilder::for($query)
+                ->allowedFilters([
+                    AllowedFilter::custom('search', new CommonFilter),
+                ])
+                ->paginate($total)
+                ->appends(request()->query());
+    }
+
     public function getById(Int $id): SubCategory|null
     {
         return SubCategory::with('categories')->findOrFail($id);
+    }
+
+    public function getBySlug(String $slug): SubCategory|null
+    {
+        return SubCategory::where('is_draft', true)->where('slug', $slug)->firstOrFail();
     }
 
     public function create(array $data): SubCategory

@@ -71,5 +71,9 @@ class OtherPermissionSeeder extends Seeder
         Permission::create(['name' => 'create coupon']);
         Permission::create(['name' => 'list coupon']);
 
+        //permission for pages seo
+        Permission::create(['name' => 'edit pages seo']);
+        Permission::create(['name' => 'list pages seo']);
+
     }
 }
