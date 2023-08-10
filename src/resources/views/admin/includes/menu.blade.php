@@ -143,6 +143,14 @@
                             </li>
                             @endcan
 
+                            @can('list features')
+                            <li class="nav-item">
+                                <a class="nav-link menu-link {{strpos(url()->current(),route('feature.paginate.get')) !== false ? 'active' : ''}}" href="{{route('feature.paginate.get')}}">
+                                    <i class="ri-function-line"></i> <span data-key="t-widgets">Feature</span>
+                                </a>
+                            </li>
+                            @endcan
+
                             <li class="nav-item">
                                 <a class="nav-link menu-link {{strpos(url()->current(),'home-page') !== false ? 'active' : ''}}" href="#sidebarDashboards1" data-bs-toggle="collapse" role="button"
                                     aria-expanded="{{strpos(url()->current(),'home-page') !== false ? 'true' : 'false'}}" aria-controls="sidebarDashboards1">
@@ -160,13 +168,30 @@
                                 </div>
                             </li>
 
+                            <li class="nav-item">
+                                <a class="nav-link menu-link {{strpos(url()->current(),'about-page') !== false ? 'active' : ''}}" href="#sidebarDashboards4" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="{{strpos(url()->current(),'about-page') !== false ? 'true' : 'false'}}" aria-controls="sidebarDashboards4">
+                                    <i class="ri-slideshow-line"></i> <span data-key="t-dashboards">About Page</span>
+                                </a>
+                                <div class="collapse menu-dropdown {{strpos(url()->current(),'about-page') !== false ? 'show' : ''}}" id="sidebarDashboards4">
+                                    <ul class="nav nav-sm flex-column">
+                                        @can('list home page content')
+                                            <li class="nav-item">
+                                                <a href="{{route('about.main.get')}}" class="nav-link {{strpos(url()->current(), route('about.main.get')) !== false ? 'active' : ''}}" data-key="t-analytics"> Main Section </a>
+                                            </li>
+                                        @endcan
+
+                                    </ul>
+                                </div>
+                            </li>
+
 
                             <li class="nav-item">
-                                <a class="nav-link menu-link {{strpos(url()->current(),'setting') !== false ? 'active' : ''}}" href="#sidebarDashboards6" data-bs-toggle="collapse" role="button"
-                                    aria-expanded="{{strpos(url()->current(),'setting') !== false ? 'true' : 'false'}}" aria-controls="sidebarDashboards6">
+                                <a class="nav-link menu-link {{strpos(url()->current(),'setting') !== false ? 'active' : ''}}" href="#sidebarDashboards3" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="{{strpos(url()->current(),'setting') !== false ? 'true' : 'false'}}" aria-controls="sidebarDashboards3">
                                     <i class="ri-tools-line"></i> <span data-key="t-dashboards">Application Settings</span>
                                 </a>
-                                <div class="collapse menu-dropdown {{strpos(url()->current(),'setting') !== false ? 'show' : ''}}" id="sidebarDashboards6">
+                                <div class="collapse menu-dropdown {{strpos(url()->current(),'setting') !== false ? 'show' : ''}}" id="sidebarDashboards3">
                                     <ul class="nav nav-sm flex-column">
                                         @can('view general settings detail')
                                             <li class="nav-item">

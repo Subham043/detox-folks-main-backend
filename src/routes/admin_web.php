@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\AboutPage\Main\Controllers\AboutMainController;
 use App\Modules\Authentication\Controllers\PasswordUpdateController;
 use App\Modules\Authentication\Controllers\ForgotPasswordController;
 use App\Modules\Authentication\Controllers\LoginController;
@@ -29,6 +30,10 @@ use App\Modules\Coupon\Controllers\CouponCreateController;
 use App\Modules\Coupon\Controllers\CouponDeleteController;
 use App\Modules\Coupon\Controllers\CouponPaginateController;
 use App\Modules\Coupon\Controllers\CouponUpdateController;
+use App\Modules\Feature\Controllers\FeatureCreateController;
+use App\Modules\Feature\Controllers\FeatureDeleteController;
+use App\Modules\Feature\Controllers\FeaturePaginateController;
+use App\Modules\Feature\Controllers\FeatureUpdateController;
 use App\Modules\Partner\Controllers\PartnerCreateController;
 use App\Modules\Partner\Controllers\PartnerDeleteController;
 use App\Modules\Partner\Controllers\PartnerPaginateController;
@@ -256,6 +261,20 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/delete/{id}', [ProductPriceDeleteController::class, 'get', 'as' => 'product_price.delete.get'])->name('product_price.delete.get');
             });
         });
+    });
+
+    Route::prefix('/about-page')->group(function () {
+        Route::get('/main', [AboutMainController::class, 'get', 'as' => 'about.main.get'])->name('about.main.get');
+        Route::post('/main', [AboutMainController::class, 'post', 'as' => 'about.main.post'])->name('about.main.post');
+    });
+
+    Route::prefix('/feature')->group(function () {
+        Route::get('/', [FeaturePaginateController::class, 'get', 'as' => 'feature.paginate.get'])->name('feature.paginate.get');
+        Route::get('/create', [FeatureCreateController::class, 'get', 'as' => 'feature.create.get'])->name('feature.create.get');
+        Route::post('/create', [FeatureCreateController::class, 'post', 'as' => 'feature.create.post'])->name('feature.create.post');
+        Route::get('/update/{id}', [FeatureUpdateController::class, 'get', 'as' => 'feature.update.get'])->name('feature.update.get');
+        Route::post('/update/{id}', [FeatureUpdateController::class, 'post', 'as' => 'feature.update.post'])->name('feature.update.post');
+        Route::get('/delete/{id}', [FeatureDeleteController::class, 'get', 'as' => 'feature.delete.get'])->name('feature.delete.get');
     });
 
     Route::post('/text-editor-image', [TextEditorImageController::class, 'post', 'as' => 'texteditor_image.post'])->name('texteditor_image.post');

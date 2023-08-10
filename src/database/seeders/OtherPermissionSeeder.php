@@ -47,6 +47,18 @@ class OtherPermissionSeeder extends Seeder
         Permission::create(['name' => 'create home page content']);
         Permission::create(['name' => 'list home page content']);
 
+        //permission for about page content
+        Permission::create(['name' => 'edit about page content']);
+        Permission::create(['name' => 'delete about page content']);
+        Permission::create(['name' => 'create about page content']);
+        Permission::create(['name' => 'list about page content']);
+
+        //permission for features
+        Permission::create(['name' => 'edit features']);
+        Permission::create(['name' => 'delete features']);
+        Permission::create(['name' => 'create features']);
+        Permission::create(['name' => 'list features']);
+
         //permission for categories
         Permission::create(['name' => 'edit categories']);
         Permission::create(['name' => 'delete categories']);
