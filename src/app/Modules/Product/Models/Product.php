@@ -4,6 +4,7 @@ namespace App\Modules\Product\Models;
 
 use App\Modules\Authentication\Models\User;
 use App\Modules\Category\Models\Category;
+use App\Modules\ProductPrice\Models\ProductPrice;
 use App\Modules\ProductSpecification\Models\ProductSpecification;
 use App\Modules\SubCategory\Models\SubCategory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -99,6 +100,11 @@ class Product extends Model implements Sitemapable
     public function product_specifications()
     {
         return $this->hasMany(ProductSpecification::class, 'product_id');
+    }
+
+    public function product_prices()
+    {
+        return $this->hasMany(ProductPrice::class, 'product_id');
     }
 
     public function getActivitylogOptions(): LogOptions

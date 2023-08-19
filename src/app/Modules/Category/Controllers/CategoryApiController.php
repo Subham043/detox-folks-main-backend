@@ -26,7 +26,6 @@ class CategoryApiController extends Controller
             }
             return response()->json(["message" => "Sub-Category recieved successfully.", "sub_categories"=>[]], 200);
         } catch (\Throwable $th) {
-            throw $th;
             return response()->json(["message" => "Something went wrong. Please try again"], 400);
         }
 

@@ -39,7 +39,6 @@ class SubCategoryCreateController extends Controller
             }
             return response()->json(["message" => "SubCategory created successfully."], 201);
         } catch (\Throwable $th) {
-            throw $th;
             return response()->json(["message" => "Something went wrong. Please try again"], 400);
         }
 

@@ -30,9 +30,62 @@ class ProductService
                 ->appends(request()->query());
     }
 
+    public function paginateMain(Int $total = 10): LengthAwarePaginator
+    {
+        $query = Product::with([
+            'categories' => function($q){
+                $q->where('is_draft', true);
+            },
+            'sub_categories' => function($q){
+                $q->where('is_draft', true);
+            },
+            'product_specifications',
+            'product_prices',
+        ])->where('is_draft', true)->latest();
+        return QueryBuilder::for($query)
+                ->allowedIncludes(['categories', 'sub_categories', 'product_specifications', 'product_prices'])
+                ->defaultSort('id')
+                ->allowedSorts('id', 'name')
+                ->allowedFilters([
+                    'is_new',
+                    'is_on_sale',
+                    AllowedFilter::callback('has_categories', function (Builder $query, $value) {
+                        $query->whereHas('categories', function($q) use($value) {
+                            $q->where('is_draft', true)->where(function($qr) use($value){
+                                $qr->where('slug', $value);
+                            });
+                        });
+                    }),
+                    AllowedFilter::callback('has_sub_categories', function (Builder $query, $value) {
+                        $query->whereHas('sub_categories', function($q) use($value) {
+                            $q->where('is_draft', true)->where(function($qr) use($value){
+                                $qr->where('slug', $value);
+                            });
+                        });
+                    }),
+                    AllowedFilter::custom('search', new CommonFilter),
+                ])
+                ->paginate($total)
+                ->appends(request()->query());
+    }
+
     public function getById(Int $id): Product|null
     {
         return Product::with('categories')->findOrFail($id);
+    }
+
+    public function getBySlug(String $slug): Product|null
+    {
+        return Product::with([
+            'categories' => function($q){
+                $q->where('is_draft', true);
+            },
+            'sub_categories' => function($q){
+                $q->where('is_draft', true);
+            },
+            'product_specifications',
+            'product_prices',
+        ])->where('is_draft', true)->where('slug', $slug)->firstOrFail();
     }
 
     public function create(array $data): Product
