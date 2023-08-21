@@ -33,18 +33,16 @@ class ProductService
     public function paginateMain(Int $total = 10): LengthAwarePaginator
     {
         $query = Product::with([
-            'categories' => function($q){
-                $q->where('is_draft', true);
-            },
-            'sub_categories' => function($q){
-                $q->where('is_draft', true);
-            },
+            'categories',
+            'sub_categories',
             'product_specifications',
-            'product_prices',
-        ])->where('is_draft', true)->latest();
+            'product_prices'=>function($q){
+                $q->orderBy('min_quantity', 'asc');
+            },
+        ])->where('is_draft', true);
         return QueryBuilder::for($query)
                 ->allowedIncludes(['categories', 'sub_categories', 'product_specifications', 'product_prices'])
-                ->defaultSort('id')
+                ->defaultSort('-id')
                 ->allowedSorts('id', 'name')
                 ->allowedFilters([
                     'is_new',
@@ -52,14 +50,16 @@ class ProductService
                     AllowedFilter::callback('has_categories', function (Builder $query, $value) {
                         $query->whereHas('categories', function($q) use($value) {
                             $q->where('is_draft', true)->where(function($qr) use($value){
-                                $qr->where('slug', $value);
+                                $arr = array_map('intval', explode('_', $value));
+                                $qr->whereIn('category_id', $arr);
                             });
                         });
                     }),
                     AllowedFilter::callback('has_sub_categories', function (Builder $query, $value) {
                         $query->whereHas('sub_categories', function($q) use($value) {
                             $q->where('is_draft', true)->where(function($qr) use($value){
-                                $qr->where('slug', $value);
+                                $arr = array_map('intval', explode('_', $value));
+                                $qr->whereIn('sub_category_id', $arr);
                             });
                         });
                     }),
@@ -84,7 +84,9 @@ class ProductService
                 $q->where('is_draft', true);
             },
             'product_specifications',
-            'product_prices',
+            'product_prices'=>function($q){
+                $q->orderBy('min_quantity', 'asc');
+            },
         ])->where('is_draft', true)->where('slug', $slug)->firstOrFail();
     }
 

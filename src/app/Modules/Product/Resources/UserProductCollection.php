@@ -33,7 +33,7 @@ class UserProductCollection extends JsonResource
             'meta_description' => $this->meta_description,
             'meta_keywords' => $this->meta_keywords,
             'product_prices' => UserProductPriceCollection::collection($this->product_prices),
-            'product_prices' => UserProductPriceCollection::collection($this->product_prices),
+            'product_specifications' => UserProductSpecificationCollection::collection($this->product_specifications),
             'categories' => UserCategoryMainCollection::collection($this->categories),
             'sub_categories' => UserSubCategoryCollection::collection($this->sub_categories),
             'created_at' => $this->created_at->diffForHumans(),

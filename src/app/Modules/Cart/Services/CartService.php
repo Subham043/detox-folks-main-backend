@@ -1,56 +1,59 @@
 <?php
 
-namespace App\Modules\Wishlist\Services;
+namespace App\Modules\Cart\Services;
 
-use App\Modules\Wishlist\Models\Wishlist;
+use App\Modules\Cart\Models\Cart;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class WishlistService
+class CartService
 {
 
     public function all(): Collection
     {
-        return Wishlist::with([
+        return Cart::with([
             'product',
+            'product_price',
         ])->where('user_id', auth()->user()->id)->get();
     }
 
     public function paginate(Int $total = 10): LengthAwarePaginator
     {
-        $query = Wishlist::with([
+        $query = Cart::with([
             'product',
+            'product_price',
         ])->where('user_id', auth()->user()->id)->latest();
         return QueryBuilder::for($query)
                 ->paginate($total)
                 ->appends(request()->query());
     }
 
-    public function getById(Int $id): Wishlist|null
+    public function getById(Int $id): Cart|null
     {
-        return Wishlist::with([
+        return Cart::with([
             'product',
+            'product_price',
         ])->where('user_id', auth()->user()->id)->findOrFail($id);
     }
 
-    public function create(array $data): Wishlist
+    public function create(array $data): Cart
     {
-        $wishlist = Wishlist::create($data);
-        $wishlist->user_id = auth()->user()->id;
-        $wishlist->save();
-        return $wishlist;
+        $cart = Cart::create($data);
+        $cart->user_id = auth()->user()->id;
+        $cart->save();
+        return $cart;
     }
 
-    public function update(array $data, Wishlist $wishlist): Wishlist
+    public function update(array $data, Cart $cart): Cart
     {
-        $wishlist->update($data);
-        return $wishlist;
+        $cart->update($data);
+        return $cart;
     }
 
-    public function delete(Wishlist $wishlist): bool|null
+    public function delete(Cart $cart): bool|null
     {
-        return $wishlist->delete();
+        return $cart->delete();
     }
 
 }

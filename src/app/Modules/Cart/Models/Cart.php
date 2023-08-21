@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Modules\ProductPrice\Models;
+namespace App\Modules\Cart\Models;
 
+use App\Modules\Authentication\Models\User;
 use App\Modules\Product\Models\Product;
+use App\Modules\ProductPrice\Models\ProductPrice;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Sitemap\Contracts\Sitemapable;
-use Spatie\Sitemap\Tags\Url;
 
-class ProductPrice extends Model implements Sitemapable
+class Cart extends Model
 {
     use HasFactory, LogsActivity;
 
-    protected $table = 'product_prices';
+    protected $table = 'carts';
 
     /**
      * The attributes that are mass assignable.
@@ -23,26 +22,23 @@ class ProductPrice extends Model implements Sitemapable
      * @var array<int, string>
      */
     protected $fillable = [
-        'min_quantity',
-        'price',
-        'discount',
+        'amount',
+        'quantity',
         'product_id',
+        'product_price_id',
+        'user_id',
     ];
 
     protected $casts = [
-        'min_quantity' => 'int',
-        'price' => 'float',
-        'discount' => 'float',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'amount' => 'float',
+        'quantity' => 'int',
     ];
-    protected $appends = ['discount_in_price'];
 
-    protected function discountInPrice(): Attribute
+    public function user()
     {
-        return new Attribute(
-            get: fn () => round($this->price - ($this->price * ($this->discount/100)), 2),
-        );
+        return $this->belongsTo(User::class, 'user_id')->withDefault();
     }
 
     public function product()
@@ -50,23 +46,23 @@ class ProductPrice extends Model implements Sitemapable
         return $this->belongsTo(Product::class, 'product_id')->withDefault();
     }
 
+    public function product_price()
+    {
+        return $this->belongsTo(ProductPrice::class, 'product_price_id')->withDefault();
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->useLogName('product_prices')
+        ->useLogName('carts')
         ->setDescriptionForEvent(
                 function(string $eventName){
-                    $desc = "Product with price ".$this->price." has been {$eventName}";
+                    $desc = "Cart item has been {$eventName}";
                     $desc .= auth()->user() ? " by ".auth()->user()->name."<".auth()->user()->email.">" : "";
                     return $desc;
                 }
             )
         ->logFillable()
         ->logOnlyDirty();
-    }
-
-    public function toSitemapTag(): Url | string | array
-    {
-        return route('product_prices_detail.get', $this->slug);
     }
 }

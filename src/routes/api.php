@@ -21,6 +21,12 @@ use App\Modules\BillingInformation\Controllers\BillingInformationPaginateControl
 use App\Modules\BillingInformation\Controllers\BillingInformationUpdateController;
 use App\Modules\Blog\Controllers\UserBlogDetailController;
 use App\Modules\Blog\Controllers\UserBlogPaginateController;
+use App\Modules\Cart\Controllers\CartAllController;
+use App\Modules\Cart\Controllers\CartCreateController;
+use App\Modules\Cart\Controllers\CartDeleteController;
+use App\Modules\Cart\Controllers\CartDetailController;
+use App\Modules\Cart\Controllers\CartPaginateController;
+use App\Modules\Cart\Controllers\CartUpdateController;
 use App\Modules\Category\Controllers\UserCategoryDetailController;
 use App\Modules\Category\Controllers\UserCategoryPaginateController;
 use App\Modules\Counter\Controllers\UserCounterAllController;
@@ -37,6 +43,7 @@ use App\Modules\Settings\Controllers\General\UserGeneralController;
 use App\Modules\SubCategory\Controllers\UserSubCategoryDetailController;
 use App\Modules\SubCategory\Controllers\UserSubCategoryPaginateController;
 use App\Modules\Testimonial\Controllers\UserTestimonialAllController;
+use App\Modules\Wishlist\Controllers\WishlistAllController;
 use App\Modules\Wishlist\Controllers\WishlistCreateController;
 use App\Modules\Wishlist\Controllers\WishlistDeleteController;
 use App\Modules\Wishlist\Controllers\WishlistDetailController;
@@ -158,10 +165,20 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('/wishlist')->group(function () {
         Route::get('/', [WishlistPaginateController::class, 'get', 'as' => 'wishlist.paginate.get'])->name('wishlist.paginate.get');
+        Route::get('/all', [WishlistAllController::class, 'get', 'as' => 'wishlist.all.get'])->name('wishlist.all.get');
         Route::post('/create', [WishlistCreateController::class, 'post', 'as' => 'wishlist.create.get'])->name('wishlist.create.post');
         Route::post('/update/{id}', [WishlistUpdateController::class, 'post', 'as' => 'wishlist.update.get'])->name('wishlist.update.post');
         Route::get('/detail/{id}', [WishlistDetailController::class, 'get', 'as' => 'wishlist.paginate.get'])->name('wishlist.paginate.get');
         Route::delete('/delete/{id}', [WishlistDeleteController::class, 'delete', 'as' => 'wishlist.delete.get'])->name('wishlist.delete.get');
+    });
+
+    Route::prefix('/cart')->group(function () {
+        Route::get('/', [CartPaginateController::class, 'get', 'as' => 'cart.paginate.get'])->name('cart.paginate.get');
+        Route::get('/all', [CartAllController::class, 'get', 'as' => 'cart.all.get'])->name('cart.all.get');
+        Route::post('/create', [CartCreateController::class, 'post', 'as' => 'cart.create.get'])->name('cart.create.post');
+        Route::post('/update/{id}', [CartUpdateController::class, 'post', 'as' => 'cart.update.get'])->name('cart.update.post');
+        Route::get('/detail/{id}', [CartDetailController::class, 'get', 'as' => 'cart.paginate.get'])->name('cart.paginate.get');
+        Route::delete('/delete/{id}', [CartDeleteController::class, 'delete', 'as' => 'cart.delete.get'])->name('cart.delete.get');
     });
 
     Route::post('/auth/logout', [UserLogoutController::class, 'post', 'as' => 'logout'])->name('user.logout');
