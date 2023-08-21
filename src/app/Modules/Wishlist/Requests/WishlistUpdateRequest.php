@@ -31,7 +31,7 @@ class WishlistUpdateRequest extends FormRequest
                 'required',
                 'numeric',
                 'exists:products,id',
-                'unique:wishlists,'.$this->route('id')
+                'unique:wishlists,product_id,'.$this->route('id')
             ],
         ];
     }

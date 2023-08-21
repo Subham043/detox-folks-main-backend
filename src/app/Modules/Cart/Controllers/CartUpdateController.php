@@ -26,7 +26,7 @@ class CartUpdateController extends Controller
             );
             return response()->json([
                 'message' => "Cart updated successfully.",
-                'cart' => CartCollection::make($cart),
+                'cart' => CartCollection::make($this->cartService->getById($id)),
             ], 200);
         } catch (\Throwable $th) {
             return response()->json(["message" => "Something went wrong. Please try again"], 400);

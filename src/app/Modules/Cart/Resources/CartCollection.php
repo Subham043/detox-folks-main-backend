@@ -3,6 +3,7 @@
 namespace App\Modules\Cart\Resources;
 
 use App\Modules\Product\Resources\UserProductCollection;
+use App\Modules\ProductPrice\Resources\UserProductPriceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CartCollection extends JsonResource
@@ -20,7 +21,7 @@ class CartCollection extends JsonResource
             'amount' => $this->amount,
             'quantity' => $this->quantity,
             'product' => UserProductCollection::make($this->product),
-            'product_price' => UserProductCollection::make($this->product_price),
+            'product_price' => UserProductPriceCollection::make($this->product_price),
             'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => $this->updated_at->diffForHumans(),
         ];

@@ -26,7 +26,7 @@ class WishlistUpdateController extends Controller
             );
             return response()->json([
                 'message' => "Wishlist updated successfully.",
-                'wishlist' => WishlistCollection::make($wishlist),
+                'wishlist' => WishlistCollection::make($this->wishlistService->getById($id)),
             ], 200);
         } catch (\Throwable $th) {
             return response()->json(["message" => "Something went wrong. Please try again"], 400);

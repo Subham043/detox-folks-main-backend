@@ -13,7 +13,20 @@ class CartService
     public function all(): Collection
     {
         return Cart::with([
-            'product',
+            'product' => function($query) {
+                $query->with([
+                    'categories' => function($q){
+                        $q->where('is_draft', true);
+                    },
+                    'sub_categories' => function($q){
+                        $q->where('is_draft', true);
+                    },
+                    'product_specifications',
+                    'product_prices'=>function($q){
+                        $q->orderBy('min_quantity', 'asc');
+                    },
+                ]);
+            },
             'product_price',
         ])->where('user_id', auth()->user()->id)->get();
     }
@@ -21,7 +34,20 @@ class CartService
     public function paginate(Int $total = 10): LengthAwarePaginator
     {
         $query = Cart::with([
-            'product',
+            'product' => function($query) {
+                $query->with([
+                    'categories' => function($q){
+                        $q->where('is_draft', true);
+                    },
+                    'sub_categories' => function($q){
+                        $q->where('is_draft', true);
+                    },
+                    'product_specifications',
+                    'product_prices'=>function($q){
+                        $q->orderBy('min_quantity', 'asc');
+                    },
+                ]);
+            },
             'product_price',
         ])->where('user_id', auth()->user()->id)->latest();
         return QueryBuilder::for($query)
@@ -32,7 +58,20 @@ class CartService
     public function getById(Int $id): Cart|null
     {
         return Cart::with([
-            'product',
+            'product' => function($query) {
+                $query->with([
+                    'categories' => function($q){
+                        $q->where('is_draft', true);
+                    },
+                    'sub_categories' => function($q){
+                        $q->where('is_draft', true);
+                    },
+                    'product_specifications',
+                    'product_prices'=>function($q){
+                        $q->orderBy('min_quantity', 'asc');
+                    },
+                ]);
+            },
             'product_price',
         ])->where('user_id', auth()->user()->id)->findOrFail($id);
     }
