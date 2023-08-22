@@ -29,6 +29,7 @@ class UserProductCollection extends JsonResource
             'image' => asset($this->image),
             'is_draft' => $this->is_draft,
             'is_new' => $this->is_new,
+            'is_featured' => $this->is_featured,
             'is_on_sale' => $this->is_on_sale,
             'meta_title' => $this->meta_title,
             'meta_description' => $this->meta_description,

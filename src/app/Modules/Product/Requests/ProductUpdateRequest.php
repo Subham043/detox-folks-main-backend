@@ -20,6 +20,7 @@ class ProductUpdateRequest extends ProductCreateRequest
             'description_unfiltered' => 'required|string',
             'image' => 'nullable|image|min:1|max:5000',
             'is_draft' => 'required|boolean',
+            'is_featured' => 'required|boolean',
             'is_new' => 'required|boolean',
             'is_on_sale' => 'required|boolean',
             'meta_title' => 'nullable|string',

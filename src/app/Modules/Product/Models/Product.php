@@ -37,6 +37,7 @@ class Product extends Model implements Sitemapable
         'is_draft',
         'is_new',
         'is_on_sale',
+        'is_featured',
         'meta_title',
         'meta_description',
         'meta_keywords',
@@ -45,6 +46,7 @@ class Product extends Model implements Sitemapable
     protected $casts = [
         'is_draft' => 'boolean',
         'is_new' => 'boolean',
+        'is_featured' => 'boolean',
         'is_on_sale' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',

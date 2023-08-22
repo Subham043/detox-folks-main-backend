@@ -57,7 +57,7 @@
                                             <div>
                                                 <div class="form-check form-switch form-check-right mb-2">
                                                     <input class="form-check-input" type="checkbox" role="switch" id="is_popular" name="is_popular" {{$data->is_popular==false ? '' : 'checked'}}>
-                                                    <label class="form-check-label" for="is_popular">Blog Publish</label>
+                                                    <label class="form-check-label" for="is_popular">Is Blog Popular?</label>
                                                 </div>
                                             </div>
 

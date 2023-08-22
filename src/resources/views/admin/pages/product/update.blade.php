@@ -47,7 +47,7 @@
                                     <div class="col-xxl-12 col-md-12">
                                         @include('admin.includes.quill', ['key'=>'description', 'label'=>'Description', 'value'=>$data->description])
                                     </div>
-                                    <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-3 col-md-6">
                                         <div class="mt-4 mt-md-0">
                                             <div>
                                                 <div class="form-check form-switch form-check-right mb-2">
@@ -58,7 +58,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-3 col-md-6">
                                         <div class="mt-4 mt-md-0">
                                             <div>
                                                 <div class="form-check form-switch form-check-right mb-2">
@@ -69,12 +69,23 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-4">
+                                    <div class="col-lg-3 col-md-6">
                                         <div class="mt-4 mt-md-0">
                                             <div>
                                                 <div class="form-check form-switch form-check-right mb-2">
                                                     <input class="form-check-input" type="checkbox" role="switch" id="is_on_sale" name="is_on_sale" {{$data->is_on_sale==false ? '' : 'checked'}}>
                                                     <label class="form-check-label" for="is_on_sale">Product On Sale?</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6">
+                                        <div class="mt-4 mt-md-0">
+                                            <div>
+                                                <div class="form-check form-switch form-check-right mb-2">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="is_featured" name="is_featured" {{$data->is_featured==false ? '' : 'checked'}}>
+                                                    <label class="form-check-label" for="is_featured">Is Product Featured?</label>
                                                 </div>
                                             </div>
 
@@ -310,6 +321,7 @@ validation
         formData.append('is_draft',document.getElementById('is_draft').checked ? 1 : 0)
         formData.append('is_new',document.getElementById('is_new').checked ? 1 : 0)
         formData.append('is_on_sale',document.getElementById('is_on_sale').checked ? 1 : 0)
+        formData.append('is_featured',document.getElementById('is_featured').checked ? 1 : 0)
         formData.append('name',document.getElementById('name').value)
         formData.append('slug',document.getElementById('slug').value)
         formData.append('brief_description',document.getElementById('brief_description').value)

@@ -48,6 +48,7 @@ class ProductService
                 ->allowedFilters([
                     'is_new',
                     'is_on_sale',
+                    'is_featured',
                     AllowedFilter::callback('has_categories', function (Builder $query, $value) {
                         $query->whereHas('categories', function($q) use($value) {
                             $q->where('is_draft', true)->where(function($qr) use($value){
