@@ -30,6 +30,7 @@ class Blog extends Model implements Sitemapable
         'description_unfiltered',
         'image',
         'is_draft',
+        'is_popular',
         'meta_title',
         'meta_description',
         'meta_keywords',
@@ -37,6 +38,7 @@ class Blog extends Model implements Sitemapable
 
     protected $casts = [
         'is_draft' => 'boolean',
+        'is_popular' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

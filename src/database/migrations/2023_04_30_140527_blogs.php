@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('description_unfiltered')->nullable();
             $table->string('image', 500)->nullable();
             $table->boolean('is_draft')->default(0);
+            $table->boolean('is_popular')->default(0);
             $table->text('meta_title')->nullable();
             $table->text('meta_description')->nullable();
             $table->text('meta_keywords')->nullable();

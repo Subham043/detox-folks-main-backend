@@ -26,6 +26,7 @@ class BlogService
                 ->defaultSort('id')
                 ->allowedSorts('id', 'name')
                 ->allowedFilters([
+                    'is_popular',
                     AllowedFilter::custom('search', new CommonFilter),
                 ])
                 ->paginate($total)
@@ -37,6 +38,7 @@ class BlogService
         $query = Blog::latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
+                    'is_popular',
                     AllowedFilter::custom('search', new CommonFilter),
                 ])
                 ->paginate($total)

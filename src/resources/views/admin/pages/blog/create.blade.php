@@ -38,12 +38,23 @@
                                     <div class="col-xxl-12 col-md-12">
                                         @include('admin.includes.quill', ['key'=>'description', 'label'=>'Description', 'value'=>old('description')])
                                     </div>
-                                    <div class="col-lg-12 col-md-12">
+                                    <div class="col-lg-6 col-md-12">
                                         <div class="mt-4 mt-md-0">
                                             <div>
                                                 <div class="form-check form-switch form-check-right mb-2">
                                                     <input class="form-check-input" type="checkbox" role="switch" id="is_draft" name="is_draft" checked>
                                                     <label class="form-check-label" for="is_draft">Blog Publish</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="mt-4 mt-md-0">
+                                            <div>
+                                                <div class="form-check form-switch form-check-right mb-2">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="is_popular" name="is_popular" checked>
+                                                    <label class="form-check-label" for="is_popular">Is Blog Popular?</label>
                                                 </div>
                                             </div>
 
@@ -245,6 +256,7 @@ validation
     try {
         var formData = new FormData();
         formData.append('is_draft',document.getElementById('is_draft').checked ? 1 : 0)
+        formData.append('is_popular',document.getElementById('is_popular').checked ? 1 : 0)
         formData.append('name',document.getElementById('name').value)
         formData.append('slug',document.getElementById('slug').value)
         formData.append('heading',document.getElementById('heading').value)

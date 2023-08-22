@@ -22,6 +22,7 @@ class BlogUpdateRequest extends BlogCreateRequest
             'description_unfiltered' => 'required|string',
             'image' => 'nullable|image|min:1|max:5000',
             'is_draft' => 'required|boolean',
+            'is_popular' => 'required|boolean',
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string',

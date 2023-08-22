@@ -23,6 +23,7 @@ class UserBlogCollection extends JsonResource
             'description_unfiltered' => $this->description_unfiltered,
             'image' => asset($this->image),
             'is_draft' => $this->is_draft,
+            'is_popular' => $this->is_popular,
             'meta_title' => $this->meta_title,
             'meta_description' => $this->meta_description,
             'meta_keywords' => $this->meta_keywords,

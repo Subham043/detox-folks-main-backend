@@ -34,6 +34,7 @@ class BlogCreateRequest extends FormRequest
             'description_unfiltered' => 'required|string',
             'image' => 'required|image|min:1|max:5000',
             'is_draft' => 'required|boolean',
+            'is_popular' => 'required|boolean',
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string',
@@ -49,6 +50,7 @@ class BlogCreateRequest extends FormRequest
     {
         return [
             'is_draft' => 'Draft',
+            'is_popular' => 'Popular',
         ];
     }
 
