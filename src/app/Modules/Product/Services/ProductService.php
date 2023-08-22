@@ -36,12 +36,13 @@ class ProductService
             'categories',
             'sub_categories',
             'product_specifications',
+            'product_images',
             'product_prices'=>function($q){
                 $q->orderBy('min_quantity', 'asc');
             },
         ])->where('is_draft', true);
         return QueryBuilder::for($query)
-                ->allowedIncludes(['categories', 'sub_categories', 'product_specifications', 'product_prices'])
+                ->allowedIncludes(['categories', 'sub_categories', 'product_specifications', 'product_prices', 'product_images'])
                 ->defaultSort('-id')
                 ->allowedSorts('id', 'name')
                 ->allowedFilters([
@@ -84,6 +85,7 @@ class ProductService
                 $q->where('is_draft', true);
             },
             'product_specifications',
+            'product_images',
             'product_prices'=>function($q){
                 $q->orderBy('min_quantity', 'asc');
             },

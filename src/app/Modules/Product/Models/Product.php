@@ -4,6 +4,7 @@ namespace App\Modules\Product\Models;
 
 use App\Modules\Authentication\Models\User;
 use App\Modules\Category\Models\Category;
+use App\Modules\ProductImage\Models\ProductImage;
 use App\Modules\ProductPrice\Models\ProductPrice;
 use App\Modules\ProductSpecification\Models\ProductSpecification;
 use App\Modules\SubCategory\Models\SubCategory;
@@ -105,6 +106,11 @@ class Product extends Model implements Sitemapable
     public function product_prices()
     {
         return $this->hasMany(ProductPrice::class, 'product_id');
+    }
+
+    public function product_images()
+    {
+        return $this->hasMany(ProductImage::class, 'product_id');
     }
 
     public function getActivitylogOptions(): LogOptions

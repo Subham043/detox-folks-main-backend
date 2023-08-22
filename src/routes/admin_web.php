@@ -63,6 +63,10 @@ use App\Modules\Product\Controllers\ProductCreateController;
 use App\Modules\Product\Controllers\ProductDeleteController;
 use App\Modules\Product\Controllers\ProductPaginateController;
 use App\Modules\Product\Controllers\ProductUpdateController;
+use App\Modules\ProductImage\Controllers\ProductImageCreateController;
+use App\Modules\ProductImage\Controllers\ProductImageDeleteController;
+use App\Modules\ProductImage\Controllers\ProductImagePaginateController;
+use App\Modules\ProductImage\Controllers\ProductImageUpdateController;
 use App\Modules\ProductPrice\Controllers\ProductPriceCreateController;
 use App\Modules\ProductPrice\Controllers\ProductPriceDeleteController;
 use App\Modules\ProductPrice\Controllers\ProductPricePaginateController;
@@ -261,6 +265,14 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/update/{id}', [ProductPriceUpdateController::class, 'get', 'as' => 'product_price.update.get'])->name('product_price.update.get');
                 Route::post('/update/{id}', [ProductPriceUpdateController::class, 'post', 'as' => 'product_price.update.post'])->name('product_price.update.post');
                 Route::get('/delete/{id}', [ProductPriceDeleteController::class, 'get', 'as' => 'product_price.delete.get'])->name('product_price.delete.get');
+            });
+            Route::prefix('/image')->group(function () {
+                Route::get('/', [ProductImagePaginateController::class, 'get', 'as' => 'product_image.paginate.get'])->name('product_image.paginate.get');
+                Route::get('/create', [ProductImageCreateController::class, 'get', 'as' => 'product_image.create.get'])->name('product_image.create.get');
+                Route::post('/create', [ProductImageCreateController::class, 'post', 'as' => 'product_image.create.post'])->name('product_image.create.post');
+                Route::get('/update/{id}', [ProductImageUpdateController::class, 'get', 'as' => 'product_image.update.get'])->name('product_image.update.get');
+                Route::post('/update/{id}', [ProductImageUpdateController::class, 'post', 'as' => 'product_image.update.post'])->name('product_image.update.post');
+                Route::get('/delete/{id}', [ProductImageDeleteController::class, 'get', 'as' => 'product_image.delete.get'])->name('product_image.delete.get');
             });
         });
     });

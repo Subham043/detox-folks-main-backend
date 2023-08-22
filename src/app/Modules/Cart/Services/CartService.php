@@ -22,6 +22,7 @@ class CartService
                         $q->where('is_draft', true);
                     },
                     'product_specifications',
+                    'product_images',
                     'product_prices'=>function($q){
                         $q->orderBy('min_quantity', 'asc');
                     },
@@ -43,6 +44,7 @@ class CartService
                         $q->where('is_draft', true);
                     },
                     'product_specifications',
+                    'product_images',
                     'product_prices'=>function($q){
                         $q->orderBy('min_quantity', 'asc');
                     },
@@ -67,6 +69,7 @@ class CartService
                         $q->where('is_draft', true);
                     },
                     'product_specifications',
+                    'product_images',
                     'product_prices'=>function($q){
                         $q->orderBy('min_quantity', 'asc');
                     },
