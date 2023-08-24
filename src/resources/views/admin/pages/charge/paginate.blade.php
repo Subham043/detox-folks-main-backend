@@ -8,14 +8,14 @@
     <div class="container-fluid">
 
         <!-- start page title -->
-        @include('admin.includes.breadcrumb', ['page'=>'Testimonial', 'page_link'=>route('testimonial.paginate.get'), 'list'=>['List']])
+        @include('admin.includes.breadcrumb', ['page'=>'Charge', 'page_link'=>route('charge.paginate.get'), 'list'=>['List']])
         <!-- end page title -->
 
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title mb-0">Testimonial</h4>
+                        <h4 class="card-title mb-0">Charge</h4>
                     </div><!-- end card header -->
 
                     <div class="card-body">
@@ -23,13 +23,13 @@
                             <div class="row g-4 mb-3">
                                 <div class="col-sm-auto">
                                     <div>
-                                        @can('create testimonials')
-                                        <a href="{{route('testimonial.create.get')}}" type="button" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Create</a>
+                                        @can('create charges')
+                                        <a href="{{route('charge.create.get')}}" type="button" class="btn btn-success add-btn" id="create-btn"><i class="ri-add-line align-bottom me-1"></i> Create</a>
                                         @endcan
                                     </div>
                                 </div>
                                 <div class="col-sm">
-                                    @include('admin.includes.search_list', ['link'=>route('testimonial.paginate.get'), 'search'=>$search])
+                                    @include('admin.includes.search_list', ['link'=>route('charge.paginate.get'), 'search'=>$search])
                                 </div>
                             </div>
                             <div class="table-responsive table-card mt-3 mb-1">
@@ -37,10 +37,9 @@
                                 <table class="table align-middle table-nowrap" id="customerTable">
                                     <thead class="table-light">
                                         <tr>
-                                            <th class="sort" data-sort="customer_name">Name</th>
-                                            <th class="sort" data-sort="customer_name">Designation</th>
-                                            <th class="sort" data-sort="customer_name">Star</th>
-                                            <th class="sort" data-sort="customer_name">Message</th>
+                                            <th class="sort" data-sort="customer_name">Charge Name</th>
+                                            <th class="sort" data-sort="customer_name">Charge Slug</th>
+                                            <th class="sort" data-sort="customer_name">Amount</th>
                                             <th class="sort" data-sort="customer_name">Status</th>
                                             <th class="sort" data-sort="date">Created On</th>
                                             <th class="sort" data-sort="action">Action</th>
@@ -49,11 +48,10 @@
                                     <tbody class="list form-check-all">
                                         @foreach ($data->items() as $item)
                                         <tr>
-                                            <td class="customer_name">{{$item->name}}</td>
-                                            <td class="customer_name">{{$item->designation}}</td>
-                                            <td class="customer_name">{{$item->star}}</td>
-                                            <td class="customer_name">{{ Str::limit($item->message, 20) }}</td>
-                                            @if($item->is_draft == 1)
+                                            <td class="customer_name">{{$item->charges_name}}</td>
+                                            <td class="customer_name">{{$item->charges_slug}}</td>
+                                            <td class="customer_name">{{$item->charges_in_amount}}</td>
+                                            @if($item->is_active == 1)
                                             <td class="status"><span class="badge badge-soft-success text-uppercase">Active</span></td>
                                             @else
                                             <td class="status"><span class="badge badge-soft-danger text-uppercase">Draft</span></td>
@@ -61,15 +59,15 @@
                                             <td class="date">{{$item->created_at->diffForHumans()}}</td>
                                             <td>
                                                 <div class="d-flex gap-2">
-                                                    @can('edit testimonials')
+                                                    @can('edit charges')
                                                     <div class="edit">
-                                                        <a href="{{route('testimonial.update.get', $item->id)}}" class="btn btn-sm btn-primary edit-item-btn">Edit</a>
+                                                        <a href="{{route('charge.update.get', $item->id)}}" class="btn btn-sm btn-primary edit-item-btn">Edit</a>
                                                     </div>
                                                     @endcan
 
-                                                    @can('delete testimonials')
+                                                    @can('delete charges')
                                                     <div class="remove">
-                                                        <button class="btn btn-sm btn-danger remove-item-btn" data-link="{{route('testimonial.delete.get', $item->id)}}">Delete</button>
+                                                        <button class="btn btn-sm btn-danger remove-item-btn" data-link="{{route('charge.delete.get', $item->id)}}">Delete</button>
                                                     </div>
                                                     @endcan
                                                 </div>

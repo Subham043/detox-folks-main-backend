@@ -22,6 +22,10 @@ use App\Modules\Category\Controllers\CategoryCreateController;
 use App\Modules\Category\Controllers\CategoryDeleteController;
 use App\Modules\Category\Controllers\CategoryPaginateController;
 use App\Modules\Category\Controllers\CategoryUpdateController;
+use App\Modules\Charge\Controllers\ChargeCreateController;
+use App\Modules\Charge\Controllers\ChargeDeleteController;
+use App\Modules\Charge\Controllers\ChargePaginateController;
+use App\Modules\Charge\Controllers\ChargeUpdateController;
 use App\Modules\Counter\Controllers\CounterCreateController;
 use App\Modules\Counter\Controllers\CounterDeleteController;
 use App\Modules\Counter\Controllers\CounterPaginateController;
@@ -295,6 +299,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/update/{id}', [FeatureUpdateController::class, 'get', 'as' => 'feature.update.get'])->name('feature.update.get');
         Route::post('/update/{id}', [FeatureUpdateController::class, 'post', 'as' => 'feature.update.post'])->name('feature.update.post');
         Route::get('/delete/{id}', [FeatureDeleteController::class, 'get', 'as' => 'feature.delete.get'])->name('feature.delete.get');
+    });
+
+    Route::prefix('/other-charges')->group(function () {
+        Route::get('/', [ChargePaginateController::class, 'get', 'as' => 'charge.paginate.get'])->name('charge.paginate.get');
+        Route::get('/create', [ChargeCreateController::class, 'get', 'as' => 'charge.create.get'])->name('charge.create.get');
+        Route::post('/create', [ChargeCreateController::class, 'post', 'as' => 'charge.create.post'])->name('charge.create.post');
+        Route::get('/update/{id}', [ChargeUpdateController::class, 'get', 'as' => 'charge.update.get'])->name('charge.update.get');
+        Route::post('/update/{id}', [ChargeUpdateController::class, 'post', 'as' => 'charge.update.post'])->name('charge.update.post');
+        Route::get('/delete/{id}', [ChargeDeleteController::class, 'get', 'as' => 'charge.delete.get'])->name('charge.delete.get');
     });
 
     Route::prefix('/seo')->group(function () {

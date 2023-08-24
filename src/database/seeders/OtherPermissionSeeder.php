@@ -41,6 +41,12 @@ class OtherPermissionSeeder extends Seeder
         Permission::create(['name' => 'create testimonials']);
         Permission::create(['name' => 'list testimonials']);
 
+        //permission for charges
+        Permission::create(['name' => 'edit charges']);
+        Permission::create(['name' => 'delete charges']);
+        Permission::create(['name' => 'create charges']);
+        Permission::create(['name' => 'list charges']);
+
         //permission for home page content
         Permission::create(['name' => 'edit home page content']);
         Permission::create(['name' => 'delete home page content']);
@@ -70,6 +76,9 @@ class OtherPermissionSeeder extends Seeder
         Permission::create(['name' => 'delete coupon']);
         Permission::create(['name' => 'create coupon']);
         Permission::create(['name' => 'list coupon']);
+
+        //permission for pages tax
+        Permission::create(['name' => 'edit tax']);
 
         //permission for pages seo
         Permission::create(['name' => 'edit pages seo']);

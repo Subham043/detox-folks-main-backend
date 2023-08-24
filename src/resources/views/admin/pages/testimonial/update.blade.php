@@ -6,7 +6,7 @@
     <div class="container-fluid">
 
         <!-- start page title -->
-        @can('list home page testimonials')
+        @can('list testimonials')
         @include('admin.includes.breadcrumb', ['page'=>'Testimonial', 'page_link'=>route('testimonial.paginate.get'), 'list'=>['Update']])
         @endcan
         <!-- end page title -->

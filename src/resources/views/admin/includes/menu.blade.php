@@ -143,6 +143,14 @@
                             </li>
                             @endcan
 
+                            @can('list charges')
+                            <li class="nav-item">
+                                <a class="nav-link menu-link {{strpos(url()->current(),route('charge.paginate.get')) !== false ? 'active' : ''}}" href="{{route('charge.paginate.get')}}">
+                                    <i class="ri-dropbox-line"></i> <span data-key="t-widgets">Other Charges</span>
+                                </a>
+                            </li>
+                            @endcan
+
                             @can('edit tax')
                             <li class="nav-item">
                                 <a class="nav-link menu-link {{strpos(url()->current(),route('tax.get')) !== false ? 'active' : ''}}" href="{{route('tax.get')}}">
