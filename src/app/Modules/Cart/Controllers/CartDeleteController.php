@@ -4,6 +4,7 @@ namespace App\Modules\Cart\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Cart\Resources\CartCollection;
+use App\Modules\Cart\Services\CartAmountService;
 use App\Modules\Cart\Services\CartService;
 
 class CartDeleteController extends Controller
@@ -26,6 +27,7 @@ class CartDeleteController extends Controller
             return response()->json([
                 'message' => "Cart deleted successfully.",
                 'cart' => CartCollection::make($cart),
+                'cart_subtotal' => (new CartAmountService())->get_subtotal(),
             ], 200);
         } catch (\Throwable $th) {
             return response()->json(["message" => "Something went wrong. Please try again"], 400);

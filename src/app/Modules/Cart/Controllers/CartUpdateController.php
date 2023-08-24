@@ -5,6 +5,7 @@ namespace App\Modules\Cart\Controllers;
 use App\Http\Controllers\Controller;
 use App\Modules\Cart\Resources\CartCollection;
 use App\Modules\Cart\Requests\CartUpdateRequest;
+use App\Modules\Cart\Services\CartAmountService;
 use App\Modules\Cart\Services\CartService;
 
 class CartUpdateController extends Controller
@@ -27,6 +28,7 @@ class CartUpdateController extends Controller
             return response()->json([
                 'message' => "Cart updated successfully.",
                 'cart' => CartCollection::make($this->cartService->getById($id)),
+                'cart_subtotal' => (new CartAmountService())->get_subtotal(),
             ], 200);
         } catch (\Throwable $th) {
             return response()->json(["message" => "Something went wrong. Please try again"], 400);

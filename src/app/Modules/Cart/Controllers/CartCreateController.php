@@ -5,6 +5,7 @@ namespace App\Modules\Cart\Controllers;
 use App\Http\Controllers\Controller;
 use App\Modules\Cart\Requests\CartCreateRequest;
 use App\Modules\Cart\Resources\CartCollection;
+use App\Modules\Cart\Services\CartAmountService;
 use App\Modules\Cart\Services\CartService;
 
 class CartCreateController extends Controller
@@ -26,6 +27,7 @@ class CartCreateController extends Controller
             return response()->json([
                 'message' => "Cart created successfully.",
                 'cart' => CartCollection::make($cart),
+                'cart_subtotal' => (new CartAmountService())->get_subtotal(),
             ], 201);
         } catch (\Throwable $th) {
             return response()->json(["message" => "Something went wrong. Please try again"], 400);
