@@ -143,6 +143,14 @@
                             </li>
                             @endcan
 
+                            @can('edit tax')
+                            <li class="nav-item">
+                                <a class="nav-link menu-link {{strpos(url()->current(),route('tax.get')) !== false ? 'active' : ''}}" href="{{route('tax.get')}}">
+                                    <i class="ri-money-dollar-circle-line"></i> <span data-key="t-widgets">Tax</span>
+                                </a>
+                            </li>
+                            @endcan
+
                             @can('list features')
                             <li class="nav-item">
                                 <a class="nav-link menu-link {{strpos(url()->current(),route('feature.paginate.get')) !== false ? 'active' : ''}}" href="{{route('feature.paginate.get')}}">

@@ -81,6 +81,7 @@ use App\Modules\SubCategory\Controllers\SubCategoryCreateController;
 use App\Modules\SubCategory\Controllers\SubCategoryDeleteController;
 use App\Modules\SubCategory\Controllers\SubCategoryPaginateController;
 use App\Modules\SubCategory\Controllers\SubCategoryUpdateController;
+use App\Modules\Tax\Controllers\TaxController;
 use App\Modules\TextEditorImage\Controllers\TextEditorImageController;
 use Illuminate\Support\Facades\Route;
 
@@ -280,6 +281,11 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/about-page')->group(function () {
         Route::get('/main', [AboutMainController::class, 'get', 'as' => 'about.main.get'])->name('about.main.get');
         Route::post('/main', [AboutMainController::class, 'post', 'as' => 'about.main.post'])->name('about.main.post');
+    });
+
+    Route::prefix('/tax')->group(function () {
+        Route::get('/', [TaxController::class, 'get', 'as' => 'tax.get'])->name('tax.get');
+        Route::post('/', [TaxController::class, 'post', 'as' => 'tax.post'])->name('tax.post');
     });
 
     Route::prefix('/feature')->group(function () {
