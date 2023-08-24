@@ -13,7 +13,17 @@ class WishlistService
     public function all(): Collection
     {
         return Wishlist::with([
-            'product',
+            'product' => function($query){
+                $query->with([
+                    'categories',
+                    'sub_categories',
+                    'product_specifications',
+                    'product_images',
+                    'product_prices'=>function($q){
+                        $q->orderBy('min_quantity', 'asc');
+                    },
+                ]);
+            },
         ])->where('user_id', auth()->user()->id)->get();
     }
 
