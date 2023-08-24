@@ -33,7 +33,7 @@
                                         @include('admin.includes.input', ['key'=>'charges_in_amount', 'label'=>'Charge In Amount', 'value'=>old('charges_in_amount')])
                                     </div>
                                     <div class="col-xxl-6 col-md-6">
-                                        @include('admin.includes.input', ['key'=>'exclude_charges_for_cart_price_above', 'label'=>'Exclude Charges For Cart Price Above', 'value'=>old('exclude_charges_for_cart_price_above')])
+                                        @include('admin.includes.input', ['key'=>'include_charges_for_cart_price_below', 'label'=>'Include Charges For Cart Price Below', 'value'=>old('include_charges_for_cart_price_below')])
                                     </div>
                                     <div class="col-lg-12 col-md-12">
                                         <div class="mt-4 mt-md-0">
@@ -110,7 +110,7 @@ validation
         errorMessage: 'Charges In Amount is required',
     },
   ])
-  .addField('#exclude_charges_for_cart_price_above', [
+  .addField('#include_charges_for_cart_price_below', [
     {
         rule: 'required',
         errorMessage: 'Exclude Charges is required',
@@ -125,7 +125,7 @@ validation
         formData.append('is_active',document.getElementById('is_active').checked ? 1 : 0)
         formData.append('charges_name',document.getElementById('charges_name').value)
         formData.append('charges_slug',document.getElementById('charges_slug').value)
-        formData.append('exclude_charges_for_cart_price_above',document.getElementById('exclude_charges_for_cart_price_above').value)
+        formData.append('include_charges_for_cart_price_below',document.getElementById('include_charges_for_cart_price_below').value)
         formData.append('charges_in_amount',document.getElementById('charges_in_amount').value)
         const response = await axios.post('{{route('charge.create.post')}}', formData)
         successToast(response.data.message)
@@ -137,8 +137,8 @@ validation
         if(error?.response?.data?.errors?.charges_slug){
             validation.showErrors({'#charges_slug': error?.response?.data?.errors?.charges_slug[0]})
         }
-        if(error?.response?.data?.errors?.exclude_charges_for_cart_price_above){
-            validation.showErrors({'#exclude_charges_for_cart_price_above': error?.response?.data?.errors?.exclude_charges_for_cart_price_above[0]})
+        if(error?.response?.data?.errors?.include_charges_for_cart_price_below){
+            validation.showErrors({'#include_charges_for_cart_price_below': error?.response?.data?.errors?.include_charges_for_cart_price_below[0]})
         }
         if(error?.response?.data?.errors?.charges_in_amount){
             validation.showErrors({'#charges_in_amount': error?.response?.data?.errors?.charges_in_amount[0]})

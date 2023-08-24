@@ -25,21 +25,21 @@ class Charge extends Model
         'charges_name',
         'charges_slug',
         'charges_in_amount',
-        'exclude_charges_for_cart_price_above',
+        'include_charges_for_cart_price_below',
         'is_active'
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
         'charges_in_amount' => 'float',
-        'exclude_charges_for_cart_price_above' => 'float',
+        'include_charges_for_cart_price_below' => 'float',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
 
     protected $attributes = [
-        'charges_in_amount' => 0,
-        'exclude_charges_for_cart_price_above' => 0,
+        'charges_in_amount' => 0.0,
+        'include_charges_for_cart_price_below' => 0.0,
     ];
 
     public function user()

@@ -17,7 +17,6 @@ class TaxCollection extends JsonResource
         return [
             'id' => $this->id,
             'tax_slug' => $this->tax_slug,
-            'heading' => $this->heading,
             'tax_name' => $this->tax_name,
             'tax_in_percentage' => $this->tax_in_percentage,
             'created_at' => $this->created_at->diffForHumans(),

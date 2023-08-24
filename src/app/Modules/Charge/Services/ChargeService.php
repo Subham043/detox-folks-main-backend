@@ -23,6 +23,11 @@ class ChargeService
         return Charge::where('is_active', true)->get();
     }
 
+    public function main_exclude_all(float $cart_price): Collection
+    {
+        return Charge::where('is_active', true)->get();
+    }
+
     public function paginate(Int $total = 10): LengthAwarePaginator
     {
         $query = Charge::latest();
