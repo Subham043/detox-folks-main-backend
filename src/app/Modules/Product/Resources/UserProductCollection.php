@@ -24,7 +24,7 @@ class UserProductCollection extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'brief_description' => $this->brief_description,
-            'short_description' => str()->limit($this->brief_description, 20),
+            'short_description' => str()->limit($this->brief_description, 100),
             'description' => $this->description,
             'description_unfiltered' => $this->description_unfiltered,
             'image' => asset($this->image),

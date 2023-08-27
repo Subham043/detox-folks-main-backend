@@ -9,11 +9,13 @@ use App\Modules\Authentication\Controllers\UserLogoutController;
 use App\Modules\Authentication\Controllers\UserPasswordUpdateController;
 use App\Modules\Authentication\Controllers\UserRegisterController;
 use App\Modules\Authentication\Controllers\VerifyRegisteredUserController;
+use App\Modules\BillingAddress\Controllers\BillingAddressAllController;
 use App\Modules\BillingAddress\Controllers\BillingAddressCreateController;
 use App\Modules\BillingAddress\Controllers\BillingAddressDeleteController;
 use App\Modules\BillingAddress\Controllers\BillingAddressDetailController;
 use App\Modules\BillingAddress\Controllers\BillingAddressPaginateController;
 use App\Modules\BillingAddress\Controllers\BillingAddressUpdateController;
+use App\Modules\BillingInformation\Controllers\BillingInformationAllController;
 use App\Modules\BillingInformation\Controllers\BillingInformationCreateController;
 use App\Modules\BillingInformation\Controllers\BillingInformationDeleteController;
 use App\Modules\BillingInformation\Controllers\BillingInformationDetailController;
@@ -149,6 +151,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('/billing-address')->group(function () {
         Route::get('/', [BillingAddressPaginateController::class, 'get', 'as' => 'billing_address.paginate.get'])->name('billing_address.paginate.get');
+        Route::get('/all', [BillingAddressAllController::class, 'get', 'as' => 'billing_address.all.get'])->name('billing_address.all.get');
         Route::post('/create', [BillingAddressCreateController::class, 'post', 'as' => 'billing_address.create.get'])->name('billing_address.create.post');
         Route::post('/update/{id}', [BillingAddressUpdateController::class, 'post', 'as' => 'billing_address.update.get'])->name('billing_address.update.post');
         Route::get('/detail/{id}', [BillingAddressDetailController::class, 'get', 'as' => 'billing_address.paginate.get'])->name('billing_address.paginate.get');
@@ -157,6 +160,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('/billing-information')->group(function () {
         Route::get('/', [BillingInformationPaginateController::class, 'get', 'as' => 'billing_information.paginate.get'])->name('billing_information.paginate.get');
+        Route::get('/all', [BillingInformationAllController::class, 'get', 'as' => 'billing_information.all.get'])->name('billing_information.all.get');
         Route::post('/create', [BillingInformationCreateController::class, 'post', 'as' => 'billing_information.create.get'])->name('billing_information.create.post');
         Route::post('/update/{id}', [BillingInformationUpdateController::class, 'post', 'as' => 'billing_information.update.get'])->name('billing_information.update.post');
         Route::get('/detail/{id}', [BillingInformationDetailController::class, 'get', 'as' => 'billing_information.paginate.get'])->name('billing_information.paginate.get');

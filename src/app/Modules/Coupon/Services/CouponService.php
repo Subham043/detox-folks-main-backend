@@ -57,9 +57,7 @@ class CouponService
 
     public function main_all(): Collection
     {
-        return Cache::remember('coupon_main', 60*60*24, function(){
-            return Coupon::where('is_draft', true)->latest()->get();
-        });
+        return Coupon::where('is_draft', true)->latest()->get();
     }
 
 }

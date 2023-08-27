@@ -16,7 +16,7 @@ class BillingAddressService
 
     public function all(): Collection
     {
-        return BillingAddress::where('user_id', auth()->user()->id)->get();
+        return BillingAddress::where('user_id', auth()->user()->id)->latest()->get();
     }
 
     public function paginate(Int $total = 10): LengthAwarePaginator

@@ -1,43 +1,42 @@
 <?php
 
-namespace App\Modules\Cart\Controllers;
+namespace App\Modules\Coupon\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Cart\Resources\CartCollection;
-use App\Modules\Cart\Requests\CartUpdateRequest;
 use App\Modules\Cart\Services\CartAmountService;
 use App\Modules\Cart\Services\CartService;
 use App\Modules\Charge\Resources\UserChargeCollection;
+use App\Modules\Coupon\Requests\ApplyCouponRequest;
 use App\Modules\Coupon\Resources\CouponCollection;
 use App\Modules\Coupon\Services\AppliedCouponService;
 use App\Modules\Tax\Resources\TaxCollection;
 
-class CartUpdateController extends Controller
+class ApplyCouponController extends Controller
 {
-    private $cartService;
+    private $appliedCouponService;
 
-    public function __construct(CartService $cartService)
+    public function __construct(AppliedCouponService $appliedCouponService)
     {
-        $this->cartService = $cartService;
+        $this->appliedCouponService = $appliedCouponService;
     }
 
-    public function post(CartUpdateRequest $request, $id){
-        $cart = $this->cartService->getById($id);
+    public function post(ApplyCouponRequest $request){
+
         try {
             //code...
-            $cart = $this->cartService->update(
-                $request->validated(),
-                $cart
+            $appliedCoupon = $this->appliedCouponService->apply(
+                $request->coupon_code
             );
             return response()->json([
-                'message' => "Cart updated successfully.",
-                'cart' => CartCollection::make($this->cartService->getById($id)),
+                "message" => "Coupon applied successfully.",
+                'cart' => CartCollection::collection((new CartService)->all()),
                 'cart_subtotal' => (new CartAmountService())->get_subtotal(),
                 'tax' => TaxCollection::make((new CartAmountService())->get_tax()),
                 'total_tax' => (new CartAmountService())->get_tax_price(),
                 'cart_charges' => UserChargeCollection::collection((new CartAmountService())->get_all_charges()),
                 'total_charges' => (new CartAmountService())->get_charge_price(),
-                "coupon_applied" => !empty((new AppliedCouponService)->getCouponApplied()) ? CouponCollection::make((new AppliedCouponService)->getCouponApplied()->coupon) : null,
+                "coupon_applied" => CouponCollection::make($appliedCoupon->coupon),
                 'discount_price' => (new CartAmountService())->get_discount_price(),
                 'total_price' => (new CartAmountService())->get_total_price(),
             ], 200);
