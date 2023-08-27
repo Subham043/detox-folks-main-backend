@@ -1,0 +1,145 @@
+<?php
+
+namespace App\Modules\Order\Services;
+
+use App\Enums\OrderEnumStatus;
+use App\Enums\PaymentMode;
+use App\Enums\PaymentStatus;
+use App\Modules\BillingAddress\Models\BillingAddress;
+use App\Modules\BillingInformation\Models\BillingInformation;
+use App\Modules\Cart\Services\CartAmountService;
+use App\Modules\Cart\Services\CartService;
+use App\Modules\Coupon\Services\AppliedCouponService;
+use App\Modules\Order\Models\Order;
+use App\Modules\Order\Models\OrderCharge;
+use App\Modules\Order\Models\OrderPayment;
+use App\Modules\Order\Models\OrderProduct;
+use App\Modules\Order\Models\OrderStatus;
+use Illuminate\Database\Eloquent\Collection;
+use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Pagination\LengthAwarePaginator;
+
+class OrderService
+{
+
+    public function all(): Collection
+    {
+        return Order::with([
+            'product',
+            'charges',
+            'statuses',
+            'payment',
+        ])->where('user_id', auth()->user()->id)->get();
+    }
+
+    public function paginate(Int $total = 10): LengthAwarePaginator
+    {
+        $query = Order::with([
+            'product',
+            'charges',
+            'statuses',
+            'payment',
+        ])->where('user_id', auth()->user()->id)->latest();
+        return QueryBuilder::for($query)
+                ->paginate($total)
+                ->appends(request()->query());
+    }
+
+    public function getById(Int $id): Order|null
+    {
+        return Order::with([
+            'product',
+            'charges',
+            'statuses',
+            'payment',
+        ])->where('user_id', auth()->user()->id)->findOrFail($id);
+    }
+
+    public function place(array $data): Order
+    {
+        $billingInformation = BillingInformation::findOrFail($data['billing_information_id']);
+        $billingAddress = BillingAddress::findOrFail($data['billing_information_id']);
+        $order = Order::create([
+            'name' => $billingInformation->name,
+            'email' => $billingInformation->email,
+            'phone' => $billingInformation->phone,
+            'country' => $billingAddress->country,
+            'state' => $billingAddress->state,
+            'city' => $billingAddress->city,
+            'pin' => $billingAddress->pin,
+            'address' => $billingAddress->address,
+            'subtotal' => (new CartAmountService())->get_subtotal(),
+            'total_tax' => (new CartAmountService())->get_tax_price(),
+            'total_charges' => (new CartAmountService())->get_charge_price(),
+            'discount_price' => (new CartAmountService())->get_discount_price(),
+            'total_price' => (new CartAmountService())->get_total_price(),
+            'coupon_name' => !empty((new AppliedCouponService)->getCouponApplied()) ? (new AppliedCouponService)->getCouponApplied()->coupon->coupon_name : null,
+            'coupon_code' => !empty((new AppliedCouponService)->getCouponApplied()) ? (new AppliedCouponService)->getCouponApplied()->coupon->coupon_code : null,
+            'coupon_description' => !empty((new AppliedCouponService)->getCouponApplied()) ? (new AppliedCouponService)->getCouponApplied()->coupon->coupon_description : null,
+            'coupon_discount' => !empty((new AppliedCouponService)->getCouponApplied()) ? (new AppliedCouponService)->getCouponApplied()->coupon->coupon_discount : null,
+            'coupon_maximum_dicount_in_price' => !empty((new AppliedCouponService)->getCouponApplied()) ? (new AppliedCouponService)->getCouponApplied()->coupon->coupon_maximum_dicount_in_price : null,
+            'coupon_maximum_number_of_use' => !empty((new AppliedCouponService)->getCouponApplied()) ? (new AppliedCouponService)->getCouponApplied()->coupon->coupon_maximum_number_of_use : null,
+            'coupon_minimum_cart_value' => !empty((new AppliedCouponService)->getCouponApplied()) ? (new AppliedCouponService)->getCouponApplied()->coupon->coupon_minimum_cart_value : null,
+            'tax_slug' => (new CartAmountService())->get_tax()->tax_slug,
+            'tax_name' => (new CartAmountService())->get_tax()->tax_name,
+            'tax_in_percentage' => (new CartAmountService())->get_tax()->tax_in_percentage,
+        ]);
+        $order->user_id = auth()->user()->id;
+        $order->save();
+        $carts = (new CartService)->all();
+        foreach ($carts as $cart) {
+            # code...
+            OrderProduct::create([
+                'name' => $cart->product->name,
+                'slug' => $cart->product->slug,
+                'brief_description' => $cart->product->brief_description,
+                'image' => $cart->product->image,
+                'min_quantity' => $cart->product_price->min_quantity,
+                'price' => $cart->product_price->price,
+                'discount' => $cart->product_price->discount,
+                'discount_in_price' => $cart->product_price->discount_in_price,
+                'quantity' => $cart->quantity,
+                'amount' => $cart->amount,
+                'order_id' => $order->id,
+            ]);
+        }
+        $charges = (new CartAmountService())->get_all_charges();
+        foreach ($charges as $charge) {
+            # code...
+            OrderCharge::create([
+                'charges_name' => $charge->charges_name,
+                'charges_slug' => $charge->charges_slug,
+                'charges_in_amount' => $charge->charges_in_amount,
+                'include_charges_for_cart_price_below' => $charge->include_charges_for_cart_price_below,
+                'order_id' => $order->id,
+            ]);
+        }
+        OrderPayment::create([
+            'mode' => PaymentMode::COD->value,
+            'status' => PaymentStatus::PENDING->value,
+            'order_id' => $order->id,
+        ]);
+        OrderStatus::create([
+            'status' => OrderEnumStatus::PROCESSING->value,
+            'order_id' => $order->id,
+        ]);
+        return Order::with([
+            'product',
+            'charges',
+            'statuses',
+            'payment',
+        ])->where('user_id', auth()->user()->id)->findOrFail($order->id);
+    }
+
+    public function update(array $data, Order $order): Order
+    {
+        $order->update($data);
+        return $order;
+    }
+
+    public function delete(Order $order): bool|null
+    {
+        return $order->delete();
+    }
+
+}

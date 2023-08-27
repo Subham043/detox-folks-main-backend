@@ -20,7 +20,7 @@ class RemoveCouponController extends Controller
         $this->appliedCouponService = $appliedCouponService;
     }
 
-    public function post(){
+    public function delete(){
 
         try {
             //code...

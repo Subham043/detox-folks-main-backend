@@ -32,11 +32,18 @@ use App\Modules\Cart\Controllers\CartUpdateController;
 use App\Modules\Category\Controllers\UserCategoryDetailController;
 use App\Modules\Category\Controllers\UserCategoryPaginateController;
 use App\Modules\Counter\Controllers\UserCounterAllController;
+use App\Modules\Coupon\Controllers\ApplyCouponController;
+use App\Modules\Coupon\Controllers\RemoveCouponController;
 use App\Modules\Enquiry\ContactForm\Controllers\ContactFormCreateController;
 use App\Modules\Feature\Controllers\UserFeatureAllController;
 use App\Modules\HomePage\Banner\Controllers\UserBannerAllController;
 use App\Modules\Legal\Controllers\UserLegalAllController;
 use App\Modules\Legal\Controllers\UserLegalDetailController;
+use App\Modules\Order\Controllers\OrderAllController;
+use App\Modules\Order\Controllers\OrderDeleteController;
+use App\Modules\Order\Controllers\OrderDetailController;
+use App\Modules\Order\Controllers\OrderPaginateController;
+use App\Modules\Order\Controllers\PlaceOrderController;
 use App\Modules\Partner\Controllers\UserPartnerAllController;
 use App\Modules\Product\Controllers\UserProductDetailController;
 use App\Modules\Product\Controllers\UserProductPaginateController;
@@ -183,6 +190,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/update/{id}', [CartUpdateController::class, 'post', 'as' => 'cart.update.get'])->name('cart.update.post');
         Route::get('/detail/{id}', [CartDetailController::class, 'get', 'as' => 'cart.paginate.get'])->name('cart.paginate.get');
         Route::delete('/delete/{id}', [CartDeleteController::class, 'delete', 'as' => 'cart.delete.get'])->name('cart.delete.get');
+    });
+
+    Route::prefix('/order')->group(function () {
+        Route::get('/', [OrderPaginateController::class, 'get', 'as' => 'order.paginate.get'])->name('order.paginate.get');
+        Route::get('/all', [OrderAllController::class, 'get', 'as' => 'order.all.get'])->name('order.all.get');
+        Route::post('/place', [PlaceOrderController::class, 'post', 'as' => 'order.place.get'])->name('order.place.post');
+        Route::get('/detail/{id}', [OrderDetailController::class, 'get', 'as' => 'order.paginate.get'])->name('order.paginate.get');
+        Route::delete('/delete/{id}', [OrderDeleteController::class, 'delete', 'as' => 'order.delete.get'])->name('order.delete.get');
+    });
+
+    Route::prefix('/coupon')->group(function () {
+        Route::post('/apply', [ApplyCouponController::class, 'post', 'as' => 'coupon.apply'])->name('coupon.apply');
+        Route::delete('/remove', [RemoveCouponController::class, 'delete', 'as' => 'coupon.remove'])->name('coupon.remove');
     });
 
     Route::post('/auth/logout', [UserLogoutController::class, 'post', 'as' => 'logout'])->name('user.logout');
