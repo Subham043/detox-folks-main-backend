@@ -10,6 +10,7 @@
         @include('admin.includes.breadcrumb', ['page'=>'Order', 'page_link'=>route('order_admin.paginate.get'), 'list'=>['Detail']])
 
         <div class="row project-wrapper">
+            @include('admin.includes.back_button', ['link'=>route('order_admin.paginate.get')])
             <div class="col-xxl-12">
 
                 <div class="row">
@@ -145,7 +146,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="flex-grow-1 ms-3">
-                                                            <h6 class="fs-15 mb-0 fw-semibold">PROCESSING @if((in_array(\App\Enums\OrderEnumStatus::PROCESSING, $order_statuses)))- @foreach($order->statuses as $v) @if(\App\Enums\OrderEnumStatus::PROCESSING==$v->status)<span class="fw-normal">{{$order->created_at->diffForHumans()}}</span>@endif @endforeach @endif</h6>
+                                                            <h6 class="fs-15 mb-0 fw-semibold">PROCESSING @if((in_array(\App\Enums\OrderEnumStatus::PROCESSING, $order_statuses)))- @foreach($order->statuses as $v) @if(\App\Enums\OrderEnumStatus::PROCESSING==$v->status)<span class="fw-normal">{{$v->created_at->diffForHumans()}}</span>@endif @endforeach @endif</h6>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -167,7 +168,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="flex-grow-1 ms-3">
-                                                            <h6 class="fs-15 mb-1 fw-semibold">CONFIRMED @if((in_array(\App\Enums\OrderEnumStatus::CONFIRMED, $order_statuses)))- @foreach($order->statuses as $v) @if(\App\Enums\OrderEnumStatus::CONFIRMED==$v->status)<span class="fw-normal">{{$order->created_at->diffForHumans()}}</span>@endif @endforeach @endif</h6>
+                                                            <h6 class="fs-15 mb-1 fw-semibold">CONFIRMED @if((in_array(\App\Enums\OrderEnumStatus::CONFIRMED, $order_statuses)))- @foreach($order->statuses as $v) @if(\App\Enums\OrderEnumStatus::CONFIRMED==$v->status)<span class="fw-normal">{{$v->created_at->diffForHumans()}}</span>@endif @endforeach @endif</h6>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -187,7 +188,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="flex-grow-1 ms-3">
-                                                            <h6 class="fs-15 mb-1 fw-semibold">OUT FOR DELIVERY @if((in_array(\App\Enums\OrderEnumStatus::OFD, $order_statuses)))- @foreach($order->statuses as $v) @if(\App\Enums\OrderEnumStatus::OFD==$v->status)<span class="fw-normal">{{$order->created_at->diffForHumans()}}</span>@endif @endforeach @endif</h6>
+                                                            <h6 class="fs-15 mb-1 fw-semibold">OUT FOR DELIVERY @if((in_array(\App\Enums\OrderEnumStatus::OFD, $order_statuses)))- @foreach($order->statuses as $v) @if(\App\Enums\OrderEnumStatus::OFD==$v->status)<span class="fw-normal">{{$v->created_at->diffForHumans()}}</span>@endif @endforeach @endif</h6>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -207,7 +208,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="flex-grow-1 ms-3">
-                                                            <h6 class="fs-14 mb-0 fw-semibold">DELIVERED @if((in_array(\App\Enums\OrderEnumStatus::DELIVERED, $order_statuses)))- @foreach($order->statuses as $v) @if(\App\Enums\OrderEnumStatus::DELIVERED==$v->status)<span class="fw-normal">{{$order->created_at->diffForHumans()}}</span>@endif @endforeach @endif</h6>
+                                                            <h6 class="fs-14 mb-0 fw-semibold">DELIVERED @if((in_array(\App\Enums\OrderEnumStatus::DELIVERED, $order_statuses)))- @foreach($order->statuses as $v) @if(\App\Enums\OrderEnumStatus::DELIVERED==$v->status)<span class="fw-normal">{{$v->created_at->diffForHumans()}}</span>@endif @endforeach @endif</h6>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -228,7 +229,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="flex-grow-1 ms-3">
-                                                            <h6 class="fs-15 mb-1 fw-semibold">CANCELLED @if(!(in_array(\App\Enums\OrderEnumStatus::CANCELLED, $order_statuses)))- @foreach($order->statuses as $v) @if(\App\Enums\OrderEnumStatus::DELIVERED==$v->status)<span class="fw-normal">{{$order->created_at->diffForHumans()}}</span>@endif @endforeach @endif</h6>
+                                                            <h6 class="fs-15 mb-1 fw-semibold">CANCELLED @if(!(in_array(\App\Enums\OrderEnumStatus::CANCELLED, $order_statuses)))- @foreach($order->statuses as $v) @if(\App\Enums\OrderEnumStatus::DELIVERED==$v->status)<span class="fw-normal">{{$v->created_at->diffForHumans()}}</span>@endif @endforeach @endif</h6>
                                                         </div>
                                                     </div>
                                                 </a>
