@@ -17,7 +17,6 @@ class PlaceOrderController extends Controller
     }
 
     public function post(PlaceOrderRequest $request){
-
         try {
             //code...
             $order = $this->orderService->place(
@@ -28,6 +27,7 @@ class PlaceOrderController extends Controller
                 'order' => OrderCollection::make($order),
             ], 201);
         } catch (\Throwable $th) {
+            throw $th;
             return response()->json(["message" => "Something went wrong. Please try again"], 400);
         }
 

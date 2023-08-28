@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('order_charges', function (Blueprint $table) {
             $table->id();
-            $table->string('charges_slug', 500);
-            $table->string('charges_name', 500);
+            $table->string('charges_slug', 500)->nullable();
+            $table->string('charges_name', 500)->nullable();
             $table->string('charges_in_amount', 500)->default(0)->nullable();
             $table->string('include_charges_for_cart_price_below', 500)->default(0)->nullable();
             $table->foreignId('order_id')->nullable()->constrained('orders')->nullOnDelete();

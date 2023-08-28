@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('order_products', function (Blueprint $table) {
             $table->id();
             $table->string('name', 500);
-            $table->string('slug', 500)->unique();
+            $table->string('slug', 500);
             $table->text('brief_description')->nullable();
             $table->string('image', 500)->nullable();
             $table->string('min_quantity', 500);

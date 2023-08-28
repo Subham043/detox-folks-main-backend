@@ -7,6 +7,7 @@ use App\Enums\PaymentMode;
 use App\Enums\PaymentStatus;
 use App\Modules\BillingAddress\Models\BillingAddress;
 use App\Modules\BillingInformation\Models\BillingInformation;
+use App\Modules\Cart\Models\Cart;
 use App\Modules\Cart\Services\CartAmountService;
 use App\Modules\Cart\Services\CartService;
 use App\Modules\Coupon\Services\AppliedCouponService;
@@ -25,7 +26,7 @@ class OrderService
     public function all(): Collection
     {
         return Order::with([
-            'product',
+            'products',
             'charges',
             'statuses',
             'payment',
@@ -35,7 +36,7 @@ class OrderService
     public function paginate(Int $total = 10): LengthAwarePaginator
     {
         $query = Order::with([
-            'product',
+            'products',
             'charges',
             'statuses',
             'payment',
@@ -48,7 +49,7 @@ class OrderService
     public function getById(Int $id): Order|null
     {
         return Order::with([
-            'product',
+            'products',
             'charges',
             'statuses',
             'payment',
@@ -58,7 +59,7 @@ class OrderService
     public function place(array $data): Order
     {
         $billingInformation = BillingInformation::findOrFail($data['billing_information_id']);
-        $billingAddress = BillingAddress::findOrFail($data['billing_information_id']);
+        $billingAddress = BillingAddress::findOrFail($data['billing_address_id']);
         $order = Order::create([
             'name' => $billingInformation->name,
             'email' => $billingInformation->email,
@@ -123,8 +124,9 @@ class OrderService
             'status' => OrderEnumStatus::PROCESSING->value,
             'order_id' => $order->id,
         ]);
+        Cart::where('user_id', auth()->user()->id)->delete();
         return Order::with([
-            'product',
+            'products',
             'charges',
             'statuses',
             'payment',
