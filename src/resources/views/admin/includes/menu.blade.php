@@ -159,6 +159,14 @@
                             </li>
                             @endcan
 
+                            @can('list orders')
+                            <li class="nav-item">
+                                <a class="nav-link menu-link {{strpos(url()->current(),route('order_admin.paginate.get')) !== false ? 'active' : ''}}" href="{{route('order_admin.paginate.get')}}">
+                                    <i class="bx bx-shopping-bag"></i> <span data-key="t-widgets">Orders</span>
+                                </a>
+                            </li>
+                            @endcan
+
                             @can('list features')
                             <li class="nav-item">
                                 <a class="nav-link menu-link {{strpos(url()->current(),route('feature.paginate.get')) !== false ? 'active' : ''}}" href="{{route('feature.paginate.get')}}">

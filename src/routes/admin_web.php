@@ -63,6 +63,11 @@ use App\Modules\HomePage\Banner\Controllers\BannerCreateController;
 use App\Modules\HomePage\Banner\Controllers\BannerDeleteController;
 use App\Modules\HomePage\Banner\Controllers\BannerPaginateController;
 use App\Modules\HomePage\Banner\Controllers\BannerUpdateController;
+use App\Modules\Order\Controllers\OrderAdminCancelController;
+use App\Modules\Order\Controllers\OrderAdminDetailController;
+use App\Modules\Order\Controllers\OrderAdminPaginateController;
+use App\Modules\Order\Controllers\OrderAdminPaymentController;
+use App\Modules\Order\Controllers\OrderAdminStatusController;
 use App\Modules\Product\Controllers\ProductCreateController;
 use App\Modules\Product\Controllers\ProductDeleteController;
 use App\Modules\Product\Controllers\ProductPaginateController;
@@ -308,6 +313,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/update/{id}', [ChargeUpdateController::class, 'get', 'as' => 'charge.update.get'])->name('charge.update.get');
         Route::post('/update/{id}', [ChargeUpdateController::class, 'post', 'as' => 'charge.update.post'])->name('charge.update.post');
         Route::get('/delete/{id}', [ChargeDeleteController::class, 'get', 'as' => 'charge.delete.get'])->name('charge.delete.get');
+    });
+
+    Route::prefix('/order')->group(function () {
+        Route::get('/', [OrderAdminPaginateController::class, 'get', 'as' => 'order_admin.paginate.get'])->name('order_admin.paginate.get');
+        Route::get('/detail/{id}', [OrderAdminDetailController::class, 'get', 'as' => 'order_admin.detail.get'])->name('order_admin.detail.get');
+        Route::get('/update-status/{id}', [OrderAdminStatusController::class, 'get', 'as' => 'order_admin.update_order_status.get'])->name('order_admin.update_order_status.get');
+        Route::get('/cancel/{id}', [OrderAdminCancelController::class, 'get', 'as' => 'order_admin.cancel.get'])->name('order_admin.cancel.get');
+        Route::get('/payment-update/{id}', [OrderAdminPaymentController::class, 'get', 'as' => 'order_admin.payment_update.get'])->name('order_admin.payment_update.get');
     });
 
     Route::prefix('/seo')->group(function () {

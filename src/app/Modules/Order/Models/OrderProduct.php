@@ -4,6 +4,7 @@ namespace App\Modules\Order\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class OrderProduct extends Model
 {
@@ -40,6 +41,22 @@ class OrderProduct extends Model
         'quantity' => 'float',
         'amount' => 'float',
     ];
+
+    protected $appends = ['image_link', 'short_description'];
+
+    protected function imageLink(): Attribute
+    {
+        return new Attribute(
+            get: fn () => asset($this->image),
+        );
+    }
+
+    protected function shortDescription(): Attribute
+    {
+        return new Attribute(
+            get: fn () => str()->limit($this->brief_description, 100),
+        );
+    }
 
     public function order()
     {

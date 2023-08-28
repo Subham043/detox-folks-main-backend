@@ -10,6 +10,7 @@ use App\Modules\BillingInformation\Models\BillingInformation;
 use App\Modules\Cart\Models\Cart;
 use App\Modules\Cart\Services\CartAmountService;
 use App\Modules\Cart\Services\CartService;
+use App\Modules\Coupon\Models\AppliedCoupon;
 use App\Modules\Coupon\Services\AppliedCouponService;
 use App\Modules\Order\Models\Order;
 use App\Modules\Order\Models\OrderCharge;
@@ -19,6 +20,9 @@ use App\Modules\Order\Models\OrderStatus;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 
 class OrderService
 {
@@ -46,6 +50,39 @@ class OrderService
                 ->appends(request()->query());
     }
 
+    public function paginate_admin(Int $total = 10): LengthAwarePaginator
+    {
+        $query = Order::with([
+            'products',
+            'charges',
+            'statuses',
+            'payment',
+        ]);
+        return QueryBuilder::for($query)
+        ->allowedIncludes(['products', 'charges', 'statuses', 'payment'])
+                ->defaultSort('-id')
+                ->allowedSorts('id', 'total_price')
+                ->allowedFilters([
+                    AllowedFilter::callback('has_status', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('statuses', function($q) use($value) {
+                                $q->where('status', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::callback('has_payment_status', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('payment', function($q) use($value) {
+                                $q->where('status', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::custom('search', new CommonFilter),
+                ])
+                ->paginate($total)
+                ->appends(request()->query());
+    }
+
     public function getById(Int $id): Order|null
     {
         return Order::with([
@@ -54,6 +91,16 @@ class OrderService
             'statuses',
             'payment',
         ])->where('user_id', auth()->user()->id)->findOrFail($id);
+    }
+
+    public function getByIdAdmin(Int $id): Order|null
+    {
+        return Order::with([
+            'products',
+            'charges',
+            'statuses',
+            'payment',
+        ])->findOrFail($id);
     }
 
     public function place(array $data): Order
@@ -125,6 +172,7 @@ class OrderService
             'order_id' => $order->id,
         ]);
         Cart::where('user_id', auth()->user()->id)->delete();
+        AppliedCoupon::where('user_id', auth()->user()->id)->delete();
         return Order::with([
             'products',
             'charges',
@@ -144,4 +192,19 @@ class OrderService
         return $order->delete();
     }
 
+}
+
+class CommonFilter implements Filter
+{
+    public function __invoke(Builder $query, $value, string $property)
+    {
+        $query->where('name', 'LIKE', '%' . $value . '%')
+        ->orWhere('id', 'LIKE', '%' . $value . '%')
+        ->orWhere('email', 'LIKE', '%' . $value . '%')
+        ->orWhere('phone', 'LIKE', '%' . $value . '%')
+        ->orWhere('total_price', 'LIKE', '%' . $value . '%')
+        ->whereHas('products', function($q) use($value) {
+            $q->where('name', 'LIKE', '%' . $value . '%');
+        });
+    }
 }
