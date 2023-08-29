@@ -3,7 +3,7 @@
 namespace App\Modules\Cart\Services;
 
 use App\Modules\Cart\Models\Cart;
-use App\Modules\COupon\Models\AppliedCoupon;
+use App\Modules\Coupon\Models\AppliedCoupon;
 use App\Modules\Charge\Services\ChargeService;
 use App\Modules\Tax\Services\TaxService;
 use Illuminate\Support\Facades\Auth;
