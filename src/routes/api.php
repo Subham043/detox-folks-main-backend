@@ -162,7 +162,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/all', [BillingAddressAllController::class, 'get', 'as' => 'billing_address.all.get'])->name('billing_address.all.get');
         Route::post('/create', [BillingAddressCreateController::class, 'post', 'as' => 'billing_address.create.get'])->name('billing_address.create.post');
         Route::post('/update/{id}', [BillingAddressUpdateController::class, 'post', 'as' => 'billing_address.update.get'])->name('billing_address.update.post');
-        Route::get('/detail/{id}', [BillingAddressDetailController::class, 'get', 'as' => 'billing_address.delete.get'])->name('billing_address.delete.get');
+        Route::get('/detail/{id}', [BillingAddressDetailController::class, 'get', 'as' => 'billing_address.detail.get'])->name('billing_address.detail.get');
         Route::delete('/delete/{id}', [BillingAddressDeleteController::class, 'delete', 'as' => 'billing_address.delete.get'])->name('billing_address.delete.get');
     });
 
