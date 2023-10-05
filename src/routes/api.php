@@ -171,7 +171,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/all', [BillingInformationAllController::class, 'get', 'as' => 'billing_information.all.get'])->name('billing_information.all.get');
         Route::post('/create', [BillingInformationCreateController::class, 'post', 'as' => 'billing_information.create.get'])->name('billing_information.create.post');
         Route::post('/update/{id}', [BillingInformationUpdateController::class, 'post', 'as' => 'billing_information.update.get'])->name('billing_information.update.post');
-        Route::get('/detail/{id}', [BillingInformationDetailController::class, 'get', 'as' => 'billing_information.paginate.get'])->name('billing_information.paginate.get');
+        Route::get('/detail/{id}', [BillingInformationDetailController::class, 'get', 'as' => 'billing_information.detail.get'])->name('billing_information.detail.get');
         Route::delete('/delete/{id}', [BillingInformationDeleteController::class, 'delete', 'as' => 'billing_information.delete.get'])->name('billing_information.delete.get');
     });
 
@@ -180,7 +180,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/all', [WishlistAllController::class, 'get', 'as' => 'wishlist.all.get'])->name('wishlist.all.get');
         Route::post('/create', [WishlistCreateController::class, 'post', 'as' => 'wishlist.create.get'])->name('wishlist.create.post');
         Route::post('/update/{id}', [WishlistUpdateController::class, 'post', 'as' => 'wishlist.update.get'])->name('wishlist.update.post');
-        Route::get('/detail/{id}', [WishlistDetailController::class, 'get', 'as' => 'wishlist.paginate.get'])->name('wishlist.paginate.get');
+        Route::get('/detail/{id}', [WishlistDetailController::class, 'get', 'as' => 'wishlist.detail.get'])->name('wishlist.detail.get');
         Route::delete('/delete/{id}', [WishlistDeleteController::class, 'delete', 'as' => 'wishlist.delete.get'])->name('wishlist.delete.get');
     });
 
@@ -189,7 +189,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/all', [CartAllController::class, 'get', 'as' => 'cart.all.get'])->name('cart.all.get');
         Route::post('/create', [CartCreateController::class, 'post', 'as' => 'cart.create.get'])->name('cart.create.post');
         Route::post('/update/{id}', [CartUpdateController::class, 'post', 'as' => 'cart.update.get'])->name('cart.update.post');
-        Route::get('/detail/{id}', [CartDetailController::class, 'get', 'as' => 'cart.paginate.get'])->name('cart.paginate.get');
+        Route::get('/detail/{id}', [CartDetailController::class, 'get', 'as' => 'cart.detail.get'])->name('cart.detail.get');
         Route::delete('/delete/{id}', [CartDeleteController::class, 'delete', 'as' => 'cart.delete.get'])->name('cart.delete.get');
     });
 
@@ -197,7 +197,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/', [OrderPaginateController::class, 'get', 'as' => 'order.paginate.get'])->name('order.paginate.get');
         Route::get('/all', [OrderAllController::class, 'get', 'as' => 'order.all.get'])->name('order.all.get');
         Route::post('/place', [PlaceOrderController::class, 'post', 'as' => 'order.place.get'])->name('order.place.post');
-        Route::get('/detail/{id}', [OrderDetailController::class, 'get', 'as' => 'order.paginate.get'])->name('order.paginate.get');
+        Route::get('/detail/{id}', [OrderDetailController::class, 'get', 'as' => 'order.detail.get'])->name('order.detail.get');
         Route::delete('/delete/{id}', [OrderDeleteController::class, 'delete', 'as' => 'order.delete.get'])->name('order.delete.get');
     });
 
