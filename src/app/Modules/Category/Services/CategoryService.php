@@ -36,8 +36,11 @@ class CategoryService
             'sub_categories' => function($q) {
                 $q->where('is_draft', true);
             }
-        ])->where('is_draft', true)->latest();
+        ])->where('is_draft', true);
         return QueryBuilder::for($query)
+                ->allowedIncludes(['sub_categories'])
+                ->defaultSort('-id')
+                ->allowedSorts('id', 'name')
                 ->allowedFilters([
                     AllowedFilter::custom('search', new CommonFilter),
                 ])
