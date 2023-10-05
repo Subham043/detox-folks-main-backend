@@ -31,7 +31,7 @@ class WishlistCreateRequest extends FormRequest
                 'required',
                 'numeric',
                 'exists:products,id',
-                'unique:wishlists'
+                // 'unique:wishlists'
             ],
         ];
     }

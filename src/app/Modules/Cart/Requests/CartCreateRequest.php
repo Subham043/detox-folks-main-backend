@@ -31,13 +31,13 @@ class CartCreateRequest extends FormRequest
                 'required',
                 'numeric',
                 'exists:products,id',
-                'unique:carts'
+                // 'unique:carts'
             ],
             'product_price_id' => [
                 'required',
                 'numeric',
                 'exists:product_prices,id',
-                'unique:carts'
+                // 'unique:carts'
             ],
             'amount' => [
                 'required',

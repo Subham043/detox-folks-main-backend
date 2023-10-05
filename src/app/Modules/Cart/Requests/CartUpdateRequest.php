@@ -31,13 +31,13 @@ class CartUpdateRequest extends FormRequest
                 'required',
                 'numeric',
                 'exists:products,id',
-                'unique:carts,product_id,'.$this->route('id')
+                // 'unique:carts,product_id,'.$this->route('id')
             ],
             'product_price_id' => [
                 'required',
                 'numeric',
                 'exists:product_prices,id',
-                'unique:carts,product_price_id,'.$this->route('id')
+                // 'unique:carts,product_price_id,'.$this->route('id')
             ],
             'amount' => [
                 'required',
