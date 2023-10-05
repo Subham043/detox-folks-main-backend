@@ -65,6 +65,11 @@ class ProductService
                             });
                         });
                     }),
+                    AllowedFilter::callback('is_random', function (Builder $query, $value) {
+                        if($value && $value==true){
+                            $query->inRandomOrder();
+                        }
+                    }),
                     AllowedFilter::custom('search', new CommonFilter),
                 ])
                 ->paginate($total)

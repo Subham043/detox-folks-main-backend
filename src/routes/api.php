@@ -8,6 +8,7 @@ use App\Modules\Authentication\Controllers\UserLoginController;
 use App\Modules\Authentication\Controllers\UserLogoutController;
 use App\Modules\Authentication\Controllers\UserPasswordUpdateController;
 use App\Modules\Authentication\Controllers\UserRegisterController;
+use App\Modules\Authentication\Controllers\UserResetPasswordController;
 use App\Modules\Authentication\Controllers\VerifyRegisteredUserController;
 use App\Modules\BillingAddress\Controllers\BillingAddressAllController;
 use App\Modules\BillingAddress\Controllers\BillingAddressCreateController;
@@ -80,11 +81,11 @@ Route::prefix('auth')->group(function () {
     Route::post('/login', [UserLoginController::class, 'post'])->name('user.login');
     Route::post('/register', [UserRegisterController::class, 'post'])->name('user.register');
     Route::post('/forgot-password', [UserForgotPasswordController::class, 'post'])->name('user.forgot_password');
+    Route::post('/reset-password/{token}', [UserResetPasswordController::class, 'post', 'as' => 'reset_password.post'])->name('user.reset_password');
 });
 
 Route::prefix('/email/verify')->group(function () {
     Route::post('/resend-notification', [VerifyRegisteredUserController::class, 'resend_notification', 'as' => 'resend_notification'])->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
-    Route::get('/{id}/{hash}', [VerifyRegisteredUserController::class, 'verify_email', 'as' => 'verify_email'])->middleware(['signed'])->name('verification.verify');
 });
 
 Route::prefix('contact-form')->group(function () {

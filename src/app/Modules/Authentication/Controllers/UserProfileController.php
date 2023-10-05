@@ -28,17 +28,21 @@ class UserProfileController extends Controller
 
     public function post(UserProfilePostRequest $request){
 
+        $email_status = false;
         try {
             //code...
             $user = $this->authService->authenticated_user();
-            $this->userService->update(
+            if($user->email != $request->email) {
+                $email_status = true;
+            }
+            $updated_user = $this->userService->update(
                 $request->validated(),
                 $user
             );
-            if ($request->user()->isDirty('email')) {
-                $request->user()->email_verified_at = null;
-                $request->user()->sendEmailVerificationNotification();
-                $request->user()->save();
+            if ($email_status) {
+                $updated_user->email_verified_at = null;
+                $updated_user->save();
+                $updated_user->sendEmailVerificationNotification();
             }
 
             (new RateLimitService($request))->clearRateLimit();
