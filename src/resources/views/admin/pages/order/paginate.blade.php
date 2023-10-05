@@ -21,7 +21,7 @@
                     <div class="card-body border border-dashed border-end-0 border-start-0">
                         <form action="{{route('order_admin.paginate.get')}}" method="GET">
                             <div class="row g-1 align-items-end justify-content-start">
-                                <div class="col-xxl-4 col-sm-12">
+                                <div class="col-xxl-4 col-lg-4 col-sm-12">
                                     <label class="form-label" for="">Search</label>
                                     <div class="search-box">
                                         <input type="text" class="form-control search" name="filter[search]" placeholder="Search for anything..." value="{{$search}}">
@@ -29,7 +29,7 @@
                                     </div>
                                 </div>
                                 <!--end col-->
-                                <div class="col-xxl-2 col-sm-12">
+                                <div class="col-xxl-2 col-lg-2 col-sm-12">
                                     <label class="form-label" for="">Payment Status</label>
                                     <div>
                                         <select class="form-control" name="filter[has_payment_status]" id="has_payment_status">
@@ -41,7 +41,7 @@
                                     </div>
                                 </div>
                                 <!--end col-->
-                                <div class="col-xxl-2 col-sm-12">
+                                <div class="col-xxl-2 col-lg-2 col-sm-12">
                                     <label class="form-label" for="">Order Status</label>
                                     <div>
                                         <select class="form-control" name="filter[has_status]" id="has_status">
@@ -52,7 +52,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-xxl-2 col-sm-12">
+                                <div class="col-xxl-2 col-lg-2 col-sm-12">
                                     <label class="form-label" for="">Sort</label>
                                     <div>
                                         <select class="form-control" name="sort" id="sort">
@@ -64,7 +64,7 @@
                                     </div>
                                 </div>
                                 <!--end col-->
-                                <div class="col-xxl-2 col-sm-12 mt-3">
+                                <div class="col-xxl-2 col-lg-2 col-sm-12 mt-3">
                                     <div>
                                         <button type="submit" class="btn btn-primary w-100">
                                             Filter
