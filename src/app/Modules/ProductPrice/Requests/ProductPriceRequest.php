@@ -28,7 +28,7 @@ class ProductPriceRequest extends FormRequest
     {
         return [
             'min_quantity' => 'required|numeric|gt:1',
-            'price' => 'required|numeric|gt:1',
+            'price' => 'required|numeric|gt:0',
             'discount' => 'required|numeric|gte:0',
         ];
     }
