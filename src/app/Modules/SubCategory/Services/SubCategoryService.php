@@ -35,6 +35,13 @@ class SubCategoryService
         $query = SubCategory::where('is_draft', true)->latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
+                    AllowedFilter::callback('has_categories', function (Builder $query, $value) {
+                        $query->whereHas('categories', function($q) use($value) {
+                            $q->where('is_draft', true)->where(function($qr) use($value){
+                                $qr->where('category_id', $value);
+                            });
+                        });
+                    }),
                     AllowedFilter::custom('search', new CommonFilter),
                 ])
                 ->paginate($total)
