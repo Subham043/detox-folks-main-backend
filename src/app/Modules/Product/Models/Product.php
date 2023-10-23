@@ -39,6 +39,7 @@ class Product extends Model implements Sitemapable
         'is_on_sale',
         'is_featured',
         'min_cart_quantity',
+        'cart_quantity_specification',
         'cart_quantity_interval',
         'meta_title',
         'meta_description',

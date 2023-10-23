@@ -32,6 +32,7 @@ class UserProductCollection extends JsonResource
             'is_new' => $this->is_new,
             'is_featured' => $this->is_featured,
             'is_on_sale' => $this->is_on_sale,
+            'cart_quantity_specification' => $this->cart_quantity_specification,
             'min_cart_quantity' => $this->min_cart_quantity,
             'cart_quantity_interval' => $this->cart_quantity_interval,
             'meta_title' => $this->meta_title,

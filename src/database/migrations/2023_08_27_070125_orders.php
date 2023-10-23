@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name', 255)->nullable();
             $table->string('email', 255)->nullable();
             $table->string('phone', 255)->nullable();
+            $table->string('gst', 255)->nullable();
             $table->string('country', 255)->nullable();
             $table->string('state', 255)->nullable();
             $table->string('city', 255)->nullable();
@@ -37,7 +38,7 @@ return new class extends Migration
             $table->string('discount_price', 500)->default(0)->nullable();
             $table->string('total_price', 500)->default(0)->nullable();
             $table->boolean('accept_terms')->default(0);
-            $table->boolean('incluce_gst')->default(0);
+            $table->boolean('include_gst')->default(0);
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });

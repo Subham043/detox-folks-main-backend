@@ -103,11 +103,14 @@
                         <div class="card-body">
                             <div class="live-preview">
                                 <div class="row gy-4">
-                                    <div class="col-xxl-6 col-md-6">
+                                    <div class="col-xxl-4 col-md-4">
                                         @include('admin.includes.input', ['key'=>'min_cart_quantity', 'label'=>'Minimum Cart Quantity', 'value'=>old('min_cart_quantity')])
                                     </div>
-                                    <div class="col-xxl-6 col-md-6">
+                                    <div class="col-xxl-4 col-md-4">
                                         @include('admin.includes.input', ['key'=>'cart_quantity_interval', 'label'=>'Cart Quantity Interval', 'value'=>old('cart_quantity_interval')])
+                                    </div>
+                                    <div class="col-xxl-4 col-md-4">
+                                        @include('admin.includes.input', ['key'=>'cart_quantity_specification', 'label'=>'Cart Quantity Specification', 'value'=>old('cart_quantity_specification')])
                                     </div>
 
                                 </div>
@@ -274,6 +277,12 @@ validation
         errorMessage: 'Cart quantity interval is required',
     },
   ])
+  .addField('#cart_quantity_specification', [
+    {
+        rule: 'required',
+        errorMessage: 'Cart quantity specification is required',
+    },
+  ])
   .addField('#category', [
     {
         rule: 'required',
@@ -335,6 +344,7 @@ validation
         formData.append('slug',document.getElementById('slug').value)
         formData.append('min_cart_quantity',document.getElementById('min_cart_quantity').value)
         formData.append('cart_quantity_interval',document.getElementById('cart_quantity_interval').value)
+        formData.append('cart_quantity_specification',document.getElementById('cart_quantity_specification').value)
         formData.append('brief_description',document.getElementById('brief_description').value)
         formData.append('description',quillDescription.root.innerHTML)
         formData.append('description_unfiltered',quillDescription.getText())
@@ -395,6 +405,9 @@ validation
         }
         if(error?.response?.data?.errors?.cart_quantity_interval){
             validation.showErrors({'#cart_quantity_interval': error?.response?.data?.errors?.cart_quantity_interval[0]})
+        }
+        if(error?.response?.data?.errors?.cart_quantity_specification){
+            validation.showErrors({'#cart_quantity_specification': error?.response?.data?.errors?.cart_quantity_specification[0]})
         }
         if(error?.response?.data?.message){
             errorToast(error?.response?.data?.message)

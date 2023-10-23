@@ -40,7 +40,7 @@ class PlaceOrderRequest extends FormRequest
                 'exists:billing_addresses,id',
             ],
             'mode_of_payment' => ['required', new Enum(PaymentMode::class)],
-            'incluce_gst' => ['required', 'boolean'],
+            'include_gst' => ['required', 'boolean'],
             'accept_terms' => ['required', 'accepted'],
         ];
     }

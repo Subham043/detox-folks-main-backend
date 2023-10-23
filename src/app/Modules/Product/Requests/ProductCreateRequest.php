@@ -37,6 +37,7 @@ class ProductCreateRequest extends FormRequest
             'is_featured' => 'required|boolean',
             'is_new' => 'required|boolean',
             'is_on_sale' => 'required|boolean',
+            'cart_quantity_specification' => 'required|string',
             'min_cart_quantity' => 'required|numeric|gt:0',
             'cart_quantity_interval' => 'required|numeric|gt:0',
             'meta_title' => 'nullable|string',
