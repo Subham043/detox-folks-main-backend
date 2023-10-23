@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name', 255)->nullable();
             $table->string('email', 255)->nullable();
             $table->string('phone', 255)->nullable();
+            $table->string('gst', 255)->nullable();
             $table->boolean('is_active')->default(0);
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();

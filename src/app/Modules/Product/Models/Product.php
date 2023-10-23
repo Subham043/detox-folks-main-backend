@@ -38,6 +38,8 @@ class Product extends Model implements Sitemapable
         'is_new',
         'is_on_sale',
         'is_featured',
+        'min_cart_quantity',
+        'cart_quantity_interval',
         'meta_title',
         'meta_description',
         'meta_keywords',
@@ -50,6 +52,8 @@ class Product extends Model implements Sitemapable
         'is_on_sale' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'min_cart_quantity' => 'int',
+        'cart_quantity_interval' => 'int',
     ];
 
     public $image_path = 'products';

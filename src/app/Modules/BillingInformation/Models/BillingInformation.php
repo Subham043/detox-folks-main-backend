@@ -23,6 +23,7 @@ class BillingInformation extends Model
         'name',
         'email',
         'phone',
+        'gst',
         'user_id',
         'is_active',
     ];

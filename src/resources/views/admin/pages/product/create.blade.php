@@ -98,6 +98,27 @@
 
                     <div class="card">
                         <div class="card-header align-items-center d-flex">
+                            <h4 class="card-title mb-0 flex-grow-1">Product Cart Detail</h4>
+                        </div><!-- end card header -->
+                        <div class="card-body">
+                            <div class="live-preview">
+                                <div class="row gy-4">
+                                    <div class="col-xxl-6 col-md-6">
+                                        @include('admin.includes.input', ['key'=>'min_cart_quantity', 'label'=>'Minimum Cart Quantity', 'value'=>old('min_cart_quantity')])
+                                    </div>
+                                    <div class="col-xxl-6 col-md-6">
+                                        @include('admin.includes.input', ['key'=>'cart_quantity_interval', 'label'=>'Cart Quantity Interval', 'value'=>old('cart_quantity_interval')])
+                                    </div>
+
+                                </div>
+                                <!--end row-->
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header align-items-center d-flex">
                             <h4 class="card-title mb-0 flex-grow-1">Product Seo Detail</h4>
                         </div><!-- end card header -->
                         <div class="card-body">
@@ -241,6 +262,18 @@ validation
         errorMessage: 'Description is required',
     },
   ])
+  .addField('#min_cart_quantity', [
+    {
+        rule: 'required',
+        errorMessage: 'Minimum cart quantity is required',
+    },
+  ])
+  .addField('#cart_quantity_interval', [
+    {
+        rule: 'required',
+        errorMessage: 'Cart quantity interval is required',
+    },
+  ])
   .addField('#category', [
     {
         rule: 'required',
@@ -300,6 +333,8 @@ validation
         formData.append('is_featured',document.getElementById('is_featured').checked ? 1 : 0)
         formData.append('name',document.getElementById('name').value)
         formData.append('slug',document.getElementById('slug').value)
+        formData.append('min_cart_quantity',document.getElementById('min_cart_quantity').value)
+        formData.append('cart_quantity_interval',document.getElementById('cart_quantity_interval').value)
         formData.append('brief_description',document.getElementById('brief_description').value)
         formData.append('description',quillDescription.root.innerHTML)
         formData.append('description_unfiltered',quillDescription.getText())
@@ -354,6 +389,12 @@ validation
         }
         if(error?.response?.data?.errors?.meta_description){
             validation.showErrors({'#meta_description': error?.response?.data?.errors?.meta_description[0]})
+        }
+        if(error?.response?.data?.errors?.min_cart_quantity){
+            validation.showErrors({'#min_cart_quantity': error?.response?.data?.errors?.min_cart_quantity[0]})
+        }
+        if(error?.response?.data?.errors?.cart_quantity_interval){
+            validation.showErrors({'#cart_quantity_interval': error?.response?.data?.errors?.cart_quantity_interval[0]})
         }
         if(error?.response?.data?.message){
             errorToast(error?.response?.data?.message)

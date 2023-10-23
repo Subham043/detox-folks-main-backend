@@ -50,7 +50,8 @@ class CartAmountService
     }
 
     public function get_tax_price() {
-        return round(($this->get_subtotal() * ($this->get_tax()->tax_in_percentage/100)),2);
+        // return round(($this->get_subtotal() * ($this->get_tax()->tax_in_percentage/100)),2);
+        return 0;
     }
 
     public function get_discount_price() {

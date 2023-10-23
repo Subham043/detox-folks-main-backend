@@ -34,6 +34,8 @@ class SubCategoryService
     {
         $query = SubCategory::where('is_draft', true)->latest();
         return QueryBuilder::for($query)
+                ->defaultSort('-id')
+                ->allowedSorts('id', 'name')
                 ->allowedFilters([
                     AllowedFilter::callback('has_categories', function (Builder $query, $value) {
                         $query->whereHas('categories', function($q) use($value) {

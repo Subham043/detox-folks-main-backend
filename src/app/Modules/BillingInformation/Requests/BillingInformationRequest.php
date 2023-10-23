@@ -30,6 +30,7 @@ class BillingInformationRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required','email:rfc,dns'],
             'phone' => ['required','numeric', 'digits:10'],
+            'gst' => ['nullable','string'],
             'is_active' => 'required|boolean',
         ];
     }

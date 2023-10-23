@@ -43,6 +43,8 @@ class Order extends Model
         'total_charges',
         'discount_price',
         'total_price',
+        'accept_terms',
+        'incluce_gst',
         'user_id',
     ];
 
@@ -57,6 +59,8 @@ class Order extends Model
         'total_price' => 'float',
         'coupon_maximum_dicount_in_price' => 'float',
         'coupon_minimum_cart_value' => 'float',
+        'accept_terms' => 'boolean',
+        'incluce_gst' => 'boolean',
     ];
 
     public function user()

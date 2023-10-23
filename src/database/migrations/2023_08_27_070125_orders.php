@@ -36,6 +36,8 @@ return new class extends Migration
             $table->string('total_charges', 500)->default(0)->nullable();
             $table->string('discount_price', 500)->default(0)->nullable();
             $table->string('total_price', 500)->default(0)->nullable();
+            $table->boolean('accept_terms')->default(0);
+            $table->boolean('incluce_gst')->default(0);
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });

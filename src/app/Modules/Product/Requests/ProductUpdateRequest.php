@@ -23,6 +23,8 @@ class ProductUpdateRequest extends ProductCreateRequest
             'is_featured' => 'required|boolean',
             'is_new' => 'required|boolean',
             'is_on_sale' => 'required|boolean',
+            'min_cart_quantity' => 'required|numeric|gt:0',
+            'cart_quantity_interval' => 'required|numeric|gt:0',
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string',

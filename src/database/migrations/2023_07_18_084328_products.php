@@ -23,6 +23,8 @@ return new class extends Migration
             $table->boolean('is_new')->default(0);
             $table->boolean('is_on_sale')->default(0);
             $table->boolean('is_featured')->default(0);
+            $table->string('min_cart_quantity', 500)->default(1);
+            $table->string('cart_quantity_interval', 500)->default(1);
             $table->text('meta_title')->nullable();
             $table->text('meta_description')->nullable();
             $table->text('meta_keywords')->nullable();
