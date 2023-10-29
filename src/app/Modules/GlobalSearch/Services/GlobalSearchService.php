@@ -15,9 +15,10 @@ class GlobalSearchService
 {
     public function paginateMain(Int $total = 10): LengthAwarePaginator
     {
-        $query1 = Category::query()->select('id', 'name', 'slug', 'image')->where('is_draft', true);
-        $query2 = SubCategory::query()->select('id', 'name', 'slug', 'image')->where('is_draft', true);
-        $query3 = Product::query()->select('id', 'name', 'slug', 'image')->where('is_draft', true);
+        $search = request()->query('filter')['search'] ?? '';
+        $query1 = Category::query()->select('id', 'name', 'slug', 'image')->where('is_draft', true)->where('name', 'LIKE', '%'.$search.'%');
+        $query2 = SubCategory::query()->select('id', 'name', 'slug', 'image')->where('is_draft', true)->where('name', 'LIKE', '%'.$search.'%');
+        $query3 = Product::query()->select('id', 'name', 'slug', 'image')->where('is_draft', true)->where('name', 'LIKE', '%'.$search.'%');
         $query4 = $query3->union($query2);
         $query = $query4->union($query1);
         return QueryBuilder::for($query)
