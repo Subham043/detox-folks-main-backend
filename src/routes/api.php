@@ -37,6 +37,7 @@ use App\Modules\Coupon\Controllers\ApplyCouponController;
 use App\Modules\Coupon\Controllers\RemoveCouponController;
 use App\Modules\Enquiry\ContactForm\Controllers\ContactFormCreateController;
 use App\Modules\Feature\Controllers\UserFeatureAllController;
+use App\Modules\GlobalSearch\Controllers\UserGlobalSearchPaginateController;
 use App\Modules\HomePage\Banner\Controllers\UserBannerAllController;
 use App\Modules\Legal\Controllers\UserLegalAllController;
 use App\Modules\Legal\Controllers\UserLegalDetailController;
@@ -138,6 +139,10 @@ Route::prefix('website-detail')->group(function () {
 Route::prefix('blog')->group(function () {
     Route::get('/', [UserBlogPaginateController::class, 'get'])->name('user.blog.paginate');
     Route::get('/{slug}', [UserBlogDetailController::class, 'get'])->name('user.blog.detail');
+});
+
+Route::prefix('search')->group(function () {
+    Route::get('/', [UserGlobalSearchPaginateController::class, 'get'])->name('user.search.paginate');
 });
 
 Route::prefix('product')->group(function () {

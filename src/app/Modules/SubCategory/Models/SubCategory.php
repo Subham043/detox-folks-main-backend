@@ -44,7 +44,7 @@ class SubCategory extends Model implements Sitemapable
 
     public $image_path = 'sub_categories';
 
-    protected $appends = ['image_link'];
+    protected $appends = ['image_link', 'search_type'];
 
     public static function boot()
     {
@@ -52,6 +52,13 @@ class SubCategory extends Model implements Sitemapable
         self::created(function ($model) {});
         self::updated(function ($model) {});
         self::deleted(function ($model) {});
+    }
+
+    protected function searchType(): Attribute
+    {
+        return new Attribute(
+            get: fn () => 'SUBCATEGORY',
+        );
     }
 
     protected function image(): Attribute

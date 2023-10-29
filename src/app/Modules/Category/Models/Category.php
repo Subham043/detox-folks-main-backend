@@ -45,7 +45,7 @@ class Category extends Model implements Sitemapable
 
     public $image_path = 'categories';
 
-    protected $appends = ['image_link'];
+    protected $appends = ['image_link', 'search_type'];
 
     public static function boot()
     {
@@ -53,6 +53,13 @@ class Category extends Model implements Sitemapable
         self::created(function ($model) {});
         self::updated(function ($model) {});
         self::deleted(function ($model) {});
+    }
+
+    protected function searchType(): Attribute
+    {
+        return new Attribute(
+            get: fn () => 'CATEGORY',
+        );
     }
 
     protected function image(): Attribute

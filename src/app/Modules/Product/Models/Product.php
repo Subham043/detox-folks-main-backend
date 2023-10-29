@@ -59,7 +59,7 @@ class Product extends Model implements Sitemapable
 
     public $image_path = 'products';
 
-    protected $appends = ['image_link'];
+    protected $appends = ['image_link', 'search_type'];
 
     public static function boot()
     {
@@ -67,6 +67,13 @@ class Product extends Model implements Sitemapable
         self::created(function ($model) {});
         self::updated(function ($model) {});
         self::deleted(function ($model) {});
+    }
+
+    protected function searchType(): Attribute
+    {
+        return new Attribute(
+            get: fn () => 'PRODUCT',
+        );
     }
 
     protected function image(): Attribute
