@@ -18,7 +18,7 @@ class UserGlobalSearchCollection extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'search_type' => $this->search_type,
+            'search_type' => $this->type,
             'image' => asset($this->image),
         ];
     }
