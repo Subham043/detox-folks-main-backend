@@ -27,6 +27,8 @@ class GlobalSearchService
         $query = $query4->union($query1);
         return QueryBuilder::for($query->orderByRaw($queryOrder))
                 ->allowedFields(['id', 'name', 'slug', 'image'])
+                ->defaultSort('id')
+                ->allowedSorts('id', 'name')
                 ->allowedFilters([
                     AllowedFilter::custom('search', new CommonFilter),
                 ])
