@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('state', 255)->nullable();
             $table->string('city', 255)->nullable();
             $table->string('pin', 255)->nullable();
+            $table->string('order_mode', 255)->nullable();
             $table->text('address')->nullable();
             $table->string('coupon_name', 500)->nullable();
             $table->string('coupon_code', 500)->nullable();

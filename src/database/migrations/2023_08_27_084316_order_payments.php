@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('mode', 500);
             $table->string('status', 500);
+            $table->text('payment_data')->nullable();
             $table->foreignId('order_id')->nullable()->constrained('orders')->nullOnDelete();
             $table->timestamps();
             $table->index(['id', 'created_at']);

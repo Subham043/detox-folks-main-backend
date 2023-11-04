@@ -39,6 +39,7 @@ class OrderCollection extends JsonResource
             'total_charges' => $this->total_charges,
             'discount_price' => $this->discount_price,
             'total_price' => $this->total_price,
+            'order_mode' => $this->order_mode,
             'products' => OrderProductCollection::collection($this->products),
             'charges' => OrderChargeCollection::collection($this->charges),
             'statuses' => OrderStatusCollection::collection($this->statuses),

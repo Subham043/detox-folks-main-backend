@@ -5,6 +5,7 @@ namespace App\Modules\Order\Services;
 use App\Enums\OrderEnumStatus;
 use App\Enums\PaymentMode;
 use App\Enums\PaymentStatus;
+use App\Http\Services\PhonepeService;
 use App\Modules\BillingAddress\Models\BillingAddress;
 use App\Modules\BillingInformation\Models\BillingInformation;
 use App\Modules\Cart\Models\Cart;
@@ -23,6 +24,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
+use Ixudra\Curl\Facades\Curl;
 
 class OrderService
 {
@@ -119,6 +121,7 @@ class OrderService
             'address' => $billingAddress->address,
             'accept_terms' => $data['accept_terms'],
             'include_gst' => $data['include_gst'],
+            'order_mode' => $data['order_mode'],
             'subtotal' => (new CartAmountService())->get_subtotal(),
             'total_tax' => (new CartAmountService())->get_tax_price(),
             'total_charges' => (new CartAmountService())->get_charge_price(),
@@ -166,7 +169,7 @@ class OrderService
             ]);
         }
         OrderPayment::create([
-            'mode' => PaymentMode::COD->value,
+            'mode' => $data['mode_of_payment'],
             'status' => PaymentStatus::PENDING->value,
             'order_id' => $order->id,
         ]);
@@ -174,8 +177,10 @@ class OrderService
             'status' => OrderEnumStatus::PROCESSING->value,
             'order_id' => $order->id,
         ]);
-        Cart::where('user_id', auth()->user()->id)->delete();
-        AppliedCoupon::where('user_id', auth()->user()->id)->delete();
+        if($data['mode_of_payment'] == PaymentMode::COD){
+            Cart::where('user_id', auth()->user()->id)->delete();
+            AppliedCoupon::where('user_id', auth()->user()->id)->delete();
+        }
         return Order::with([
             'products',
             'charges',
@@ -193,6 +198,11 @@ class OrderService
     public function delete(Order $order): bool|null
     {
         return $order->delete();
+    }
+
+    public function phone_pe_response(array $input): string
+    {
+        return (new PhonepeService)->verify($input);
     }
 
 }

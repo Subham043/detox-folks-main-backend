@@ -1,6 +1,7 @@
 <?php
 
 use App\Modules\Authentication\Controllers\VerifyRegisteredUserController;
+use App\Modules\Order\Controllers\PhonepeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,3 +18,5 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/email/verify')->group(function () {
     Route::get('/{id}/{hash}', [VerifyRegisteredUserController::class, 'verify_email', 'as' => 'verify_email'])->name('verification.verify');
 });
+
+Route::post('/phonepe', [PhonepeController::class, 'post', 'as' => 'post'])->name('phonepe_response');

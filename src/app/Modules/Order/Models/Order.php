@@ -2,6 +2,7 @@
 
 namespace App\Modules\Order\Models;
 
+use App\Enums\OrderMode;
 use App\Modules\Authentication\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -46,6 +47,7 @@ class Order extends Model
         'total_price',
         'accept_terms',
         'include_gst',
+        'order_mode',
         'user_id',
     ];
 
@@ -62,6 +64,11 @@ class Order extends Model
         'coupon_minimum_cart_value' => 'float',
         'accept_terms' => 'boolean',
         'include_gst' => 'boolean',
+        'order_mode' => OrderMode::class,
+    ];
+
+    protected $attributes = [
+        'order_mode' => OrderMode::WEBSITE,
     ];
 
     public function user()

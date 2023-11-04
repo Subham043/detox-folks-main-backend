@@ -18,6 +18,7 @@ class OrderPaymentCollection extends JsonResource
             'id' => $this->id,
             'mode' => $this->mode,
             'status' => $this->status,
+            'phone_pe_payment_link' => $this->phone_pe_payment_link,
             'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => $this->updated_at->diffForHumans(),
         ];

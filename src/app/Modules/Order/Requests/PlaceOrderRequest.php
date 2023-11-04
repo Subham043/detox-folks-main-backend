@@ -2,6 +2,7 @@
 
 namespace App\Modules\Order\Requests;
 
+use App\Enums\OrderMode;
 use App\Enums\PaymentMode;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +41,7 @@ class PlaceOrderRequest extends FormRequest
                 'exists:billing_addresses,id',
             ],
             'mode_of_payment' => ['required', new Enum(PaymentMode::class)],
+            'order_mode' => ['required', new Enum(OrderMode::class)],
             'include_gst' => ['required', 'boolean'],
             'accept_terms' => ['required', 'accepted'],
         ];
