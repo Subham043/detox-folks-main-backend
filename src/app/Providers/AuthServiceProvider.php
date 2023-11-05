@@ -34,7 +34,7 @@ class AuthServiceProvider extends ServiceProvider
         //custom link for reset password
         ResetPassword::createUrlUsing(function (User $user, string $token) {
             if(empty($user->current_role)){
-                return env('MAIN_URL')."/reset-password/".$token;
+                return config('app.main_url')."/reset-password/".$token;
             }
             return URL::temporarySignedRoute('reset_password.get', now()->addMinutes(60), ['token' => $token]);
         });

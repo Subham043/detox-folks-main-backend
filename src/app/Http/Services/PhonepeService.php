@@ -15,7 +15,7 @@ class PhonepeService
     public function generate(string $id, float $amount): string
     {
         $data = array (
-            'merchantId' => 'PGTESTPAYUAT',
+            'merchantId' => config('app.phonepe_merchant_id'),
             'merchantTransactionId' => $id,
             'merchantUserId' => 'MUID123',
             'amount' => $amount * 100,
@@ -31,15 +31,15 @@ class PhonepeService
 
         $encode = base64_encode(json_encode($data));
 
-        $saltKey = '099eb0cd-02cf-4e2a-8aca-3e6c6aff0399';
-        $saltIndex = 1;
+        $saltKey = config('app.phonepe_salt_key');
+        $saltIndex = config('app.phonepe_salt_index');
 
         $string = $encode.'/pg/v1/pay'.$saltKey;
         $sha256 = hash('sha256',$string);
 
         $finalXHeader = $sha256.'###'.$saltIndex;
 
-        $response = Curl::to('https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay')
+        $response = Curl::to(config('app.phonepe_url'))
                 ->withHeader('Content-Type:application/json')
                 ->withHeader('X-VERIFY:'.$finalXHeader)
                 ->withData(json_encode(['request' => $encode]))
@@ -71,12 +71,12 @@ class PhonepeService
             $payment->save();
             Cart::where('user_id', $payment->order->user_id)->delete();
             if($payment->order->order_mode == OrderMode::WEBSITE){
-                return "https://parcelcounter.in/orders?success=true";
+                return config('app.main_url')."/orders?success=true";
             }else{
-                return "https://parcelcounter.in/checkout";
+                return config('app.main_url')."/checkout";
             }
         }else{
-            return "https://parcelcounter.in/checkout";
+            return config('app.main_url')."/checkout";
         }
     }
 

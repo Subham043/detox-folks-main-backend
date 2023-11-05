@@ -57,7 +57,24 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'main_url' => env('MAIN_URL', 'http://localhost:3000'),
+
     'asset_url' => env('ASSET_URL'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Phonepe Configuration
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'phonepe_url' => env('PHONEPE_URL', 'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay'),
+
+    'phonepe_merchant_id' => env('PHONEPE_MERCHANT_ID', 'PGTESTPAYUAT'),
+
+    'phonepe_salt_key' => env('PHONEPE_SALT_KEY', '099eb0cd-02cf-4e2a-8aca-3e6c6aff0399'),
+
+    'phonepe_salt_index' => env('PHONEPE_SALT_INDEX', 1),
 
     /*
     |--------------------------------------------------------------------------

@@ -23,7 +23,7 @@ class VerifyRegisteredUserController extends Controller
 
     public function verify_email(UserEmailVerificationRequest $request, $id, $hash){
         $request->fulfill();
-        return redirect(env('MAIN_URL').'?verified=true');
+        return redirect(config('app.main_url').'?verified=true');
     }
 
 
