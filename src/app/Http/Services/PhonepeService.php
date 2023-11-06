@@ -70,7 +70,7 @@ class PhonepeService
             $payment->save();
             Cart::where('user_id', $payment->order->user_id)->delete();
             if($payment->order->order_mode == OrderMode::WEBSITE){
-                return config('app.main_url')."/orders?success=true";
+                return config('app.main_url')."/orders?order_placed=true";
             }else{
                 return config('app.main_url')."/checkout";
             }
