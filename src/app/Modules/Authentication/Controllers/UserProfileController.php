@@ -39,11 +39,11 @@ class UserProfileController extends Controller
                 $request->validated(),
                 $user
             );
-            if ($email_status) {
-                $updated_user->email_verified_at = null;
-                $updated_user->save();
-                $updated_user->sendEmailVerificationNotification();
-            }
+            // if ($email_status) {
+            //     $updated_user->email_verified_at = null;
+            //     $updated_user->save();
+            //     $updated_user->sendEmailVerificationNotification();
+            // }
 
             (new RateLimitService($request))->clearRateLimit();
             return response()->json([

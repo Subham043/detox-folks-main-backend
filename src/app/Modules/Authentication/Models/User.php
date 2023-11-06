@@ -63,7 +63,7 @@ class User extends Authenticatable
         parent::boot();
         self::created(function ($user) {
             // event(new Registered($user));
-            $user->sendEmailVerificationNotification();
+            // $user->sendEmailVerificationNotification();
         });
         self::updated(function ($user) {});
         self::deleted(function ($user) {});
