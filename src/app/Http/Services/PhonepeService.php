@@ -51,8 +51,8 @@ class PhonepeService
 
     public function verify(array $input):string
     {
-        $saltKey = '099eb0cd-02cf-4e2a-8aca-3e6c6aff0399';
-        $saltIndex = 1;
+        $saltKey = config('app.phonepe_salt_key');
+        $saltIndex = config('app.phonepe_salt_index');
 
         $finalXHeader = hash('sha256','/pg/v1/status/'.$input['merchantId'].'/'.$input['transactionId'].$saltKey).'###'.$saltIndex;
 

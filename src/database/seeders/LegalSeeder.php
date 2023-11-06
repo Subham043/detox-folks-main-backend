@@ -51,5 +51,12 @@ class LegalSeeder extends Seeder
             'slug' => 'terms-condition',
             'is_draft' => true
         ]);
+
+        Legal::create([
+            'page_name' => 'Shipping Policy',
+            'heading' => 'Shipping Policy',
+            'slug' => 'shipping-policy',
+            'is_draft' => true
+        ]);
     }
 }
