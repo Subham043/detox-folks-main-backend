@@ -5,7 +5,7 @@ namespace App\Modules\Order\Controllers;
 use App\Http\Controllers\Controller;
 use App\Modules\Cart\Models\Cart;
 use App\Modules\Order\Requests\PlaceOrderRequest;
-use App\Modules\Order\Resources\OrderCollection;
+use App\Modules\Order\Resources\OrderGenerateCollection;
 use App\Modules\Order\Services\OrderService;
 
 class PlaceOrderController extends Controller
@@ -29,7 +29,7 @@ class PlaceOrderController extends Controller
             );
             return response()->json([
                 'message' => "Order placed successfully.",
-                'order' => OrderCollection::make($order),
+                'order' => OrderGenerateCollection::make($order),
             ], 201);
         } catch (\Throwable $th) {
             throw $th;

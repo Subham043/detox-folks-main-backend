@@ -205,6 +205,11 @@ class OrderService
         return (new PhonepeService)->verify($input);
     }
 
+    public function get_phone_pe_link(Order $order): string|null
+    {
+        return $order->payment->mode==PaymentMode::PHONEPE ? (new PhonepeService)->generate($order->id, $order->total_price) : null;
+    }
+
 }
 
 class CommonFilter implements Filter

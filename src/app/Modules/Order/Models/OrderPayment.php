@@ -4,10 +4,8 @@ namespace App\Modules\Order\Models;
 
 use App\Enums\PaymentMode;
 use App\Enums\PaymentStatus;
-use App\Http\Services\PhonepeService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class OrderPayment extends Model
 {
@@ -38,14 +36,7 @@ class OrderPayment extends Model
         'status' => PaymentStatus::PENDING,
     ];
 
-    protected $appends = ['phone_pe_payment_link', 'short_description'];
-
-    protected function phonePePaymentLink(): Attribute
-    {
-        return new Attribute(
-            get: fn () => $this->mode==PaymentMode::PHONEPE ? (new PhonepeService)->generate($this->order->id, $this->order->total_price) : null,
-        );
-    }
+    protected $appends = ['short_description'];
 
     public function order()
     {
