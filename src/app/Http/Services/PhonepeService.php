@@ -38,7 +38,7 @@ class PhonepeService
 
         $finalXHeader = $sha256.'###'.$saltIndex;
 
-        $response = Curl::to(config('app.phonepe_url'))
+        $response = Curl::to(config('app.phonepe_url').'/pg/v1/pay')
                 ->withHeader('Content-Type:application/json')
                 ->withHeader('X-VERIFY:'.$finalXHeader)
                 ->withData(json_encode(['request' => $encode]))
@@ -56,7 +56,7 @@ class PhonepeService
 
         $finalXHeader = hash('sha256','/pg/v1/status/'.$input['merchantId'].'/'.$input['transactionId'].$saltKey).'###'.$saltIndex;
 
-        $response = Curl::to('https://api-preprod.phonepe.com/apis/merchant-simulator/pg/v1/status/'.$input['merchantId'].'/'.$input['transactionId'])
+        $response = Curl::to(config('app.phonepe_url').'/pg/v1/status/'.$input['merchantId'].'/'.$input['transactionId'])
                 ->withHeader('Content-Type:application/json')
                 ->withHeader('accept:application/json')
                 ->withHeader('X-VERIFY:'.$finalXHeader)
