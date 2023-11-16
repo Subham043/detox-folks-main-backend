@@ -36,8 +36,6 @@ class OrderPayment extends Model
         'status' => PaymentStatus::PENDING,
     ];
 
-    protected $appends = ['short_description'];
-
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_id')->withDefault();
