@@ -60,7 +60,7 @@ class PhonepeService
                 ->withHeader('Content-Type:application/json')
                 ->withHeader('accept:application/json')
                 ->withHeader('X-VERIFY:'.$finalXHeader)
-                ->withHeader('X-MERCHANT-ID:'.$input['transactionId'])
+                ->withHeader('X-MERCHANT-ID:'.$input['merchantId'])
                 ->get();
         $rData = json_decode($response);
         if($rData->success==true && $rData->code=="PAYMENT_SUCCESS"){
