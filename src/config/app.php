@@ -70,6 +70,8 @@ return [
 
     'phonepe_url' => env('PHONEPE_URL', 'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay'),
 
+    'phonepe_status_url' => env('PHONEPE_STATUS_URL', 'https://api-preprod.phonepe.com/apis/merchant-simulator/pg/v1/status'),
+
     'phonepe_merchant_id' => env('PHONEPE_MERCHANT_ID', 'PGTESTPAYUAT'),
 
     'phonepe_salt_key' => env('PHONEPE_SALT_KEY', '099eb0cd-02cf-4e2a-8aca-3e6c6aff0399'),
