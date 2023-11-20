@@ -10,6 +10,8 @@ use Spatie\QueryBuilder\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
+use Spatie\QueryBuilder\Sorts\Sort;
 
 class ProductService
 {
@@ -44,7 +46,11 @@ class ProductService
         return QueryBuilder::for($query)
                 ->allowedIncludes(['categories', 'sub_categories', 'product_specifications', 'product_prices', 'product_images'])
                 ->defaultSort('-id')
-                ->allowedSorts('id', 'name')
+                // ->allowedSorts('id', 'name')
+                ->allowedSorts([
+                    AllowedSort::custom('name', new StringLengthSort(), 'name'),
+                    AllowedSort::custom('id', new StringLengthSort(), 'id'),
+                ])
                 ->allowedFilters([
                     'is_new',
                     'is_on_sale',
@@ -156,5 +162,15 @@ class CommonFilter implements Filter
         $query->where('name', 'LIKE', '%' . $value . '%')
         ->orWhere('slug', 'LIKE', '%' . $value . '%')
         ->orWhere('description_unfiltered', 'LIKE', '%' . $value . '%');
+    }
+}
+
+class StringLengthSort implements Sort
+{
+    public function __invoke(Builder $query, bool $descending, string $property)
+    {
+        $direction = $descending ? 'DESC' : 'ASC';
+
+        $query->orderByRaw("LENGTH(`{$property}`) {$direction}")->orderBy($property, $direction);
     }
 }

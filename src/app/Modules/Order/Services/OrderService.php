@@ -177,7 +177,7 @@ class OrderService
             'status' => OrderEnumStatus::PROCESSING->value,
             'order_id' => $order->id,
         ]);
-        if($data['mode_of_payment'] == PaymentMode::COD){
+        if($data['mode_of_payment'] == PaymentMode::COD->value){
             Cart::where('user_id', auth()->user()->id)->delete();
             AppliedCoupon::where('user_id', auth()->user()->id)->delete();
         }
