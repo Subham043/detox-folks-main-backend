@@ -78,7 +78,7 @@
             options = {
                 "key": "{{config('app.razorpay.key')}}", // Enter the Key ID generated from the Dashboard
                 "amount": parseFloat({{$order->total_price}}) * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-                "order_id": "{{$order->razorpay_order_id}}",
+                "order_id": "{{$order->payment->razorpay_order_id}}",
                 "currency": "INR",
                 "name": "Parcelcounter",
                 "description": "Order Transaction",
