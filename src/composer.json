@@ -17,7 +17,7 @@
         "maatwebsite/excel": "^3.1",
         "predis/predis": "^2.1",
         "rap2hpoutre/laravel-log-viewer": "^2.3",
-        "razorpay/razorpay": "^2.8",
+        "razorpay/razorpay": "^2.9",
         "spatie/cpu-load-health-check": "^1.0",
         "spatie/laravel-activitylog": "^4.7",
         "spatie/laravel-csp": "^2.8",

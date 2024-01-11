@@ -50,6 +50,9 @@ class ContentSecurityPolicy extends Basic
 
         //start of common
         ->addDirective(Directive::IMG, 'i3.ytimg.com')
+        ->addDirective(Directive::SCRIPT, 'checkout.razorpay.com')
+        ->addDirective(Directive::FRAME, 'api.razorpay.com')
+        ->addDirective(Directive::CONNECT, 'lumberjack-cx.razorpay.com')
         ->addDirective(Directive::FONT, 'at.alicdn.com')
         ->addDirective(Directive::FONT, 'fonts.gstatic.com')
         ->addDirective(Directive::STYLE, 'fonts.googleapis.com')

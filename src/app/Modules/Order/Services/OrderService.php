@@ -6,6 +6,7 @@ use App\Enums\OrderEnumStatus;
 use App\Enums\PaymentMode;
 use App\Enums\PaymentStatus;
 use App\Http\Services\PhonepeService;
+use App\Http\Services\RazorpayService;
 use App\Modules\BillingAddress\Models\BillingAddress;
 use App\Modules\BillingInformation\Models\BillingInformation;
 use App\Modules\Cart\Models\Cart;
@@ -52,6 +53,62 @@ class OrderService
                 ->appends(request()->query());
     }
 
+    public function paginatePlaced(Int $total = 10): LengthAwarePaginator
+    {
+        $query = Order::with([
+            'products',
+            'charges',
+            'statuses',
+            'payment',
+        ])->whereHas('payment', function($qry){
+            $qry->where(function($q){
+                $q->where('mode', PaymentMode::COD);
+            })->orWhere(function($q){
+                $q->where(function($qr){
+                    $qr->where('mode', PaymentMode::PHONEPE)->orWhere('mode', PaymentMode::RAZORPAY);
+                })->where('status', '<>', PaymentStatus::PENDING);
+            });
+        })->where('user_id', auth()->user()->id)->latest();
+        return QueryBuilder::for($query)
+                ->paginate($total)
+                ->appends(request()->query());
+    }
+
+    public function paginateOrderProducts(Int $total = 10): LengthAwarePaginator
+    {
+        $query = OrderProduct::with([
+            'product' => function($qry){
+                $qry->with([
+                    'categories',
+                    'sub_categories',
+                    'product_specifications',
+                    'product_images',
+                    'product_prices'=>function($q){
+                        $q->orderBy('min_quantity', 'asc');
+                    },
+                ]);
+            },
+            'order' => function($qry) {
+                $qry->where('user_id', auth()->user()->id);
+            },
+        ])->whereHas('order', function($qry){
+            $qry->where('user_id', auth()->user()->id);
+        })->whereHas('product', function($qry){
+            $qry->with([
+                'categories',
+                'sub_categories',
+                'product_specifications',
+                'product_images',
+                'product_prices'=>function($q){
+                    $q->orderBy('min_quantity', 'asc');
+                },
+            ]);
+        })->latest();
+        return QueryBuilder::for($query)
+                ->paginate($total)
+                ->appends(request()->query());
+    }
+
     public function paginate_admin(Int $total = 10): LengthAwarePaginator
     {
         $query = Order::with([
@@ -93,6 +150,24 @@ class OrderService
             'statuses',
             'payment',
         ])->where('user_id', auth()->user()->id)->findOrFail($id);
+    }
+
+    public function getOrderPlacedById(Int $id): Order|null
+    {
+        return Order::with([
+            'products',
+            'charges',
+            'statuses',
+            'payment',
+        ])->whereHas('payment', function($qry){
+            $qry->where(function($q){
+                $q->where('mode', PaymentMode::COD);
+            })->orWhere(function($q){
+                $q->where(function($qr){
+                    $qr->where('mode', PaymentMode::PHONEPE)->orWhere('mode', PaymentMode::RAZORPAY);
+                })->where('status', '<>', PaymentStatus::PENDING);
+            });
+        })->where('user_id', auth()->user()->id)->findOrFail($id);
     }
 
     public function getByIdAdmin(Int $id): Order|null
@@ -168,11 +243,20 @@ class OrderService
                 'order_id' => $order->id,
             ]);
         }
-        OrderPayment::create([
-            'mode' => $data['mode_of_payment'],
-            'status' => PaymentStatus::PENDING->value,
-            'order_id' => $order->id,
-        ]);
+        if($data['mode_of_payment'] == PaymentMode::RAZORPAY->value){
+            OrderPayment::create([
+                'mode' => $data['mode_of_payment'],
+                'status' => PaymentStatus::PENDING->value,
+                'razorpay_order_id' => (new RazorpayService)->create_order_id($order->total_price, $order->id),
+                'order_id' => $order->id,
+            ]);
+        }else{
+            OrderPayment::create([
+                'mode' => $data['mode_of_payment'],
+                'status' => PaymentStatus::PENDING->value,
+                'order_id' => $order->id,
+            ]);
+        }
         OrderStatus::create([
             'status' => OrderEnumStatus::PROCESSING->value,
             'order_id' => $order->id,

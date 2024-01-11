@@ -2,6 +2,7 @@
 
 use App\Modules\Authentication\Controllers\VerifyRegisteredUserController;
 use App\Modules\Order\Controllers\PhonepeController;
+use App\Modules\Order\Controllers\RazorpayController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,8 @@ Route::prefix('/email/verify')->group(function () {
 });
 
 Route::post('/phonepe', [PhonepeController::class, 'post', 'as' => 'post'])->name('phonepe_response');
+Route::get('/razorpay-order-payment-success', function () {
+    return view('razorpay.success');
+})->name('razorpay_payment_success');
+Route::get('/make-razorpay-order-payment/{order_id}', [RazorpayController::class, 'get'])->name('make_razorpay_payment');
+Route::post('/verify-razorpay-order-payment/{order_id}', [RazorpayController::class, 'post'])->name('verify_razorpay_payment');

@@ -22,6 +22,9 @@ class OrderPayment extends Model
         'mode',
         'status',
         'payment_data',
+        'razorpay_order_id',
+        'razorpay_payment_id',
+        'razorpay_signature',
         'order_id',
     ];
 
@@ -34,6 +37,9 @@ class OrderPayment extends Model
     protected $attributes = [
         'mode' => PaymentMode::COD,
         'status' => PaymentStatus::PENDING,
+        'razorpay_order_id' => null,
+        'razorpay_payment_id' => null,
+        'razorpay_signature' => null,
     ];
 
     public function order()
