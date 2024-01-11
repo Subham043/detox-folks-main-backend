@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('mode', 500);
             $table->string('status', 500);
             $table->text('payment_data')->nullable();
-            $table->string('razorpay_signature', 255)->nullable();
+            $table->text('razorpay_signature')->nullable();
             $table->text('razorpay_order_id')->nullable();
             $table->text('razorpay_payment_id')->nullable();
             $table->foreignId('order_id')->nullable()->constrained('orders')->nullOnDelete();
