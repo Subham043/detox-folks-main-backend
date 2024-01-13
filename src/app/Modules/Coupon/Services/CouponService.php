@@ -66,12 +66,14 @@ class CommonFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property)
     {
-        $query->where('name', 'LIKE', '%' . $value . '%')
-        ->orWhere('code', 'LIKE', '%' . $value . '%')
-        ->orWhere('description', 'LIKE', '%' . $value . '%')
-        ->orWhere('discount', 'LIKE', '%' . $value . '%')
-        ->orWhere('maximum_dicount_in_price', 'LIKE', '%' . $value . '%')
-        ->orWhere('maximum_number_of_use', 'LIKE', '%' . $value . '%')
-        ->orWhere('minimum_cart_value', 'LIKE', '%' . $value . '%');
+        $query->where(function($q) use($value){
+            $q->where('name', 'LIKE', '%' . $value . '%')
+            ->orWhere('code', 'LIKE', '%' . $value . '%')
+            ->orWhere('description', 'LIKE', '%' . $value . '%')
+            ->orWhere('discount', 'LIKE', '%' . $value . '%')
+            ->orWhere('maximum_dicount_in_price', 'LIKE', '%' . $value . '%')
+            ->orWhere('maximum_number_of_use', 'LIKE', '%' . $value . '%')
+            ->orWhere('minimum_cart_value', 'LIKE', '%' . $value . '%');
+        });
     }
 }

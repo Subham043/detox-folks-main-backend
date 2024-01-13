@@ -40,8 +40,10 @@ class CommonFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property)
     {
-        $query->where('log_name', 'LIKE', '%' . $value . '%')
-        ->orWhere('event', 'LIKE', '%' . $value . '%')
-        ->orWhere('description', 'LIKE', '%' . $value . '%');
+        $query->where(function($q) use($value){
+            $q->where('log_name', 'LIKE', '%' . $value . '%')
+            ->orWhere('event', 'LIKE', '%' . $value . '%')
+            ->orWhere('description', 'LIKE', '%' . $value . '%');
+        });
     }
 }

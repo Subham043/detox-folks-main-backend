@@ -51,9 +51,11 @@ class CommonFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property)
     {
-        $query->where('heading', 'LIKE', '%' . $value . '%')
-        ->orWhere('page_name', 'LIKE', '%' . $value . '%')
-        ->orWhere('slug', 'LIKE', '%' . $value . '%')
-        ->orWhere('description_unfiltered', 'LIKE', '%' . $value . '%');
+        $query->where(function($q) use($value){
+            $q->where('heading', 'LIKE', '%' . $value . '%')
+            ->orWhere('page_name', 'LIKE', '%' . $value . '%')
+            ->orWhere('slug', 'LIKE', '%' . $value . '%')
+            ->orWhere('description_unfiltered', 'LIKE', '%' . $value . '%');
+        });
     }
 }

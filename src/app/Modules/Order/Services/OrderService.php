@@ -300,13 +300,15 @@ class CommonFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property)
     {
-        $query->where('name', 'LIKE', '%' . $value . '%')
-        ->orWhere('id', 'LIKE', '%' . $value . '%')
-        ->orWhere('email', 'LIKE', '%' . $value . '%')
-        ->orWhere('phone', 'LIKE', '%' . $value . '%')
-        ->orWhere('total_price', 'LIKE', '%' . $value . '%')
-        ->whereHas('products', function($q) use($value) {
-            $q->where('name', 'LIKE', '%' . $value . '%');
+        $query->where(function($qr) use($value){
+            $qr->where('name', 'LIKE', '%' . $value . '%')
+            ->orWhere('id', 'LIKE', '%' . $value . '%')
+            ->orWhere('email', 'LIKE', '%' . $value . '%')
+            ->orWhere('phone', 'LIKE', '%' . $value . '%')
+            ->orWhere('total_price', 'LIKE', '%' . $value . '%')
+            ->whereHas('products', function($q) use($value) {
+                $q->where('name', 'LIKE', '%' . $value . '%');
+            });
         });
     }
 }

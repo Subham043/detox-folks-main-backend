@@ -60,10 +60,12 @@ class CommonFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property)
     {
-        $query->where('country', 'LIKE', '%' . $value . '%')
-        ->orWhere('state', 'LIKE', '%' . $value . '%')
-        ->orWhere('city', 'LIKE', '%' . $value . '%')
-        ->orWhere('pin', 'LIKE', '%' . $value . '%')
-        ->orWhere('address', 'LIKE', '%' . $value . '%');
+        $query->where(function($q) use($value){
+            $q->where('country', 'LIKE', '%' . $value . '%')
+            ->orWhere('state', 'LIKE', '%' . $value . '%')
+            ->orWhere('city', 'LIKE', '%' . $value . '%')
+            ->orWhere('pin', 'LIKE', '%' . $value . '%')
+            ->orWhere('address', 'LIKE', '%' . $value . '%');
+        });
     }
 }

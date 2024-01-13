@@ -74,9 +74,11 @@ class CommonFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property)
     {
-        $query->where('charges_name', 'LIKE', '%' . $value . '%')
-        ->orWhere('charges_slug', 'LIKE', '%' . $value . '%')
-        ->orWhere('charges_in_amount', 'LIKE', '%' . $value . '%')
-        ->orWhere('exclude_charges_for_cart_price_above', 'LIKE', '%' . $value . '%');
+        $query->where(function($q) use($value){
+            $q->where('charges_name', 'LIKE', '%' . $value . '%')
+            ->orWhere('charges_slug', 'LIKE', '%' . $value . '%')
+            ->orWhere('charges_in_amount', 'LIKE', '%' . $value . '%')
+            ->orWhere('exclude_charges_for_cart_price_above', 'LIKE', '%' . $value . '%');
+        });
     }
 }

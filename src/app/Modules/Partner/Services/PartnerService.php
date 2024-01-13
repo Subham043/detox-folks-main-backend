@@ -83,7 +83,9 @@ class CommonFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property)
     {
-        $query->where('image_title', 'LIKE', '%' . $value . '%')
-        ->orWhere('image_alt', 'LIKE', '%' . $value . '%');
+        $query->where(function($q) use($value){
+            $q->where('image_title', 'LIKE', '%' . $value . '%')
+            ->orWhere('image_alt', 'LIKE', '%' . $value . '%');
+        });
     }
 }

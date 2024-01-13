@@ -64,7 +64,9 @@ class CommonFilter implements Filter
 {
     public function __invoke(Builder $query, $value, string $property)
     {
-        $query->where('title', 'LIKE', '%' . $value . '%')
-        ->orWhere('counter', 'LIKE', '%' . $value . '%');
+        $query->where(function($q) use($value){
+            $q->where('title', 'LIKE', '%' . $value . '%')
+            ->orWhere('counter', 'LIKE', '%' . $value . '%');
+        });
     }
 }
