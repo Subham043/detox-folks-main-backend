@@ -21,6 +21,7 @@ class BillingAddressCollection extends JsonResource
             'city' => $this->city,
             'pin' => $this->pin,
             'address' => $this->address,
+            'map_information' => $this->map_information,
             'is_active' => $this->is_active,
             'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => $this->updated_at->diffForHumans(),

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class BillingAddress extends Model
 {
@@ -25,6 +26,7 @@ class BillingAddress extends Model
         'city',
         'pin',
         'address',
+        'map_information',
         'user_id',
         'is_active',
     ];
@@ -34,6 +36,18 @@ class BillingAddress extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    protected $attributes = [
+        'map_information' => null,
+    ];
+
+    protected function mapInformation(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => !empty($this->map_information) ? json_decode($this->map_information) : null,
+            set: fn (string $value) => !empty($value) ? json_encode($value) : null,
+        );
+    }
 
     public function user()
     {

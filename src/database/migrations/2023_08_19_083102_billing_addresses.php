@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('city', 255)->nullable();
             $table->string('pin', 255)->nullable();
             $table->text('address')->nullable();
+            $table->text('map_information')->nullable();
             $table->boolean('is_active')->default(0);
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
@@ -32,3 +33,5 @@ return new class extends Migration
         Schema::dropIfExists('billing_addresses');
     }
 };
+
+// ALTER TABLE `billing_addresses` ADD `map_information` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL AFTER `address`;

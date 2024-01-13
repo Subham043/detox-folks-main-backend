@@ -25,6 +25,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Ixudra\Curl\Facades\Curl;
 
 class OrderService
@@ -91,9 +92,7 @@ class OrderService
             'order' => function($qry) {
                 $qry->where('user_id', auth()->user()->id);
             },
-        ])->whereHas('order', function($qry){
-            $qry->where('user_id', auth()->user()->id);
-        })->whereHas('product', function($qry){
+        ])->whereHas('product', function($qry){
             $qry->with([
                 'categories',
                 'sub_categories',
@@ -103,7 +102,7 @@ class OrderService
                     $q->orderBy('min_quantity', 'asc');
                 },
             ]);
-        })->latest();
+        })->groupBy('slug')->latest();
         return QueryBuilder::for($query)
                 ->paginate($total)
                 ->appends(request()->query());
@@ -229,6 +228,7 @@ class OrderService
                 'discount_in_price' => $cart->product_price->discount_in_price,
                 'quantity' => $cart->quantity,
                 'amount' => $cart->amount,
+                'unit' => $cart->product->cart_quantity_specification,
                 'order_id' => $order->id,
             ]);
         }

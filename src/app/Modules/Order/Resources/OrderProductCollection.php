@@ -26,6 +26,7 @@ class OrderProductCollection extends JsonResource
             'discount_in_price' => $this->discount_in_price,
             'quantity' => $this->quantity,
             'amount' => $this->amount,
+            'unit' => $this->unit,
             'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => $this->updated_at->diffForHumans(),
         ];

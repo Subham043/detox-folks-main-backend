@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('discount_in_price', 500);
             $table->string('quantity', 500);
             $table->string('amount', 500);
+            $table->string('unit', 500)->default('pieces');
             $table->foreignId('order_id')->nullable()->constrained('orders')->nullOnDelete();
             $table->timestamps();
             $table->index(['id', 'created_at']);
@@ -37,3 +38,5 @@ return new class extends Migration
         Schema::dropIfExists('order_products');
     }
 };
+
+// ALTER TABLE `order_products` ADD `unit` VARCHAR(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pieces' AFTER `amount`;
