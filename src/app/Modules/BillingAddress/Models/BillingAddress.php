@@ -44,7 +44,7 @@ class BillingAddress extends Model
     protected function mapInformation(): Attribute
     {
         return Attribute::make(
-            get: fn () => json_decode($this->map_information),
+            get: fn ($value) => json_decode($value),
             set: fn ($value) => !empty($value) ? json_encode($value) : null,
         );
     }
