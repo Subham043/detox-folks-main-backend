@@ -32,7 +32,7 @@ class BillingAddressRequest extends FormRequest
             'city' => ['required', 'string', 'max:255'],
             'pin' => ['required', 'numeric'],
             'address' => ['required', 'string', 'max:255'],
-            'map_information' => ['nullable', 'string'],
+            'map_information' => ['nullable'],
             'is_active' => 'required|boolean',
         ];
     }
