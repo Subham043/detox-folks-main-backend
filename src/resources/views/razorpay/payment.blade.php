@@ -124,9 +124,10 @@
         window.onload = setPrice;
 
         const verifyPayment = async (data) => {
-            const response = await axios.post('{{route('verify_razorpay_payment', $order->id)}}', data)
-            window.location.replace('{{route('razorpay_payment_success')}}');
             try {
+                const response = await axios.post('{{route('verify_razorpay_payment', $order->id)}}', data)
+                // window.location.replace('{{route('razorpay_payment_success')}}');
+                window.location.replace('{{config('app.main_url').'/account/orders/'.$order->id.'?order_placed=true'}}');
             }catch (error){
                 console.log(error);
                 if(error?.response?.data?.errors?.razorpay_order_id){

@@ -24,8 +24,8 @@
                 <div class="form-holder">
                     <div class="form-content">
                         <div class="form-items">
-                            <div class="website-logo-inside mb-0 text-center pt-5 mb-3">
-                                <a href="{{config('app.main_url')}}">
+                            <div class="website-logo-inside text-center pt-5 mb-3">
+                                <a href="{{config('app.main_url')."/account/orders"}}">
                                     <div class="logo">
                                         <img src="{{ asset('payment/logo.png') }}" />
                                     </div>
