@@ -8,10 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Sitemap\Contracts\Sitemapable;
-use Spatie\Sitemap\Tags\Url;
 
-class Blog extends Model implements Sitemapable
+class Blog extends Model
 {
     use HasFactory, LogsActivity;
 
@@ -94,10 +92,5 @@ class Blog extends Model implements Sitemapable
             )
         ->logFillable()
         ->logOnlyDirty();
-    }
-
-    public function toSitemapTag(): Url | string | array
-    {
-        return route('blogs_detail.get', $this->slug);
     }
 }

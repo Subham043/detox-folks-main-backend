@@ -29,6 +29,18 @@ class OrderAdminStatusController extends Controller
                     'order_id' => $id,
                 ]);
                 return redirect()->back()->with('success_status', 'Order confirmed successfully.');
+            }elseif(!in_array(OrderEnumStatus::PACKED, $order_status->pluck('status')->toArray())){
+                OrderStatus::create([
+                    'status' => OrderEnumStatus::PACKED->value,
+                    'order_id' => $id,
+                ]);
+                return redirect()->back()->with('success_status', 'Order is out for delivery.');
+            }elseif(!in_array(OrderEnumStatus::READY, $order_status->pluck('status')->toArray())){
+                OrderStatus::create([
+                    'status' => OrderEnumStatus::READY->value,
+                    'order_id' => $id,
+                ]);
+                return redirect()->back()->with('success_status', 'Order is out for delivery.');
             }elseif(!in_array(OrderEnumStatus::OFD, $order_status->pluck('status')->toArray())){
                 OrderStatus::create([
                     'status' => OrderEnumStatus::OFD->value,

@@ -7,10 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Sitemap\Contracts\Sitemapable;
-use Spatie\Sitemap\Tags\Url;
 
-class ProductSpecification extends Model implements Sitemapable
+class ProductSpecification extends Model
 {
     use HasFactory, LogsActivity;
 
@@ -50,10 +48,5 @@ class ProductSpecification extends Model implements Sitemapable
             )
         ->logFillable()
         ->logOnlyDirty();
-    }
-
-    public function toSitemapTag(): Url | string | array
-    {
-        return route('product_specifications_detail.get', $this->slug);
     }
 }

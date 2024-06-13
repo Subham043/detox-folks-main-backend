@@ -15,6 +15,7 @@ class RazorpayService
             'receipt'         => $receipt,
             'amount'          => $amount*100, // 39900 rupees in paise
             'currency'        => 'INR',
+            'method'        => 'upi',
             'partial_payment' => false,
         ];
 
@@ -31,7 +32,7 @@ class RazorpayService
             'speed'        => 'normal',
         ];
 
-        $razorpayOrder = $api->payment->fetch($razorpay_payment_id)->refund($refundData);
+        $api->payment->fetch($razorpay_payment_id)->refund($refundData);
     }
 
     public function payment_verify(array $data): bool

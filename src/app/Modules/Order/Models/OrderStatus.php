@@ -29,7 +29,7 @@ class OrderStatus extends Model
     ];
 
     protected $attributes = [
-        'status' => OrderEnumStatus::PROCESSING,
+        'status' => OrderEnumStatus::PLACED,
     ];
 
     public function order()

@@ -4,15 +4,14 @@ namespace App\Modules\SubCategory\Models;
 
 use App\Modules\Authentication\Models\User;
 use App\Modules\Category\Models\Category;
+use App\Modules\Product\Models\Product;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Sitemap\Contracts\Sitemapable;
-use Spatie\Sitemap\Tags\Url;
 
-class SubCategory extends Model implements Sitemapable
+class SubCategory extends Model
 {
     use HasFactory, LogsActivity;
 
@@ -110,10 +109,5 @@ class SubCategory extends Model implements Sitemapable
             )
         ->logFillable()
         ->logOnlyDirty();
-    }
-
-    public function toSitemapTag(): Url | string | array
-    {
-        return route('sub_categories_detail.get', $this->slug);
     }
 }

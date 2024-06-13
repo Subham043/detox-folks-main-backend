@@ -8,9 +8,6 @@ use App\Modules\Cart\Requests\CartUpdateRequest;
 use App\Modules\Cart\Services\CartAmountService;
 use App\Modules\Cart\Services\CartService;
 use App\Modules\Charge\Resources\UserChargeCollection;
-use App\Modules\Coupon\Resources\CouponCollection;
-use App\Modules\Coupon\Services\AppliedCouponService;
-use App\Modules\Tax\Resources\TaxCollection;
 
 class CartUpdateController extends Controller
 {
@@ -33,12 +30,8 @@ class CartUpdateController extends Controller
                 'message' => "Cart updated successfully.",
                 'cart' => CartCollection::make($this->cartService->getById($id)),
                 'cart_subtotal' => (new CartAmountService())->get_subtotal(),
-                'tax' => TaxCollection::make((new CartAmountService())->get_tax()),
-                'total_tax' => (new CartAmountService())->get_tax_price(),
                 'cart_charges' => UserChargeCollection::collection((new CartAmountService())->get_all_charges()),
                 'total_charges' => (new CartAmountService())->get_charge_price(),
-                "coupon_applied" => !empty((new AppliedCouponService)->getCouponApplied()) ? CouponCollection::make((new AppliedCouponService)->getCouponApplied()->coupon) : null,
-                'discount_price' => (new CartAmountService())->get_discount_price(),
                 'total_price' => (new CartAmountService())->get_total_price(),
             ], 200);
         } catch (\Throwable $th) {

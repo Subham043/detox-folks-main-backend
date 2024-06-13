@@ -12,8 +12,6 @@ use App\Modules\BillingInformation\Models\BillingInformation;
 use App\Modules\Cart\Models\Cart;
 use App\Modules\Cart\Services\CartAmountService;
 use App\Modules\Cart\Services\CartService;
-use App\Modules\Coupon\Models\AppliedCoupon;
-use App\Modules\Coupon\Services\AppliedCouponService;
 use App\Modules\Order\Models\Order;
 use App\Modules\Order\Models\OrderCharge;
 use App\Modules\Order\Models\OrderPayment;
@@ -25,8 +23,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
-use Ixudra\Curl\Facades\Curl;
 
 class OrderService
 {
@@ -197,20 +193,8 @@ class OrderService
             'include_gst' => $data['include_gst'],
             'order_mode' => $data['order_mode'],
             'subtotal' => (new CartAmountService())->get_subtotal(),
-            'total_tax' => (new CartAmountService())->get_tax_price(),
             'total_charges' => (new CartAmountService())->get_charge_price(),
-            'discount_price' => (new CartAmountService())->get_discount_price(),
             'total_price' => (new CartAmountService())->get_total_price(),
-            'coupon_name' => !empty((new AppliedCouponService)->getCouponApplied()) ? (new AppliedCouponService)->getCouponApplied()->coupon->coupon_name : null,
-            'coupon_code' => !empty((new AppliedCouponService)->getCouponApplied()) ? (new AppliedCouponService)->getCouponApplied()->coupon->coupon_code : null,
-            'coupon_description' => !empty((new AppliedCouponService)->getCouponApplied()) ? (new AppliedCouponService)->getCouponApplied()->coupon->coupon_description : null,
-            'coupon_discount' => !empty((new AppliedCouponService)->getCouponApplied()) ? (new AppliedCouponService)->getCouponApplied()->coupon->coupon_discount : null,
-            'coupon_maximum_dicount_in_price' => !empty((new AppliedCouponService)->getCouponApplied()) ? (new AppliedCouponService)->getCouponApplied()->coupon->coupon_maximum_dicount_in_price : null,
-            'coupon_maximum_number_of_use' => !empty((new AppliedCouponService)->getCouponApplied()) ? (new AppliedCouponService)->getCouponApplied()->coupon->coupon_maximum_number_of_use : null,
-            'coupon_minimum_cart_value' => !empty((new AppliedCouponService)->getCouponApplied()) ? (new AppliedCouponService)->getCouponApplied()->coupon->coupon_minimum_cart_value : null,
-            'tax_slug' => (new CartAmountService())->get_tax()->tax_slug,
-            'tax_name' => (new CartAmountService())->get_tax()->tax_name,
-            'tax_in_percentage' => (new CartAmountService())->get_tax()->tax_in_percentage,
         ]);
         $order->user_id = auth()->user()->id;
         $order->save();
@@ -258,12 +242,11 @@ class OrderService
             ]);
         }
         OrderStatus::create([
-            'status' => OrderEnumStatus::PROCESSING->value,
+            'status' => OrderEnumStatus::PLACED->value,
             'order_id' => $order->id,
         ]);
         if($data['mode_of_payment'] == PaymentMode::COD->value){
             Cart::where('user_id', auth()->user()->id)->delete();
-            AppliedCoupon::where('user_id', auth()->user()->id)->delete();
         }
         return Order::with([
             'products',

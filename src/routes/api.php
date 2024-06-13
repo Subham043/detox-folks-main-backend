@@ -32,13 +32,9 @@ use App\Modules\Cart\Controllers\CartPaginateController;
 use App\Modules\Cart\Controllers\CartUpdateController;
 use App\Modules\Category\Controllers\UserCategoryDetailController;
 use App\Modules\Category\Controllers\UserCategoryPaginateController;
-use App\Modules\Counter\Controllers\UserCounterAllController;
-use App\Modules\Coupon\Controllers\ApplyCouponController;
-use App\Modules\Coupon\Controllers\RemoveCouponController;
 use App\Modules\Enquiry\ContactForm\Controllers\ContactFormCreateController;
 use App\Modules\Feature\Controllers\UserFeatureAllController;
 use App\Modules\GlobalSearch\Controllers\UserGlobalSearchPaginateController;
-use App\Modules\HomePage\Banner\Controllers\UserBannerAllController;
 use App\Modules\Legal\Controllers\UserLegalAllController;
 use App\Modules\Legal\Controllers\UserLegalDetailController;
 use App\Modules\Order\Controllers\LatestOrderProductsPaginateController;
@@ -49,20 +45,11 @@ use App\Modules\Order\Controllers\OrderPaginateController;
 use App\Modules\Order\Controllers\OrderPlacedDetailController;
 use App\Modules\Order\Controllers\OrderPlacedPaginateController;
 use App\Modules\Order\Controllers\PlaceOrderController;
-use App\Modules\Partner\Controllers\UserPartnerAllController;
 use App\Modules\Product\Controllers\UserProductDetailController;
 use App\Modules\Product\Controllers\UserProductPaginateController;
-use App\Modules\Seo\Controllers\UserSeoDetailController;
-use App\Modules\Settings\Controllers\General\UserGeneralController;
 use App\Modules\SubCategory\Controllers\UserSubCategoryDetailController;
 use App\Modules\SubCategory\Controllers\UserSubCategoryPaginateController;
 use App\Modules\Testimonial\Controllers\UserTestimonialAllController;
-use App\Modules\Wishlist\Controllers\WishlistAllController;
-use App\Modules\Wishlist\Controllers\WishlistCreateController;
-use App\Modules\Wishlist\Controllers\WishlistDeleteController;
-use App\Modules\Wishlist\Controllers\WishlistDetailController;
-use App\Modules\Wishlist\Controllers\WishlistPaginateController;
-use App\Modules\Wishlist\Controllers\WishlistUpdateController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -96,14 +83,6 @@ Route::prefix('contact-form')->group(function () {
     Route::post('/', [ContactFormCreateController::class, 'post'])->name('user.contact_form.create');
 });
 
-Route::prefix('counter')->group(function () {
-    Route::get('/', [UserCounterAllController::class, 'get'])->name('user.counter.all');
-});
-
-Route::prefix('partner')->group(function () {
-    Route::get('/', [UserPartnerAllController::class, 'get'])->name('user.partner.all');
-});
-
 Route::prefix('testimonial')->group(function () {
     Route::get('/', [UserTestimonialAllController::class, 'get'])->name('user.testimonial.all');
 });
@@ -114,10 +93,6 @@ Route::prefix('feature')->group(function () {
 
 Route::prefix('about-section')->group(function () {
     Route::get('/', [UserAboutMainController::class, 'get'])->name('user.about.main');
-});
-
-Route::prefix('home-page-banner')->group(function () {
-    Route::get('/', [UserBannerAllController::class, 'get'])->name('user.home_page.banner');
 });
 
 Route::prefix('legal')->group(function () {
@@ -135,10 +110,6 @@ Route::prefix('sub-category')->group(function () {
     Route::get('/{slug}', [UserSubCategoryDetailController::class, 'get'])->name('user.sub_category.detail');
 });
 
-Route::prefix('website-detail')->group(function () {
-    Route::get('/', [UserGeneralController::class, 'get'])->name('user.website-detail.all');
-});
-
 Route::prefix('blog')->group(function () {
     Route::get('/', [UserBlogPaginateController::class, 'get'])->name('user.blog.paginate');
     Route::get('/{slug}', [UserBlogDetailController::class, 'get'])->name('user.blog.detail');
@@ -151,10 +122,6 @@ Route::prefix('search')->group(function () {
 Route::prefix('product')->group(function () {
     Route::get('/', [UserProductPaginateController::class, 'get'])->name('user.product.paginate');
     Route::get('/{slug}', [UserProductDetailController::class, 'get'])->name('user.product.detail');
-});
-
-Route::prefix('seo')->group(function () {
-    Route::get('/{slug}', [UserSeoDetailController::class, 'get'])->name('user.seo.detail');
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -183,15 +150,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/delete/{id}', [BillingInformationDeleteController::class, 'delete', 'as' => 'billing_information.delete.get'])->name('billing_information.delete.get');
     });
 
-    Route::prefix('/wishlist')->group(function () {
-        Route::get('/', [WishlistPaginateController::class, 'get', 'as' => 'wishlist.paginate.get'])->name('wishlist.paginate.get');
-        Route::get('/all', [WishlistAllController::class, 'get', 'as' => 'wishlist.all.get'])->name('wishlist.all.get');
-        Route::post('/create', [WishlistCreateController::class, 'post', 'as' => 'wishlist.create.get'])->name('wishlist.create.post');
-        Route::post('/update/{id}', [WishlistUpdateController::class, 'post', 'as' => 'wishlist.update.get'])->name('wishlist.update.post');
-        Route::get('/detail/{id}', [WishlistDetailController::class, 'get', 'as' => 'wishlist.detail.get'])->name('wishlist.detail.get');
-        Route::delete('/delete/{id}', [WishlistDeleteController::class, 'delete', 'as' => 'wishlist.delete.get'])->name('wishlist.delete.get');
-    });
-
     Route::prefix('/cart')->group(function () {
         Route::get('/', [CartPaginateController::class, 'get', 'as' => 'cart.paginate.get'])->name('cart.paginate.get');
         Route::get('/all', [CartAllController::class, 'get', 'as' => 'cart.all.get'])->name('cart.all.get');
@@ -210,11 +168,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/detail/{id}', [OrderDetailController::class, 'get', 'as' => 'order.detail.get'])->name('order.detail.get');
         Route::get('/placed-detail/{id}', [OrderPlacedDetailController::class, 'get', 'as' => 'order.placed_detail.get'])->name('order.placed_detail.get');
         Route::delete('/delete/{id}', [OrderDeleteController::class, 'delete', 'as' => 'order.delete.get'])->name('order.delete.get');
-    });
-
-    Route::prefix('/coupon')->group(function () {
-        Route::post('/apply', [ApplyCouponController::class, 'post', 'as' => 'coupon.apply'])->name('coupon.apply');
-        Route::delete('/remove', [RemoveCouponController::class, 'delete', 'as' => 'coupon.remove'])->name('coupon.remove');
     });
 
     Route::post('/auth/logout', [UserLogoutController::class, 'post', 'as' => 'logout'])->name('user.logout');

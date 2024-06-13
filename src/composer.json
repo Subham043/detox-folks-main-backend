@@ -10,7 +10,6 @@
         "guzzlehttp/guzzle": "^7.2",
         "ixudra/curl": "^6.22",
         "laravel/framework": "^10.10",
-        "laravel/horizon": "^5.15",
         "laravel/sanctum": "^3.2",
         "laravel/telescope": "^4.14",
         "laravel/tinker": "^2.8",
@@ -24,7 +23,6 @@
         "spatie/laravel-health": "^1.22",
         "spatie/laravel-permission": "^5.10",
         "spatie/laravel-query-builder": "^5.2",
-        "spatie/laravel-sitemap": "^6.2",
         "spatie/security-advisories-health-check": "^1.0",
         "stevebauman/purify": "^6.0"
     },

@@ -10,10 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Sitemap\Contracts\Sitemapable;
-use Spatie\Sitemap\Tags\Url;
 
-class Category extends Model implements Sitemapable
+class Category extends Model
 {
     use HasFactory, LogsActivity;
 
@@ -111,10 +109,5 @@ class Category extends Model implements Sitemapable
             )
         ->logFillable()
         ->logOnlyDirty();
-    }
-
-    public function toSitemapTag(): Url | string | array
-    {
-        return route('categories_detail.get', $this->slug);
     }
 }

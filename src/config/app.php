@@ -192,8 +192,6 @@ return [
         /*
          * Package Service Providers...
          */
-
-        App\Providers\HorizonServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         App\Providers\HealthServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
