@@ -12,7 +12,6 @@ class ActivityLogPaginateController extends Controller
 
     public function __construct(ActivityLogService $activityLogService)
     {
-        $this->middleware('permission:list activity logs', ['only' => ['get']]);
         $this->activityLogService = $activityLogService;
     }
 

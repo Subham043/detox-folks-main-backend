@@ -6,17 +6,11 @@
 								<div class="container-fluid">
 
 												<!-- start page title -->
-												@can("list charges")
-																@include("admin.includes.breadcrumb", [
-																				"page" => "Cart Charges",
-																				"page_link" => route("charge.paginate.get"),
-																				"list" => ["Create"],
-																])
-												@endcan
+												<x-includes.breadcrumb link="charge.paginate.get" page="Cart Charges" :list='["Create"]' />
 												<!-- end page title -->
 
 												<div class="row">
-																@include("admin.includes.back_button", ["link" => route("charge.paginate.get")])
+																<x-includes.back-button link="charge.paginate.get" />
 																<div class="col-lg-12">
 																				<form id="countryForm" method="post" action="{{ route("charge.create.post") }}"
 																								enctype="multipart/form-data">

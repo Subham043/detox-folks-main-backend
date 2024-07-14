@@ -12,7 +12,6 @@ class FeatureUpdateController extends Controller
 
     public function __construct(FeatureService $featureService)
     {
-        $this->middleware('permission:edit features', ['only' => ['get','post']]);
         $this->featureService = $featureService;
     }
 

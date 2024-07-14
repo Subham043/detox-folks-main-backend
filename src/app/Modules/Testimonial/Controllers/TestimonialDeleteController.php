@@ -11,7 +11,6 @@ class TestimonialDeleteController extends Controller
 
     public function __construct(TestimonialService $testimonialService)
     {
-        $this->middleware('permission:delete testimonials', ['only' => ['get']]);
         $this->testimonialService = $testimonialService;
     }
 

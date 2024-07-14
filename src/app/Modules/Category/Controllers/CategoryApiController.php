@@ -12,7 +12,6 @@ class CategoryApiController extends Controller
 
     public function __construct(SubCategoryService $subcategoryService)
     {
-        $this->middleware('permission:create products', ['only' => ['post']]);
         $this->subcategoryService = $subcategoryService;
     }
 

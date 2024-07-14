@@ -12,7 +12,6 @@ class LegalPaginateController extends Controller
 
     public function __construct(LegalService $legalService)
     {
-        $this->middleware('permission:list legal pages', ['only' => ['get']]);
         $this->legalService = $legalService;
     }
 

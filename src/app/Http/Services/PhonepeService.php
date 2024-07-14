@@ -2,28 +2,25 @@
 
 namespace App\Http\Services;
 
-use App\Enums\OrderMode;
 use App\Enums\PaymentStatus;
-use App\Modules\Cart\Models\Cart;
-use App\Modules\Order\Models\OrderPayment;
+use App\Modules\Order\Models\Order;
 use Ixudra\Curl\Facades\Curl;
 
 class PhonepeService
 {
 
-    public function generate(string $id, float $amount): string
+    public function generate(string $id, int $user_id, float $amount): string
     {
         $data = array (
             'merchantId' => config('app.phonepe_merchant_id'),
             'merchantTransactionId' => $id,
-            'merchantUserId' => 'MUID123',
+            'merchantUserId' => $user_id,
             'amount' => $amount * 100,
             'redirectUrl' => route('phonepe_response'),
             'redirectMode' => 'POST',
             'callbackUrl' => route('phonepe_response'),
             'mobileNumber' => '9999999999',
-            'paymentInstrument' =>
-            array (
+            'paymentInstrument' => array (
               'type' => 'PAY_PAGE',
             ),
         );
@@ -49,7 +46,7 @@ class PhonepeService
         return $rData->data->instrumentResponse->redirectInfo->url;
     }
 
-    public function verify(array $input):string
+    public function verify(array $input, Order $order):string
     {
         $saltKey = config('app.phonepe_salt_key');
         $saltIndex = config('app.phonepe_salt_index');
@@ -64,19 +61,41 @@ class PhonepeService
                 ->get();
         $rData = json_decode($response);
         if($rData->success==true && $rData->code=="PAYMENT_SUCCESS"){
-            $payment = OrderPayment::where('order_id', $input['transactionId'])->firstOrFail();
-            $payment->status = PaymentStatus::PAID->value;
-            $payment->payment_data = json_encode($rData->data);
-            $payment->save();
-            Cart::where('user_id', $payment->order->user_id)->delete();
-            if($payment->order->order_mode == OrderMode::WEBSITE){
-                return config('app.main_url')."/account/orders/".$input['transactionId']."?order_placed=true";
-            }else{
-                return config('app.main_url')."/account/checkout";
-            }
+            $order->payment->update([
+                'status' => PaymentStatus::PAID->value,
+                'payment_data' => json_encode($input)
+            ]);
+            return route('payment_success');
         }else{
-            return config('app.main_url')."/account/checkout";
+            return route('payment_fail');
         }
+    }
+
+    public function refund(string $transactionId, string $id, int $user_id, float $amount): void
+    {
+        $data = array (
+            'merchantId' => config('app.phonepe_merchant_id'),
+            'merchantUserId' => $user_id,
+            'merchantTransactionId' => $id,
+            'originalTransactionId' => $transactionId,
+            'amount' => $amount * 100,
+        );
+
+        $encode = base64_encode(json_encode($data));
+
+        $saltKey = config('app.phonepe_salt_key');
+        $saltIndex = config('app.phonepe_salt_index');
+
+        $string = $encode.'/pg/v1/refund'.$saltKey;
+        $sha256 = hash('sha256',$string);
+
+        $finalXHeader = $sha256.'###'.$saltIndex;
+
+        Curl::to(config('app.phonepe_refund_url'))
+                ->withHeader('Content-Type:application/json')
+                ->withHeader('X-VERIFY:'.$finalXHeader)
+                ->withData(json_encode(['request' => $encode]))
+                ->post();
     }
 
 }

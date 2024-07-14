@@ -13,6 +13,8 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
-        '/phonepe'
+        '/phonepe',
+        '/pay-u/*',
+        '/razorpay/*',
     ];
 }

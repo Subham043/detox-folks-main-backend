@@ -11,7 +11,6 @@ class ProductImageDeleteController extends Controller
 
     public function __construct(ProductImageService $productImageService)
     {
-        $this->middleware('permission:delete products', ['only' => ['get']]);
         $this->productImageService = $productImageService;
     }
 

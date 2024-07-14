@@ -16,7 +16,7 @@ class ProductCreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::check();
+        return Auth::check() && Auth::user()->hasRole('Super-Admin|Staff|Inventory Manager');
     }
 
     /**

@@ -12,7 +12,6 @@ class BlogPaginateController extends Controller
 
     public function __construct(BlogService $blogService)
     {
-        $this->middleware('permission:list blogs', ['only' => ['get']]);
         $this->blogService = $blogService;
     }
 

@@ -14,7 +14,6 @@ class SubCategoryUpdateController extends Controller
 
     public function __construct(SubCategoryService $subcategoryService, CategoryService $categoryService)
     {
-        $this->middleware('permission:edit categories', ['only' => ['get','post']]);
         $this->subcategoryService = $subcategoryService;
         $this->categoryService = $categoryService;
     }

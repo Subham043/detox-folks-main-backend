@@ -15,12 +15,11 @@ class OrderAdminPaginateController extends Controller
 
     public function __construct(OrderService $orderService)
     {
-        $this->middleware('permission:list orders', ['only' => ['get']]);
         $this->orderService = $orderService;
     }
 
     public function get(Request $request){
-        $data = $this->orderService->paginate_admin($request->total ?? 10);
+        $data = $this->orderService->paginateForAdmin($request->total ?? 10);
         return view('admin.pages.order.paginate', compact(['data']))
             ->with('search', $request->query('filter')['search'] ?? '')
             ->with('payment_status', $request->query('filter')['has_payment_status'] ?? 'all')

@@ -11,7 +11,6 @@ class CategoryDeleteController extends Controller
 
     public function __construct(CategoryService $categoryService)
     {
-        $this->middleware('permission:delete categories', ['only' => ['get']]);
         $this->categoryService = $categoryService;
     }
 

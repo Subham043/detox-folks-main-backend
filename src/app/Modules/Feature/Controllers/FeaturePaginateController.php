@@ -12,7 +12,6 @@ class FeaturePaginateController extends Controller
 
     public function __construct(FeatureService $featureService)
     {
-        $this->middleware('permission:list features', ['only' => ['get']]);
         $this->featureService = $featureService;
     }
 

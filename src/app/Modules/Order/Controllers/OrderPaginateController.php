@@ -17,7 +17,7 @@ class OrderPaginateController extends Controller
     }
 
     public function get(Request $request){
-        $data = $this->orderService->paginate($request->total ?? 10);
+        $data = $this->orderService->paginateLatestPlacedByUser($request->total ?? 10);
         return OrderCollection::collection($data);
     }
 

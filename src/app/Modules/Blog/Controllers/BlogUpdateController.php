@@ -12,7 +12,6 @@ class BlogUpdateController extends Controller
 
     public function __construct(BlogService $blogService)
     {
-        $this->middleware('permission:edit blogs', ['only' => ['get','post']]);
         $this->blogService = $blogService;
     }
 

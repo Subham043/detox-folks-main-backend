@@ -82,9 +82,11 @@
 												options = {
 																"key": "{{ config("app.razorpay.key") }}", // Enter the Key ID generated from the Dashboard
 																"amount": parseFloat({{ $order->total_price }}) *
-																100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+																				100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
 																"order_id": "{{ $order->payment->razorpay_order_id }}",
 																"currency": "INR",
+																"callback_url": '{{ route("verify_razorpay_payment", $order->id) }}',
+																"redirect": true,
 																"name": "Parcelcounter",
 																"description": "Order Transaction",
 																"image": "{{ asset("payment/logo.png") }}",
@@ -109,7 +111,7 @@
 																				document.getElementById('payment_success').style.display = 'block';
 																				document.getElementById('payment_cancelled').style.display = 'none';
 																				document.getElementById('payment_failed').style.display = 'none';
-																				verifyPayment(response);
+																				// verifyPayment(response);
 																},
 																"prefill": {
 																				"name": "{{ $order->name }}",
@@ -147,9 +149,9 @@
 								const verifyPayment = async (data) => {
 												try {
 																const response = await axios.post('{{ route("verify_razorpay_payment", $order->id) }}', data)
-																// window.location.replace('{{ route("razorpay_payment_success") }}');
-																window.location.replace(
-																				'{{ config("app.main_url") . "/account/orders/" . $order->id . "?order_placed=true" }}');
+																window.location.replace('{{ route("payment_success") }}');
+																// window.location.replace(
+																// 																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																'{{ config("app.main_url") . "/account/orders/" . $order->id . "?order_placed=true" }}');
 												} catch (error) {
 																console.log(error);
 																if (error?.response?.data?.errors?.razorpay_order_id) {

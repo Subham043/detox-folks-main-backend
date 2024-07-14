@@ -12,7 +12,6 @@ class ContactFormPaginateController extends Controller
 
     public function __construct(ContactFormService $contactFormService)
     {
-        $this->middleware('permission:list enquiries', ['only' => ['get']]);
         $this->contactFormService = $contactFormService;
     }
 

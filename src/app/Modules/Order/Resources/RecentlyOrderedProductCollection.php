@@ -5,7 +5,7 @@ namespace App\Modules\Order\Resources;
 use App\Modules\Product\Resources\UserProductCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LatestOrderProductCollection extends JsonResource
+class RecentlyOrderedProductCollection extends JsonResource
 {
     /**
      * Transform the resource collection into an array.

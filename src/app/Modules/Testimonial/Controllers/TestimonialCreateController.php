@@ -12,7 +12,6 @@ class TestimonialCreateController extends Controller
 
     public function __construct(TestimonialService $testimonialService)
     {
-        $this->middleware('permission:create testimonials', ['only' => ['get','post']]);
         $this->testimonialService = $testimonialService;
     }
 

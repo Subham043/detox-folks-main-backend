@@ -31,7 +31,6 @@ class PasswordUpdateController extends Controller
             (new RateLimitService($request))->clearRateLimit();
             return response()->json(["message" => "Password Updated successfully."], 200);
         } catch (\Throwable $th) {
-            // throw $th;
             return response()->json(["error"=>"something went wrong. Please try again"], 400);
         }
 

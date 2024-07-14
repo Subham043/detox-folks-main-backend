@@ -6,11 +6,7 @@
 								<div class="container-fluid">
 
 												<!-- start page title -->
-												@include("admin.includes.breadcrumb", [
-																"page" => "Cart Charges",
-																"page_link" => route("charge.paginate.get"),
-																"list" => ["List"],
-												])
+												<x-includes.breadcrumb link="charge.paginate.get" page="Cart Charges" :list='["List"]' />
 												<!-- end page title -->
 
 												<div class="row">
@@ -25,18 +21,13 @@
 																																<div class="row g-4 mb-3">
 																																				<div class="col-sm-auto">
 																																								<div>
-																																												@can("create charges")
-																																																<a href="{{ route("charge.create.get") }}" type="button"
-																																																				class="btn btn-success add-btn" id="create-btn"><i
-																																																								class="ri-add-line me-1 align-bottom"></i> Create</a>
-																																												@endcan
+																																												<a href="{{ route("charge.create.get") }}" type="button"
+																																																class="btn btn-success add-btn" id="create-btn"><i
+																																																				class="ri-add-line me-1 align-bottom"></i> Create</a>
 																																								</div>
 																																				</div>
 																																				<div class="col-sm">
-																																								@include("admin.includes.search_list", [
-																																												"link" => route("charge.paginate.get"),
-																																												"search" => $search,
-																																								])
+																																								<x-includes.search :search="$search" link="charge.paginate.get" />
 																																				</div>
 																																</div>
 																																<div class="table-responsive table-card mb-1 mt-3">
@@ -70,19 +61,14 @@
 																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
 																																																								<td>
 																																																												<div class="d-flex gap-2">
-																																																																@can("edit charges")
-																																																																				<div class="edit">
-																																																																								<a href="{{ route("charge.update.get", $item->id) }}"
-																																																																												class="btn btn-sm btn-primary edit-item-btn">Edit</a>
-																																																																				</div>
-																																																																@endcan
-
-																																																																@can("delete charges")
-																																																																				<div class="remove">
-																																																																								<button class="btn btn-sm btn-danger remove-item-btn"
-																																																																												data-link="{{ route("charge.delete.get", $item->id) }}">Delete</button>
-																																																																				</div>
-																																																																@endcan
+																																																																<div class="edit">
+																																																																				<a href="{{ route("charge.update.get", $item->id) }}"
+																																																																								class="btn btn-sm btn-primary edit-item-btn">Edit</a>
+																																																																</div>
+																																																																<div class="remove">
+																																																																				<button class="btn btn-sm btn-danger remove-item-btn"
+																																																																								data-link="{{ route("charge.delete.get", $item->id) }}">Delete</button>
+																																																																</div>
 																																																												</div>
 																																																								</td>
 																																																				</tr>
@@ -91,7 +77,7 @@
 																																												</tbody>
 																																								</table>
 																																				@else
-																																								@include("admin.includes.no_result")
+																																								<x-includes.no-result />
 																																				@endif
 																																</div>
 																																{{ $data->onEachSide(5)->links("admin.includes.pagination") }}

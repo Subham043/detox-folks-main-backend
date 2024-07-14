@@ -23,7 +23,7 @@ class ChargeService
         return Charge::where('is_active', true)->get();
     }
 
-    public function main_exclude_all(float $cart_price): Collection
+    public function main_exclude_all(): Collection
     {
         return Charge::where('is_active', true)->get();
     }

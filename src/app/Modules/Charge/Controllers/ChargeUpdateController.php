@@ -12,7 +12,6 @@ class ChargeUpdateController extends Controller
 
     public function __construct(ChargeService $chargeService)
     {
-        $this->middleware('permission:edit charges', ['only' => ['get','post']]);
         $this->chargeService = $chargeService;
     }
 

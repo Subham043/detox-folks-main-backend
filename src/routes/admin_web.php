@@ -30,10 +30,6 @@ use App\Modules\Feature\Controllers\FeatureCreateController;
 use App\Modules\Feature\Controllers\FeatureDeleteController;
 use App\Modules\Feature\Controllers\FeaturePaginateController;
 use App\Modules\Feature\Controllers\FeatureUpdateController;
-use App\Modules\Role\Controllers\RoleCreateController;
-use App\Modules\Role\Controllers\RoleDeleteController;
-use App\Modules\Role\Controllers\RolePaginateController;
-use App\Modules\Role\Controllers\RoleUpdateController;
 use App\Modules\Settings\Controllers\ActivityLog\ActivityLogDetailController;
 use App\Modules\Settings\Controllers\ActivityLog\ActivityLogPaginateController;
 use App\Modules\Settings\Controllers\ErrorLogController;
@@ -48,7 +44,7 @@ use App\Modules\Testimonial\Controllers\TestimonialUpdateController;
 use App\Modules\Order\Controllers\OrderAdminCancelController;
 use App\Modules\Order\Controllers\OrderAdminDetailController;
 use App\Modules\Order\Controllers\OrderAdminPaginateController;
-use App\Modules\Order\Controllers\OrderAdminPaymentController;
+use App\Modules\Order\Controllers\OrderAdminCollectPaymentController;
 use App\Modules\Order\Controllers\OrderAdminStatusController;
 use App\Modules\Product\Controllers\ProductCreateController;
 use App\Modules\Product\Controllers\ProductDeleteController;
@@ -97,7 +93,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'get', 'as' => 'dashboard.get'])->name('dashboard.get');
 
-    Route::prefix('/logs')->group(function () {
+    Route::middleware(['role:Super-Admin'])->prefix('/logs')->group(function () {
         Route::get('/error', [ErrorLogController::class, 'get', 'as' => 'error_log.get'])->name('error_log.get');
         Route::prefix('/activity')->group(function () {
             Route::get('/', [ActivityLogPaginateController::class, 'get', 'as' => 'activity_log.paginate.get'])->name('activity_log.paginate.get');
@@ -106,13 +102,13 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::prefix('/contact-form-enquiries')->group(function () {
+    Route::middleware(['role:Super-Admin|Staff'])->prefix('/contact-form-enquiries')->group(function () {
         Route::get('/', [ContactFormPaginateController::class, 'get', 'as' => 'enquiry.contact_form.paginate.get'])->name('enquiry.contact_form.paginate.get');
         Route::get('/excel', [ContactFormExcelController::class, 'get', 'as' => 'enquiry.contact_form.excel.get'])->name('enquiry.contact_form.excel.get');
         Route::get('/delete/{id}', [ContactFormDeleteController::class, 'get', 'as' => 'enquiry.contact_form.delete.get'])->name('enquiry.contact_form.delete.get');
     });
 
-    Route::prefix('/content-management')->group(function () {
+    Route::middleware(['role:Super-Admin|Staff|Content Manager'])->prefix('/content-management')->group(function () {
         Route::prefix('/legal-pages')->group(function () {
             Route::get('/', [LegalPaginateController::class, 'get', 'as' => 'legal.paginate.get'])->name('legal.paginate.get');
             Route::get('/update/{slug}', [LegalUpdateController::class, 'get', 'as' => 'legal.update.get'])->name('legal.update.get');
@@ -156,27 +152,16 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/profile-password-update', [PasswordUpdateController::class, 'post', 'as' => 'password.post'])->name('password.post');
     });
 
-    Route::prefix('/user-management')->group(function () {
-        Route::prefix('/role')->group(function () {
-            Route::get('/', [RolePaginateController::class, 'get', 'as' => 'role.paginate.get'])->name('role.paginate.get');
-            Route::get('/create', [RoleCreateController::class, 'get', 'as' => 'role.create.get'])->name('role.create.get');
-            Route::post('/create', [RoleCreateController::class, 'post', 'as' => 'role.create.get'])->name('role.create.post');
-            Route::get('/update/{id}', [RoleUpdateController::class, 'get', 'as' => 'role.update.get'])->name('role.update.get');
-            Route::post('/update/{id}', [RoleUpdateController::class, 'post', 'as' => 'role.update.get'])->name('role.update.post');
-            Route::get('/delete/{id}', [RoleDeleteController::class, 'get', 'as' => 'role.delete.get'])->name('role.delete.get');
-        });
-
-        Route::prefix('/user')->group(function () {
-            Route::get('/', [UserPaginateController::class, 'get', 'as' => 'user.paginate.get'])->name('user.paginate.get');
-            Route::get('/create', [UserCreateController::class, 'get', 'as' => 'user.create.get'])->name('user.create.get');
-            Route::post('/create', [UserCreateController::class, 'post', 'as' => 'user.create.get'])->name('user.create.post');
-            Route::get('/update/{id}', [UserUpdateController::class, 'get', 'as' => 'user.update.get'])->name('user.update.get');
-            Route::post('/update/{id}', [UserUpdateController::class, 'post', 'as' => 'user.update.get'])->name('user.update.post');
-            Route::get('/delete/{id}', [UserDeleteController::class, 'get', 'as' => 'user.delete.get'])->name('user.delete.get');
-        });
+    Route::middleware(['role:Super-Admin|Staff'])->prefix('/user')->group(function () {
+        Route::get('/', [UserPaginateController::class, 'get', 'as' => 'user.paginate.get'])->name('user.paginate.get');
+        Route::get('/create', [UserCreateController::class, 'get', 'as' => 'user.create.get'])->name('user.create.get');
+        Route::post('/create', [UserCreateController::class, 'post', 'as' => 'user.create.get'])->name('user.create.post');
+        Route::get('/update/{id}', [UserUpdateController::class, 'get', 'as' => 'user.update.get'])->name('user.update.get');
+        Route::post('/update/{id}', [UserUpdateController::class, 'post', 'as' => 'user.update.get'])->name('user.update.post');
+        Route::get('/delete/{id}', [UserDeleteController::class, 'get', 'as' => 'user.delete.get'])->name('user.delete.get');
     });
 
-    Route::prefix('/product-management')->group(function () {
+    Route::middleware(['role:Super-Admin|Staff|Inventory Manager'])->prefix('/product-management')->group(function () {
         Route::prefix('/category')->group(function () {
             Route::get('/', [CategoryPaginateController::class, 'get', 'as' => 'category.paginate.get'])->name('category.paginate.get');
             Route::get('/create', [CategoryCreateController::class, 'get', 'as' => 'category.create.get'])->name('category.create.get');
@@ -232,7 +217,7 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::prefix('/cart-charges')->group(function () {
+    Route::middleware(['role:Super-Admin|Staff'])->prefix('/cart-charges')->group(function () {
         Route::get('/', [ChargePaginateController::class, 'get', 'as' => 'charge.paginate.get'])->name('charge.paginate.get');
         Route::get('/create', [ChargeCreateController::class, 'get', 'as' => 'charge.create.get'])->name('charge.create.get');
         Route::post('/create', [ChargeCreateController::class, 'post', 'as' => 'charge.create.post'])->name('charge.create.post');
@@ -241,12 +226,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/delete/{id}', [ChargeDeleteController::class, 'get', 'as' => 'charge.delete.get'])->name('charge.delete.get');
     });
 
-    Route::prefix('/order')->group(function () {
+    Route::middleware(['role:Super-Admin|Staff'])->prefix('/order')->group(function () {
         Route::get('/', [OrderAdminPaginateController::class, 'get', 'as' => 'order_admin.paginate.get'])->name('order_admin.paginate.get');
         Route::get('/detail/{id}', [OrderAdminDetailController::class, 'get', 'as' => 'order_admin.detail.get'])->name('order_admin.detail.get');
         Route::get('/update-status/{id}', [OrderAdminStatusController::class, 'get', 'as' => 'order_admin.update_order_status.get'])->name('order_admin.update_order_status.get');
         Route::get('/cancel/{id}', [OrderAdminCancelController::class, 'get', 'as' => 'order_admin.cancel.get'])->name('order_admin.cancel.get');
-        Route::get('/payment-update/{id}', [OrderAdminPaymentController::class, 'get', 'as' => 'order_admin.payment_update.get'])->name('order_admin.payment_update.get');
+        Route::get('/payment-update/{id}', [OrderAdminCollectPaymentController::class, 'get', 'as' => 'order_admin.payment_update.get'])->name('order_admin.payment_update.get');
     });
 
     Route::post('/text-editor-image', [TextEditorImageController::class, 'post', 'as' => 'texteditor_image.post'])->name('texteditor_image.post');

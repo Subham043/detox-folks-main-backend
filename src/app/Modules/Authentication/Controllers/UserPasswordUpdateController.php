@@ -33,7 +33,6 @@ class UserPasswordUpdateController extends Controller
                 'message' => "Password Updated successfully.",
             ], 200);
         } catch (\Throwable $th) {
-            // throw $th;
             return response()->json([
                 'message' => "something went wrong. Please try again",
             ], 400);

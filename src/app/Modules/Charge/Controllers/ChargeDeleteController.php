@@ -11,7 +11,6 @@ class ChargeDeleteController extends Controller
 
     public function __construct(ChargeService $chargeService)
     {
-        $this->middleware('permission:delete charges', ['only' => ['get']]);
         $this->chargeService = $chargeService;
     }
 

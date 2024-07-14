@@ -47,14 +47,14 @@
     --vz-vertical-menu-sub-item-hover-color: #5ea3cb;
     --vz-vertical-menu-sub-item-active-color: #5ea3cb;
     --vz-vertical-menu-title-color: #919da9;
-    --vz-vertical-menu-bg-dark: #777c78;
-    --vz-vertical-menu-item-color-dark: #a4b0bf;
+    --vz-vertical-menu-bg-dark: #b8a497;
+    --vz-vertical-menu-item-color-dark: #000;
     --vz-vertical-menu-item-hover-color-dark: #fff;
     --vz-vertical-menu-item-active-color-dark: #fff;
-    --vz-vertical-menu-sub-item-color-dark: #a4b0bf;
+    --vz-vertical-menu-sub-item-color-dark: #000;
     --vz-vertical-menu-sub-item-hover-color-dark: #fff;
     --vz-vertical-menu-sub-item-active-color-dark: #fff;
-    --vz-vertical-menu-title-color-dark: #a4b0bf;
+    --vz-vertical-menu-title-color-dark: #fff;
     --vz-header-bg: #fff;
     --vz-header-item-color: #e9ecef;
     --vz-header-bg-dark: #323835;
@@ -111,6 +111,8 @@
     --vz-input-disabled-bg: #eff2f7;
     --vz-input-group-addon-bg: #eff2f7;
     --vz-input-check-border: var(--vz-input-border);
+    --vz-success-rgb: 140, 109, 82;
+    --vz-primary-rgb: 140, 109, 82;
 }
 [data-layout-mode="dark"] {
     --vz-gray-100: #1a1d21;
@@ -137,7 +139,7 @@
     --vz-vertical-menu-item-color-dark: #89929b;
     --vz-vertical-menu-item-hover-color-dark: #fff;
     --vz-vertical-menu-item-active-color-dark: #fff;
-    --vz-vertical-menu-sub-item-color-dark: #89929b;
+    --vz-vertical-menu-sub-item-color-dark: #000;
     --vz-vertical-menu-sub-item-hover-color-dark: #fff;
     --vz-vertical-menu-sub-item-active-color-dark: #fff;
     --vz-vertical-menu-title-color-dark: #89929b;
@@ -4748,7 +4750,7 @@ strong {
     background-color: rgba(112, 132, 199, 0.18) !important;
 }
 .bg-soft-success {
-    background-color: rgba(106, 218, 125, 0.18) !important;
+    background-color: #b8a4979e !important;
 }
 .bg-soft-info {
     background-color: rgba(88, 202, 234, 0.18) !important;
@@ -11466,7 +11468,7 @@ span.flatpickr-weekday {
     background-size: cover;
 }
 .auth-one-bg .bg-overlay {
-    background: linear-gradient(to right, #ffdb32, #74b106);
+    background: linear-gradient(to right, #ede1d7, #b8a497);
     opacity: 0.9;
 }
 .auth-one-bg .shape {

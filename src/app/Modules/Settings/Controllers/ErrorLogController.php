@@ -14,7 +14,6 @@ class ErrorLogController extends Controller
 
     public function __construct(LaravelLogViewer $laravelLogViewer)
     {
-        $this->middleware('permission:view application error logs', ['only' => ['get']]);
         $this->laravelLogViewer = $laravelLogViewer;
     }
 

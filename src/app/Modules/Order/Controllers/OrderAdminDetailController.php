@@ -11,12 +11,11 @@ class OrderAdminDetailController extends Controller
 
     public function __construct(OrderService $orderService)
     {
-        $this->middleware('permission:list orders', ['only' => ['get']]);
         $this->orderService = $orderService;
     }
 
     public function get($id){
-        $order = $this->orderService->getByIdAdmin($id);
+        $order = $this->orderService->getByIdForAdmin($id);
         return view('admin.pages.order.detail', compact(['order']))
         ->with([
             'order_statuses' => $order->statuses->pluck('status')->toArray(),

@@ -14,7 +14,6 @@ class ProductSpecificationCreateController extends Controller
 
     public function __construct(ProductSpecificationService $productSpecificationService, ProductService $productService)
     {
-        $this->middleware('permission:create products', ['only' => ['get','post']]);
         $this->productSpecificationService = $productSpecificationService;
         $this->productService = $productService;
     }

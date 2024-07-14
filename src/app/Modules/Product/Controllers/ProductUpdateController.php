@@ -16,7 +16,6 @@ class ProductUpdateController extends Controller
 
     public function __construct(ProductService $productService, CategoryService $categoryService, SubCategoryService $subcategoryService)
     {
-        $this->middleware('permission:edit products', ['only' => ['get','post']]);
         $this->productService = $productService;
         $this->categoryService = $categoryService;
         $this->subcategoryService = $subcategoryService;

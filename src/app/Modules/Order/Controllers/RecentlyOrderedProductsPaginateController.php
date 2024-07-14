@@ -3,12 +3,11 @@
 namespace App\Modules\Order\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Order\Resources\LatestOrderProductCollection;
-use App\Modules\Order\Resources\OrderCollection;
+use App\Modules\Order\Resources\RecentlyOrderedProductCollection;
 use App\Modules\Order\Services\OrderService;
 use Illuminate\Http\Request;
 
-class LatestOrderProductsPaginateController extends Controller
+class RecentlyOrderedProductsPaginateController extends Controller
 {
     private $orderService;
 
@@ -18,8 +17,8 @@ class LatestOrderProductsPaginateController extends Controller
     }
 
     public function get(Request $request){
-        $data = $this->orderService->paginateOrderProducts($request->total ?? 10);
-        return LatestOrderProductCollection::collection($data);
+        $data = $this->orderService->paginateRecentlyOrderedProducts($request->total ?? 10);
+        return RecentlyOrderedProductCollection::collection($data);
     }
 
 }

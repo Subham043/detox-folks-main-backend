@@ -12,7 +12,6 @@ class AboutMainController extends Controller
 
     public function __construct(MainService $mainService)
     {
-        $this->middleware('permission:edit about page content', ['only' => ['get','post']]);
         $this->mainService = $mainService;
     }
 

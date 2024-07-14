@@ -14,7 +14,6 @@ class SubCategoryCreateController extends Controller
 
     public function __construct(SubCategoryService $subcategoryService, CategoryService $categoryService)
     {
-        $this->middleware('permission:create categories', ['only' => ['get','post']]);
         $this->subcategoryService = $subcategoryService;
         $this->categoryService = $categoryService;
     }

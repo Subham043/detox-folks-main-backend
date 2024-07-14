@@ -17,7 +17,7 @@ class OrderPlacedPaginateController extends Controller
     }
 
     public function get(Request $request){
-        $data = $this->orderService->paginatePlaced($request->total ?? 10);
+        $data = $this->orderService->paginateLatestPlacedByUserPaymentCompleted($request->total ?? 10);
         return OrderCollection::collection($data);
     }
 

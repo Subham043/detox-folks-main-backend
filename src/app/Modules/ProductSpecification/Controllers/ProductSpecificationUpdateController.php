@@ -12,7 +12,6 @@ class ProductSpecificationUpdateController extends Controller
 
     public function __construct(ProductSpecificationService $productSpecificationService)
     {
-        $this->middleware('permission:edit products', ['only' => ['get','post']]);
         $this->productSpecificationService = $productSpecificationService;
     }
 

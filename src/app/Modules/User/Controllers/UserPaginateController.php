@@ -12,7 +12,6 @@ class UserPaginateController extends Controller
 
     public function __construct(UserService $userService)
     {
-        $this->middleware('permission:list users', ['only' => ['get']]);
         $this->userService = $userService;
     }
 

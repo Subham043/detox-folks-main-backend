@@ -3,11 +3,14 @@
 namespace App\Modules\Order\Models;
 
 use App\Enums\OrderMode;
+use App\Enums\PaymentMode;
+use App\Enums\PaymentStatus;
 use App\Modules\Authentication\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Database\Eloquent\Builder;
 
 class Order extends Model
 {
@@ -54,6 +57,13 @@ class Order extends Model
         'order_mode' => OrderMode::WEBSITE,
     ];
 
+    protected array $orderWith = [
+        'products',
+        'charges',
+        'statuses',
+        'payment',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id')->withDefault();
@@ -77,6 +87,36 @@ class Order extends Model
     public function payment()
     {
         return $this->hasOne(OrderPayment::class, 'order_id');
+    }
+
+    public function scopeCommonWith(Builder $query): Builder
+    {
+        return $query->with($this->orderWith);
+    }
+
+    public function scopePlacedByUser(Builder $query): Builder
+    {
+        return $query->where('user_id', auth()->user()->id);
+    }
+
+    public function scopePaymentCompleted(Builder $query): Builder
+    {
+        return $query->whereHas('payment', function($qry){
+            $qry->where(function($q){
+                $q->where('mode', PaymentMode::COD);
+            })->orWhere(function($q){
+                $q->where(function($qr){
+                    $qr->where('mode', PaymentMode::PHONEPE)->orWhere('mode', PaymentMode::RAZORPAY)->orWhere('mode', PaymentMode::PAYU)->orWhere('mode', PaymentMode::CASHFREE);
+                })->where('status', '<>', PaymentStatus::PENDING);
+            });
+        });
+    }
+
+    public function scopePaymentPendingFrom(Builder $query, $order_id, $mode): Builder
+    {
+        return $query->whereHas('payment', function($qry) use($order_id, $mode){
+            $qry->where('mode', $mode)->where('status', PaymentStatus::PENDING)->where('order_id', $order_id);
+        });
     }
 
     public function getActivitylogOptions(): LogOptions

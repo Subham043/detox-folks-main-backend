@@ -12,7 +12,6 @@ class TestimonialUpdateController extends Controller
 
     public function __construct(TestimonialService $testimonialService)
     {
-        $this->middleware('permission:edit testimonials', ['only' => ['get','post']]);
         $this->testimonialService = $testimonialService;
     }
 

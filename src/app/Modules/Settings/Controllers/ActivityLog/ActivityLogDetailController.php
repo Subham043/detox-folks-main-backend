@@ -12,7 +12,6 @@ class ActivityLogDetailController extends Controller
 
     public function __construct(ActivityLogService $activityLogService)
     {
-        $this->middleware('permission:view activity log detail', ['only' => ['get']]);
         $this->activityLogService = $activityLogService;
     }
 

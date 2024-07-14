@@ -12,7 +12,6 @@ class ChargePaginateController extends Controller
 
     public function __construct(ChargeService $chargeService)
     {
-        $this->middleware('permission:list charges', ['only' => ['get']]);
         $this->chargeService = $chargeService;
     }
 

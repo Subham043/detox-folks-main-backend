@@ -7,21 +7,14 @@ use App\Enums\PaymentStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Services\RazorpayService;
 use App\Modules\Cart\Models\Cart;
-use App\Modules\Order\Models\Order;
 use App\Modules\Order\Requests\RazorpayVerifyPaymentRequest;
+use App\Modules\Order\Services\OrderService;
 
 class RazorpayController extends Controller
 {
 
     public function get(string $order_id){
-        $order = Order::with([
-            'products',
-            'charges',
-            'statuses',
-            'payment',
-        ])->whereHas('payment', function($qry){
-            $qry->where('mode', PaymentMode::RAZORPAY)->where('status', PaymentStatus::PENDING);
-        })->findOrFail($order_id);
+        $order = (new OrderService)->getOrderPlacedByIdPaymentPendingVia($order_id, PaymentMode::RAZORPAY);
         return view('razorpay.payment')->with([
             'order' => $order
         ]);
@@ -29,33 +22,20 @@ class RazorpayController extends Controller
 
     public function post(RazorpayVerifyPaymentRequest $request, string $order_id){
 
-        $order = Order::with([
-            'products',
-            'charges',
-            'statuses',
-            'payment',
-        ])->whereHas('payment', function($qry) use($request){
-            $qry->where('mode', PaymentMode::RAZORPAY)->where('status', PaymentStatus::PENDING)->where('razorpay_order_id', $request->razorpay_order_id);
-        })->findOrFail($order_id);
-
+        $order = (new OrderService)->getOrderPlacedByIdPaymentPendingVia($order_id, PaymentMode::RAZORPAY);
         try {
             //code...
-            $order->payment->update([
+            (new OrderService)->updateOrderPayment([
                 'razorpay_payment_id' => $request->razorpay_payment_id,
                 'razorpay_signature' => $request->razorpay_signature,
+                'payment_data' => json_encode((new RazorpayService)->get_payment_detail($request->razorpay_payment_id)),
                 'status' => PaymentStatus::PAID->value
-            ]);
+            ], $order);
 
             Cart::where('user_id', $order->user_id)->delete();
-
-            return response()->json([
-                'message' => "Payment done successfully.",
-            ], 200);
+            return redirect(route('payment_success'));
         } catch (\Throwable $th) {
-            throw $th;
-            return response()->json([
-                'message' => "Something went wrong. Please try again",
-            ], 400);
+            return redirect(route('payment_fail'));
         }
 
     }

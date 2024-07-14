@@ -12,7 +12,6 @@ class SubCategoryPaginateController extends Controller
 
     public function __construct(SubCategoryService $subcategoryService)
     {
-        $this->middleware('permission:list categories', ['only' => ['get']]);
         $this->subcategoryService = $subcategoryService;
     }
 

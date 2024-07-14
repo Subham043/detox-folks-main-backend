@@ -12,7 +12,6 @@ class ProductSpecificationPaginateController extends Controller
 
     public function __construct(ProductSpecificationService $productSpecificationService)
     {
-        $this->middleware('permission:list products', ['only' => ['get']]);
         $this->productSpecificationService = $productSpecificationService;
     }
 

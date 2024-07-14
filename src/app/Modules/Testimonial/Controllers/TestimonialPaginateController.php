@@ -12,7 +12,6 @@ class TestimonialPaginateController extends Controller
 
     public function __construct(TestimonialService $testimonialService)
     {
-        $this->middleware('permission:list testimonials', ['only' => ['get']]);
         $this->testimonialService = $testimonialService;
     }
 

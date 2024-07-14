@@ -12,7 +12,6 @@ class LegalUpdateController extends Controller
 
     public function __construct(LegalService $legalService)
     {
-        $this->middleware('permission:edit legal pages', ['only' => ['get','post']]);
         $this->legalService = $legalService;
     }
 

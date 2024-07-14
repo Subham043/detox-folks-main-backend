@@ -30,7 +30,7 @@ class CartAmountService
     }
 
     public function get_all_charges() {
-        $charges = (new ChargeService)->main_exclude_all($this->get_subtotal());
+        $charges = (new ChargeService)->main_exclude_all();
         return $charges->map(function($item, $key) {
             if($this->get_subtotal()<=$item->include_charges_for_cart_price_below){
                 return $item;

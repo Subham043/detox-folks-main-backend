@@ -12,7 +12,6 @@ class ProductPricePaginateController extends Controller
 
     public function __construct(ProductPriceService $productPriceService)
     {
-        $this->middleware('permission:list products', ['only' => ['get']]);
         $this->productPriceService = $productPriceService;
     }
 

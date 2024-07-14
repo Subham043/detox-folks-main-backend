@@ -72,6 +72,8 @@ return [
 
     'phonepe_status_url' => env('PHONEPE_STATUS_URL', 'https://api-preprod.phonepe.com/apis/merchant-simulator/pg/v1/status'),
 
+    'phonepe_refund_url' => env('PHONEPE_REFUND_URL', 'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/refund'),
+
     'phonepe_merchant_id' => env('PHONEPE_MERCHANT_ID', 'PGTESTPAYUAT'),
 
     'phonepe_salt_key' => env('PHONEPE_SALT_KEY', '099eb0cd-02cf-4e2a-8aca-3e6c6aff0399'),
@@ -90,6 +92,31 @@ return [
         'secret' => env('RAZORPAY_SECRET'),
         'signature' => env('RAZORPAY_WEBHOOK_SIGNATURE'),
         'webhook_secret' => env('RAZORPAY_WEBHOOK_SECRET'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | PAYU Configuration
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'payu' => [
+        'merchant_key' => env('PAYU_MERCHANT_KEY'),
+        'salt' => env('PAYU_SALT'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | CASHFREE Configuration
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'cashfree' => [
+        'app_id' => env('CASHFREE_APP_ID'),
+        'secret_key' => env('CASHFREE_SECRET_KEY'),
+        'url' => env('CASHFREE_URL', "https://sandbox.cashfree.com"),
     ],
 
     /*

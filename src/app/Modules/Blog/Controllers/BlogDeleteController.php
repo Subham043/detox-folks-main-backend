@@ -11,7 +11,6 @@ class BlogDeleteController extends Controller
 
     public function __construct(BlogService $blogService)
     {
-        $this->middleware('permission:delete blogs', ['only' => ['get']]);
         $this->blogService = $blogService;
     }
 

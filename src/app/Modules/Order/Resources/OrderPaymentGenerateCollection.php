@@ -23,6 +23,8 @@ class OrderPaymentGenerateCollection extends JsonResource
             'phone_pe_payment_link' => $this->mode==PaymentMode::PHONEPE ? (new OrderService)->get_phone_pe_link($this->order) : null,
             'razorpay_order_id' => $this->razorpay_order_id,
             'razorpay_payment_link' => $this->mode==PaymentMode::RAZORPAY ? route('make_razorpay_payment', $this->order->id) : null,
+            'payu_payment_link' => $this->mode==PaymentMode::PAYU ? route('make_payu_payment', $this->order->id) : null,
+            'cashfree_payment_link' => $this->mode==PaymentMode::CASHFREE ? route('make_cashfree_payment', $this->order->id) : null,
             'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => $this->updated_at->diffForHumans(),
         ];

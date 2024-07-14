@@ -14,7 +14,6 @@ class UserCreateController extends Controller
 
     public function __construct(UserService $userService, RoleService $roleService)
     {
-        $this->middleware('permission:create users', ['only' => ['get','post']]);
         $this->userService = $userService;
         $this->roleService = $roleService;
     }

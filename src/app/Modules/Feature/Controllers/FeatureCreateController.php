@@ -12,7 +12,6 @@ class FeatureCreateController extends Controller
 
     public function __construct(FeatureService $featureService)
     {
-        $this->middleware('permission:create features', ['only' => ['get','post']]);
         $this->featureService = $featureService;
     }
 

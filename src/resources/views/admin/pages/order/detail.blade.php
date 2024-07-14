@@ -5,14 +5,10 @@
 				<div class="page-content">
 								<div class="container-fluid">
 
-												@include("admin.includes.breadcrumb", [
-																"page" => "Order",
-																"page_link" => route("order_admin.paginate.get"),
-																"list" => ["Detail"],
-												])
+												<x-includes.breadcrumb link="order_admin.paginate.get" page="Order" :list='["Detail"]' />
 
 												<div class="row project-wrapper">
-																@include("admin.includes.back_button", ["link" => route("order_admin.paginate.get")])
+																<x-includes.back-button link="order_admin.paginate.get" />
 																<div class="col-xxl-12">
 
 																				<div class="row">

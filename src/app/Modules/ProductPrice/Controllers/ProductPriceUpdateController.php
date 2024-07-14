@@ -12,7 +12,6 @@ class ProductPriceUpdateController extends Controller
 
     public function __construct(ProductPriceService $productPriceService)
     {
-        $this->middleware('permission:edit products', ['only' => ['get','post']]);
         $this->productPriceService = $productPriceService;
     }
 

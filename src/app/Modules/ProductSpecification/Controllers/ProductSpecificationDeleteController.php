@@ -11,7 +11,6 @@ class ProductSpecificationDeleteController extends Controller
 
     public function __construct(ProductSpecificationService $productSpecificationService)
     {
-        $this->middleware('permission:delete products', ['only' => ['get']]);
         $this->productSpecificationService = $productSpecificationService;
     }
 

@@ -11,7 +11,6 @@ class FeatureDeleteController extends Controller
 
     public function __construct(FeatureService $featureService)
     {
-        $this->middleware('permission:delete features', ['only' => ['get']]);
         $this->featureService = $featureService;
     }
 

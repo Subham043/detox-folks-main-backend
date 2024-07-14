@@ -37,9 +37,8 @@ use App\Modules\Feature\Controllers\UserFeatureAllController;
 use App\Modules\GlobalSearch\Controllers\UserGlobalSearchPaginateController;
 use App\Modules\Legal\Controllers\UserLegalAllController;
 use App\Modules\Legal\Controllers\UserLegalDetailController;
-use App\Modules\Order\Controllers\LatestOrderProductsPaginateController;
+use App\Modules\Order\Controllers\RecentlyOrderedProductsPaginateController;
 use App\Modules\Order\Controllers\OrderAllController;
-use App\Modules\Order\Controllers\OrderDeleteController;
 use App\Modules\Order\Controllers\OrderDetailController;
 use App\Modules\Order\Controllers\OrderPaginateController;
 use App\Modules\Order\Controllers\OrderPlacedDetailController;
@@ -162,12 +161,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('/order')->group(function () {
         Route::get('/', [OrderPaginateController::class, 'get', 'as' => 'order.paginate.get'])->name('order.paginate.get');
         Route::get('/all', [OrderAllController::class, 'get', 'as' => 'order.all.get'])->name('order.all.get');
-        Route::get('/latest-product-item', [LatestOrderProductsPaginateController::class, 'get', 'as' => 'order.latest_product.get'])->name('order.latest_product.get');
+        Route::get('/latest-product-item', [RecentlyOrderedProductsPaginateController::class, 'get', 'as' => 'order.latest_product.get'])->name('order.latest_product.get');
         Route::get('/placed-paginate', [OrderPlacedPaginateController::class, 'get', 'as' => 'order.placed_paginate.get'])->name('order.placed_paginate.get');
         Route::post('/place', [PlaceOrderController::class, 'post', 'as' => 'order.place.get'])->name('order.place.post');
         Route::get('/detail/{id}', [OrderDetailController::class, 'get', 'as' => 'order.detail.get'])->name('order.detail.get');
         Route::get('/placed-detail/{id}', [OrderPlacedDetailController::class, 'get', 'as' => 'order.placed_detail.get'])->name('order.placed_detail.get');
-        Route::delete('/delete/{id}', [OrderDeleteController::class, 'delete', 'as' => 'order.delete.get'])->name('order.delete.get');
     });
 
     Route::post('/auth/logout', [UserLogoutController::class, 'post', 'as' => 'logout'])->name('user.logout');

@@ -12,7 +12,6 @@ class BlogCreateController extends Controller
 
     public function __construct(BlogService $blogService)
     {
-        $this->middleware('permission:create blogs', ['only' => ['get','post']]);
         $this->blogService = $blogService;
     }
 

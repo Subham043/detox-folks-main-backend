@@ -12,7 +12,6 @@ class ProductImageUpdateController extends Controller
 
     public function __construct(ProductImageService $productImageService)
     {
-        $this->middleware('permission:edit products', ['only' => ['get','post']]);
         $this->productImageService = $productImageService;
     }
 
