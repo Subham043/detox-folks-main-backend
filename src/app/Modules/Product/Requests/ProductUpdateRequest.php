@@ -33,6 +33,15 @@ class ProductUpdateRequest extends ProductCreateRequest
             'category.*' => 'required|numeric|exists:categories,id',
             'sub_category' => 'nullable|array|min:0',
             'sub_category.*' => 'nullable|numeric|exists:sub_categories,id',
+            'specifications' => 'required|array|min:1',
+            'specifications.*.id' => 'nullable|numeric|exists:product_specifications,id',
+            'specifications.*.title' => 'required|string|max:500',
+            'specifications.*.description' => 'required|string',
+            'prices' => 'required|array|min:1',
+            'prices.*.id' => 'nullable|numeric|exists:product_prices,id',
+            'prices.*.min_quantity' => 'required|numeric|gt:1',
+            'prices.*.price' => 'required|numeric|gt:0',
+            'prices.*.discount' => 'required|numeric|gte:0',
         ];
     }
 

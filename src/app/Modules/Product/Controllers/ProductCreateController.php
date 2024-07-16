@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Modules\Category\Services\CategoryService;
 use App\Modules\Product\Requests\ProductCreateRequest;
 use App\Modules\Product\Services\ProductService;
-use App\Modules\ProductImage\Models\ProductImage;
 use Illuminate\Support\Facades\DB;
 
 class ProductCreateController extends Controller
@@ -30,7 +29,7 @@ class ProductCreateController extends Controller
         try {
             //code...
             $product = $this->productService->create(
-                $request->except(['image', 'images', 'specifications', 'prices'])
+                $request->except(['image', 'specifications', 'prices'])
             );
             if($request->hasFile('image')){
                 $this->productService->saveImage($product);
@@ -52,7 +51,6 @@ class ProductCreateController extends Controller
             return response()->json(["message" => "Product created successfully."], 201);
         } catch (\Throwable $th) {
             DB::rollBack();
-            throw $th;
             return response()->json(["message" => "Something went wrong. Please try again"], 400);
         } finally {
             DB::commit();

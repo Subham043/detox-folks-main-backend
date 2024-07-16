@@ -175,8 +175,7 @@
 																																								</div>
 																																								<div class="col-12 text-right">
 																																												<button type="button" data-repeater-delete
-																																																class="btn btn-danger waves-effect waves-light"
-																																																id="submitBtn">Remove</button>
+																																																class="btn btn-danger waves-effect waves-light">Remove</button>
 																																								</div>
 
 																																				</div>
@@ -247,8 +246,7 @@
 																																								</div>
 																																								<div class="col-12 text-right">
 																																												<button type="button" data-repeater-delete
-																																																class="btn btn-danger waves-effect waves-light"
-																																																id="submitBtn">Remove</button>
+																																																class="btn btn-danger waves-effect waves-light">Remove</button>
 																																								</div>
 
 																																				</div>

@@ -5,6 +5,8 @@ namespace App\Modules\Product\Services;
 use App\Http\Services\FileService;
 use App\Modules\Product\Models\Product;
 use App\Modules\ProductImage\Models\ProductImage;
+use App\Modules\ProductPrice\Models\ProductPrice;
+use App\Modules\ProductSpecification\Models\ProductSpecification;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\Filters\Filter;
@@ -85,7 +87,7 @@ class ProductService
 
     public function getById(Int $id): Product|null
     {
-        return Product::with('categories')->findOrFail($id);
+        return Product::with(['categories', 'product_specifications', 'product_prices'])->findOrFail($id);
     }
 
     public function getBySlug(String $slug): Product|null
@@ -161,9 +163,37 @@ class ProductService
         return $product;
     }
 
+    public function save_specifications(Product $product, array $data): Product
+    {
+        foreach ($data as $value) {
+            # code...
+            if(!empty($value['id'])){
+                ProductSpecification::where('id', $value['id'])->update(['title'=> $value['title'], 'description'=> $value['description']]);
+            }else{
+                ProductSpecification::create([...$value, 'product_id' => $product->id]);
+            }
+        }
+        $product->refresh();
+        return $product;
+    }
+
     public function create_prices(Product $product, array $data): Product
     {
         $product->product_prices()->createMany($data);
+        $product->refresh();
+        return $product;
+    }
+
+    public function save_prices(Product $product, array $data): Product
+    {
+        foreach ($data as $value) {
+            # code...
+            if(!empty($value['id'])){
+                ProductPrice::where('id', $value['id'])->update(['min_quantity'=> $value['min_quantity'], 'price'=> $value['price'], 'discount' => $value['discount']]);
+            }else{
+                ProductPrice::create([...$value, 'product_id' => $product->id]);
+            }
+        }
         $product->refresh();
         return $product;
     }

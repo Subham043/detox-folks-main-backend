@@ -7,6 +7,7 @@ use App\Modules\Category\Services\CategoryService;
 use App\Modules\Product\Requests\ProductUpdateRequest;
 use App\Modules\Product\Services\ProductService;
 use App\Modules\SubCategory\Services\SubCategoryService;
+use Illuminate\Support\Facades\DB;
 
 class ProductUpdateController extends Controller
 {
@@ -31,11 +32,13 @@ class ProductUpdateController extends Controller
     }
 
     public function post(ProductUpdateRequest $request, $id){
+        // return response()->json(["message" => "Something went wrong. Please try again", "test" => $request->specifications], 400);
         $product = $this->productService->getById($id);
+        DB::beginTransaction();
         try {
             //code...
             $this->productService->update(
-                $request->except(['image']),
+                $request->except(['image', 'specifications', 'prices']),
                 $product
             );
             if($request->hasFile('image')){
@@ -49,9 +52,19 @@ class ProductUpdateController extends Controller
             }else{
                 $this->productService->save_sub_categories($product, []);
             }
+            if($request->specifications && count($request->specifications)>0){
+                $this->productService->save_specifications($product, $request->specifications);
+            }
+            if($request->prices && count($request->prices)>0){
+                $this->productService->save_prices($product, $request->prices);
+            }
             return response()->json(["message" => "Product updated successfully."], 201);
         } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
             return response()->json(["message" => "Something went wrong. Please try again"], 400);
+        } finally {
+            DB::commit();
         }
 
     }

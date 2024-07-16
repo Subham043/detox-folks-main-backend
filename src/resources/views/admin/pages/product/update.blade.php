@@ -1,5 +1,25 @@
 @extends("admin.layouts.dashboard")
 
+@section("css")
+
+				<style nonce="{{ csp_nonce() }}">
+								.text-right {
+												text-align: right;
+								}
+
+								.repeater-specification .row:not(.repeater-specification .row:first-of-type) {
+												border-top: 1px dashed #ccc;
+												margin-top: 20px;
+								}
+
+								.repeater-price .row:not(.repeater-price .row:first-of-type) {
+												border-top: 1px dashed #ccc;
+												margin-top: 20px;
+								}
+				</style>
+
+@stop
+
 @section("content")
 
 				<div class="page-content">
@@ -130,6 +150,85 @@
 																												</div>
 																								</div>
 
+																								<div class="card repeater-price">
+																												<div class="card-header justify-content-between align-items-center d-flex">
+																																<h4 class="card-title flex-grow-1 mb-0">Product Price</h4>
+																																<button type="button" data-repeater-create
+																																				class="btn btn-secondary waves-effect waves-light">Add</button>
+																												</div><!-- end card header -->
+																												<div class="card-body">
+																																<div class="live-preview" data-repeater-list="price">
+																																				@if ($data->product_prices->count() > 0)
+																																								@foreach ($data->product_prices as $price)
+																																												<div class="row repeater-price-row gy-4" data-repeater-item>
+																																																<div class="col-xxl-4 col-md-4">
+																																																				@include("admin.includes.input", [
+																																																								"key" => "price_min_quantity",
+																																																								"label" => "Minimum Quantity",
+																																																								"value" => $price->min_quantity,
+																																																				])
+																																																</div>
+																																																<div class="col-xxl-4 col-md-4">
+																																																				@include("admin.includes.input", [
+																																																								"key" => "price_price",
+																																																								"label" => "Price",
+																																																								"value" => $price->price,
+																																																				])
+																																																</div>
+																																																<div class="col-xxl-4 col-md-4">
+																																																				@include("admin.includes.input", [
+																																																								"key" => "price_discount",
+																																																								"label" => "Discount (%)",
+																																																								"value" => $price->discount,
+																																																				])
+																																																</div>
+																																																<input type="hidden" name="price_id" value="{{ $price->id }}">
+																																																<div class="col-12 text-right">
+																																																				<button type="button"
+																																																								data-link="{{ route("product_price.delete.get", [$data->id, $price->id]) }}"
+																																																								class="btn btn-danger waves-effect waves-light remove-item-btn"
+																																																								data-repeater-delete>Remove</button>
+																																																</div>
+
+																																												</div>
+																																								@endforeach
+																																				@else
+																																								<div class="row repeater-price-row gy-4" data-repeater-item>
+																																												<div class="col-xxl-4 col-md-4">
+																																																@include("admin.includes.input", [
+																																																				"key" => "price_min_quantity",
+																																																				"label" => "Minimum Quantity",
+																																																				"value" => old("price_min_quantity"),
+																																																])
+																																												</div>
+																																												<div class="col-xxl-4 col-md-4">
+																																																@include("admin.includes.input", [
+																																																				"key" => "price_price",
+																																																				"label" => "Price",
+																																																				"value" => old("price_price"),
+																																																])
+																																												</div>
+																																												<div class="col-xxl-4 col-md-4">
+																																																@include("admin.includes.input", [
+																																																				"key" => "price_discount",
+																																																				"label" => "Discount (%)",
+																																																				"value" => old("price_discount"),
+																																																])
+																																												</div>
+																																												<input type="hidden" name="price_id" value="">
+																																												<div class="col-12 text-right">
+																																																<button type="button" data-repeater-delete
+																																																				class="btn btn-danger waves-effect waves-light">Remove</button>
+																																												</div>
+
+																																								</div>
+																																				@endif
+																																				<!--end row-->
+																																</div>
+
+																												</div>
+																								</div>
+
 																								<div class="card">
 																												<div class="card-header align-items-center d-flex">
 																																<h4 class="card-title flex-grow-1 mb-0">Product Cart Detail</h4>
@@ -159,6 +258,71 @@
 																																												])
 																																								</div>
 																																				</div>
+																																				<!--end row-->
+																																</div>
+
+																												</div>
+																								</div>
+
+																								<div class="card repeater-specification">
+																												<div class="card-header justify-content-between align-items-center d-flex">
+																																<h4 class="card-title flex-grow-1 mb-0">Product Specifications</h4>
+																																<button type="button" data-repeater-create
+																																				class="btn btn-secondary waves-effect waves-light">Add</button>
+																												</div><!-- end card header -->
+																												<div class="card-body">
+																																<div class="live-preview" data-repeater-list="specifications">
+																																				@if ($data->product_specifications->count() > 0)
+																																								@foreach ($data->product_specifications as $specification)
+																																												<div class="row repeater-specification-row gy-4" data-repeater-item>
+																																																<div class="col-xxl-12 col-md-12">
+																																																				@include("admin.includes.input", [
+																																																								"key" => "specification_title",
+																																																								"label" => "Title",
+																																																								"value" => $specification->title,
+																																																				])
+																																																</div>
+																																																<div class="col-xxl-12 col-md-12">
+																																																				@include("admin.includes.textarea", [
+																																																								"key" => "specification_description",
+																																																								"label" => "Description",
+																																																								"value" => $specification->description,
+																																																				])
+																																																</div>
+																																																<input type="hidden" name="specification_id"
+																																																				value="{{ $specification->id }}">
+																																																<div class="col-12 text-right">
+																																																				<button type="button" data-repeater-delete
+																																																								data-link="{{ route("product_specification.delete.get", [$data->id, $specification->id]) }}"
+																																																								class="btn btn-danger waves-effect waves-light remove-item-btn">Remove</button>
+																																																</div>
+
+																																												</div>
+																																								@endforeach
+																																				@else
+																																								<div class="row repeater-specification-row gy-4" data-repeater-item>
+																																												<div class="col-xxl-12 col-md-12">
+																																																@include("admin.includes.input", [
+																																																				"key" => "specification_title",
+																																																				"label" => "Title",
+																																																				"value" => old("specification_title"),
+																																																])
+																																												</div>
+																																												<div class="col-xxl-12 col-md-12">
+																																																@include("admin.includes.textarea", [
+																																																				"key" => "specification_description",
+																																																				"label" => "Description",
+																																																				"value" => old("specification_description"),
+																																																])
+																																												</div>
+																																												<input type="hidden" name="specification_id" value="">
+																																												<div class="col-12 text-right">
+																																																<button type="button" data-repeater-delete
+																																																				class="btn btn-danger waves-effect waves-light">Remove</button>
+																																												</div>
+
+																																								</div>
+																																				@endif
 																																				<!--end row-->
 																																</div>
 
@@ -219,6 +383,8 @@
 @section("javascript")
 				<script src="{{ asset("admin/js/pages/plugins/quill.min.js") }}"></script>
 				<script src="{{ asset("admin/js/pages/choices.min.js") }}"></script>
+				<script src="{{ asset("admin/js/pages/jQuery.min.js") }}"></script>
+				<script src="{{ asset("admin/js/pages/jquery.repeater.js") }}"></script>
 
 				<script type="text/javascript" nonce="{{ csp_nonce() }}">
 								const Delta = Quill.import('delta');
@@ -419,11 +585,70 @@
 																												formData.append('sub_category[]', document.getElementById('sub_category')[index].value)
 																								}
 																				}
+																				const repeater_price_row_selector = document.querySelectorAll('.repeater-price-row');
+																				for (let repeater_price_row = 0; repeater_price_row < repeater_price_row_selector
+																								.length; repeater_price_row++) {
+																								if ((document.querySelector('input[name="price[' + repeater_price_row +
+																																'][price_min_quantity]"]').value).length > 0) {
+
+																												formData.append('prices[' + repeater_price_row + '][min_quantity]', document
+																																.querySelector('input[name="price[' + repeater_price_row +
+																																				'][price_min_quantity]"]').value)
+																								}
+																								if ((document.querySelector('input[name="price[' + repeater_price_row +
+																																'][price_price]"]').value).length > 0) {
+
+																												formData.append('prices[' + repeater_price_row + '][price]', document
+																																.querySelector('input[name="price[' + repeater_price_row +
+																																				'][price_price]"]').value)
+																								}
+																								if ((document.querySelector('input[name="price[' + repeater_price_row +
+																																'][price_discount]"]').value).length > 0) {
+
+																												formData.append('prices[' + repeater_price_row + '][discount]', document
+																																.querySelector('input[name="price[' + repeater_price_row +
+																																				'][price_discount]"]').value)
+																								}
+																								if ((document.querySelector('input[name="price[' + repeater_price_row +
+																																'][price_id]"]').value).length > 0) {
+
+																												formData.append('prices[' + repeater_price_row + '][id]', document
+																																.querySelector('input[name="price[' + repeater_price_row +
+																																				'][price_id]"]').value)
+																								}
+																				}
+																				const repeater_specification_row_selector = document.querySelectorAll(
+																								'.repeater-specification-row');
+																				for (let repeater_specification_row = 0; repeater_specification_row <
+																								repeater_specification_row_selector
+																								.length; repeater_specification_row++) {
+																								if ((document.querySelector('input[name="specifications[' + repeater_specification_row +
+																																'][specification_title]"]').value).length > 0) {
+
+																												formData.append('specifications[' + repeater_specification_row + '][title]', document
+																																.querySelector('input[name="specifications[' + repeater_specification_row +
+																																				'][specification_title]"]').value)
+																								}
+																								if ((document.querySelector('textarea[name="specifications[' + repeater_specification_row +
+																																'][specification_description]"]').value).length > 0) {
+																												formData.append('specifications[' + repeater_specification_row + '][description]', document
+																																.querySelector('textarea[name="specifications[' + repeater_specification_row +
+																																				'][specification_description]"]').value)
+																								}
+																								if ((document.querySelector('input[name="specifications[' + repeater_specification_row +
+																																'][specification_id]"]').value).length > 0) {
+
+																												formData.append('specifications[' + repeater_specification_row + '][id]', document
+																																.querySelector('input[name="specifications[' + repeater_specification_row +
+																																				'][specification_id]"]').value)
+																								}
+																				}
 
 																				const response = await axios.post('{{ route("product.update.post", $data->id) }}', formData)
 																				successToast(response.data.message)
 																				setInterval(location.reload(), 1500);
 																} catch (error) {
+																				// console.log(error)
 																				if (error?.response?.data?.errors?.name) {
 																								validation.showErrors({
 																												'#name': error?.response?.data?.errors?.name[0]
@@ -489,6 +714,59 @@
 																												'#cart_quantity_specification': error?.response?.data?.errors
 																																?.cart_quantity_specification[0]
 																								})
+																				}
+																				const repeater_price_row_selector = document.querySelectorAll('.repeater-price-row');
+																				for (let repeater_price_row = 0; repeater_price_row < repeater_price_row_selector
+																								.length; repeater_price_row++) {
+																								if (error?.response?.data?.errors['prices.' + repeater_price_row + '.min_quantity']) {
+																												let elem = `input[name="price[${repeater_price_row}][price_min_quantity]"]`;
+																												validation.showErrors({
+																																[elem]: error
+																																				?.response?.data?.errors['prices.' + repeater_price_row + '.min_quantity'][
+																																								0
+																																				]
+																												})
+																								}
+																								if (error?.response?.data?.errors['prices.' + repeater_price_row + '.discount']) {
+																												let elem = `input[name="price[${repeater_price_row}][price_discount]"]`;
+																												validation.showErrors({
+																																[elem]: error
+																																				?.response?.data?.errors['prices.' + repeater_price_row + '.discount'][0]
+																												})
+																								}
+																								if (error?.response?.data?.errors['prices.' + repeater_price_row + '.price']) {
+																												let elem = `input[name="price[${repeater_price_row}][price_price]"]`;
+																												validation.showErrors({
+																																[elem]: error
+																																				?.response?.data?.errors['prices.' + repeater_price_row + '.price'][0]
+																												})
+																								}
+																				}
+																				const repeater_specification_row_selector = document.querySelectorAll(
+																								'.repeater-specification-row');
+																				for (let repeater_specification_row = 0; repeater_specification_row <
+																								repeater_specification_row_selector
+																								.length; repeater_specification_row++) {
+																								if (error?.response?.data?.errors['specifications.' + repeater_specification_row +
+																																'.title']) {
+																												let elem =
+																																`input[name="specifications[${repeater_specification_row}][specification_title]"]`;
+																												validation.showErrors({
+																																[elem]: error
+																																				?.response?.data?.errors['specifications.' + repeater_specification_row +
+																																								'.title'][0]
+																												})
+																								}
+																								if (error?.response?.data?.errors['specifications.' + repeater_specification_row +
+																																'.description']) {
+																												let elem =
+																																`textarea[name="specifications[${repeater_specification_row}][specification_description]"]`;
+																												validation.showErrors({
+																																[elem]: error
+																																				?.response?.data?.errors['specifications.' + repeater_specification_row +
+																																								'.description'][0]
+																												})
+																								}
 																				}
 																				if (error?.response?.data?.message) {
 																								errorToast(error?.response?.data?.message)
@@ -564,6 +842,198 @@
 																}
 												}
 								);
+
+								(function($) {
+												$(document).ready(function() {
+																$('.repeater-specification').repeater({
+																				initEmpty: false,
+																				isFirstItemUndeletable: {{ $data->product_specifications->count() > 0 ? "false" : "true" }},
+																				show: function() {
+																								validation.addField('input[name="' + $(this).find('.specification_title').attr(
+																												"name") + '"]', [{
+																												rule: 'required',
+																												errorMessage: 'Title is required',
+																								}, ]);
+																								validation.addField('textarea[name="' + $(this).find(
+																												'.specification_description').attr(
+																												"name") + '"]', [{
+																												rule: 'required',
+																												errorMessage: 'Description is required',
+																								}, ]);
+																								$(this).slideDown();
+																				},
+																				hide: function(deleteElement) {
+																								const item = $(this);
+																								iziToast.question({
+																												timeout: 20000,
+																												close: false,
+																												overlay: true,
+																												displayMode: 'once',
+																												id: 'question',
+																												zindex: 999,
+																												title: 'Hey',
+																												message: 'Are you sure about that?',
+																												position: 'center',
+																												buttons: [
+																																['<button><b>YES</b></button>', function(instance, toast) {
+
+																																				instance.hide({
+																																								transitionOut: 'fadeOut'
+																																				}, toast, 'button');
+																																				validation.removeField('input[name="' + item
+																																								.find('.specification_title').attr(
+																																												"name") +
+																																								'"]')
+																																				validation.removeField('textarea[name="' + item
+																																								.find('.specification_description').attr(
+																																												"name") + '"]')
+																																				item.slideUp(deleteElement);
+
+																																}, true],
+																																['<button>NO</button>', function(instance, toast) {
+
+																																				instance.hide({
+																																								transitionOut: 'fadeOut'
+																																				}, toast, 'button');
+
+																																}],
+																												],
+																												onClosing: function(instance, toast, closedBy) {},
+																												onClosed: function(instance, toast, closedBy) {}
+																								});
+																				},
+																				ready: function(setIndexes) {
+																								@if ($data->product_specifications->count() == 0)
+																												validation
+																																.addField('input[name="specifications[0][specification_title]"]', [{
+																																				rule: 'required',
+																																				errorMessage: 'Title is required',
+																																}, ])
+																																.addField(
+																																				'textarea[name="specifications[0][specification_description]"]',
+																																				[{
+																																								rule: 'required',
+																																								errorMessage: 'Description is required',
+																																				}, ])
+																								@else
+																												@foreach ($data->product_specifications as $k => $specification)
+																																validation
+																																				.addField(
+																																								'input[name="specifications[{{ $k }}][specification_title]"]',
+																																								[{
+																																												rule: 'required',
+																																												errorMessage: 'Title is required',
+																																								}, ])
+																																				.addField(
+																																								'textarea[name="specifications[{{ $k }}][specification_description]"]',
+																																								[{
+																																												rule: 'required',
+																																												errorMessage: 'Description is required',
+																																								}, ])
+																												@endforeach
+																								@endif
+																				}
+																});
+																$('.repeater-price').repeater({
+																				initEmpty: false,
+																				isFirstItemUndeletable: {{ $data->product_prices->count() > 0 ? "false" : "true" }},
+																				show: function() {
+																								validation.addField('input[name="' + $(this).find('.price_min_quantity').attr(
+																												"name") + '"]', [{
+																												rule: 'required',
+																												errorMessage: 'Minimum quantity is required',
+																								}, ]);
+																								validation.addField('input[name="' + $(this).find('.price_price').attr(
+																												"name") + '"]', [{
+																												rule: 'required',
+																												errorMessage: 'Price is required',
+																								}, ]);
+																								validation.addField('input[name="' + $(this).find('.price_discount').attr(
+																												"name") + '"]', [{
+																												rule: 'required',
+																												errorMessage: 'Discount is required',
+																								}, ]);
+																								$(this).slideDown();
+																				},
+																				hide: function(deleteElement) {
+																								const item = $(this);
+																								iziToast.question({
+																												timeout: 20000,
+																												close: false,
+																												overlay: true,
+																												displayMode: 'once',
+																												id: 'question',
+																												zindex: 999,
+																												title: 'Hey',
+																												message: 'Are you sure about that?',
+																												position: 'center',
+																												buttons: [
+																																['<button><b>YES</b></button>', function(instance, toast) {
+
+																																				instance.hide({
+																																								transitionOut: 'fadeOut'
+																																				}, toast, 'button');
+																																				validation.removeField('input[name="' + item
+																																								.find('.price_min_quantity').attr("name") +
+																																								'"]')
+																																				validation.removeField('input[name="' + item
+																																								.find('.price_price').attr("name") + '"]')
+																																				validation.removeField('input[name="' + item
+																																								.find('.price_discount').attr("name") +
+																																								'"]')
+																																				item.slideUp(deleteElement);
+
+																																}, true],
+																																['<button>NO</button>', function(instance, toast) {
+
+																																				instance.hide({
+																																								transitionOut: 'fadeOut'
+																																				}, toast, 'button');
+
+																																}],
+																												],
+																												onClosing: function(instance, toast, closedBy) {},
+																												onClosed: function(instance, toast, closedBy) {}
+																								});
+																				},
+																				ready: function(setIndexes) {
+																								@if ($data->product_prices->count() == 0)
+																												validation.addField('input[name="price[0][price_min_quantity]"]', [{
+																																				rule: 'required',
+																																				errorMessage: 'Minimum quantity is required',
+																																}, ])
+																																.addField('input[name="price[0][price_price]"]', [{
+																																				rule: 'required',
+																																				errorMessage: 'Price is required',
+																																}, ])
+																																.addField('input[name="price[0][price_discount]"]', [{
+																																				rule: 'required',
+																																				errorMessage: 'Discount is required',
+																																}, ])
+																								@else
+																												@foreach ($data->product_prices as $key => $price)
+																																validation.addField(
+																																								'input[name="price[{{ $key }}][price_min_quantity]"]',
+																																								[{
+																																												rule: 'required',
+																																												errorMessage: 'Minimum quantity is required',
+																																								}, ])
+																																				.addField('input[name="price[{{ $key }}][price_price]"]',
+																																								[{
+																																												rule: 'required',
+																																												errorMessage: 'Price is required',
+																																								}, ])
+																																				.addField(
+																																								'input[name="price[{{ $key }}][price_discount]"]', [{
+																																												rule: 'required',
+																																												errorMessage: 'Discount is required',
+																																								}, ])
+																												@endforeach
+																								@endif
+																				}
+																});
+												});
+								})(jQuery);
 				</script>
 
 @stop

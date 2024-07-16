@@ -45,6 +45,8 @@ class ProductCreateRequest extends FormRequest
             'meta_keywords' => 'nullable|string',
             'category' => 'required|array|min:1',
             'category.*' => 'required|numeric|exists:categories,id',
+            'sub_category' => 'nullable|array|min:0',
+            'sub_category.*' => 'nullable|numeric|exists:sub_categories,id',
             'specifications' => 'required|array|min:1',
             'specifications.*.title' => 'required|string|max:500',
             'specifications.*.description' => 'required|string',
@@ -52,8 +54,6 @@ class ProductCreateRequest extends FormRequest
             'prices.*.min_quantity' => 'required|numeric|gt:1',
             'prices.*.price' => 'required|numeric|gt:0',
             'prices.*.discount' => 'required|numeric|gte:0',
-            'sub_category' => 'nullable|array|min:0',
-            'sub_category.*' => 'nullable|numeric|exists:sub_categories,id',
         ];
     }
 
