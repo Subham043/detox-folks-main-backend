@@ -133,6 +133,33 @@
 																																																																				<a href="{{ route("order_admin.detail.get", $item->id) }}"
 																																																																								class="btn btn-sm btn-primary edit-item-btn">View</a>
 																																																																</div>
+																																																																@if (!in_array(\App\Enums\OrderEnumStatus::CANCELLED, $item->statuses->pluck("status")->toArray()))
+																																																																				@if (!in_array(\App\Enums\OrderEnumStatus::DELIVERED, $item->statuses->pluck("status")->toArray()))
+																																																																								<div class="remove">
+																																																																												<button
+																																																																																class="btn btn-sm btn-warning remove-item-btn"
+																																																																																data-link="{{ route("order_admin.update_order_status.get", $item->id) }}">Update
+																																																																																Status</button>
+																																																																								</div>
+																																																																				@endif
+																																																																				@if (
+																																																																								$item->payment &&
+																																																																												$item->payment->status != \App\Enums\PaymentStatus::PAID &&
+																																																																												$item->payment->mode == \App\Enums\PaymentMode::COD)
+																																																																								<div class="remove">
+																																																																												<button
+																																																																																class="btn btn-sm btn-secondary remove-item-btn"
+																																																																																data-link="{{ route("order_admin.cancel.get", $item->id) }}">Payment
+																																																																																Collected</button>
+																																																																								</div>
+																																																																				@endif
+																																																																				<div class="remove">
+																																																																								<button
+																																																																												class="btn btn-sm btn-danger remove-item-btn"
+																																																																												data-link="{{ route("order_admin.cancel.get", $item->id) }}">Cancel
+																																																																												Order</button>
+																																																																				</div>
+																																																																@endif
 																																																												</div>
 																																																								</td>
 																																																				</tr>

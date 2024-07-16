@@ -286,7 +286,8 @@ class OrderService
                     'order_id' => $id,
                 ]);
                 return 'Order delivered successfully.';
-            }
+                }
+            return 'Order already delivered successfully.';
         }
     }
 

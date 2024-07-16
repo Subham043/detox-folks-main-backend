@@ -45,6 +45,13 @@ class ProductCreateRequest extends FormRequest
             'meta_keywords' => 'nullable|string',
             'category' => 'required|array|min:1',
             'category.*' => 'required|numeric|exists:categories,id',
+            'specifications' => 'required|array|min:1',
+            'specifications.*.title' => 'required|string|max:500',
+            'specifications.*.description' => 'required|string',
+            'prices' => 'required|array|min:1',
+            'prices.*.min_quantity' => 'required|numeric|gt:1',
+            'prices.*.price' => 'required|numeric|gt:0',
+            'prices.*.discount' => 'required|numeric|gte:0',
             'sub_category' => 'nullable|array|min:0',
             'sub_category.*' => 'nullable|numeric|exists:sub_categories,id',
         ];
@@ -59,6 +66,14 @@ class ProductCreateRequest extends FormRequest
     {
         return [
             'is_draft' => 'Draft',
+            'images.*.image_title' => 'Title',
+            'images.*.image_alt' => 'Alt',
+            'images.*.image' => 'Image',
+            'specifications.*.title' => 'Title',
+            'specifications.*.description' => 'Description',
+            'prices.*.min_quantity' => 'Min Quantity',
+            'prices.*.price' => 'Price',
+            'prices.*.discount' => 'Discount',
         ];
     }
 

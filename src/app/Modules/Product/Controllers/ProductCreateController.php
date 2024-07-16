@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Modules\Category\Services\CategoryService;
 use App\Modules\Product\Requests\ProductCreateRequest;
 use App\Modules\Product\Services\ProductService;
+use App\Modules\ProductImage\Models\ProductImage;
+use Illuminate\Support\Facades\DB;
 
 class ProductCreateController extends Controller
 {
@@ -24,11 +26,11 @@ class ProductCreateController extends Controller
     }
 
     public function post(ProductCreateRequest $request){
-
+        DB::beginTransaction();
         try {
             //code...
             $product = $this->productService->create(
-                $request->except(['image'])
+                $request->except(['image', 'images', 'specifications', 'prices'])
             );
             if($request->hasFile('image')){
                 $this->productService->saveImage($product);
@@ -41,9 +43,19 @@ class ProductCreateController extends Controller
             }else{
                 $this->productService->save_sub_categories($product, []);
             }
+            if($request->specifications && count($request->specifications)>0){
+                $this->productService->create_specifications($product, $request->specifications);
+            }
+            if($request->prices && count($request->prices)>0){
+                $this->productService->create_prices($product, $request->prices);
+            }
             return response()->json(["message" => "Product created successfully."], 201);
         } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
             return response()->json(["message" => "Something went wrong. Please try again"], 400);
+        } finally {
+            DB::commit();
         }
 
     }

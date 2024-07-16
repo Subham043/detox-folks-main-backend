@@ -4,6 +4,7 @@ namespace App\Modules\Product\Services;
 
 use App\Http\Services\FileService;
 use App\Modules\Product\Models\Product;
+use App\Modules\ProductImage\Models\ProductImage;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\Filters\Filter;
@@ -120,7 +121,7 @@ class ProductService
 
     public function saveImage(Product $product): Product
     {
-        $this->deleteImage($product);
+        // $this->deleteImage($product);
         $image = (new FileService)->save_file('image', (new Product)->image_path);
         return $this->update([
             'image' => $image,
@@ -150,6 +151,20 @@ class ProductService
     public function save_sub_categories(Product $product, array $data): Product
     {
         $product->sub_categories()->sync($data);
+        return $product;
+    }
+
+    public function create_specifications(Product $product, array $data): Product
+    {
+        $product->product_specifications()->createMany($data);
+        $product->refresh();
+        return $product;
+    }
+
+    public function create_prices(Product $product, array $data): Product
+    {
+        $product->product_prices()->createMany($data);
+        $product->refresh();
         return $product;
     }
 

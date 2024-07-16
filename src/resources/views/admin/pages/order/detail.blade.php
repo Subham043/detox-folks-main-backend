@@ -391,7 +391,7 @@
 																												<!--end card-->
 																								</div>
 																								<!--end col-->
-																								<div class="col-xl-4">
+																								<div class="col-xl-6">
 
 																												<div class="card">
 																																<div class="card-header">
@@ -414,7 +414,7 @@
 																																</div>
 																												</div>
 																								</div>
-																								<div class="col-xl-4">
+																								<div class="col-xl-6">
 
 																												<!--end card-->
 																												<div class="card">
@@ -434,7 +434,7 @@
 																												</div>
 																												<!--end card-->
 																								</div>
-																								<div class="col-xl-4">
+																								<div class="col-12">
 
 																												<div class="card">
 																																<div class="card-header">
@@ -443,7 +443,7 @@
 																																																class="ri-secure-payment-line text-muted me-1 align-bottom"></i> Payment
 																																												Details</h5>
 																																								@if (!in_array(\App\Enums\OrderEnumStatus::CANCELLED, $order_statuses))
-																																												@if ($order->payment->status != \App\Enums\PaymentStatus::PAID)
+																																												@if ($order->payment && $order->payment->status != \App\Enums\PaymentStatus::PAID)
 																																																<div class="mt-sm-0 row mt-2 flex-shrink-0 gap-1">
 																																																				<button
 																																																								data-link="{{ route("order_admin.payment_update.get", $order->id) }}"
@@ -462,7 +462,7 @@
 																																												<p class="text-muted mb-0">Payment Method:</p>
 																																								</div>
 																																								<div class="flex-grow-1 ms-2">
-																																												<h6 class="mb-0">{{ $order->payment->mode }}</h6>
+																																												<h6 class="mb-0">{{ $order->payment ? $order->payment->mode : "N/A" }}</h6>
 																																								</div>
 																																				</div>
 																																				<div class="d-flex align-items-center mb-2">
@@ -470,7 +470,8 @@
 																																												<p class="text-muted mb-0">Payment Status:</p>
 																																								</div>
 																																								<div class="flex-grow-1 ms-2">
-																																												<h6 class="mb-0">{{ $order->payment->status }}</h6>
+																																												<h6 class="mb-0">{{ $order->payment ? $order->payment->status : "N/A" }}
+																																												</h6>
 																																								</div>
 																																				</div>
 																																				<div class="d-flex align-items-center">
@@ -481,6 +482,24 @@
 																																												<h6 class="mb-0">&#8377; {{ $order->total_price }}</h6>
 																																								</div>
 																																				</div>
+																																				@if ($order->payment)
+																																								@foreach ($order->payment->resolvedPaymentData as $key => $value)
+																																												@if (!is_array($value) && !is_object($value))
+																																																@if ($value)
+																																																				<div class="d-flex align-items-center">
+																																																								<div class="flex-shrink-0">
+																																																												<p class="text-muted mb-0">{{ $key }}:</p>
+																																																								</div>
+																																																								<div class="flex-grow-1 ms-2">
+																																																												<h6 class="mb-0">
+																																																																{{ $value }}
+																																																												</h6>
+																																																								</div>
+																																																				</div>
+																																																@endif
+																																												@endif
+																																								@endforeach
+																																				@endif
 																																</div>
 																												</div>
 																												<!--end card-->

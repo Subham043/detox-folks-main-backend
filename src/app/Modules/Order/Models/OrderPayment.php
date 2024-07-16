@@ -6,6 +6,7 @@ use App\Enums\PaymentMode;
 use App\Enums\PaymentStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class OrderPayment extends Model
 {
@@ -41,6 +42,15 @@ class OrderPayment extends Model
         'razorpay_payment_id' => null,
         'razorpay_signature' => null,
     ];
+
+    protected function resolvedPaymentData(): Attribute
+    {
+        $data = json_decode($this->payment_data, true);
+
+        return Attribute::make(
+            get: fn () => is_array($data) ? $data : [],
+        );
+    }
 
     public function order()
     {
