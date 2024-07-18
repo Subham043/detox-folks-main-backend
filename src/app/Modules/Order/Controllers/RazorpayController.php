@@ -6,7 +6,7 @@ use App\Enums\PaymentMode;
 use App\Enums\PaymentStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Services\RazorpayService;
-use App\Modules\Cart\Models\Cart;
+use App\Modules\Cart\Services\CartService;
 use App\Modules\Order\Requests\RazorpayVerifyPaymentRequest;
 use App\Modules\Order\Services\OrderService;
 
@@ -32,7 +32,7 @@ class RazorpayController extends Controller
                 'status' => PaymentStatus::PAID->value
             ], $order);
 
-            Cart::where('user_id', $order->user_id)->delete();
+            (new CartService)->empty($order->user_id);
             return redirect(route('payment_success'));
         } catch (\Throwable $th) {
             return redirect(route('payment_fail'));

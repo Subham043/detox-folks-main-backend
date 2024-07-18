@@ -85,6 +85,32 @@
 																																																												<div class="avatar-sm flex-shrink-0">
 																																																																<span
 																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">
+																																																																												{{ $total_packed_orders }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Total Orders Packed
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+
+																																												<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
 																																																																				<i class="ri-shopping-bag-line text-success"></i>
 																																																																</span>
 																																																												</div>
@@ -95,7 +121,7 @@
 																																																																				</h4>
 																																																																</div>
 																																																																<p class="text-muted mb-0">
-																																																																				Total Orders Our For Delivery
+																																																																				Total Orders Out For Delivery
 																																																																</p>
 																																																												</div>
 																																																								</div>
@@ -167,37 +193,11 @@
 																																																																<div class="d-flex align-items-center">
 																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
 																																																																												class="text-uppercase">&#8377;
-																																																																												{{ $total_payment }}</span>
-																																																																				</h4>
-																																																																</div>
-																																																																<p class="text-muted mb-0">
-																																																																				Total Payment
-																																																																</p>
-																																																												</div>
-																																																								</div>
-																																																				</div><!-- end card body -->
-																																																</div>
-																																												</div><!-- end col -->
-
-																																												<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-																																																<div class="card card-animate no-box-shadow">
-																																																				<div class="card-body">
-																																																								<div class="d-flex align-items-center">
-																																																												<div class="avatar-sm flex-shrink-0">
-																																																																<span
-																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
-																																																																				<i class="ri-money-dollar-circle-line text-success"></i>
-																																																																</span>
-																																																												</div>
-																																																												<div class="flex-grow-1 ms-3">
-																																																																<div class="d-flex align-items-center">
-																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
-																																																																												class="text-uppercase">&#8377;
 																																																																												{{ $total_payment_pending }}</span>
 																																																																				</h4>
 																																																																</div>
 																																																																<p class="text-muted mb-0">
-																																																																				Total Payment Pending
+																																																																				Total Amount Pending
 																																																																</p>
 																																																												</div>
 																																																								</div>
@@ -224,7 +224,7 @@
 																																																																				</h4>
 																																																																</div>
 																																																																<p class="text-muted mb-0">
-																																																																				Total Payment Paid
+																																																																				Total Amount Paid
 																																																																</p>
 																																																												</div>
 																																																								</div>
@@ -251,7 +251,7 @@
 																																																																				</h4>
 																																																																</div>
 																																																																<p class="text-muted mb-0">
-																																																																				Total Payment Refund
+																																																																				Total Amount Refund
 																																																																</p>
 																																																												</div>
 																																																								</div>

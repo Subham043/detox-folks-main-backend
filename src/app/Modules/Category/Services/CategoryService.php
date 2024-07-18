@@ -78,7 +78,6 @@ class CategoryService
 
     public function saveImage(Category $category): Category
     {
-        $this->deleteImage($category);
         $image = (new FileService)->save_file('image', (new Category)->image_path);
         return $this->update([
             'image' => $image,
@@ -87,7 +86,6 @@ class CategoryService
 
     public function delete(Category $category): bool|null
     {
-        $this->deleteImage($category);
         return $category->delete();
     }
 

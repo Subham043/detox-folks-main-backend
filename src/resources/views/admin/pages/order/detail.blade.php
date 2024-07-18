@@ -71,7 +71,7 @@
 																																																								</th>
 																																																								<td></td>
 																																																								<th class="text-end" colspan="4">&#8377;
-																																																												{{ $v->charges_in_amount }}</th>
+																																																												{{ $v->total_charge_in_amount }}</th>
 																																																				</tr>
 																																																@endforeach
 																																																<tr class="border-top border-top-dashed">

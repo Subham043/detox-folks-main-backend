@@ -37,7 +37,7 @@
 																																																<tr>
 																																																				<th class="sort" data-sort="customer_name">Charge Name</th>
 																																																				<th class="sort" data-sort="customer_name">Charge Slug</th>
-																																																				<th class="sort" data-sort="customer_name">Amount</th>
+																																																				<th class="sort" data-sort="customer_name">Charge Value</th>
 																																																				<th class="sort" data-sort="customer_name">Status</th>
 																																																				<th class="sort" data-sort="date">Created On</th>
 																																																				<th class="sort" data-sort="action">Action</th>
@@ -48,7 +48,11 @@
 																																																				<tr>
 																																																								<td class="customer_name">{{ $item->charges_name }}</td>
 																																																								<td class="customer_name">{{ $item->charges_slug }}</td>
-																																																								<td class="customer_name">{{ $item->charges_in_amount }}</td>
+																																																								@if ($item->is_percentage)
+																																																												<td class="customer_name">{{ $item->charges_in_amount }}%</td>
+																																																								@else
+																																																												<td class="customer_name">₹ {{ $item->charges_in_amount }}</td>
+																																																								@endif
 																																																								@if ($item->is_active == 1)
 																																																												<td class="status"><span
 																																																																				class="badge badge-soft-success text-uppercase">Active</span>

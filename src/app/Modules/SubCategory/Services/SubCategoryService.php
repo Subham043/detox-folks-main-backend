@@ -76,7 +76,6 @@ class SubCategoryService
 
     public function saveImage(SubCategory $sub_category): SubCategory
     {
-        $this->deleteImage($sub_category);
         $image = (new FileService)->save_file('image', (new SubCategory)->image_path);
         return $this->update([
             'image' => $image,
@@ -85,7 +84,6 @@ class SubCategoryService
 
     public function delete(SubCategory $sub_category): bool|null
     {
-        $this->deleteImage($sub_category);
         return $sub_category->delete();
     }
 

@@ -6,7 +6,7 @@ use App\Enums\PaymentMode;
 use App\Enums\PaymentStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Services\PayUService;
-use App\Modules\Cart\Models\Cart;
+use App\Modules\Cart\Services\CartService;
 use App\Modules\Order\Services\OrderService;
 use Illuminate\Http\Request;
 
@@ -41,7 +41,7 @@ class PayUMoneyController extends Controller
                 'status' => PaymentStatus::PAID->value
             ], $order);
 
-            Cart::where('user_id', $order->user_id)->delete();
+            (new CartService)->empty($order->user_id);
             return redirect(route('payment_success'));
         }
         return redirect(route('payment_fail'));

@@ -123,7 +123,6 @@ class ProductService
 
     public function saveImage(Product $product): Product
     {
-        // $this->deleteImage($product);
         $image = (new FileService)->save_file('image', (new Product)->image_path);
         return $this->update([
             'image' => $image,
@@ -132,7 +131,6 @@ class ProductService
 
     public function delete(Product $product): bool|null
     {
-        $this->deleteImage($product);
         return $product->delete();
     }
 

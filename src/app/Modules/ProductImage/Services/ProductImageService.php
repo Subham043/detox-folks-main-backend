@@ -54,7 +54,6 @@ class ProductImageService
 
     public function saveImage(ProductImage $product_image): ProductImage
     {
-        $this->deleteImage($product_image);
         $image = (new FileService)->save_file('image', (new ProductImage)->image_path);
         return $this->update([
             'image' => $image,
@@ -63,7 +62,6 @@ class ProductImageService
 
     public function delete(ProductImage $product_image): bool|null
     {
-        $this->deleteImage($product_image);
         return $product_image->delete();
     }
 

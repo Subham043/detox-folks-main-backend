@@ -61,6 +61,7 @@ class Order extends Model
         'products',
         'charges',
         'statuses',
+        'current_status',
         'payment',
     ];
 
@@ -82,6 +83,11 @@ class Order extends Model
     public function statuses()
     {
         return $this->hasMany(OrderStatus::class, 'order_id');
+    }
+
+    public function current_status()
+    {
+        return $this->hasOne(OrderStatus::class, 'order_id')->latestOfMany();
     }
 
     public function payment()

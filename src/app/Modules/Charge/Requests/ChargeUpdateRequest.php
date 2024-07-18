@@ -2,10 +2,6 @@
 
 namespace App\Modules\Charge\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-use Stevebauman\Purify\Facades\Purify;
-
 
 class ChargeUpdateRequest extends ChargeCreateRequest
 {
@@ -21,7 +17,8 @@ class ChargeUpdateRequest extends ChargeCreateRequest
             'charges_name' => 'required|string|max:250',
             'charges_slug' => 'required|string|max:500|unique:charges,charges_slug,'.$this->route('id'),
             'charges_in_amount' => ['required', 'numeric', 'gte:0'],
-            'include_charges_for_cart_price_below' => ['required', 'numeric', 'gte:0'],
+            'is_percentage' => 'required|boolean',
+            'include_charges_for_cart_price_below' => ['nullable', 'numeric', 'gte:0'],
             'is_active' => 'required|boolean',
         ];
     }

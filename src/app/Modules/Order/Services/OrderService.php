@@ -11,7 +11,6 @@ use App\Http\Services\PhonepeService;
 use App\Http\Services\RazorpayService;
 use App\Modules\BillingAddress\Models\BillingAddress;
 use App\Modules\BillingInformation\Models\BillingInformation;
-use App\Modules\Cart\Models\Cart;
 use App\Modules\Cart\Services\CartAmountService;
 use App\Modules\Cart\Services\CartService;
 use App\Modules\Order\Models\Order;
@@ -87,13 +86,13 @@ class OrderService
     public function paginateForAdmin(Int $total = 10): LengthAwarePaginator
     {
         return QueryBuilder::for(Order::commonWith())
-        ->allowedIncludes(['products', 'charges', 'statuses', 'payment'])
+        ->allowedIncludes(['products', 'charges', 'statuses', 'current_status', 'payment'])
                 ->defaultSort('-id')
                 ->allowedSorts('id', 'total_price')
                 ->allowedFilters([
                     AllowedFilter::callback('has_status', function (Builder $query, $value) {
                         if($value!='all'){
-                            $query->whereHas('statuses', function($q) use($value) {
+                            $query->whereHas('current_status', function($q) use($value) {
                                 $q->where('status', $value);
                             });
                         }
@@ -105,10 +104,136 @@ class OrderService
                             });
                         }
                     }),
+                    AllowedFilter::callback('has_payment_mode', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('payment', function($q) use($value) {
+                                $q->where('mode', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::callback('has_date', function (Builder $query, $value) {
+                        $date = explode(' - ', $value);
+                        $query->whereBetween('created_at', [...$date]);
+                    }),
                     AllowedFilter::custom('search', new CommonFilter),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());
+    }
+
+    public function orderCountAdmin(): int
+    {
+        return QueryBuilder::for(Order::commonWith())
+        ->allowedIncludes(['products', 'charges', 'statuses', 'current_status', 'payment'])
+                ->defaultSort('-id')
+                ->allowedSorts('id', 'total_price')
+                ->allowedFilters([
+                    AllowedFilter::callback('has_status', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('current_status', function($q) use($value) {
+                                $q->where('status', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::callback('has_payment_status', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('payment', function($q) use($value) {
+                                $q->where('status', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::callback('has_payment_mode', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('payment', function($q) use($value) {
+                                $q->where('mode', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::callback('has_date', function (Builder $query, $value) {
+                        $date = explode(' - ', $value);
+                        $query->whereBetween('created_at', [...$date]);
+                    }),
+                    AllowedFilter::custom('search', new CommonFilter),
+                ])
+                ->count();
+    }
+
+    public function earningCountAdmin(): int
+    {
+        return QueryBuilder::for(Order::commonWith()->whereHas('payment', function($q) {
+            $q->where('status', PaymentStatus::PAID);
+        }))
+        ->allowedIncludes(['products', 'charges', 'statuses', 'current_status', 'payment'])
+                ->defaultSort('-id')
+                ->allowedSorts('id', 'total_price')
+                ->allowedFilters([
+                    AllowedFilter::callback('has_status', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('current_status', function($q) use($value) {
+                                $q->where('status', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::callback('has_payment_status', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('payment', function($q) use($value) {
+                                $q->where('status', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::callback('has_payment_mode', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('payment', function($q) use($value) {
+                                $q->where('mode', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::callback('has_date', function (Builder $query, $value) {
+                        $date = explode(' - ', $value);
+                        $query->whereBetween('created_at', [...$date]);
+                    }),
+                    AllowedFilter::custom('search', new CommonFilter),
+                ])
+                ->sum('total_price');
+    }
+
+    public function lossCountAdmin(): int
+    {
+        return QueryBuilder::for(Order::commonWith()->whereHas('payment', function($q) {
+            $q->where('status', PaymentStatus::REFUND);
+        }))
+        ->allowedIncludes(['products', 'charges', 'statuses', 'current_status', 'payment'])
+                ->defaultSort('-id')
+                ->allowedSorts('id', 'total_price')
+                ->allowedFilters([
+                    AllowedFilter::callback('has_status', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('current_status', function($q) use($value) {
+                                $q->where('status', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::callback('has_payment_status', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('payment', function($q) use($value) {
+                                $q->where('status', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::callback('has_payment_mode', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('payment', function($q) use($value) {
+                                $q->where('mode', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::callback('has_date', function (Builder $query, $value) {
+                        $date = explode(' - ', $value);
+                        $query->whereBetween('created_at', [...$date]);
+                    }),
+                    AllowedFilter::custom('search', new CommonFilter),
+                ])
+                ->sum('total_price');
     }
 
     public function getById(Int $id): Order|null
@@ -183,6 +308,7 @@ class OrderService
                     'charges_slug' => $charge->charges_slug,
                     'charges_in_amount' => $charge->charges_in_amount,
                     'include_charges_for_cart_price_below' => $charge->include_charges_for_cart_price_below,
+                    'is_percentage' => $charge->is_percentage,
                     'order_id' => $order->id,
                 ]);
             }
@@ -205,7 +331,7 @@ class OrderService
                 'order_id' => $order->id,
             ]);
             if($data['mode_of_payment'] == PaymentMode::COD->value){
-                Cart::where('user_id', auth()->user()->id)->delete();
+                (new CartService)->empty(auth()->user()->id);
             }
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -236,7 +362,7 @@ class OrderService
     public function phone_pe_response(array $input): string
     {
         $order = $this->getOrderPlacedByIdPaymentPendingVia($input['transactionId'], PaymentMode::PHONEPE);
-        Cart::where('user_id', $order->user_id)->delete();
+        (new CartService)->empty($order->user_id);
         return (new PhonepeService)->verify($input, $order);
     }
 
@@ -357,7 +483,7 @@ class CommonFilter implements Filter
             ->orWhere('email', 'LIKE', '%' . $value . '%')
             ->orWhere('phone', 'LIKE', '%' . $value . '%')
             ->orWhere('total_price', 'LIKE', '%' . $value . '%')
-            ->whereHas('products', function($q) use($value) {
+            ->orWhereHas('products', function($q) use($value) {
                 $q->where('name', 'LIKE', '%' . $value . '%');
             });
         });

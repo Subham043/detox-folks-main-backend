@@ -25,13 +25,21 @@ class DashboardController extends Controller
         $lastRanAt  = new Carbon($health?->finishedAt);
         return view('admin.pages.dashboard.index', compact(['health', 'lastRanAt']))->with(([
             'total_orders' => Order::count(),
-            'total_cancelled_orders' => OrderStatus::where('status', OrderEnumStatus::CANCELLED)->count(),
-            'total_confirmed_orders' => OrderStatus::where('status', OrderEnumStatus::CONFIRMED)->count(),
-            'total_delivered_orders' => OrderStatus::where('status', OrderEnumStatus::DELIVERED)->count(),
-            'total_ofd_orders' => OrderStatus::where('status', OrderEnumStatus::OFD)->count(),
-            'total_payment' => Order::whereHas('payment', function($q){
-                $q->where('status', '<>', PaymentStatus::REFUND);
-            })->sum('total_price'),
+            'total_cancelled_orders' => Order::whereHas('current_status', function($q) {
+                $q->where('status', OrderEnumStatus::CANCELLED);
+            })->count(),
+            'total_confirmed_orders' => Order::whereHas('current_status', function($q) {
+                $q->where('status', OrderEnumStatus::CONFIRMED);
+            })->count(),
+            'total_delivered_orders' => Order::whereHas('current_status', function($q) {
+                $q->where('status', OrderEnumStatus::DELIVERED);
+            })->count(),
+            'total_ofd_orders' => Order::whereHas('current_status', function($q) {
+                $q->where('status', OrderEnumStatus::OFD);
+            })->count(),
+            'total_packed_orders' => Order::whereHas('current_status', function($q) {
+                $q->where('status', OrderEnumStatus::PACKED);
+            })->count(),
             'total_payment_pending' => Order::whereHas('payment', function($q){
                 $q->where('status', PaymentStatus::PENDING);
             })->sum('total_price'),

@@ -1,5 +1,9 @@
 @extends("admin.layouts.dashboard")
 
+@section("css")
+				<link rel="stylesheet" href="{{ asset("admin/css/daterangepicker.css") }}">
+@stop
+
 @section("content")
 
 				<div class="page-content">
@@ -10,16 +14,94 @@
 												<!-- end page title -->
 
 												<div class="row">
+																<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																				<div class="card card-animate no-box-shadow">
+																								<div class="card-body">
+																												<div class="d-flex align-items-center">
+																																<div class="avatar-sm flex-shrink-0">
+																																				<span class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																								<i class="ri-shopping-bag-line text-success"></i>
+																																				</span>
+																																</div>
+																																<div class="flex-grow-1 ms-3">
+																																				<div class="d-flex align-items-center">
+																																								<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																class="text-uppercase">{{ $order_count }}</span>
+																																								</h4>
+																																				</div>
+																																				<p class="text-muted mb-0">
+																																								Total Orders
+																																				</p>
+																																</div>
+																												</div>
+																								</div><!-- end card body -->
+																				</div>
+																</div>
+																<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																				<div class="card card-animate no-box-shadow">
+																								<div class="card-body">
+																												<div class="d-flex align-items-center">
+																																<div class="avatar-sm flex-shrink-0">
+																																				<span class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																								<i class="ri-thumb-up-line text-success"></i>
+																																				</span>
+																																</div>
+																																<div class="flex-grow-1 ms-3">
+																																				<div class="d-flex align-items-center">
+																																								<h4 class="fs-4 flex-grow-1 mb-0"><span class="text-uppercase">₹
+																																																{{ $earning_count }}</span>
+																																								</h4>
+																																				</div>
+																																				<p class="text-muted mb-0">
+																																								Total Earning
+																																				</p>
+																																</div>
+																												</div>
+																								</div><!-- end card body -->
+																				</div>
+																</div>
+																<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																				<div class="card card-animate no-box-shadow">
+																								<div class="card-body">
+																												<div class="d-flex align-items-center">
+																																<div class="avatar-sm flex-shrink-0">
+																																				<span class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																								<i class="ri-thumb-down-line text-success"></i>
+																																				</span>
+																																</div>
+																																<div class="flex-grow-1 ms-3">
+																																				<div class="d-flex align-items-center">
+																																								<h4 class="fs-4 flex-grow-1 mb-0"><span class="text-uppercase">₹
+																																																{{ $loss_count }}</span>
+																																								</h4>
+																																				</div>
+																																				<p class="text-muted mb-0">
+																																								Total Loss
+																																				</p>
+																																</div>
+																												</div>
+																								</div><!-- end card body -->
+																				</div>
+																</div>
+												</div>
+
+												<div class="row">
 																<div class="col-lg-12">
 																				<div class="card">
-																								<div class="card-header">
-																												<h4 class="card-title mb-0">Order</h4>
-																								</div><!-- end card header -->
+																								<form action="{{ route("order_admin.paginate.get") }}" method="GET">
+																												<div class="card-header d-flex justify-content-between align-items-center">
+																																<h4 class="card-title mb-0">Order</h4>
+																																<button type="submit" class="btn btn-primary">
+																																				Filter
+																																</button>
+																												</div><!-- end card header -->
 
-																								<div class="card-body border-end-0 border-start-0 border border-dashed">
-																												<form action="{{ route("order_admin.paginate.get") }}" method="GET">
+																												<div class="card-body border-end-0 border-start-0 border border-dashed">
+																																{{-- <form action="{{ route("order_admin.paginate.get") }}" method="GET">
+                                                                                                                        <!--end row-->
+                                                                                                                    </form> --}}
 																																<div class="row g-1 align-items-end justify-content-start">
-																																				<div class="col-xxl-4 col-lg-4 col-sm-12">
+																																				<div class="col-xxl-auto col-lg-auto col-sm-12">
 																																								<label class="form-label" for="">Search</label>
 																																								<div class="search-box">
 																																												<input type="text" class="form-control search" name="filter[search]"
@@ -28,6 +110,21 @@
 																																								</div>
 																																				</div>
 																																				<!--end col-->
+																																				<div class="col-xxl-2 col-lg-2 col-sm-12">
+																																								<label class="form-label" for="">Payment Mode</label>
+																																								<div>
+																																												<select class="form-control" name="filter[has_payment_mode]"
+																																																id="has_payment_mode">
+																																																<option value="all" @if (strpos("all", $payment_mode) !== false) selected @endif>all
+																																																</option>
+																																																@foreach ($payment_modes as $v)
+																																																				<option value="{{ $v }}"
+																																																								@if (strpos($v, $payment_mode) !== false) selected @endif>
+																																																								{{ $v }}</option>
+																																																@endforeach
+																																												</select>
+																																								</div>
+																																				</div>
 																																				<div class="col-xxl-2 col-lg-2 col-sm-12">
 																																								<label class="form-label" for="">Payment Status</label>
 																																								<div>
@@ -74,22 +171,19 @@
 																																								</div>
 																																				</div>
 																																				<!--end col-->
-																																				<div class="col-xxl-2 col-lg-2 col-sm-12 mt-3">
-																																								<div>
-																																												<button type="submit" class="btn btn-primary w-100">
-																																																Filter
-																																												</button>
-																																								</div>
+																																				<div class="col-xxl-2 col-lg-2 col-sm-12">
+																																								<label class="form-label" for="">Date Range</label>
+																																								<input type="text" class="form-control" name="filter[has_date]"
+																																												placeholder="Pick Date" id="date-range" autocomplete="false">
 																																				</div>
 																																				<!--end col-->
 																																</div>
-																																<!--end row-->
-																												</form>
-																								</div>
+																												</div>
+																								</form>
 
 																								<div class="card-body">
 																												<div id="customerList">
-																																<div class="table-responsive table-card mb-1 mt-3">
+																																<div class="table-responsive table-card mb-1">
 																																				@if ($data->total() > 0)
 																																								<table class="table-nowrap table align-middle" id="customerTable">
 																																												<thead class="table-light">
@@ -124,7 +218,7 @@
 																																																								<td class="customer_name">{{ $item->payment->mode ?? "" }}</td>
 																																																								<td class="customer_name">{{ $item->payment->status ?? "" }}</td>
 																																																								<td class="customer_name">
-																																																												{{ $item->statuses->count() > 0 ? $item->statuses[$item->statuses->count() - 1]->status : "" }}
+																																																												{{ $item->current_status ? $item->current_status->status : "" }}
 																																																								</td>
 																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
 																																																								<td>
@@ -184,4 +278,27 @@
 								</div>
 				</div>
 
+@stop
+
+@section("javascript")
+				<script src="{{ asset("admin/js/pages/jQuery.min.js") }}"></script>
+				<script src="{{ asset("admin/js/pages/moment.js") }}"></script>
+				<script src="{{ asset("admin/js/pages/daterangepicker.js") }}"></script>
+				<script type="text/javascript" nonce="{{ csp_nonce() }}">
+								$(function() {
+												$('#date-range').daterangepicker({
+																opens: 'left',
+																autoUpdateInput: false,
+																alwaysShowCalendars: true,
+																maxDate: moment(),
+																locale: {
+																				format: 'YYYY-MM-DD'
+																}
+												});
+												$('#date-range').on('apply.daterangepicker', function(ev, picker) {
+																$(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format(
+																				'YYYY-MM-DD'));
+												});
+								});
+				</script>
 @stop

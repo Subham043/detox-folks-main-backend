@@ -37,9 +37,7 @@
 																																																				<th class="sort" data-sort="customer_name">Email</th>
 																																																				<th class="sort" data-sort="customer_name">Phone</th>
 																																																				<th class="sort" data-sort="customer_name">Page Url</th>
-																																																				<th class="sort" data-sort="customer_name">Service</th>
 																																																				<th class="sort" data-sort="customer_name">Message</th>
-																																																				<th class="sort" data-sort="customer_name">Image</th>
 																																																				<th class="sort" data-sort="date">Created On</th>
 																																																				<th class="sort" data-sort="action">Action</th>
 																																																</tr>
@@ -53,14 +51,7 @@
 																																																								<td class="customer_name"> <a href="{{ $item->page_url }}"
 																																																																target="_blank"
 																																																																rel="noopener noreferrer">{{ $item->page_url }}</a></td>
-																																																								<td class="customer_name">{{ $item->service }}</td>
 																																																								<td class="customer_name">{{ $item->message }}</td>
-																																																								<td class="customer_name">
-																																																												@if (!empty($item->image_link))
-																																																																<img src="{{ $item->image_link }}" alt=""
-																																																																				class="img-preview">
-																																																												@endif
-																																																								</td>
 																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
 																																																								<td>
 																																																												<div class="d-flex gap-2">

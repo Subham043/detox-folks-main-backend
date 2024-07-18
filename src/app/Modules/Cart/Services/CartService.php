@@ -12,46 +12,12 @@ class CartService
 
     public function all(): Collection
     {
-        return Cart::with([
-            'product' => function($query) {
-                $query->with([
-                    'categories' => function($q){
-                        $q->where('is_draft', true);
-                    },
-                    'sub_categories' => function($q){
-                        $q->where('is_draft', true);
-                    },
-                    'product_specifications',
-                    'product_images',
-                    'product_prices'=>function($q){
-                        $q->orderBy('min_quantity', 'asc');
-                    },
-                ]);
-            },
-            'product_price',
-        ])->where('user_id', auth()->user()->id)->get();
+        return Cart::commonWith()->belongsToUser()->get();
     }
 
     public function paginate(Int $total = 10): LengthAwarePaginator
     {
-        $query = Cart::with([
-            'product' => function($query) {
-                $query->with([
-                    'categories' => function($q){
-                        $q->where('is_draft', true);
-                    },
-                    'sub_categories' => function($q){
-                        $q->where('is_draft', true);
-                    },
-                    'product_specifications',
-                    'product_images',
-                    'product_prices'=>function($q){
-                        $q->orderBy('min_quantity', 'asc');
-                    },
-                ]);
-            },
-            'product_price',
-        ])->where('user_id', auth()->user()->id)->latest();
+        $query = Cart::commonWith()->belongsToUser()->latest();
         return QueryBuilder::for($query)
                 ->paginate($total)
                 ->appends(request()->query());
@@ -59,24 +25,7 @@ class CartService
 
     public function getById(Int $id): Cart|null
     {
-        return Cart::with([
-            'product' => function($query) {
-                $query->with([
-                    'categories' => function($q){
-                        $q->where('is_draft', true);
-                    },
-                    'sub_categories' => function($q){
-                        $q->where('is_draft', true);
-                    },
-                    'product_specifications',
-                    'product_images',
-                    'product_prices'=>function($q){
-                        $q->orderBy('min_quantity', 'asc');
-                    },
-                ]);
-            },
-            'product_price',
-        ])->where('user_id', auth()->user()->id)->findOrFail($id);
+        return Cart::commonWith()->belongsToUser()->findOrFail($id);
     }
 
     public function create(array $data): Cart
@@ -96,6 +45,16 @@ class CartService
     public function delete(Cart $cart): bool|null
     {
         return $cart->delete();
+    }
+
+    public function empty(string $user_id): void
+    {
+        Cart::where('user_id', $user_id)->delete();
+    }
+
+    public function get_total_amount(): mixed
+    {
+        return Cart::commonWith()->belongsToUser()->sum('amount');
     }
 
 }

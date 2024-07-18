@@ -8,6 +8,7 @@ use App\Modules\Authentication\Controllers\UserLoginController;
 use App\Modules\Authentication\Controllers\UserLogoutController;
 use App\Modules\Authentication\Controllers\UserPasswordUpdateController;
 use App\Modules\Authentication\Controllers\UserRegisterController;
+use App\Modules\Authentication\Controllers\UserResendOtpController;
 use App\Modules\Authentication\Controllers\UserResetPasswordController;
 use App\Modules\Authentication\Controllers\VerifyRegisteredUserController;
 use App\Modules\BillingAddress\Controllers\BillingAddressAllController;
@@ -72,6 +73,7 @@ Route::prefix('auth')->group(function () {
     Route::post('/register', [UserRegisterController::class, 'post'])->name('user.register');
     Route::post('/forgot-password', [UserForgotPasswordController::class, 'post'])->name('user.forgot_password');
     Route::post('/reset-password/{token}', [UserResetPasswordController::class, 'post', 'as' => 'reset_password.post'])->name('user.reset_password');
+    Route::post('/resend-otp', [UserResendOtpController::class, 'post', 'as' => 'resend_otp.post'])->name('user.resend_otp');
 });
 
 Route::prefix('/email/verify')->group(function () {

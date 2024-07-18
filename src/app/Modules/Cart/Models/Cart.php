@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Database\Eloquent\Builder;
 
 class Cart extends Model
 {
@@ -49,6 +50,33 @@ class Cart extends Model
     public function product_price()
     {
         return $this->belongsTo(ProductPrice::class, 'product_price_id')->withDefault();
+    }
+
+    public function scopeCommonWith(Builder $query): Builder
+    {
+        return $query->with([
+            'product' => function($query) {
+                $query->with([
+                    'categories' => function($q){
+                        $q->where('is_draft', true);
+                    },
+                    'sub_categories' => function($q){
+                        $q->where('is_draft', true);
+                    },
+                    'product_specifications',
+                    'product_images',
+                    'product_prices'=>function($q){
+                        $q->orderBy('min_quantity', 'asc');
+                    },
+                ]);
+            },
+            'product_price',
+        ]);
+    }
+
+    public function scopeBelongsToUser(Builder $query): Builder
+    {
+        return $query->where('user_id', auth()->user()->id);
     }
 
     public function getActivitylogOptions(): LogOptions

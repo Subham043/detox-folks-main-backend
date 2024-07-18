@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('charges_slug', 500)->nullable();
             $table->string('charges_name', 500)->nullable();
             $table->string('charges_in_amount', 500)->default(0)->nullable();
+            $table->boolean('is_percentage')->default(0);
             $table->string('include_charges_for_cart_price_below', 500)->default(0)->nullable();
             $table->foreignId('order_id')->nullable()->constrained('orders')->nullOnDelete();
             $table->timestamps();

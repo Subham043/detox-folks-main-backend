@@ -23,6 +23,7 @@ class UserRegisterController extends Controller
     public function post(UserRegisterPostRequest $request){
 
         $user = $this->userService->create($request->validated());
+        $this->userService->syncRoles(['User'], $user);
         $token = $this->authService->generate_token($user);
 
         if ($token) {
