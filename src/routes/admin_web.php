@@ -45,6 +45,7 @@ use App\Modules\Order\Controllers\OrderAdminCancelController;
 use App\Modules\Order\Controllers\OrderAdminDetailController;
 use App\Modules\Order\Controllers\OrderAdminPaginateController;
 use App\Modules\Order\Controllers\OrderAdminCollectPaymentController;
+use App\Modules\Order\Controllers\OrderAdminInvoicePdfController;
 use App\Modules\Order\Controllers\OrderAdminStatusController;
 use App\Modules\Product\Controllers\ProductCreateController;
 use App\Modules\Product\Controllers\ProductDeleteController;
@@ -229,6 +230,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:Super-Admin|Staff'])->prefix('/order')->group(function () {
         Route::get('/', [OrderAdminPaginateController::class, 'get', 'as' => 'order_admin.paginate.get'])->name('order_admin.paginate.get');
         Route::get('/detail/{id}', [OrderAdminDetailController::class, 'get', 'as' => 'order_admin.detail.get'])->name('order_admin.detail.get');
+        Route::get('/pdf/{id}', [OrderAdminInvoicePdfController::class, 'get', 'as' => 'order_admin.pdf.get'])->name('order_admin.pdf.get');
         Route::get('/update-status/{id}', [OrderAdminStatusController::class, 'get', 'as' => 'order_admin.update_order_status.get'])->name('order_admin.update_order_status.get');
         Route::get('/cancel/{id}', [OrderAdminCancelController::class, 'get', 'as' => 'order_admin.cancel.get'])->name('order_admin.cancel.get');
         Route::get('/payment-update/{id}', [OrderAdminCollectPaymentController::class, 'get', 'as' => 'order_admin.payment_update.get'])->name('order_admin.payment_update.get');

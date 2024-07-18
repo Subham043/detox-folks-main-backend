@@ -227,6 +227,12 @@
 																																																																				<a href="{{ route("order_admin.detail.get", $item->id) }}"
 																																																																								class="btn btn-sm btn-primary edit-item-btn">View</a>
 																																																																</div>
+																																																																<div class="edit">
+																																																																				<a href="{{ route("order_admin.pdf.get", $item->id) }}"
+																																																																								class="btn btn-sm btn-secondary edit-item-btn"
+																																																																								download>
+																																																																								Invoice</a>
+																																																																</div>
 																																																																@if (!in_array(\App\Enums\OrderEnumStatus::CANCELLED, $item->statuses->pluck("status")->toArray()))
 																																																																				@if (!in_array(\App\Enums\OrderEnumStatus::DELIVERED, $item->statuses->pluck("status")->toArray()))
 																																																																								<div class="remove">

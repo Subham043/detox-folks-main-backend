@@ -8,7 +8,21 @@
 												<x-includes.breadcrumb link="order_admin.paginate.get" page="Order" :list='["Detail"]' />
 
 												<div class="row project-wrapper">
-																<x-includes.back-button link="order_admin.paginate.get" />
+																<div class="row justify-content-between g-4 mb-3">
+																				<div class="col-sm-auto">
+																								<div>
+																												<a href="{{ route("order_admin.paginate.get") }}" type="button" class="btn btn-dark add-btn"
+																																id="create-btn"><i class="ri-arrow-go-back-line me-1 align-bottom"></i> Go Back</a>
+																								</div>
+																				</div>
+																				<div class="col-sm-auto px-0">
+																								<div>
+																												<a href="{{ route("order_admin.pdf.get", $order->id) }}" type="button" download
+																																class="btn btn-secondary add-btn" id="create-btn"><i
+																																				class="ri-file-download-line me-1 align-bottom"></i> Invoice</a>
+																								</div>
+																				</div>
+																</div>
 																<div class="col-xxl-12">
 
 																				<div class="row">
