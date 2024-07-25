@@ -37,9 +37,9 @@ class OrderFormExport implements FromCollection,WithHeadings,WithMapping
             $data->order->phone,
             $data->order->id,
             $data->order->total_price,
-            $data->order->payment->mode,
-            $data->order->payment->status,
-            $data->order->current_status->status,
+            $data->order->payment->mode ? $data->order->payment->mode->value : '',
+            $data->order->payment->status ? $data->order->payment->status->value : '',
+            $data->order->current_status->status ? $data->order->current_status->status->value : '',
             $data->message,
             $data->created_at,
          ];
@@ -53,6 +53,6 @@ class OrderFormExport implements FromCollection,WithHeadings,WithMapping
                     'payment',
                 ]);
             }
-        ])->whereHas('order')->all();
+        ])->whereHas('order')->get();
     }
 }

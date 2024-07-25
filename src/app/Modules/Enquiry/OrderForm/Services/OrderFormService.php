@@ -22,7 +22,7 @@ class OrderFormService
                     'payment',
                 ]);
             }
-        ])->whereHas('order')->all();
+        ])->whereHas('order')->get();
     }
 
     public function paginate(Int $total = 10): LengthAwarePaginator
