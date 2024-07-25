@@ -8,6 +8,7 @@ use App\Modules\Authentication\Requests\UserRegisterPostRequest;
 use App\Modules\Authentication\Resources\AuthCollection;
 use App\Modules\Authentication\Services\AuthService;
 use App\Modules\User\Services\UserService;
+use Illuminate\Auth\Events\Registered;
 
 class UserRegisterController extends Controller
 {
@@ -25,6 +26,7 @@ class UserRegisterController extends Controller
         $user = $this->userService->create($request->validated());
         $this->userService->syncRoles(['User'], $user);
         $token = $this->authService->generate_token($user);
+        event(new Registered($user));
 
         if ($token) {
             (new RateLimitService($request))->clearRateLimit();

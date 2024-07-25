@@ -19,6 +19,10 @@ class PasswordUpdateController extends Controller
         $this->authService = $authService;
     }
 
+    public function get(){
+        return view('admin.pages.profile.password');
+    }
+
     public function post(PasswordPostRequest $request)
     {
         try {

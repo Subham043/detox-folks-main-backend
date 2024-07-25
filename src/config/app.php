@@ -127,6 +127,7 @@ return [
     */
 
     'sms' => [
+        'enabled' => env('SMS_ENABLED', false),
         'key' => env('SMS_KEY'),
     ],
 

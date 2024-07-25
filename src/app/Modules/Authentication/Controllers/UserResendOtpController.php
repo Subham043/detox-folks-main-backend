@@ -18,7 +18,8 @@ class UserResendOtpController extends Controller
     }
 
     public function post(UserResendOtpPostRequest $request){
-        $is_success = (new SmsService)->send($request->phone, 'Your OTP is 1234');
+        // $is_success = (new SmsService)->send($request->phone, 'Your OTP is 1234');
+        $is_success = true;
         if($is_success){
             (new RateLimitService($request))->clearRateLimit();
             return response()->json([

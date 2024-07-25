@@ -4,6 +4,7 @@ namespace App\Modules\Authentication\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Authentication\Requests\UserEmailVerificationRequest;
+use App\Modules\User\Services\UserService;
 use Illuminate\Http\Request;
 
 class VerifyRegisteredUserController extends Controller
@@ -23,7 +24,11 @@ class VerifyRegisteredUserController extends Controller
 
     public function verify_email(UserEmailVerificationRequest $request, $id, $hash){
         $request->fulfill();
-        return redirect(config('app.main_url').'?verified=true');
+        $user = (new UserService)->getById($id);
+        if($user->current_role==="User"){
+            return redirect(config('app.main_url').'?verified=true');
+        }
+        return redirect()->to(route('dashboard.get'));
     }
 
 

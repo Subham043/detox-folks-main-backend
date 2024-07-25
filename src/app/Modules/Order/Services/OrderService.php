@@ -236,22 +236,22 @@ class OrderService
                 ->sum('total_price');
     }
 
-    public function getById(Int $id): Order|null
+    public function getById($id): Order|null
     {
         return Order::commonWith()->placedByUser()->findOrFail($id);
     }
 
-    public function getOrderPlacedById(Int $id): Order|null
+    public function getOrderPlacedById($id): Order|null
     {
         return Order::commonWith()->paymentCompleted()->placedByUser()->findOrFail($id);
     }
 
-    public function getOrderPlacedByIdPaymentPendingVia(Int $id, PaymentMode $paymentMode): Order|null
+    public function getOrderPlacedByIdPaymentPendingVia($id, PaymentMode $paymentMode): Order|null
     {
         return Order::commonWith()->paymentPendingFrom($id, $paymentMode)->findOrFail($id);
     }
 
-    public function getByIdForAdmin(Int $id): Order|null
+    public function getByIdForAdmin($id): Order|null
     {
         return Order::commonWith()->findOrFail($id);
     }

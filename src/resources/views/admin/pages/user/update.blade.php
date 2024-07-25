@@ -134,7 +134,7 @@
 												choices: [{
 																				value: '',
 																				label: 'Select a role',
-																				selected: {{ empty(old("role")) || count($user_roles) == 0 ? "true" : "false" }},
+																				selected: {{ count($user_roles) == 0 ? "true" : "false" }},
 																				disabled: true,
 																},
 																@foreach ($roles as $val)

@@ -43,10 +43,28 @@
 
 																@hasanyrole("Staff|Super-Admin")
 																				<li class="nav-item">
-																								<a class="nav-link menu-link {{ strpos(url()->current(), route("enquiry.contact_form.paginate.get")) !== false ? "active" : "" }}"
-																												href="{{ route("enquiry.contact_form.paginate.get") }}">
-																												<i class="ri-survey-line"></i> <span data-key="t-widgets">Contact Form Enquiries</span>
+																								<a class="nav-link menu-link {{ strpos(url()->current(), "enquiries") !== false ? "active" : "" }}"
+																												href="#sidebarDashboards5" data-bs-toggle="collapse" role="button"
+																												aria-expanded="{{ strpos(url()->current(), "enquiries") !== false ? "true" : "false" }}"
+																												aria-controls="sidebarDashboards5">
+																												<i class="ri-survey-line"></i> <span data-key="t-dashboards">Enquiries</span>
 																								</a>
+																								<div class="menu-dropdown {{ strpos(url()->current(), "enquiries") !== false ? "show" : "" }} collapse"
+																												id="sidebarDashboards5">
+																												<ul class="nav nav-sm flex-column">
+																																<li class="nav-item">
+																																				<a href="{{ route("enquiry.contact_form.paginate.get") }}"
+																																								class="nav-link {{ strpos(url()->current(), route("enquiry.contact_form.paginate.get")) !== false ? "active" : "" }}"
+																																								data-key="t-analytics"> Contact Form </a>
+																																</li>
+																																<li class="nav-item">
+																																				<a href="{{ route("enquiry.order_form.paginate.get") }}"
+																																								class="nav-link {{ strpos(url()->current(), route("enquiry.order_form.paginate.get")) !== false ? "active" : "" }}"
+																																								data-key="t-analytics"> Order Form </a>
+																																</li>
+
+																												</ul>
+																								</div>
 																				</li>
 																@endhasanyrole
 
@@ -59,7 +77,49 @@
 																				</li>
 																@endhasanyrole
 
-																@hasanyrole("Staff|Super-Admin|Content Manager")
+																@hasanyrole("Delivery Agent")
+																				<li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("delivery_management.agent.order.get")) !== false ? "active" : "" }}"
+																												href="{{ route("delivery_management.agent.order.get") }}">
+																												<i class="ri-truck-line"></i> <span data-key="t-widgets">Orders</span>
+																								</a>
+																				</li>
+																@endhasanyrole
+
+																@hasanyrole("Content Manager")
+																				<li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("testimonial.paginate.get")) !== false ? "active" : "" }}"
+																												href="{{ route("testimonial.paginate.get") }}">
+																												<i class="ri-chat-1-line"></i> <span data-key="t-widgets">Testimonials</span>
+																								</a>
+																				</li>
+																				<li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("blog.paginate.get")) !== false ? "active" : "" }}"
+																												href="{{ route("blog.paginate.get") }}">
+																												<i class="ri-file-add-line"></i> <span data-key="t-widgets">Blogs</span>
+																								</a>
+																				</li>
+																				<li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("legal.paginate.get")) !== false ? "active" : "" }}"
+																												href="{{ route("legal.paginate.get") }}">
+																												<i class="ri-article-line"></i> <span data-key="t-widgets">Legal Pages</span>
+																								</a>
+																				</li>
+																				<li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("feature.paginate.get")) !== false ? "active" : "" }}"
+																												href="{{ route("feature.paginate.get") }}">
+																												<i class="ri-bookmark-3-line"></i> <span data-key="t-widgets">Features</span>
+																								</a>
+																				</li>
+																				<li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("about.main.get")) !== false ? "active" : "" }}"
+																												href="{{ route("about.main.get") }}">
+																												<i class="ri-pages-line"></i> <span data-key="t-widgets">About Page</span>
+																								</a>
+																				</li>
+																@endhasanyrole
+
+																@hasanyrole("Staff|Super-Admin")
 																				<li class="nav-item">
 																								<a class="nav-link menu-link {{ strpos(url()->current(), "content-management") !== false ? "active" : "" }}"
 																												href="#sidebarDashboards2" data-bs-toggle="collapse" role="button"
@@ -101,7 +161,28 @@
 																				</li>
 																@endhasanyrole
 
-																@hasanyrole("Staff|Super-Admin|Inventory Manager")
+																@hasanyrole("Inventory Manager")
+																				<li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("category.paginate.get")) !== false ? "active" : "" }}"
+																												href="{{ route("category.paginate.get") }}">
+																												<i class="ri-file-copy-2-line"></i> <span data-key="t-widgets">Categories</span>
+																								</a>
+																				</li>
+																				<li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("sub_category.paginate.get")) !== false ? "active" : "" }}"
+																												href="{{ route("sub_category.paginate.get") }}">
+																												<i class="ri-pages-line"></i> <span data-key="t-widgets">Sub-Categories</span>
+																								</a>
+																				</li>
+																				<li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("product.paginate.get")) !== false ? "active" : "" }}"
+																												href="{{ route("product.paginate.get") }}">
+																												<i class="ri-shopping-bag-3-line"></i> <span data-key="t-widgets">Products</span>
+																								</a>
+																				</li>
+																@endhasanyrole
+
+																@hasanyrole("Staff|Super-Admin")
 																				<li class="nav-item">
 																								<a class="nav-link menu-link {{ strpos(url()->current(), "product-management") !== false ? "active" : "" }}"
 																												href="#sidebarDashboards3" data-bs-toggle="collapse" role="button"
@@ -147,6 +228,12 @@
 																								<a class="nav-link menu-link {{ strpos(url()->current(), route("order_admin.paginate.get")) !== false ? "active" : "" }}"
 																												href="{{ route("order_admin.paginate.get") }}">
 																												<i class="bx bx-shopping-bag"></i> <span data-key="t-widgets">Orders</span>
+																								</a>
+																				</li>
+																				<li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("delivery_management.agent.paginate.get")) !== false ? "active" : "" }}"
+																												href="{{ route("delivery_management.agent.paginate.get") }}">
+																												<i class="ri-truck-line"></i> <span data-key="t-widgets">Delivery Agent</span>
 																								</a>
 																				</li>
 																@endhasanyrole

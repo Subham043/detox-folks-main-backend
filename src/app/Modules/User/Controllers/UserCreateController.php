@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\Role\Services\RoleService;
 use App\Modules\User\Requests\UserCreatePostRequest;
 use App\Modules\User\Services\UserService;
+use Illuminate\Auth\Events\Registered;
 
 class UserCreateController extends Controller
 {
@@ -31,6 +32,7 @@ class UserCreateController extends Controller
                 $request->except('role')
             );
             $this->userService->syncRoles([$request->role], $user);
+            $user->sendEmailVerificationNotification();
             return redirect()->intended(route('user.create.get'))->with('success_status', 'User created successfully.');
         } catch (\Throwable $th) {
             return redirect()->intended(route('user.create.get'))->with('error_status', 'Something went wrong. Please try again');

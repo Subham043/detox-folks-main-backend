@@ -18,7 +18,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/admin/dashboard';
+    public const HOME = '/portal/dashboard';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
@@ -40,7 +40,7 @@ class RouteServiceProvider extends ServiceProvider
                 });
 
             Route::middleware(['web', 'csp.policy'])->group(base_path('routes/web.php'));
-            Route::middleware(['web', 'csp.policy', 'custom.headers'])->prefix('admin')->group(base_path('routes/admin_web.php'));
+            Route::middleware(['web', 'csp.policy', 'custom.headers'])->prefix('portal')->group(base_path('routes/portal_web.php'));
         });
     }
 }

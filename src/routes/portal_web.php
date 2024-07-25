@@ -7,6 +7,7 @@ use App\Modules\Authentication\Controllers\LoginController;
 use App\Modules\Authentication\Controllers\LogoutController;
 use App\Modules\Authentication\Controllers\ProfileController;
 use App\Modules\Authentication\Controllers\ResetPasswordController;
+use App\Modules\Authentication\Controllers\VerifyRegisteredAdminController;
 use App\Modules\Dashboard\Controllers\DashboardController;
 use App\Modules\Enquiry\ContactForm\Controllers\ContactFormDeleteController;
 use App\Modules\Enquiry\ContactForm\Controllers\ContactFormExcelController;
@@ -26,6 +27,13 @@ use App\Modules\Charge\Controllers\ChargeCreateController;
 use App\Modules\Charge\Controllers\ChargeDeleteController;
 use App\Modules\Charge\Controllers\ChargePaginateController;
 use App\Modules\Charge\Controllers\ChargeUpdateController;
+use App\Modules\DeliveryManagement\Controllers\AssignDeliveryAgentController;
+use App\Modules\DeliveryManagement\Controllers\AssignedOrderController;
+use App\Modules\DeliveryManagement\Controllers\AssignedOrderForAgentPaginateController;
+use App\Modules\DeliveryManagement\Controllers\DeliveryAgentPaginateController;
+use App\Modules\Enquiry\OrderForm\Controllers\OrderFormDeleteController;
+use App\Modules\Enquiry\OrderForm\Controllers\OrderFormExcelController;
+use App\Modules\Enquiry\OrderForm\Controllers\OrderFormPaginateController;
 use App\Modules\Feature\Controllers\FeatureCreateController;
 use App\Modules\Feature\Controllers\FeatureDeleteController;
 use App\Modules\Feature\Controllers\FeaturePaginateController;
@@ -84,6 +92,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [LoginController::class, 'get', 'as' => 'login.get'])->name('login.get');
     Route::post('/authenticate', [LoginController::class, 'post', 'as' => 'login.post'])->name('login.post');
+    Route::get('/login-otp', [LoginController::class, 'login_otp', 'as' => 'login_otp.get'])->name('login_otp.get');
+    Route::post('/authenticate-otp', [LoginController::class, 'otp_post', 'as' => 'login_otp.post'])->name('login_otp.post');
+    Route::post('/authenticate-send-otp', [LoginController::class, 'send_otp', 'as' => 'login_send_otp.post'])->name('login_send_otp.post');
     Route::get('/forgot-password', [ForgotPasswordController::class, 'get', 'as' => 'forgot_password.get'])->name('forgot_password.get');
     Route::post('/forgot-password', [ForgotPasswordController::class, 'post', 'as' => 'forgot_password.post'])->name('forgot_password.post');
     Route::get('/reset-password/{token}', [ResetPasswordController::class, 'get', 'as' => 'reset_password.get'])->name('reset_password.get');
@@ -103,10 +114,17 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::middleware(['role:Super-Admin|Staff'])->prefix('/contact-form-enquiries')->group(function () {
-        Route::get('/', [ContactFormPaginateController::class, 'get', 'as' => 'enquiry.contact_form.paginate.get'])->name('enquiry.contact_form.paginate.get');
-        Route::get('/excel', [ContactFormExcelController::class, 'get', 'as' => 'enquiry.contact_form.excel.get'])->name('enquiry.contact_form.excel.get');
-        Route::get('/delete/{id}', [ContactFormDeleteController::class, 'get', 'as' => 'enquiry.contact_form.delete.get'])->name('enquiry.contact_form.delete.get');
+    Route::middleware(['role:Super-Admin|Staff'])->prefix('/enquiries')->group(function () {
+        Route::prefix('/contact-form')->group(function () {
+            Route::get('/', [ContactFormPaginateController::class, 'get', 'as' => 'enquiry.contact_form.paginate.get'])->name('enquiry.contact_form.paginate.get');
+            Route::get('/excel', [ContactFormExcelController::class, 'get', 'as' => 'enquiry.contact_form.excel.get'])->name('enquiry.contact_form.excel.get');
+            Route::get('/delete/{id}', [ContactFormDeleteController::class, 'get', 'as' => 'enquiry.contact_form.delete.get'])->name('enquiry.contact_form.delete.get');
+        });
+        Route::prefix('/order-form')->group(function () {
+            Route::get('/', [OrderFormPaginateController::class, 'get', 'as' => 'enquiry.order_form.paginate.get'])->name('enquiry.order_form.paginate.get');
+            Route::get('/excel', [OrderFormExcelController::class, 'get', 'as' => 'enquiry.order_form.excel.get'])->name('enquiry.order_form.excel.get');
+            Route::get('/delete/{id}', [OrderFormDeleteController::class, 'get', 'as' => 'enquiry.order_form.delete.get'])->name('enquiry.order_form.delete.get');
+        });
     });
 
     Route::middleware(['role:Super-Admin|Staff|Content Manager'])->prefix('/content-management')->group(function () {
@@ -150,7 +168,9 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/profile')->group(function () {
         Route::get('/', [ProfileController::class, 'get', 'as' => 'profile.get'])->name('profile.get');
         Route::post('/update', [ProfileController::class, 'post', 'as' => 'profile.post'])->name('profile.post');
+        Route::get('/profile-password-update', [PasswordUpdateController::class, 'get', 'as' => 'password.get'])->name('password.get');
         Route::post('/profile-password-update', [PasswordUpdateController::class, 'post', 'as' => 'password.post'])->name('password.post');
+        Route::get('/resend-email-verify-notification', [VerifyRegisteredAdminController::class, 'resend_notification', 'as' => 'resend_notification'])->middleware(['throttle:6,1'])->name('admin_email.verification.send');
     });
 
     Route::middleware(['role:Super-Admin|Staff'])->prefix('/user')->group(function () {
@@ -234,6 +254,21 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/update-status/{id}', [OrderAdminStatusController::class, 'get', 'as' => 'order_admin.update_order_status.get'])->name('order_admin.update_order_status.get');
         Route::get('/cancel/{id}', [OrderAdminCancelController::class, 'get', 'as' => 'order_admin.cancel.get'])->name('order_admin.cancel.get');
         Route::get('/payment-update/{id}', [OrderAdminCollectPaymentController::class, 'get', 'as' => 'order_admin.payment_update.get'])->name('order_admin.payment_update.get');
+    });
+
+    Route::middleware(['role:Super-Admin|Staff'])->prefix('/delivery-management')->group(function () {
+        Route::get('/agent', [DeliveryAgentPaginateController::class, 'get', 'as' => 'delivery_management.agent.paginate.get'])->name('delivery_management.agent.paginate.get');
+        Route::get('/agent/{user_id}/assign', [AssignDeliveryAgentController::class, 'get', 'as' => 'delivery_management.agent.assign_order.get'])->name('delivery_management.agent.assign_order.get');
+        Route::post('/agent/{user_id}/assign', [AssignDeliveryAgentController::class, 'post', 'as' => 'delivery_management.agent.assign_order.post'])->name('delivery_management.agent.assign_order.post');
+        Route::get('/agent/{user_id}/order-assigned', [AssignedOrderController::class, 'get', 'as' => 'delivery_management.agent.assigned_order.get'])->name('delivery_management.agent.assigned_order.get');
+        Route::post('/agent/{user_id}/order-unassigned', [AssignedOrderController::class, 'post', 'as' => 'delivery_management.agent.unassign_order.post'])->name('delivery_management.agent.unassign_order.post');
+    });
+
+    Route::middleware(['role:Delivery Agent'])->prefix('/delivery')->group(function () {
+        Route::get('/order', [AssignedOrderForAgentPaginateController::class, 'get', 'as' => 'delivery_management.agent.order.get'])->name('delivery_management.agent.order.get');
+        Route::get('/order/{order_id}', [AssignedOrderForAgentPaginateController::class, 'detail', 'as' => 'delivery_management.agent.order_detail.get'])->name('delivery_management.agent.order_detail.get');
+        Route::get('/order/{order_id}/send-otp', [AssignedOrderForAgentPaginateController::class, 'send_otp', 'as' => 'delivery_management.agent.order_send_otp.get'])->middleware(['throttle:3,1'])->name('delivery_management.agent.order_send_otp.get');
+        Route::post('/order/{order_id}/complete', [AssignedOrderForAgentPaginateController::class, 'deliver_order', 'as' => 'delivery_management.agent.order_deliver_order.post'])->name('delivery_management.agent.order_deliver_order.post');
     });
 
     Route::post('/text-editor-image', [TextEditorImageController::class, 'post', 'as' => 'texteditor_image.post'])->name('texteditor_image.post');

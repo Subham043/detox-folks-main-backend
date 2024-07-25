@@ -27,6 +27,7 @@ class Order extends Model
         'name',
         'email',
         'phone',
+        'otp',
         'gst',
         'country',
         'state',
@@ -93,6 +94,11 @@ class Order extends Model
     public function payment()
     {
         return $this->hasOne(OrderPayment::class, 'order_id');
+    }
+
+    public function delivery_agent()
+    {
+        return $this->belongsToMany(User::class, 'delivery_assigneds', 'order_id', 'user_id');
     }
 
     public function scopeCommonWith(Builder $query): Builder

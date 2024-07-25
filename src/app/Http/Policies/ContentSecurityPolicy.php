@@ -12,7 +12,7 @@ class ContentSecurityPolicy extends Basic
     {
         // parent::configure();
 
-        if(request()->is('admin/*')){
+        if(request()->is('portal/*')){
             $this->addNonceForDirective(Directive::STYLE);
         }
 

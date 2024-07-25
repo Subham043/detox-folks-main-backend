@@ -28,10 +28,18 @@ class ProfileController extends Controller
         try {
             //code...
             $user = $this->authService->authenticated_user();
+            $data = $request->validated();
+            if($user->email != $data['email']){
+                $data['email_verified_at'] = null;
+            }
+            if($user->phone != $data['phone']){
+                $data['phone_verified_at'] = null;
+            }
             $this->userService->update(
-                $request->validated(),
+                $data,
                 $user
             );
+            $user->save();
             (new RateLimitService($request))->clearRateLimit();
             return response()->json(["message" => "Profile Updated successfully."], 201);
         } catch (\Throwable $th) {

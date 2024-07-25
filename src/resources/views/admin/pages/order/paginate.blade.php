@@ -197,6 +197,7 @@
 																																																				<th class="sort" data-sort="customer_name">Mode Of Payment</th>
 																																																				<th class="sort" data-sort="customer_name">Payment Status</th>
 																																																				<th class="sort" data-sort="customer_name">Order Status</th>
+																																																				<th class="sort" data-sort="date">Status Updated On</th>
 																																																				<th class="sort" data-sort="date">Placed On</th>
 																																																				<th class="sort" data-sort="action">Action</th>
 																																																</tr>
@@ -219,6 +220,9 @@
 																																																								<td class="customer_name">{{ $item->payment->status ?? "" }}</td>
 																																																								<td class="customer_name">
 																																																												{{ $item->current_status ? $item->current_status->status : "" }}
+																																																								</td>
+																																																								<td class="customer_name">
+																																																												{{ $item->current_status ? $item->current_status->created_at->diffForHumans() : "" }}
 																																																								</td>
 																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
 																																																								<td>

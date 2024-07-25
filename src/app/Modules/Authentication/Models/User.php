@@ -4,6 +4,7 @@ namespace App\Modules\Authentication\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Modules\Order\Models\Order;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,7 +32,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'email_verified_at',
         'phone',
+        'otp',
+        'phone_verified_at',
         'password',
     ];
 
@@ -56,6 +60,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'phone_verified_at' => 'datetime',
     ];
 
     public static function boot()
@@ -97,6 +102,11 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new \App\Modules\Authentication\Notifications\ResetPasswordQueued($token));
+    }
+
+    public function order_assigned()
+    {
+        return $this->belongsToMany(Order::class, 'delivery_assigneds', 'user_id', 'order_id');
     }
 
     /**

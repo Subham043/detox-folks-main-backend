@@ -26,6 +26,7 @@ class UserSeeder extends Seeder
             'phone' => '7892156160',
             'password' => 'subham',
             'email_verified_at' => now(),
+            'phone_verified_at' => now(),
             'created_at' => now(),
             'updated_at' => now(),
         ])->assignRole($admin_role);

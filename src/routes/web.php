@@ -45,3 +45,13 @@ Route::prefix('cashfree')->group(function () {
     Route::get('pay/{order_id}',[CashfreeController::class,'cashfreeView'])->name('make_cashfree_payment');
     Route::get('response/{order_id}',[CashfreeController::class,'cashfreeResponse'])->name('cashfree.response');
 });
+
+Route::get('pdf/{file}', function($file){
+    try {
+        //code...
+        return response()->download(storage_path('app/public/reports/'.$file))->deleteFileAfterSend(true);
+    } catch (\Throwable $th) {
+        //throw $th;
+        return response()->json('File not found', 404);
+    }
+})->name('downaload_invoice_customer');

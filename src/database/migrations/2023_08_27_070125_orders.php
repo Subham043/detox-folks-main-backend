@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name', 255)->nullable();
             $table->string('email', 255)->nullable();
             $table->string('phone', 255)->nullable();
+            $table->string('otp', 255)->nullable();
             $table->string('gst', 255)->nullable();
             $table->string('country', 255)->nullable();
             $table->string('state', 255)->nullable();

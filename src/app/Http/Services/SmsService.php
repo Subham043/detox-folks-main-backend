@@ -5,14 +5,17 @@ namespace App\Http\Services;
 class SmsService
 {
 
-    public function send(int $phone, string $msg)
+    private function send(int $phone, string $msg, string $sndr = 'PRCCTR')
     {
+        if(!((boolean) config('app.sms.enabled'))){
+            return true;
+        }
         $key = config('app.sms.key');
         // Account details
         $apiKey = urlencode($key);
         // Message details
         $numbers = array($phone);
-        $sender = urlencode('TXTLCL');
+        $sender = urlencode($sndr);
         $message = rawurlencode($msg);
 
         $numbers = implode(',', $numbers);
@@ -32,7 +35,19 @@ class SmsService
             // throw $err;
             return false;
         }
-        return $response;
+        return true;
+    }
+
+    public function sendDeliveryConfirmation(string $phone, string $otp)
+    {
+        $message = "Please share this OTP with the delivery agent to complete the order. Your OTP is " . $otp . ". Parcelcounter.";
+        return $this->send('91'.$phone, $message);
+    }
+
+    public function sendLoginOtp(string $phone, string $otp)
+    {
+        $message = "Your one time password for login is ".$otp.". Do not share with anyone. Parcelcounter.";
+        return $this->send('91'.$phone, $message);
     }
 
 }

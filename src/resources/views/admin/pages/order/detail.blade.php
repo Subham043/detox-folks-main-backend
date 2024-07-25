@@ -8,7 +8,7 @@
 												<x-includes.breadcrumb link="order_admin.paginate.get" page="Order" :list='["Detail"]' />
 
 												<div class="row project-wrapper">
-																<div class="row justify-content-between g-4 mb-3">
+																<div class="row justify-content-between mb-3">
 																				<div class="col-sm-auto">
 																								<div>
 																												<a href="{{ route("order_admin.paginate.get") }}" type="button" class="btn btn-dark add-btn"

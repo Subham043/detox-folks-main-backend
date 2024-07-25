@@ -43,4 +43,9 @@ class AuthService
         return Auth::user();
     }
 
+    public function getByPhone(string $phone): User|null
+    {
+        return User::where('phone', $phone)->first();
+    }
+
 }

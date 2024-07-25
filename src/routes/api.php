@@ -34,6 +34,7 @@ use App\Modules\Cart\Controllers\CartUpdateController;
 use App\Modules\Category\Controllers\UserCategoryDetailController;
 use App\Modules\Category\Controllers\UserCategoryPaginateController;
 use App\Modules\Enquiry\ContactForm\Controllers\ContactFormCreateController;
+use App\Modules\Enquiry\OrderForm\Controllers\OrderFormCreateController;
 use App\Modules\Feature\Controllers\UserFeatureAllController;
 use App\Modules\GlobalSearch\Controllers\UserGlobalSearchPaginateController;
 use App\Modules\Legal\Controllers\UserLegalAllController;
@@ -41,6 +42,7 @@ use App\Modules\Legal\Controllers\UserLegalDetailController;
 use App\Modules\Order\Controllers\RecentlyOrderedProductsPaginateController;
 use App\Modules\Order\Controllers\OrderAllController;
 use App\Modules\Order\Controllers\OrderDetailController;
+use App\Modules\Order\Controllers\OrderInvoicePdfController;
 use App\Modules\Order\Controllers\OrderPaginateController;
 use App\Modules\Order\Controllers\OrderPlacedDetailController;
 use App\Modules\Order\Controllers\OrderPlacedPaginateController;
@@ -70,6 +72,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('auth')->group(function () {
     Route::post('/login', [UserLoginController::class, 'post'])->name('user.login');
+    Route::post('/login-phone', [UserLoginController::class, 'phone_post'])->name('user.login_phone');
+    Route::post('/login-phone-otp', [UserLoginController::class, 'phone_otp_post'])->name('user.login_phone_otp');
     Route::post('/register', [UserRegisterController::class, 'post'])->name('user.register');
     Route::post('/forgot-password', [UserForgotPasswordController::class, 'post'])->name('user.forgot_password');
     Route::post('/reset-password/{token}', [UserResetPasswordController::class, 'post', 'as' => 'reset_password.post'])->name('user.reset_password');
@@ -167,7 +171,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/placed-paginate', [OrderPlacedPaginateController::class, 'get', 'as' => 'order.placed_paginate.get'])->name('order.placed_paginate.get');
         Route::post('/place', [PlaceOrderController::class, 'post', 'as' => 'order.place.get'])->name('order.place.post');
         Route::get('/detail/{id}', [OrderDetailController::class, 'get', 'as' => 'order.detail.get'])->name('order.detail.get');
+        Route::get('/pdf/{id}', [OrderInvoicePdfController::class, 'get', 'as' => 'order.pdf.get'])->name('order.pdf.get');
         Route::get('/placed-detail/{id}', [OrderPlacedDetailController::class, 'get', 'as' => 'order.placed_detail.get'])->name('order.placed_detail.get');
+        Route::post('/enquiry/{order_id}', [OrderFormCreateController::class, 'post', 'as' => 'order.enquiry.post'])->name('order.enquiry.post');
     });
 
     Route::post('/auth/logout', [UserLogoutController::class, 'post', 'as' => 'logout'])->name('user.logout');
