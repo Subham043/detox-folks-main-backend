@@ -68,7 +68,7 @@
 																				</li>
 																@endhasanyrole
 
-																@hasanyrole("Staff|Super-Admin")
+																@hasanyrole("Super-Admin")
 																				<li class="nav-item">
 																								<a class="nav-link menu-link {{ strpos(url()->current(), route("user.paginate.get")) !== false ? "active" : "" }}"
 																												href="{{ route("user.paginate.get") }}">
@@ -119,7 +119,7 @@
 																				</li>
 																@endhasanyrole
 
-																@hasanyrole("Staff|Super-Admin")
+																@hasanyrole("Super-Admin")
 																				<li class="nav-item">
 																								<a class="nav-link menu-link {{ strpos(url()->current(), "content-management") !== false ? "active" : "" }}"
 																												href="#sidebarDashboards2" data-bs-toggle="collapse" role="button"
@@ -214,7 +214,7 @@
 																				</li>
 																@endhasanyrole
 
-																@hasanyrole("Staff|Super-Admin")
+																@hasanyrole("Super-Admin")
 																				<li class="nav-item">
 																								<a class="nav-link menu-link {{ strpos(url()->current(), route("charge.paginate.get")) !== false ? "active" : "" }}"
 																												href="{{ route("charge.paginate.get") }}">
@@ -238,7 +238,7 @@
 																				</li>
 																@endhasanyrole
 
-																@hasanyrole("Staff|Super-Admin")
+																@hasanyrole("Super-Admin")
 																				<li class="nav-item">
 																								<a class="nav-link menu-link {{ strpos(url()->current(), "logs") !== false ? "active" : "" }}"
 																												href="#sidebarDashboards4" data-bs-toggle="collapse" role="button"

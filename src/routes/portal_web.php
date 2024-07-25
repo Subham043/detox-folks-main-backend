@@ -127,7 +127,7 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::middleware(['role:Super-Admin|Staff|Content Manager'])->prefix('/content-management')->group(function () {
+    Route::middleware(['role:Super-Admin|Content Manager'])->prefix('/content-management')->group(function () {
         Route::prefix('/legal-pages')->group(function () {
             Route::get('/', [LegalPaginateController::class, 'get', 'as' => 'legal.paginate.get'])->name('legal.paginate.get');
             Route::get('/update/{slug}', [LegalUpdateController::class, 'get', 'as' => 'legal.update.get'])->name('legal.update.get');
@@ -173,7 +173,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/resend-email-verify-notification', [VerifyRegisteredAdminController::class, 'resend_notification', 'as' => 'resend_notification'])->middleware(['throttle:6,1'])->name('admin_email.verification.send');
     });
 
-    Route::middleware(['role:Super-Admin|Staff'])->prefix('/user')->group(function () {
+    Route::middleware(['role:Super-Admin'])->prefix('/user')->group(function () {
         Route::get('/', [UserPaginateController::class, 'get', 'as' => 'user.paginate.get'])->name('user.paginate.get');
         Route::get('/create', [UserCreateController::class, 'get', 'as' => 'user.create.get'])->name('user.create.get');
         Route::post('/create', [UserCreateController::class, 'post', 'as' => 'user.create.get'])->name('user.create.post');
@@ -238,7 +238,7 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::middleware(['role:Super-Admin|Staff'])->prefix('/cart-charges')->group(function () {
+    Route::middleware(['role:Super-Admin'])->prefix('/cart-charges')->group(function () {
         Route::get('/', [ChargePaginateController::class, 'get', 'as' => 'charge.paginate.get'])->name('charge.paginate.get');
         Route::get('/create', [ChargeCreateController::class, 'get', 'as' => 'charge.create.get'])->name('charge.create.get');
         Route::post('/create', [ChargeCreateController::class, 'post', 'as' => 'charge.create.post'])->name('charge.create.post');
