@@ -117,6 +117,7 @@ return [
         'app_id' => env('CASHFREE_APP_ID'),
         'secret_key' => env('CASHFREE_SECRET_KEY'),
         'url' => env('CASHFREE_URL', "https://sandbox.cashfree.com"),
+        'mode' => env('CASHFREE_MODE', "sandbox"),
     ],
 
     /*

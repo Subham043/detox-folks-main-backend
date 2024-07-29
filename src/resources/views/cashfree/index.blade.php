@@ -51,8 +51,7 @@
 				<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 				<script type="text/javascript" nonce="{{ csp_nonce() }}">
 								const cashfree = Cashfree({
-												//mode: "sandbox" //or production
-												mode: "production" //or production
+												mode: "{{ config("app.cashfree.mode") }}" //or production
 								});
 								let checkoutOptions = {
 												paymentSessionId: "{{ $paymentSessionId }}",
