@@ -21,7 +21,7 @@ class ContentSecurityPolicy extends Basic
         ->addDirective(Directive::BASE, Keyword::SELF)
         ->addDirective(Directive::CONNECT, Keyword::SELF)
         ->addDirective(Directive::DEFAULT, Keyword::SELF)
-        ->addDirective(Directive::FORM_ACTION, [Keyword::SELF, 'secure.payu.in', 'api.payu.in', 'sandbox.cashfree.com', 'api.cashfree.com'])
+        ->addDirective(Directive::FORM_ACTION, [Keyword::SELF, 'secure.payu.in', 'api.payu.in', 'sandbox.cashfree.com', 'payout-api.cashfree.com'])
         ->addDirective(Directive::IMG, Keyword::SELF)
         ->addDirective(Directive::MEDIA, Keyword::SELF)
         ->addDirective(Directive::OBJECT, Keyword::NONE)
