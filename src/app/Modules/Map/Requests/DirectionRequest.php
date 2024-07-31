@@ -27,10 +27,10 @@ class DirectionRequest extends FormRequest
     public function rules()
     {
         return [
-            'origin_lat' => 'required|numeric',
-            'origin_lng' => 'required|numeric',
-            'destination_lat' => 'required|numeric',
-            'destination_lng' => 'required|numeric',
+            'origin_lat' => 'required|decimal:1,15',
+            'origin_lng' => 'required|decimal:1,15',
+            'destination_lat' => 'required|decimal:1,15',
+            'destination_lng' => 'required|decimal:1,15',
         ];
     }
 

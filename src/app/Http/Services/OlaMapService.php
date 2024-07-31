@@ -51,7 +51,7 @@ class OlaMapService
         return json_decode($response)->predictions;
     }
 
-    public function get_reverse_geoconding(int $lat, int $lng)
+    public function get_reverse_geoconding(float $lat, float $lng)
     {
         if(!$this->ENABLED) return [];
         $token = $this->authenticate();
@@ -67,7 +67,7 @@ class OlaMapService
         return json_decode($response)->results;
     }
 
-    public function get_direction(int $origin_lat, int $origin_lng, int $destination_lat, int $destination_lng)
+    public function get_direction(float $origin_lat, float $origin_lng, float $destination_lat, float $destination_lng)
     {
         if(!$this->ENABLED) return [];
         $token = $this->authenticate();

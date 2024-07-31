@@ -27,8 +27,8 @@ class ReverseGeocodingRequest extends FormRequest
     public function rules()
     {
         return [
-            'lat' => 'required|numeric',
-            'lng' => 'required|numeric',
+            'lat' => 'required|decimal:1,15',
+            'lng' => 'required|decimal:1,15',
         ];
     }
 
