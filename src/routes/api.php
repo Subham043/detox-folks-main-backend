@@ -39,6 +39,9 @@ use App\Modules\Feature\Controllers\UserFeatureAllController;
 use App\Modules\GlobalSearch\Controllers\UserGlobalSearchPaginateController;
 use App\Modules\Legal\Controllers\UserLegalAllController;
 use App\Modules\Legal\Controllers\UserLegalDetailController;
+use App\Modules\Map\Controllers\MapAutoCompleteController;
+use App\Modules\Map\Controllers\MapDirectionController;
+use App\Modules\Map\Controllers\MapReverseGeocodingController;
 use App\Modules\Order\Controllers\RecentlyOrderedProductsPaginateController;
 use App\Modules\Order\Controllers\OrderAllController;
 use App\Modules\Order\Controllers\OrderDetailController;
@@ -78,6 +81,12 @@ Route::prefix('auth')->group(function () {
     Route::post('/forgot-password', [UserForgotPasswordController::class, 'post'])->name('user.forgot_password');
     Route::post('/reset-password/{token}', [UserResetPasswordController::class, 'post', 'as' => 'reset_password.post'])->name('user.reset_password');
     Route::post('/resend-otp', [UserResendOtpController::class, 'post', 'as' => 'resend_otp.post'])->name('user.resend_otp');
+});
+
+Route::prefix('map')->middleware(['auth:sanctum'])->group(function () {
+    Route::post('/autocomplete', [MapAutoCompleteController::class, 'get'])->name('map.autocomplete');
+    Route::post('/reverse', [MapReverseGeocodingController::class, 'get'])->name('map.reverse');
+    Route::post('/direction', [MapDirectionController::class, 'get'])->name('map.direction');
 });
 
 Route::prefix('/email/verify')->group(function () {
