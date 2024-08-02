@@ -232,6 +232,14 @@
 																																																																								class="btn btn-sm btn-primary edit-item-btn">View</a>
 																																																																</div>
 																																																												</div>
+																																																												@if ($item->map_information)
+																																																																<div class="edit">
+																																																																				<a href="https://maps.google.com/maps?daddr={{ $item->map_information->geometry->location->lat }},{{ $item->map_information->geometry->location->lng }}&hl=en"
+																																																																								class="btn btn-sm btn-dark edit-item-btn"
+																																																																								target="_blank">
+																																																																								Map</a>
+																																																																</div>
+																																																												@endif
 																																																								</td>
 																																																				</tr>
 																																																@endforeach

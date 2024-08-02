@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Order extends Model
 {
@@ -34,6 +35,7 @@ class Order extends Model
         'city',
         'pin',
         'address',
+        'map_information',
         'subtotal',
         'total_charges',
         'total_price',
@@ -56,6 +58,7 @@ class Order extends Model
 
     protected $attributes = [
         'order_mode' => OrderMode::WEBSITE,
+        'map_information' => null,
     ];
 
     protected array $orderWith = [
@@ -65,6 +68,14 @@ class Order extends Model
         'current_status',
         'payment',
     ];
+
+    protected function mapInformation(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => !empty($value) ? json_decode($value) : null,
+            set: fn ($value) => !empty($value) ? json_encode($value) : null,
+        );
+    }
 
     public function user()
     {

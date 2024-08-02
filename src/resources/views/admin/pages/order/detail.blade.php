@@ -439,11 +439,50 @@
 																																</div>
 																																<div class="card-body">
 																																				<ul class="list-unstyled vstack mb-0 gap-2">
-																																								<li>{{ $order->address }}</li>
-																																								<li>{{ $order->city }} - {{ $order->pin }}</li>
-																																								<li>{{ $order->state }}</li>
-																																								<li>{{ $order->country }}</li>
+																																								<li><b class="text-muted">Address:</b> {{ $order->address }}</li>
+																																								<li><b class="text-muted">City/Pin:</b> {{ $order->city }} - {{ $order->pin }}
+																																								</li>
+																																								<li><b class="text-muted">State:</b> {{ $order->state }}</li>
+																																								<li><b class="text-muted">Country:</b> {{ $order->country }}</li>
 																																				</ul>
+																																</div>
+																												</div>
+																												<!--end card-->
+																								</div>
+																								<div class="col-xl-12">
+
+																												<!--end card-->
+																												<div class="card">
+																																<div class="card-header">
+																																				<div class="d-flex align-items-center justify-content-between">
+																																								<h5 class="card-title mb-0">Map
+																																								</h5>
+																																								@if ($order->map_information)
+																																												<a href="https://maps.google.com/maps?daddr={{ $order->map_information->geometry->location->lat }},{{ $order->map_information->geometry->location->lng }}&hl=en"
+																																																target="_blank" type="button" class="btn btn-secondary add-btn"
+																																																id="address-btn"><i
+																																																				class="ri-map-pin-line text-light me-1 align-middle"></i>
+																																																Get Direction</a>
+																																								@endif
+																																				</div>
+																																</div>
+																																<div class="card-body">
+																																				@if ($order->map_information)
+																																								<iframe class="w-100" height="300" marginheight="0" marginwidth="0"
+																																												src="https://maps.google.com/maps?q={{ $order->map_information->geometry->location->lat }},{{ $order->map_information->geometry->location->lng }}&hl=en&zoom=20&output=embed">
+																																								</iframe>
+																																								<br />
+																																								<ul class="list-unstyled vstack mb-0 gap-2">
+																																												<li><b class="text-muted">Address:</b>
+																																																{{ $order->map_information->description }}
+																																												</li>
+																																								</ul>
+																																				@else
+																																								<ul class="list-unstyled vstack mb-0 gap-2">
+																																												<li>Map Not Available
+																																												</li>
+																																								</ul>
+																																				@endif
 																																</div>
 																												</div>
 																												<!--end card-->

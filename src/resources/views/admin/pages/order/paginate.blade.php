@@ -237,6 +237,15 @@
 																																																																								download>
 																																																																								Invoice</a>
 																																																																</div>
+																																																																@if ($item->map_information)
+																																																																				<div class="edit">
+																																																																								<a href="https://maps.google.com/maps?daddr={{ $item->map_information->geometry->location->lat }},{{ $item->map_information->geometry->location->lng }}&hl=en"
+																																																																												class="btn btn-sm btn-dark edit-item-btn"
+																																																																												target="_blank">
+																																																																												Map</a>
+																																																																				</div>
+																																																																@endif
+
 																																																																@if (!in_array(\App\Enums\OrderEnumStatus::CANCELLED, $item->statuses->pluck("status")->toArray()))
 																																																																				@if (!in_array(\App\Enums\OrderEnumStatus::DELIVERED, $item->statuses->pluck("status")->toArray()))
 																																																																								<div class="remove">

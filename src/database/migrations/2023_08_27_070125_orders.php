@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('pin', 255)->nullable();
             $table->string('order_mode', 255)->nullable();
             $table->text('address')->nullable();
+            $table->text('map_information')->nullable();
             $table->string('subtotal', 500)->default(0)->nullable();
             $table->string('total_charges', 500)->default(0)->nullable();
             $table->string('total_price', 500)->default(0)->nullable();
@@ -42,3 +43,5 @@ return new class extends Migration
         Schema::dropIfExists('orders');
     }
 };
+
+// ALTER TABLE `orders` ADD `map_information` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL AFTER `address`;

@@ -273,6 +273,7 @@ class OrderService
                 'city' => $billingAddress->city,
                 'pin' => $billingAddress->pin,
                 'address' => $billingAddress->address,
+                'map_information' => $billingAddress->map_information,
                 'accept_terms' => $data['accept_terms'],
                 'include_gst' => $data['include_gst'],
                 'order_mode' => $data['order_mode'],
