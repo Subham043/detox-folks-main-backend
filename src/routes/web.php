@@ -38,7 +38,7 @@ Route::prefix('razorpay')->group(function () {
 Route::prefix('pay-u')->group(function () {
     Route::get('pay/{order_id}',[PayUMoneyController::class,'payUMoneyView'])->name('make_payu_payment');
     Route::post('response/{order_id}',[PayUMoneyController::class,'payUResponse'])->name('pay.u.response');
-    Route::get('cancel',[PayUMoneyController::class,'payUCancel'])->name('pay.u.cancel');
+    Route::post('cancel',[PayUMoneyController::class,'payUCancel'])->name('pay.u.cancel');
 });
 
 Route::prefix('cashfree')->group(function () {
