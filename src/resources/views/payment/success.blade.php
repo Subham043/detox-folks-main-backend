@@ -35,8 +35,7 @@
 																																				</div>
 																																</a>
 																												</div>
-																												<p class="text-dark">Your Payment completed successfully and your order has been placed
-																																successfully. You can close this window.</p>
+																												<p class="text-dark">Your payment was successful, and your order has been placed. You may now close this window.</p>
 																								</div>
 																				</div>
 																</div>

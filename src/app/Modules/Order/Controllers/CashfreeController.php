@@ -33,7 +33,7 @@ class CashfreeController extends Controller
                     'status' => PaymentStatus::PAID->value
                 ], $order);
                 (new CartService)->empty($order->user_id);
-                return redirect(route('payment_success'));
+                return redirect(route('payment_success').'?closeAppBrowser=true');
             }
             return redirect(route('payment_fail'));
         } catch (\Throwable $th) {

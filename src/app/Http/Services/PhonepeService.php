@@ -65,7 +65,7 @@ class PhonepeService
                 'status' => PaymentStatus::PAID->value,
                 'payment_data' => json_encode($input)
             ]);
-            return route('payment_success');
+            return route('payment_success').'?closeAppBrowser=true';
         }else{
             return route('payment_fail');
         }

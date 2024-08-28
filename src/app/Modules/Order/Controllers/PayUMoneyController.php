@@ -42,7 +42,7 @@ class PayUMoneyController extends Controller
             ], $order);
 
             (new CartService)->empty($order->user_id);
-            return redirect(route('payment_success'));
+            return redirect(route('payment_success').'?closeAppBrowser=true');
         }
         return redirect(route('payment_fail'));
     }
