@@ -25,9 +25,14 @@ class Cart extends Model
     protected $fillable = [
         'amount',
         'quantity',
+        'color',
         'product_id',
         'product_price_id',
         'user_id',
+    ];
+
+    protected $attributes = [
+        'color' => null,
     ];
 
     protected $casts = [
@@ -65,6 +70,7 @@ class Cart extends Model
                     },
                     'product_specifications',
                     'product_images',
+                    'product_colors',
                     'product_prices'=>function($q){
                         $q->orderBy('min_quantity', 'asc');
                     },

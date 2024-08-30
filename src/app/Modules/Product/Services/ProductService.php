@@ -4,7 +4,6 @@ namespace App\Modules\Product\Services;
 
 use App\Http\Services\FileService;
 use App\Modules\Product\Models\Product;
-use App\Modules\ProductImage\Models\ProductImage;
 use App\Modules\ProductPrice\Models\ProductPrice;
 use App\Modules\ProductSpecification\Models\ProductSpecification;
 use Illuminate\Database\Eloquent\Collection;
@@ -42,12 +41,13 @@ class ProductService
             'sub_categories',
             'product_specifications',
             'product_images',
+            'product_colors',
             'product_prices'=>function($q){
                 $q->orderBy('min_quantity', 'asc');
             },
         ])->where('is_draft', true);
         return QueryBuilder::for($query)
-                ->allowedIncludes(['categories', 'sub_categories', 'product_specifications', 'product_prices', 'product_images'])
+                ->allowedIncludes(['categories', 'sub_categories', 'product_specifications', 'product_prices', 'product_images', 'product_colors'])
                 ->defaultSort('-id')
                 // ->allowedSorts('id', 'name')
                 ->allowedSorts([
@@ -87,7 +87,7 @@ class ProductService
 
     public function getById(Int $id): Product|null
     {
-        return Product::with(['categories', 'product_specifications', 'product_prices'])->findOrFail($id);
+        return Product::with(['categories', 'product_specifications', 'product_colors', 'product_prices'])->findOrFail($id);
     }
 
     public function getBySlug(String $slug): Product|null
@@ -101,6 +101,7 @@ class ProductService
             },
             'product_specifications',
             'product_images',
+            'product_colors',
             'product_prices'=>function($q){
                 $q->orderBy('min_quantity', 'asc');
             },

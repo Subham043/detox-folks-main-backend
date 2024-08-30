@@ -2,6 +2,7 @@
 
 namespace App\Modules\Cart\Requests;
 
+use App\Modules\ProductColor\Models\ProductColor;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Stevebauman\Purify\Facades\Purify;
@@ -26,6 +27,7 @@ class CartCreateRequest extends FormRequest
      */
     public function rules()
     {
+        $color = ProductColor::where('product_id', $this->product_id)->count();
         return [
             'product_id' => [
                 'required',
@@ -36,6 +38,13 @@ class CartCreateRequest extends FormRequest
                 'required',
                 'numeric',
                 'exists:product_prices,id',
+            ],
+            'color' => $color > 0 ? [
+                'required',
+                'string',
+            ] : [
+                'nullable',
+                'string',
             ],
             'amount' => [
                 'required',

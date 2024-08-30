@@ -59,6 +59,7 @@ class OrderService
                     'sub_categories',
                     'product_specifications',
                     'product_images',
+                    'product_colors',
                     'product_prices'=>function($q){
                         $q->orderBy('min_quantity', 'asc');
                     },
@@ -73,6 +74,7 @@ class OrderService
                 'sub_categories',
                 'product_specifications',
                 'product_images',
+                'product_colors',
                 'product_prices'=>function($q){
                     $q->orderBy('min_quantity', 'asc');
                 },
@@ -297,6 +299,7 @@ class OrderService
                     'discount_in_price' => $cart->product_price->discount_in_price,
                     'quantity' => $cart->quantity,
                     'amount' => $cart->amount,
+                    'color' => $cart->color,
                     'unit' => $cart->product->cart_quantity_specification,
                     'order_id' => $order->id,
                 ]);

@@ -59,6 +59,10 @@ use App\Modules\Product\Controllers\ProductCreateController;
 use App\Modules\Product\Controllers\ProductDeleteController;
 use App\Modules\Product\Controllers\ProductPaginateController;
 use App\Modules\Product\Controllers\ProductUpdateController;
+use App\Modules\ProductColor\Controllers\ProductColorCreateController;
+use App\Modules\ProductColor\Controllers\ProductColorDeleteController;
+use App\Modules\ProductColor\Controllers\ProductColorPaginateController;
+use App\Modules\ProductColor\Controllers\ProductColorUpdateController;
 use App\Modules\ProductImage\Controllers\ProductImageCreateController;
 use App\Modules\ProductImage\Controllers\ProductImageDeleteController;
 use App\Modules\ProductImage\Controllers\ProductImagePaginateController;
@@ -217,6 +221,14 @@ Route::middleware(['auth'])->group(function () {
                     Route::get('/update/{id}', [ProductSpecificationUpdateController::class, 'get', 'as' => 'product_specification.update.get'])->name('product_specification.update.get');
                     Route::post('/update/{id}', [ProductSpecificationUpdateController::class, 'post', 'as' => 'product_specification.update.post'])->name('product_specification.update.post');
                     Route::get('/delete/{id}', [ProductSpecificationDeleteController::class, 'get', 'as' => 'product_specification.delete.get'])->name('product_specification.delete.get');
+                });
+                Route::prefix('/color')->group(function () {
+                    Route::get('/', [ProductColorPaginateController::class, 'get', 'as' => 'product_color.paginate.get'])->name('product_color.paginate.get');
+                    Route::get('/create', [ProductColorCreateController::class, 'get', 'as' => 'product_color.create.get'])->name('product_color.create.get');
+                    Route::post('/create', [ProductColorCreateController::class, 'post', 'as' => 'product_color.create.post'])->name('product_color.create.post');
+                    Route::get('/update/{id}', [ProductColorUpdateController::class, 'get', 'as' => 'product_color.update.get'])->name('product_color.update.get');
+                    Route::post('/update/{id}', [ProductColorUpdateController::class, 'post', 'as' => 'product_color.update.post'])->name('product_color.update.post');
+                    Route::get('/delete/{id}', [ProductColorDeleteController::class, 'get', 'as' => 'product_color.delete.get'])->name('product_color.delete.get');
                 });
                 Route::prefix('/price')->group(function () {
                     Route::get('/', [ProductPricePaginateController::class, 'get', 'as' => 'product_price.paginate.get'])->name('product_price.paginate.get');

@@ -29,6 +29,7 @@ class OrderProduct extends Model
         'discount_in_price',
         'quantity',
         'amount',
+        'color',
         'unit',
         'order_id',
     ];

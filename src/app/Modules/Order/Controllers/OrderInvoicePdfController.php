@@ -21,7 +21,7 @@ class OrderInvoicePdfController extends Controller
         $data = [
             'order' => $order
         ];
-        $pdf = Pdf::loadView('pdf.invoice', $data)->setPaper('a4', 'potrait');
+        $pdf = Pdf::loadView('pdf.invoice_2', $data)->setPaper('a4', 'potrait');
         $pdf->save(storage_path('app/public/reports/').$fileName.'.pdf');
         return response()->json(['path' => route('downaload_invoice_customer', $fileName.'.pdf')]);
     }

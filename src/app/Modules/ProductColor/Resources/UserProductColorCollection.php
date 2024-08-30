@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Modules\Cart\Resources;
+namespace App\Modules\ProductColor\Resources;
 
-use App\Modules\Product\Resources\UserProductCollection;
-use App\Modules\ProductPrice\Resources\UserProductPriceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CartCollection extends JsonResource
+class UserProductColorCollection extends JsonResource
 {
     /**
      * Transform the resource collection into an array.
@@ -18,11 +16,8 @@ class CartCollection extends JsonResource
     {
         return [
             'id' => $this->id,
-            'amount' => $this->amount,
-            'quantity' => $this->quantity,
-            'color' => $this->color,
-            'product' => UserProductCollection::make($this->product),
-            'product_price' => UserProductPriceCollection::make($this->product_price),
+            'name' => $this->name,
+            'code' => $this->code,
             'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => $this->updated_at->diffForHumans(),
         ];

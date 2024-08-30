@@ -3,6 +3,7 @@
 namespace App\Modules\Product\Resources;
 
 use App\Modules\Category\Resources\UserCategoryMainCollection;
+use App\Modules\ProductColor\Resources\UserProductColorCollection;
 use App\Modules\ProductImage\Resources\UserProductImageCollection;
 use App\Modules\ProductPrice\Resources\UserProductPriceCollection;
 use App\Modules\ProductSpecification\Resources\UserProductSpecificationCollection;
@@ -40,6 +41,7 @@ class UserProductCollection extends JsonResource
             'meta_keywords' => $this->meta_keywords,
             'product_prices' => UserProductPriceCollection::collection($this->product_prices),
             'product_specifications' => UserProductSpecificationCollection::collection($this->product_specifications),
+            'product_colors' => UserProductColorCollection::collection($this->product_colors),
             'product_images' => UserProductImageCollection::collection($this->product_images),
             'categories' => UserCategoryMainCollection::collection($this->categories),
             'sub_categories' => UserSubCategoryCollection::collection($this->sub_categories),

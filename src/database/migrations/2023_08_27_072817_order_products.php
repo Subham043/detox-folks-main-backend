@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('discount_in_price', 500);
             $table->string('quantity', 500);
             $table->string('amount', 500);
+            $table->string('color', 500)->nullable();
             $table->string('unit', 500)->default('pieces');
             $table->foreignId('order_id')->nullable()->constrained('orders')->nullOnDelete();
             $table->timestamps();
@@ -39,4 +40,4 @@ return new class extends Migration
     }
 };
 
-// ALTER TABLE `order_products` ADD `unit` VARCHAR(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pieces' AFTER `amount`;
+// ALTER TABLE `order_products` ADD `color` VARCHAR(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL AFTER `amount`;

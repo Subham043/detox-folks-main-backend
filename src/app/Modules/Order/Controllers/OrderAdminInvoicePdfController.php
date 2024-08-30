@@ -21,10 +21,9 @@ class OrderAdminInvoicePdfController extends Controller
         $data = [
             'order' => $order
         ];
-        $pdf = Pdf::loadView('pdf.invoice', $data)->setPaper('a4', 'potrait');
-        // // // $pdf->save(storage_path('app/public/reports/').$fileName.'.pdf');
+        $pdf = Pdf::loadView('pdf.invoice_2', $data)->setPaper('a4', 'potrait');
         return $pdf->download($fileName.'.pdf');
-        // return view('pdf.invoice', compact(['order']))
+        // return view('pdf.invoice_2', compact(['order']))
         // ->with([
         //     'order_statuses' => $order->statuses->pluck('status')->toArray(),
         // ]);

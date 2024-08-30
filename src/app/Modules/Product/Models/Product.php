@@ -4,6 +4,7 @@ namespace App\Modules\Product\Models;
 
 use App\Modules\Authentication\Models\User;
 use App\Modules\Category\Models\Category;
+use App\Modules\ProductColor\Models\ProductColor;
 use App\Modules\ProductImage\Models\ProductImage;
 use App\Modules\ProductPrice\Models\ProductPrice;
 use App\Modules\ProductSpecification\Models\ProductSpecification;
@@ -113,6 +114,11 @@ class Product extends Model
     public function product_specifications()
     {
         return $this->hasMany(ProductSpecification::class, 'product_id');
+    }
+
+    public function product_colors()
+    {
+        return $this->hasMany(ProductColor::class, 'product_id');
     }
 
     public function product_prices()
