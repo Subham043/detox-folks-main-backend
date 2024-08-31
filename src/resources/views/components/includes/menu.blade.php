@@ -86,6 +86,15 @@
 																				</li>
 																@endhasanyrole
 
+																@hasanyrole("Warehouse Manager")
+																				<li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("warehouse_management.order.get")) !== false ? "active" : "" }}"
+																												href="{{ route("warehouse_management.order.get") }}">
+																												<i class="ri-truck-line"></i> <span data-key="t-widgets">Orders</span>
+																								</a>
+																				</li>
+																@endhasanyrole
+
 																@hasanyrole("Content Manager")
 																				<li class="nav-item">
 																								<a class="nav-link menu-link {{ strpos(url()->current(), route("testimonial.paginate.get")) !== false ? "active" : "" }}"
@@ -182,7 +191,7 @@
 																				</li>
 																@endhasanyrole
 
-																@hasanyrole("Staff|Super-Admin")
+																@hasanyrole("Super-Admin")
 																				<li class="nav-item">
 																								<a class="nav-link menu-link {{ strpos(url()->current(), "product-management") !== false ? "active" : "" }}"
 																												href="#sidebarDashboards3" data-bs-toggle="collapse" role="button"
@@ -223,13 +232,16 @@
 																				</li>
 																@endhasanyrole
 
-																@hasanyrole("Staff|Super-Admin")
+																@hasanyrole("Inventory Manager|Staff|Super-Admin")
 																				<li class="nav-item">
 																								<a class="nav-link menu-link {{ strpos(url()->current(), route("order_admin.paginate.get")) !== false ? "active" : "" }}"
 																												href="{{ route("order_admin.paginate.get") }}">
 																												<i class="bx bx-shopping-bag"></i> <span data-key="t-widgets">Orders</span>
 																								</a>
 																				</li>
+																@endhasanyrole
+
+																@hasanyrole("Staff|Super-Admin")
 																				<li class="nav-item">
 																								<a class="nav-link menu-link {{ strpos(url()->current(), route("delivery_management.agent.paginate.get")) !== false ? "active" : "" }}"
 																												href="{{ route("delivery_management.agent.paginate.get") }}">

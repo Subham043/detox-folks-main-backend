@@ -177,6 +177,12 @@
 																vertical-align: top;
 												}
 
+                                                table td.desc {
+																vertical-align: top;
+                                                                width: 150px;
+												}
+
+												table td.desc,
 												table td.unit,
 												table td.qty,
 												table td.total {
@@ -322,7 +328,7 @@
 																								<tr>
 																												<td class="service">{{ $k + 1 }}</td>
 																												<td class="desc">{{ $v->name }}</td>
-																												<td class="unit">Rs. {{ $v->discount_in_price }}/pieces</td>
+																												<td class="unit">Rs. {{ $v->discount_in_price }}/{{ $v->unit }}</td>
 																												<td class="qty">{{ $v->quantity }}</td>
 																												<td class="total">Rs. {{ $v->amount }}</td>
 																								</tr>

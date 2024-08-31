@@ -80,6 +80,9 @@ use App\Modules\SubCategory\Controllers\SubCategoryDeleteController;
 use App\Modules\SubCategory\Controllers\SubCategoryPaginateController;
 use App\Modules\SubCategory\Controllers\SubCategoryUpdateController;
 use App\Modules\TextEditorImage\Controllers\TextEditorImageController;
+use App\Modules\WarehouseManagement\Controllers\WarehouseOrderDetailController;
+use App\Modules\WarehouseManagement\Controllers\WarehouseOrderPaginateController;
+use App\Modules\WarehouseManagement\Controllers\WarehouseOrderStatusUpdateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -186,7 +189,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/delete/{id}', [UserDeleteController::class, 'get', 'as' => 'user.delete.get'])->name('user.delete.get');
     });
 
-    Route::middleware(['role:Super-Admin|Staff|Inventory Manager'])->prefix('/product-management')->group(function () {
+    Route::middleware(['role:Super-Admin|Inventory Manager'])->prefix('/product-management')->group(function () {
         Route::prefix('/category')->group(function () {
             Route::get('/', [CategoryPaginateController::class, 'get', 'as' => 'category.paginate.get'])->name('category.paginate.get');
             Route::get('/create', [CategoryCreateController::class, 'get', 'as' => 'category.create.get'])->name('category.create.get');
@@ -259,7 +262,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/delete/{id}', [ChargeDeleteController::class, 'get', 'as' => 'charge.delete.get'])->name('charge.delete.get');
     });
 
-    Route::middleware(['role:Super-Admin|Staff'])->prefix('/order')->group(function () {
+    Route::middleware(['role:Super-Admin|Staff|Inventory Manager'])->prefix('/order')->group(function () {
         Route::get('/', [OrderAdminPaginateController::class, 'get', 'as' => 'order_admin.paginate.get'])->name('order_admin.paginate.get');
         Route::get('/detail/{id}', [OrderAdminDetailController::class, 'get', 'as' => 'order_admin.detail.get'])->name('order_admin.detail.get');
         Route::get('/pdf/{id}', [OrderAdminInvoicePdfController::class, 'get', 'as' => 'order_admin.pdf.get'])->name('order_admin.pdf.get');
@@ -281,6 +284,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/order/{order_id}', [AssignedOrderForAgentPaginateController::class, 'detail', 'as' => 'delivery_management.agent.order_detail.get'])->name('delivery_management.agent.order_detail.get');
         Route::get('/order/{order_id}/send-otp', [AssignedOrderForAgentPaginateController::class, 'send_otp', 'as' => 'delivery_management.agent.order_send_otp.get'])->middleware(['throttle:3,1'])->name('delivery_management.agent.order_send_otp.get');
         Route::post('/order/{order_id}/complete', [AssignedOrderForAgentPaginateController::class, 'deliver_order', 'as' => 'delivery_management.agent.order_deliver_order.post'])->name('delivery_management.agent.order_deliver_order.post');
+    });
+
+    Route::middleware(['role:Warehouse Manager'])->prefix('/warehouse-management')->group(function () {
+        Route::get('/order', [WarehouseOrderPaginateController::class, 'get', 'as' => 'warehouse_management.order.get'])->name('warehouse_management.order.get');
+        Route::get('/order/{order_id}', [WarehouseOrderDetailController::class, 'get', 'as' => 'warehouse_management.order_detail.get'])->name('warehouse_management.order_detail.get');
+        Route::get('/order/{order_id}/packed', [WarehouseOrderStatusUpdateController::class, 'get', 'as' => 'warehouse_management.order_placed.get'])->name('warehouse_management.order_placed.get');
     });
 
     Route::post('/text-editor-image', [TextEditorImageController::class, 'post', 'as' => 'texteditor_image.post'])->name('texteditor_image.post');

@@ -262,7 +262,7 @@
 																																																																								<div class="remove">
 																																																																												<button
 																																																																																class="btn btn-sm btn-secondary remove-item-btn"
-																																																																																data-link="{{ route("order_admin.cancel.get", $item->id) }}">Payment
+																																																																																data-link="{{ route("order_admin.payment_update.get", $item->id) }}">Payment
 																																																																																Collected</button>
 																																																																								</div>
 																																																																				@endif

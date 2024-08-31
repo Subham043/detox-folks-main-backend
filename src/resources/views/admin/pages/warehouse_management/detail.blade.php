@@ -15,23 +15,28 @@
 				<div class="page-content">
 								<div class="container-fluid">
 
-												<x-includes.breadcrumb link="order_admin.paginate.get" page="Order" :list='["Detail"]' />
+												<x-includes.breadcrumb link="warehouse_management.order.get" page="Order" :list='["Detail"]' />
 
 												<div class="row project-wrapper">
 																<div class="row justify-content-between mb-3">
 																				<div class="col-sm-auto">
 																								<div>
-																												<a href="{{ route("order_admin.paginate.get") }}" type="button" class="btn btn-dark add-btn"
-																																id="create-btn"><i class="ri-arrow-go-back-line me-1 align-bottom"></i> Go Back</a>
+																												<a href="{{ route("warehouse_management.order.get") }}" type="button"
+																																class="btn btn-dark add-btn" id="create-btn"><i
+																																				class="ri-arrow-go-back-line me-1 align-bottom"></i> Go Back</a>
 																								</div>
 																				</div>
-																				<div class="col-sm-auto px-0">
-																								<div>
-																												<a href="{{ route("order_admin.pdf.get", $order->id) }}" type="button" download
-																																class="btn btn-secondary add-btn" id="create-btn"><i
-																																				class="ri-file-download-line me-1 align-bottom"></i> Invoice</a>
-																								</div>
-																				</div>
+																				@if (!in_array(\App\Enums\OrderEnumStatus::CANCELLED, $order_statuses))
+																								@if ($order->current_status->status == \App\Enums\OrderEnumStatus::CONFIRMED && !in_array(\App\Enums\OrderEnumStatus::PACKED, $order_statuses))
+																												<div class="col-sm-auto px-0">
+                                                                                                                                <div class="remove">
+                                                                                                                                    <button
+                                                                                                                                        class="btn btn-warning remove-item-btn"
+                                                                                                                                        data-link="{{ route("warehouse_management.order_placed.get", $order->id) }}">Packing Completed</button>
+                                                                                                                                </div>
+																												</div>
+																								@endif
+																				@endif
 																</div>
 																<div class="col-xxl-12">
 
@@ -121,55 +126,6 @@
 																																<div class="card-header">
 																																				<div class="d-sm-flex align-items-center">
 																																								<h5 class="card-title flex-grow-1 mb-0">Order Status</h5>
-																																								@if (!in_array(\App\Enums\OrderEnumStatus::CANCELLED, $order_statuses))
-																																												<div class="mt-sm-0 row mt-2 flex-shrink-0 gap-1">
-																																																@if (!in_array(\App\Enums\OrderEnumStatus::CONFIRMED, $order_statuses))
-																																																				<button
-																																																								data-link="{{ route("order_admin.update_order_status.get", $order->id) }}"
-																																																								class="btn btn-soft-success btn-sm mt-sm-0 remove-item-btn col-auto mt-2"><i
-																																																												class="ri-donut-chart-line me-1 align-bottom"></i>
-																																																								Change Order Status :
-																																																								CONFIRMED
-																																																				</button>
-																																																@elseif(!in_array(\App\Enums\OrderEnumStatus::PACKED, $order_statuses))
-																																																				<button
-																																																								data-link="{{ route("order_admin.update_order_status.get", $order->id) }}"
-																																																								class="btn btn-soft-success btn-sm mt-sm-0 remove-item-btn col-auto mt-2"><i
-																																																												class="ri-donut-chart-line me-1 align-bottom"></i>
-																																																								Change Order Status :
-																																																								PACKED
-																																																				</button>
-																																																@elseif(!in_array(\App\Enums\OrderEnumStatus::READY, $order_statuses))
-																																																				<button
-																																																								data-link="{{ route("order_admin.update_order_status.get", $order->id) }}"
-																																																								class="btn btn-soft-success btn-sm mt-sm-0 remove-item-btn col-auto mt-2"><i
-																																																												class="ri-donut-chart-line me-1 align-bottom"></i>
-																																																								Change Order Status :
-																																																								READY FOR SHIPMENT
-																																																				</button>
-																																																@elseif(!in_array(\App\Enums\OrderEnumStatus::OFD, $order_statuses))
-																																																				<button
-																																																								data-link="{{ route("order_admin.update_order_status.get", $order->id) }}"
-																																																								class="btn btn-soft-success btn-sm mt-sm-0 remove-item-btn col-auto mt-2"><i
-																																																												class="ri-donut-chart-line me-1 align-bottom"></i>
-																																																								Change Order Status :
-																																																								OUT FOR DELIVERY
-																																																				</button>
-																																																@elseif(!in_array(\App\Enums\OrderEnumStatus::DELIVERED, $order_statuses))
-																																																				<button
-																																																								data-link="{{ route("order_admin.update_order_status.get", $order->id) }}"
-																																																								class="btn btn-soft-success btn-sm mt-sm-0 remove-item-btn col-auto mt-2"><i
-																																																												class="ri-donut-chart-line me-1 align-bottom"></i>
-																																																								Change Order Status :
-																																																								DELIVERED
-																																																				</button>
-																																																@endif
-																																																<button data-link="{{ route("order_admin.cancel.get", $order->id) }}"
-																																																				class="btn btn-soft-danger btn-sm mt-sm-0 remove-item-btn col-auto mt-2"><i
-																																																								class="mdi mdi-archive-remove-outline me-1 align-bottom"></i> Cancel
-																																																				Order</button>
-																																												</div>
-																																								@endif
 																																				</div>
 																																</div>
 																																<div class="card-body">
@@ -510,18 +466,6 @@
 																																								<h5 class="card-title mb-0"><i
 																																																class="ri-secure-payment-line text-muted me-1 align-bottom"></i> Payment
 																																												Details</h5>
-																																								@if (!in_array(\App\Enums\OrderEnumStatus::CANCELLED, $order_statuses))
-																																												@if ($order->payment && $order->payment->status != \App\Enums\PaymentStatus::PAID)
-																																																<div class="mt-sm-0 row mt-2 flex-shrink-0 gap-1">
-																																																				<button
-																																																								data-link="{{ route("order_admin.payment_update.get", $order->id) }}"
-																																																								class="btn btn-soft-success btn-sm mt-sm-0 remove-item-btn col-auto mt-2">
-																																																								Change Payment Status :
-																																																								PAID
-																																																				</button>
-																																																</div>
-																																												@endif
-																																								@endif
 																																				</div>
 																																</div>
 																																<div class="card-body">
@@ -550,24 +494,6 @@
 																																												<h6 class="mb-0">&#8377; {{ $order->total_price }}</h6>
 																																								</div>
 																																				</div>
-																																				@if ($order->payment)
-																																								@foreach ($order->payment->resolvedPaymentData as $key => $value)
-																																												@if (!is_array($value) && !is_object($value))
-																																																@if ($value)
-																																																				<div class="d-flex align-items-center">
-																																																								<div class="flex-shrink-0">
-																																																												<p class="text-muted mb-0">{{ $key }}:</p>
-																																																								</div>
-																																																								<div class="flex-grow-1 ms-2">
-																																																												<h6 class="mb-0">
-																																																																{{ $value }}
-																																																												</h6>
-																																																								</div>
-																																																				</div>
-																																																@endif
-																																												@endif
-																																								@endforeach
-																																				@endif
 																																</div>
 																												</div>
 																												<!--end card-->

@@ -1,5 +1,15 @@
 @extends("admin.layouts.dashboard")
 
+@section("css")
+
+                <style nonce="{{ csp_nonce() }}">
+                                .color_input{
+                                    width: 20px;
+                                    height: 20px;
+                                }
+                </style>
+@stop
+
 @section("content")
 
 				<div class="modal" id="deliverModal" tabindex="-1">
@@ -90,10 +100,15 @@
 																																																																				<p class="text-muted mb-0"><span
 																																																																												class="fw-medium">{{ $v->short_description }}</span>
 																																																																				</p>
+                                                                                                                                                                                                                                                                                @if($v->color)
+																																																																				<p class="text-dark mb-0"><span
+																																																																												class="fw-medium d-inline-flex w-auto gap-1 align-items-center">Selected Color: <span class="d-inline-flex w-auto gap-1 align-items-center"><input type="color" value="{{ $v->color }}" class="color_input" disabled /><span class="text-muted">{{ $v->color }}</span></span></span>
+																																																																				</p>
+                                                                                                                                                                                                                                                                                @endif
 																																																																</div>
 																																																												</div>
 																																																								</td>
-																																																								<td>&#8377; {{ $v->discount_in_price }}/pieces</td>
+																																																								<td>&#8377; {{ $v->discount_in_price }}/{{ $v->unit }}</td>
 																																																								<td>{{ $v->quantity }}</td>
 																																																								<td class="fw-medium text-end">
 																																																												&#8377; {{ $v->amount }}
