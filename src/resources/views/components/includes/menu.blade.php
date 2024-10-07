@@ -86,6 +86,15 @@
 																				</li>
 																@endhasanyrole
 
+																@hasanyrole("App Promoter")
+																				<li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("promoter.agent.app_installer.get")) !== false ? "active" : "" }}"
+																												href="{{ route("promoter.agent.app_installer.get") }}">
+																												<i class="ri-user-voice-line"></i> <span data-key="t-widgets">App Promoter</span>
+																								</a>
+																				</li>
+																@endhasanyrole
+
 																@hasanyrole("Warehouse Manager")
 																				<li class="nav-item">
 																								<a class="nav-link menu-link {{ strpos(url()->current(), route("warehouse_management.order.get")) !== false ? "active" : "" }}"
@@ -246,6 +255,12 @@
 																								<a class="nav-link menu-link {{ strpos(url()->current(), route("delivery_management.agent.paginate.get")) !== false ? "active" : "" }}"
 																												href="{{ route("delivery_management.agent.paginate.get") }}">
 																												<i class="ri-truck-line"></i> <span data-key="t-widgets">Delivery Agent</span>
+																								</a>
+																				</li>
+																				<li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("promoter.agent.paginate.get")) !== false ? "active" : "" }}"
+																												href="{{ route("promoter.agent.paginate.get") }}">
+																												<i class="ri-user-voice-line"></i> <span data-key="t-widgets">App Promoter Agent</span>
 																								</a>
 																				</li>
 																@endhasanyrole

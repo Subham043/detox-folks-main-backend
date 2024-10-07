@@ -75,6 +75,9 @@ use App\Modules\ProductSpecification\Controllers\ProductSpecificationCreateContr
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationDeleteController;
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationPaginateController;
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationUpdateController;
+use App\Modules\Promoter\Controllers\PromoterInstalledController;
+use App\Modules\Promoter\Controllers\PromoterInstallerPaginateController;
+use App\Modules\Promoter\Controllers\PromoterPaginateController;
 use App\Modules\SubCategory\Controllers\SubCategoryCreateController;
 use App\Modules\SubCategory\Controllers\SubCategoryDeleteController;
 use App\Modules\SubCategory\Controllers\SubCategoryPaginateController;
@@ -284,6 +287,18 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/order/{order_id}', [AssignedOrderForAgentPaginateController::class, 'detail', 'as' => 'delivery_management.agent.order_detail.get'])->name('delivery_management.agent.order_detail.get');
         Route::get('/order/{order_id}/send-otp', [AssignedOrderForAgentPaginateController::class, 'send_otp', 'as' => 'delivery_management.agent.order_send_otp.get'])->middleware(['throttle:3,1'])->name('delivery_management.agent.order_send_otp.get');
         Route::post('/order/{order_id}/complete', [AssignedOrderForAgentPaginateController::class, 'deliver_order', 'as' => 'delivery_management.agent.order_deliver_order.post'])->name('delivery_management.agent.order_deliver_order.post');
+    });
+
+    Route::middleware(['role:Super-Admin|Staff'])->prefix('/promoter-management')->group(function () {
+        Route::get('/agent', [PromoterPaginateController::class, 'get', 'as' => 'promoter.agent.paginate.get'])->name('promoter.agent.paginate.get');
+        Route::get('/agent/{user_id}/installer', [PromoterInstalledController::class, 'get', 'as' => 'promoter.agent.installer.get'])->name('promoter.agent.installer.get');
+        Route::get('/agent/{agent_id}/installer/{user_id}', [PromoterInstalledController::class, 'destroy', 'as' => 'promoter.agent.installer.delete'])->name('promoter.agent.installer.delete');
+    });
+
+    Route::middleware(['role:App Promoter'])->prefix('/promoter')->group(function () {
+        Route::get('/', [PromoterInstallerPaginateController::class, 'get', 'as' => 'promoter.agent.app_installer.get'])->name('promoter.agent.app_installer.get');
+        Route::post('/promote', [PromoterInstallerPaginateController::class, 'promote', 'as' => 'promoter.agent.app_installer.post'])->name('promoter.agent.app_installer.post');
+        Route::get('/destroy/{order_id}', [PromoterInstallerPaginateController::class, 'destroy', 'as' => 'promoter.agent.app_installer.delete'])->name('promoter.agent.app_installer.delete');
     });
 
     Route::middleware(['role:Warehouse Manager'])->prefix('/warehouse-management')->group(function () {

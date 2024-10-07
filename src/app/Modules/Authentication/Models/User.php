@@ -5,6 +5,7 @@ namespace App\Modules\Authentication\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Modules\Order\Models\Order;
+use App\Modules\Promoter\Models\Promoter;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -107,6 +108,16 @@ class User extends Authenticatable
     public function order_assigned()
     {
         return $this->belongsToMany(Order::class, 'delivery_assigneds', 'user_id', 'order_id');
+    }
+
+    public function app_installer()
+    {
+        return $this->belongsToMany(User::class, 'promoters', 'promoted_by_id', 'installed_by_id');
+    }
+
+    public function app_promoter()
+    {
+        return $this->belongsToMany(User::class, 'promoters', 'installed_by_id', 'promoted_by_id');
     }
 
     /**
