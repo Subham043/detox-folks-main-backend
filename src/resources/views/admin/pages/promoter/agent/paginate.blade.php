@@ -37,6 +37,7 @@
 																																												<thead class="table-light">
 																																																<tr>
 																																																				<th class="sort" data-sort="customer_name">Name</th>
+																																																				<th class="sort" data-sort="customer_name">Code</th>
 																																																				<th class="sort" data-sort="customer_name">Email</th>
 																																																				<th class="sort" data-sort="customer_name">Phone</th>
 																																																				<th class="sort" data-sort="customer_name">Total App Installed</th>
@@ -48,6 +49,7 @@
 																																																@foreach ($data->items() as $item)
 																																																				<tr>
 																																																								<td class="customer_name">{{ $item->name }}</td>
+																																																								<td class="customer_name"><code>{{ $item->app_promoter_code->code }}</code></td>
 																																																								<td class="customer_name">{{ $item->email }}</td>
 																																																								<td class="customer_name">{{ $item->phone }}</td>
 																																																								<td class="customer_name">{{ $item->app_installer_count }}</td>

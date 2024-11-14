@@ -6,6 +6,7 @@ namespace App\Modules\Authentication\Models;
 
 use App\Modules\Order\Models\Order;
 use App\Modules\Promoter\Models\Promoter;
+use App\Modules\Promoter\Models\PromoterCode;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -118,6 +119,11 @@ class User extends Authenticatable
     public function app_promoter()
     {
         return $this->belongsToMany(User::class, 'promoters', 'installed_by_id', 'promoted_by_id');
+    }
+
+    public function app_promoter_code()
+    {
+        return $this->hasOne(PromoterCode::class, 'promoter_id');
     }
 
     /**

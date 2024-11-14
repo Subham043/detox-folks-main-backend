@@ -297,8 +297,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['role:App Promoter'])->prefix('/promoter')->group(function () {
         Route::get('/', [PromoterInstallerPaginateController::class, 'get', 'as' => 'promoter.agent.app_installer.get'])->name('promoter.agent.app_installer.get');
-        Route::post('/promote', [PromoterInstallerPaginateController::class, 'promote', 'as' => 'promoter.agent.app_installer.post'])->name('promoter.agent.app_installer.post');
-        Route::get('/destroy/{order_id}', [PromoterInstallerPaginateController::class, 'destroy', 'as' => 'promoter.agent.app_installer.delete'])->name('promoter.agent.app_installer.delete');
     });
 
     Route::middleware(['role:Warehouse Manager'])->prefix('/warehouse-management')->group(function () {

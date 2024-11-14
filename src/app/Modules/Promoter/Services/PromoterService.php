@@ -15,7 +15,7 @@ class PromoterService
 
     public function paginatePromoter(Int $total = 10): LengthAwarePaginator
     {
-        $query = User::with(['roles'])->whereHas('roles', function($q) { $q->where('name', 'App Promoter'); })->withCount('app_installer')->latest();
+        $query = User::with(['roles', 'app_promoter_code'])->whereHas('app_promoter_code')->whereHas('roles', function($q) { $q->where('name', 'App Promoter'); })->withCount('app_installer')->latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
                     AllowedFilter::custom('search', new AgentFilter),

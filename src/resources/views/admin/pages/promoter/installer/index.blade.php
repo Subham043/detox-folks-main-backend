@@ -13,38 +13,15 @@
 												<x-includes.breadcrumb link="promoter.agent.app_installer.get" page="Installer" :list='["List"]' />
 												<!-- end page title -->
 
+
                                                 <div class="row">
 																<div class="col-lg-12">
-																				<form id="countryForm" method="post" action="{{ route("promoter.agent.app_installer.post") }}"
-																								enctype="multipart/form-data">
-																								@csrf
-																								<div class="card">
-																												<div class="card-header align-items-center d-flex">
-																																<h4 class="card-title flex-grow-1 mb-0">Promote</h4>
-																												</div><!-- end card header -->
-																												<div class="card-body">
-																																<div class="live-preview">
-																																				<div class="row gy-4">
-																																								<div class="col-xxl-12 col-md-12">
-																																												@include("admin.includes.input", [
-																																																"key" => "email",
-																																																"label" => "Email",
-																																																"value" => old("email"),
-																																												])
-																																								</div>
-
-																																								<div class="col-xxl-12 col-md-12">
-																																												<button type="submit" class="btn btn-primary waves-effect waves-light"
-																																																id="submitBtn">Promote</button>
-																																								</div>
-
-																																				</div>
-																																				<!--end row-->
-																																</div>
-
-																												</div>
-																								</div>
-																				</form>
+                                                                                <div class="card">
+                                                                                                <div class="card-header align-items-center d-flex justify-content-between">
+                                                                                                                <h4 class="card-title flex-grow-1 mb-0">CODE</h4>
+                                                                                                                <h4 class="card-title col-auto mb-0"><code>{{$code}}</code></h4>
+                                                                                                </div><!-- end card header -->
+                                                                                </div>
 																</div>
 																<!--end col-->
 												</div>
@@ -98,7 +75,6 @@
 																																																				<th class="sort" data-sort="customer_name">Email</th>
 																																																				<th class="sort" data-sort="customer_name">Phone</th>
 																																																				<th class="sort" data-sort="date">Created On</th>
-																																																				<th class="sort" data-sort="action">Action</th>
 																																																</tr>
 																																												</thead>
 																																												<tbody class="list form-check-all">
@@ -109,14 +85,6 @@
 																																																								<td class="customer_name">{{ $item->email }}</td>
 																																																								<td class="customer_name">{{ $item->phone }}</td>
 																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
-																																																								<td>
-																																																												<div class="d-flex gap-2">
-                                                                                                                                                                                                                                                    <div class="remove">
-                                                                                                                                                                                                                                                                    <button class="btn btn-sm btn-danger remove-item-btn"
-                                                                                                                                                                                                                                                                                    data-link="{{ route("promoter.agent.app_installer.delete", [$item->id]) }}">Delete</button>
-                                                                                                                                                                                                                                                    </div>
-																																																												</div>
-																																																								</td>
 																																																				</tr>
 																																																@endforeach
 
@@ -163,24 +131,4 @@
 								});
 				</script>
 
-                <script type="text/javascript" nonce="{{ csp_nonce() }}">
-								// initialize the validation library
-								const validation = new JustValidate('#countryForm', {
-												errorFieldCssClass: 'is-invalid',
-								});
-								// apply rules to form fields
-								validation
-												.addField('#email', [{
-																				rule: 'required',
-																				errorMessage: 'Email is required',
-																},
-																{
-																				rule: 'email',
-																				errorMessage: 'Email is invalid!',
-																},
-												])
-												.onSuccess(async (event) => {
-																event.target.submit();
-												});
-				</script>
 @stop

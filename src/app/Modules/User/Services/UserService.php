@@ -3,6 +3,7 @@
 namespace App\Modules\User\Services;
 
 use App\Modules\Authentication\Models\User;
+use App\Modules\Promoter\Models\PromoterCode;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\Filters\Filter;
@@ -41,7 +42,36 @@ class UserService
 
     public function create(array $data): User
     {
-        return User::create($data);
+        $user = User::create($data);
+        $code = $this->generateUniqueCode();
+        PromoterCode::create([
+            'promoter_id' => $user->id,
+            'code' => $code,
+        ]);
+        return $user;
+    }
+
+    public function generateUniqueCode()
+    {
+
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersNumber = strlen($characters);
+        $codeLength = 6;
+
+        $code = '';
+
+        while (strlen($code) < $codeLength) {
+            $position = rand(0, $charactersNumber - 1);
+            $character = $characters[$position];
+            $code = $code.$character;
+        }
+
+        if (PromoterCode::where('code', $code)->exists()) {
+            $this->generateUniqueCode();
+        }
+
+        return $code;
+
     }
 
     public function update(array $data, User $user): User

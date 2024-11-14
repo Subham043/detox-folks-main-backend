@@ -52,6 +52,7 @@ use App\Modules\Order\Controllers\OrderPlacedPaginateController;
 use App\Modules\Order\Controllers\PlaceOrderController;
 use App\Modules\Product\Controllers\UserProductDetailController;
 use App\Modules\Product\Controllers\UserProductPaginateController;
+use App\Modules\Promoter\Controllers\InstallerController;
 use App\Modules\SubCategory\Controllers\UserSubCategoryDetailController;
 use App\Modules\SubCategory\Controllers\UserSubCategoryPaginateController;
 use App\Modules\Testimonial\Controllers\UserTestimonialAllController;
@@ -144,6 +145,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/', [UserProfileController::class, 'get', 'as' => 'profile.get'])->name('user.profile.get');
         Route::post('/update', [UserProfileController::class, 'post', 'as' => 'profile.post'])->name('user.profile.post');
         Route::post('/update-password', [UserPasswordUpdateController::class, 'post', 'as' => 'password.post'])->name('user.password.post');
+    });
+
+    Route::prefix('/promotion')->group(function () {
+        Route::get('/', [InstallerController::class, 'get', 'as' => 'promotion.get']);
+        Route::post('/', [InstallerController::class, 'post', 'as' => 'promotion.post']);
     });
 
     Route::prefix('/billing-address')->group(function () {
