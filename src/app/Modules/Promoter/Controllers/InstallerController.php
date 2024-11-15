@@ -19,6 +19,7 @@ class InstallerController extends Controller
                     'id' => $promoter->promoted_by->id,
                     'name' => $promoter->promoted_by->name,
                     'email' => $promoter->promoted_by->email,
+                    'phone' => $promoter->promoted_by->phone,
                 )
             ], 200);
         }
@@ -41,10 +42,10 @@ class InstallerController extends Controller
                 'installed_by_id' => auth()->user()->id,
                 'promoted_by_id' => $app_promoter_codes->promoter->id
             ]);
+            return response()->json([
+                'message' => "User promoted successfully.",
+                'promoted' => true,
+            ], 200);
         }
-        return response()->json([
-            'message' => "User promoted successfully.",
-            'promoted' => true,
-        ], 200);
     }
 }
