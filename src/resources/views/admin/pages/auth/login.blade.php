@@ -45,6 +45,8 @@
 																																<p class="mb-0"><a href="{{ route("login_otp.get") }}"
 																																								class="fw-semibold text-primary text-decoration-underline"> Click here</a> To Login
 																																				with Phone Number & OTP</p>
+																																<p class="mb-0"><a href="{{ route("register.get") }}"
+																																								class="fw-semibold text-primary text-decoration-underline"> Click here</a> To Register</p>
 																												</div>
 
 																								</form>

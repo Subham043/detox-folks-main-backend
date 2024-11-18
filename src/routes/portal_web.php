@@ -1,6 +1,7 @@
 <?php
 
 use App\Modules\AboutPage\Main\Controllers\AboutMainController;
+use App\Modules\Authentication\Controllers\AdminRegisterController;
 use App\Modules\Authentication\Controllers\PasswordUpdateController;
 use App\Modules\Authentication\Controllers\ForgotPasswordController;
 use App\Modules\Authentication\Controllers\LoginController;
@@ -105,6 +106,8 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/login-otp', [LoginController::class, 'login_otp', 'as' => 'login_otp.get'])->name('login_otp.get');
     Route::post('/authenticate-otp', [LoginController::class, 'otp_post', 'as' => 'login_otp.post'])->name('login_otp.post');
     Route::post('/authenticate-send-otp', [LoginController::class, 'send_otp', 'as' => 'login_send_otp.post'])->name('login_send_otp.post');
+    Route::get('/register', [AdminRegisterController::class, 'get', 'as' => 'register.get'])->name('register.get');
+    Route::post('/register', [AdminRegisterController::class, 'post', 'as' => 'register.post'])->name('register.post');
     Route::get('/forgot-password', [ForgotPasswordController::class, 'get', 'as' => 'forgot_password.get'])->name('forgot_password.get');
     Route::post('/forgot-password', [ForgotPasswordController::class, 'post', 'as' => 'forgot_password.post'])->name('forgot_password.post');
     Route::get('/reset-password/{token}', [ResetPasswordController::class, 'get', 'as' => 'reset_password.get'])->name('reset_password.get');
