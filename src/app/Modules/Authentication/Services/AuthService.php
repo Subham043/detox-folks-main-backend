@@ -35,7 +35,7 @@ class AuthService
 
     public function generate_token(User $user): string
     {
-        return $user->createToken((string) $user->id)->plainTextToken;
+        return $user->createToken($user->id)->plainTextToken;
     }
 
     public function user_profile(): User
