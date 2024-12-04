@@ -36,7 +36,10 @@ class UserProfileController extends Controller
                 $email_status = true;
             }
             $updated_user = $this->userService->update(
-                $request->validated(),
+                [
+                    ...$request->validated(),
+                    'email' => !empty($request->email) ? $request->email : null
+                ],
                 $user
             );
             // if ($email_status) {

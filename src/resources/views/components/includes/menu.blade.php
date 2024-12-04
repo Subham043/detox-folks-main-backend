@@ -86,7 +86,7 @@
 																				</li>
 																@endhasanyrole
 
-																@hasanyrole("App Promoter")
+																@hasanyrole("App Promoter|Reward Riders|Referral Rockstars")
 																				<li class="nav-item">
 																								<a class="nav-link menu-link {{ strpos(url()->current(), route("promoter.agent.app_installer.get")) !== false ? "active" : "" }}"
 																												href="{{ route("promoter.agent.app_installer.get") }}">

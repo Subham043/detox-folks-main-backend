@@ -30,7 +30,7 @@ class UserRegisterPostRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'email' => ['required','email:rfc,dns','unique:users'],
+            'email' => ['nullable','string','email:rfc,dns','unique:users'],
             'phone' => ['required','numeric', 'digits:10', 'unique:users'],
             'password' => ['required',
                 'string',

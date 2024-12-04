@@ -23,10 +23,15 @@ class UserRegisterController extends Controller
 
     public function post(UserRegisterPostRequest $request){
 
-        $user = $this->userService->create($request->validated());
+        $user = $this->userService->create([
+            ...$request->validated(),
+            'email' => !empty($request->email) ? $request->email : null
+        ]);
         $this->userService->syncRoles(['User'], $user);
         $token = $this->authService->generate_token($user);
-        event(new Registered($user));
+        if($user->email){
+            event(new Registered($user));
+        }
 
         if ($token) {
             (new RateLimitService($request))->clearRateLimit();

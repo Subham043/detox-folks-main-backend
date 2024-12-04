@@ -41,6 +41,7 @@
 																																																				<th class="sort" data-sort="customer_name">Email</th>
 																																																				<th class="sort" data-sort="customer_name">Phone</th>
 																																																				<th class="sort" data-sort="customer_name">Total App Installed</th>
+																																																				<th class="sort" data-sort="customer_name">Role</th>
 																																																				<th class="sort" data-sort="date">Created On</th>
 																																																				<th class="sort" data-sort="action">Action</th>
 																																																</tr>
@@ -53,6 +54,7 @@
 																																																								<td class="customer_name">{{ $item->email }}</td>
 																																																								<td class="customer_name">{{ $item->phone }}</td>
 																																																								<td class="customer_name">{{ $item->app_installer_count }}</td>
+                                                                                                                                                                                                                                <td class="customer_name">{{ $item->current_role }}</td>
 																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
 																																																								<td>
 																																																												<div class="d-flex gap-2">
@@ -64,6 +66,11 @@
 																																																																<div class="edit">
 																																																																				<a href="{{ route("promoter.agent.installer.get", $item->id) }}"
 																																																																								class="btn btn-sm btn-warning edit-item-btn">App Installers</a>
+																																																																</div>
+
+																																																																<div class="edit">
+																																																																				<a href="{{ route("promoter.agent.installer_bank.get", $item->id) }}"
+																																																																								class="btn btn-sm btn-secondary edit-item-btn">Bank Information</a>
 																																																																</div>
 
 																																																																<div class="remove">

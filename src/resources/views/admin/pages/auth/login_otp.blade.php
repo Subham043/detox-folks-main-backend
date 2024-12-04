@@ -43,7 +43,7 @@
 																																<button class="btn btn-success w-100" id="loginBtn" type="submit">Sign In</button>
 																												</div>
 																												<div class="mt-4 text-center">
-																																<p class="mb-0"><a href="{{ route("login.get") }}"
+																																<p class="mb-0"><a href="{{ route("login_email.get") }}"
 																																								class="fw-semibold text-primary text-decoration-underline"> Click here</a> To Login
 																																				with Email & Password</p>
                                                                                                                                 <p class="mb-0"><a href="{{ route("register.get") }}"

@@ -36,7 +36,10 @@ class ProfileController extends Controller
                 $data['phone_verified_at'] = null;
             }
             $this->userService->update(
-                $data,
+                [
+                    ...$data,
+                    'email' => !empty($data['email']) ? $data['email'] : null
+                ],
                 $user
             );
             $user->save();

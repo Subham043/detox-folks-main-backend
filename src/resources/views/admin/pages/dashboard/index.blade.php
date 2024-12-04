@@ -27,7 +27,7 @@
 																																<div class="card-body p-0">
 																																				<div class="p-3">
 																																								<div class="row">
-
+                                                                                                                                                                                @hasanyrole("Staff|Super-Admin|Inventory Manager")
 																																												<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
@@ -178,7 +178,9 @@
 																																																				</div><!-- end card body -->
 																																																</div>
 																																												</div><!-- end col -->
+                                                                                                                                                                                @endhasanyrole
 
+                                                                                                                                                                                @hasanyrole("Staff|Super-Admin")
 																																												<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
@@ -258,6 +260,477 @@
 																																																				</div><!-- end card body -->
 																																																</div>
 																																												</div><!-- end col -->
+                                                                                                                                                                                @endhasanyrole
+
+																																												<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">
+																																																																												{{ $total_products }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Total Products
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+
+                                                                                                                                                                                @hasanyrole("Inventory Manager|Super-Admin")
+                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">&#8377;
+																																																																												{{ $categories }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Product Categories
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+
+                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">&#8377;
+																																																																												{{ $sub_categories }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Product Sub-Categories
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+
+                                                                                                                                                                                @endhasanyrole
+
+                                                                                                                                                                                @hasanyrole("Super-Admin")
+                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">&#8377;
+																																																																												{{ $admin_users }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Admins
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+
+                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">&#8377;
+																																																																												{{ $staff_users }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Staffs
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+
+                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">&#8377;
+																																																																												{{ $content_manager_users }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Content Managers
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+
+                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">&#8377;
+																																																																												{{ $inventory_manager_users }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Inventory Managers
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+
+                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">&#8377;
+																																																																												{{ $warehouse_manager_users }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Warehouse Managers
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+
+                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">&#8377;
+																																																																												{{ $delivery_agent_users }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Delivery Agents
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+
+                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">&#8377;
+																																																																												{{ $reward_rider_users }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Reward Riders
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+
+                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">&#8377;
+																																																																												{{ $referral_rockstar_users }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Referral Rockstars
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+
+                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">&#8377;
+																																																																												{{ $normal_users }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Customers
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+                                                                                                                                                                                @endhasanyrole
+
+                                                                                                                                                                                @hasanyrole("Staff|Super-Admin")
+                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">&#8377;
+																																																																												{{ $contact_enquiry }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Contact Form Enquiries
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+
+                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">&#8377;
+																																																																												{{ $order_enquiry }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Order Form Enquiries
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+                                                                                                                                                                                @endhasanyrole
+
+                                                                                                                                                                                @hasanyrole("Super-Admin|Content Manager")
+                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">&#8377;
+																																																																												{{ $testimonials }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Testimonials
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+
+                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">&#8377;
+																																																																												{{ $legal_pages }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Legal Pages
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+                                                                                                                                                                                @endhasanyrole
+
+                                                                                                                                                                                @hasanyrole("App Promoter|Reward Riders|Referral Rockstars")
+                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">&#8377;
+																																																																												{{ $installer }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Total Promotions
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</div><!-- end col -->
+                                                                                                                                                                                @endhasanyrole
 
 																																								</div>
 																																				</div>

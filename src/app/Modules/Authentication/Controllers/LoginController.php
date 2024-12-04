@@ -37,7 +37,7 @@ class LoginController extends Controller
             return redirect()->intended(route('dashboard.get'))->with('success_status', 'Logged in successfully.');
         }
 
-        return redirect(route('login.get'))->with('error_status', 'Oops! You have entered invalid credentials');
+        return redirect(route('login_email.get'))->with('error_status', 'Oops! You have entered invalid credentials');
     }
 
     public function send_otp(PhonePostRequest $request){

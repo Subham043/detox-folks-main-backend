@@ -17,7 +17,7 @@ class AdminRegisterController extends Controller
     }
 
     public function get(){
-        $roles = Role::whereIn('name', ['Delivery Agent', 'App Promoter'])->get();
+        $roles = Role::whereIn('name', ['Delivery Agent', 'App Promoter', 'Reward Riders', 'Referral Rockstars'])->get();
         return view('admin.pages.auth.register')->with('roles', $roles);
     }
 
@@ -26,11 +26,16 @@ class AdminRegisterController extends Controller
         try {
             //code...
             $user = $this->userService->create(
-                $request->except('role')
+                [
+                    ...$request->except('role'),
+                    'email' =>  !empty($request->email) ? $request->email : null
+                ]
             );
             $this->userService->syncRoles([$request->role], $user);
-            $user->sendEmailVerificationNotification();
-            return redirect()->intended(route('login.get'))->with('success_status', 'Registration completed successfully.');
+            if($user->email){
+                $user->sendEmailVerificationNotification();
+            }
+            return redirect()->intended(route('login_otp.get'))->with('success_status', 'Registration completed successfully.');
         } catch (\Throwable $th) {
             return redirect()->intended(route('register.get'))->with('error_status', 'Something went wrong. Please try again');
         }

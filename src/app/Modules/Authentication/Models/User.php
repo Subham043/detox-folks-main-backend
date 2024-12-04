@@ -5,7 +5,6 @@ namespace App\Modules\Authentication\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Modules\Order\Models\Order;
-use App\Modules\Promoter\Models\Promoter;
 use App\Modules\Promoter\Models\PromoterCode;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -53,6 +52,10 @@ class User extends Authenticatable
 
     protected $append = [
         'current_role',
+    ];
+
+    protected $attributes = [
+        'email' => null,
     ];
 
     /**

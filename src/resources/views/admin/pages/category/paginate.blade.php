@@ -39,7 +39,7 @@
 																																																				<th class="sort" data-sort="customer_name">Slug</th>
 																																																				<th class="sort" data-sort="customer_name">Heading</th>
 																																																				<th class="sort" data-sort="customer_name">Description</th>
-																																																				<th class="sort" data-sort="customer_name">Blog Status</th>
+																																																				<th class="sort" data-sort="customer_name">Status</th>
 																																																				<th class="sort" data-sort="date">Created On</th>
 																																																				<th class="sort" data-sort="action">Action</th>
 																																																</tr>

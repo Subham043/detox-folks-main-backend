@@ -32,7 +32,9 @@ class UserCreateController extends Controller
                 $request->except('role')
             );
             $this->userService->syncRoles([$request->role], $user);
-            $user->sendEmailVerificationNotification();
+            if($user->email){
+                $user->sendEmailVerificationNotification();
+            }
             return redirect()->intended(route('user.create.get'))->with('success_status', 'User created successfully.');
         } catch (\Throwable $th) {
             return redirect()->intended(route('user.create.get'))->with('error_status', 'Something went wrong. Please try again');

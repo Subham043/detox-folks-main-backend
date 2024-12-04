@@ -9,7 +9,7 @@
             @if(auth()->check())
                 <a href="{{route('dashboard.get')}}" class="btn btn-success"><i class="mdi mdi-home me-1"></i>Back to dashboard</a>
             @else
-                <a href="{{route('login.get')}}" class="btn btn-success"><i class="mdi mdi-home me-1"></i>Back to login</a>
+                <a href="{{route('login_otp.get')}}" class="btn btn-success"><i class="mdi mdi-home me-1"></i>Back to login</a>
             @endif
         </div>
     </div><!-- end col-->

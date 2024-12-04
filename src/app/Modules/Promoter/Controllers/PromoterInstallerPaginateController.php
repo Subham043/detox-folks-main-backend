@@ -17,7 +17,7 @@ class PromoterInstallerPaginateController extends Controller
     }
 
     public function get(Request $request){
-        $code = User::with(['roles', 'app_promoter'])->whereHas('roles', function($q) { $q->where('name', 'App Promoter'); })->findOrFail(auth()->user()->id)->app_promoter_code->code;
+        $code = User::with(['roles', 'app_promoter'])->whereHas('roles', function($q) { $q->whereIn('name', ['App Promoter', 'Reward Riders', 'Referral Rockstars']); })->findOrFail(auth()->user()->id)->app_promoter_code->code;
         $installer = $this->service->paginateInstaller(auth()->user()->id, $request->total ?? 10);
         return view('admin.pages.promoter.installer.index', compact(['installer']))
         ->with('code', $code)

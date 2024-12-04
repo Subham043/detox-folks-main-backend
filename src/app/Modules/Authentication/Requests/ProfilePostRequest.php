@@ -30,7 +30,7 @@ class ProfilePostRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,'.Auth::user()->id,
+            'email' => 'nullable|string|email|max:255|unique:users,email,'.Auth::user()->id,
             'phone' => 'required|numeric|digits:10|unique:users,phone,'.Auth::user()->id,
         ];
     }

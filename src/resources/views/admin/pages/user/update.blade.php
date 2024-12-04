@@ -32,7 +32,7 @@
 																																								<div class="col-xxl-3 col-md-3">
 																																												@include("admin.includes.input", [
 																																																"key" => "email",
-																																																"label" => "Email",
+																																																"label" => "Email (Optional)",
 																																																"value" => old("email") ? old("email") : $data->email,
 																																												])
 																																								</div>
@@ -106,10 +106,7 @@
 																				errorMessage: 'Name is invalid',
 																},
 												])
-												.addField('#email', [{
-																				rule: 'required',
-																				errorMessage: 'Email is required',
-																},
+												.addField('#email', [
 																{
 																				rule: 'email',
 																				errorMessage: 'Email is invalid!',

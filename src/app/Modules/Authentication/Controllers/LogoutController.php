@@ -18,6 +18,6 @@ class LogoutController extends Controller
     public function get()
     {
         $this->authService->logout();
-        return redirect(route('login.get'));
+        return redirect(route('login_otp.get'));
     }
 }

@@ -33,7 +33,7 @@
 																																				<div class="col-lg-4">
 																																								@include("admin.includes.input", [
 																																												"key" => "email",
-																																												"label" => "Email",
+																																												"label" => "Email (Optional)",
 																																												"value" => Auth::user()->email,
 																																								])
 																																								@if (Auth::user()->email_verified_at)
@@ -127,10 +127,7 @@
 																				errorMessage: 'Name is invalid',
 																},
 												])
-												.addField('#email', [{
-																				rule: 'required',
-																				errorMessage: 'Email is required',
-																},
+												.addField('#email', [
 																{
 																				rule: 'email',
 																				errorMessage: 'Email is invalid!',

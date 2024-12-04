@@ -24,7 +24,7 @@
 																												<div class="mb-3">
 																																@include("admin.includes.input", [
 																																				"key" => "email",
-																																				"label" => "Email",
+																																				"label" => "Email (Optional)",
 																																				"value" => old("email"),
 																																])
 																												</div>
@@ -63,7 +63,7 @@
 																																<button class="btn btn-success w-100" type="submit">Sign Up</button>
 																												</div>
 																												<div class="mt-4 text-center">
-																																<p class="mb-0">Already have an account? <a href="{{ route("login.get") }}"
+																																<p class="mb-0">Already have an account? <a href="{{ route("login_otp.get") }}"
 																																								class="fw-semibold text-primary text-decoration-underline"> Click here</a> To Login</p>
 																												</div>
 
@@ -174,10 +174,7 @@
 																				errorMessage: 'Name is required',
 																},
 												])
-												.addField('#email', [{
-																				rule: 'required',
-																				errorMessage: 'Email is required',
-																},
+												.addField('#email', [
 																{
 																				rule: 'email',
 																				errorMessage: 'Email is invalid!',

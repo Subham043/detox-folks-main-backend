@@ -76,6 +76,7 @@ use App\Modules\ProductSpecification\Controllers\ProductSpecificationCreateContr
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationDeleteController;
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationPaginateController;
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationUpdateController;
+use App\Modules\Promoter\Controllers\PromoterBankInformationController;
 use App\Modules\Promoter\Controllers\PromoterInstalledController;
 use App\Modules\Promoter\Controllers\PromoterInstallerPaginateController;
 use App\Modules\Promoter\Controllers\PromoterPaginateController;
@@ -101,10 +102,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['guest'])->group(function () {
-    Route::get('/login', [LoginController::class, 'get', 'as' => 'login.get'])->name('login.get');
-    Route::post('/authenticate', [LoginController::class, 'post', 'as' => 'login.post'])->name('login.post');
-    Route::get('/login-otp', [LoginController::class, 'login_otp', 'as' => 'login_otp.get'])->name('login_otp.get');
+    Route::get('/login', [LoginController::class, 'login_otp', 'as' => 'login_otp.get'])->name('login_otp.get');
     Route::post('/authenticate-otp', [LoginController::class, 'otp_post', 'as' => 'login_otp.post'])->name('login_otp.post');
+    Route::get('/login-email', [LoginController::class, 'get', 'as' => 'login_email.get'])->name('login_email.get');
+    Route::post('/authenticate', [LoginController::class, 'post', 'as' => 'login.post'])->name('login.post');
     Route::post('/authenticate-send-otp', [LoginController::class, 'send_otp', 'as' => 'login_send_otp.post'])->name('login_send_otp.post');
     Route::get('/register', [AdminRegisterController::class, 'get', 'as' => 'register.get'])->name('register.get');
     Route::post('/register', [AdminRegisterController::class, 'post', 'as' => 'register.post'])->name('register.post');
@@ -295,10 +296,12 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:Super-Admin|Staff'])->prefix('/promoter-management')->group(function () {
         Route::get('/agent', [PromoterPaginateController::class, 'get', 'as' => 'promoter.agent.paginate.get'])->name('promoter.agent.paginate.get');
         Route::get('/agent/{user_id}/installer', [PromoterInstalledController::class, 'get', 'as' => 'promoter.agent.installer.get'])->name('promoter.agent.installer.get');
+        Route::get('/agent/{user_id}/bank-information', [PromoterBankInformationController::class, 'get', 'as' => 'promoter.agent.installer_bank.get'])->name('promoter.agent.installer_bank.get');
+        Route::post('/agent/{user_id}/bank-information', [PromoterBankInformationController::class, 'post', 'as' => 'promoter.agent.installer_bank.post'])->name('promoter.agent.installer_bank.post');
         Route::get('/agent/{agent_id}/installer/{user_id}', [PromoterInstalledController::class, 'destroy', 'as' => 'promoter.agent.installer.delete'])->name('promoter.agent.installer.delete');
     });
 
-    Route::middleware(['role:App Promoter'])->prefix('/promoter')->group(function () {
+    Route::middleware(['role:App Promoter|Reward Riders|Referral Rockstars'])->prefix('/promoter')->group(function () {
         Route::get('/', [PromoterInstallerPaginateController::class, 'get', 'as' => 'promoter.agent.app_installer.get'])->name('promoter.agent.app_installer.get');
     });
 

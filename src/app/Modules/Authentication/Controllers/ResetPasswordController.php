@@ -36,7 +36,7 @@ class ResetPasswordController extends Controller
         );
         if($status === Password::PASSWORD_RESET){
             (new RateLimitService($request))->clearRateLimit();
-            return redirect(route('login.get'))->with('success_status', __($status));
+            return redirect(route('login_email.get'))->with('success_status', __($status));
         }
         return back()->with(['error_status' => __($status)]);
 
