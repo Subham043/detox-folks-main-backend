@@ -459,6 +459,7 @@
 																																								</li>
 																																								<li><b class="text-muted">State:</b> {{ $order->state }}</li>
 																																								<li><b class="text-muted">Country:</b> {{ $order->country }}</li>
+																																								<li><b class="text-muted">Delivery Slot:</b> {{ $order->delivery_slot ?? 'N/A' }}</li>
 																																				</ul>
 																																</div>
 																												</div>

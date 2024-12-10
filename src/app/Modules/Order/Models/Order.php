@@ -42,6 +42,7 @@ class Order extends Model
         'accept_terms',
         'include_gst',
         'order_mode',
+        'delivery_slot',
         'user_id',
     ];
 
@@ -59,6 +60,7 @@ class Order extends Model
     protected $attributes = [
         'order_mode' => OrderMode::WEBSITE,
         'map_information' => null,
+        'delivery_slot' => null,
     ];
 
     protected array $orderWith = [

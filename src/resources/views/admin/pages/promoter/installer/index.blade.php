@@ -33,6 +33,9 @@
 																												<div class="card-header d-flex justify-content-between align-items-center">
 																																<h4 class="card-title mb-0">Installer</h4>
                                                                                                                                 <div class="col-auto">
+                                                                                                                                    <a href="{{ route("promoter.agent.bank_information.get") }}" class="btn btn-secondary">
+                                                                                                                                        Bank Information
+                                                                                                                                    </a>
                                                                                                                                     <button type="submit" class="btn btn-primary">
                                                                                                                                                     Filter
                                                                                                                                     </button>

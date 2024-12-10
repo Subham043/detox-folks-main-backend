@@ -44,6 +44,7 @@ class PlaceOrderRequest extends FormRequest
             'order_mode' => ['required', new Enum(OrderMode::class)],
             'include_gst' => ['required', 'boolean'],
             'accept_terms' => ['required', 'accepted'],
+            'delivery_slot' => ['required', 'string'],
         ];
     }
 

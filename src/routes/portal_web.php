@@ -80,6 +80,7 @@ use App\Modules\Promoter\Controllers\PromoterBankInformationController;
 use App\Modules\Promoter\Controllers\PromoterInstalledController;
 use App\Modules\Promoter\Controllers\PromoterInstallerPaginateController;
 use App\Modules\Promoter\Controllers\PromoterPaginateController;
+use App\Modules\Promoter\Controllers\PromoterSelfBankInformationController;
 use App\Modules\SubCategory\Controllers\SubCategoryCreateController;
 use App\Modules\SubCategory\Controllers\SubCategoryDeleteController;
 use App\Modules\SubCategory\Controllers\SubCategoryPaginateController;
@@ -303,6 +304,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['role:App Promoter|Reward Riders|Referral Rockstars'])->prefix('/promoter')->group(function () {
         Route::get('/', [PromoterInstallerPaginateController::class, 'get', 'as' => 'promoter.agent.app_installer.get'])->name('promoter.agent.app_installer.get');
+        Route::get('/bank-information', [PromoterSelfBankInformationController::class, 'get', 'as' => 'promoter.agent.bank_information.get'])->name('promoter.agent.bank_information.get');
+        Route::post('/bank-information', [PromoterSelfBankInformationController::class, 'post', 'as' => 'promoter.agent.bank_information.post'])->name('promoter.agent.bank_information.post');
     });
 
     Route::middleware(['role:Warehouse Manager'])->prefix('/warehouse-management')->group(function () {

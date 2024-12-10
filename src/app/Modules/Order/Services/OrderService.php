@@ -279,6 +279,7 @@ class OrderService
                 'accept_terms' => $data['accept_terms'],
                 'include_gst' => $data['include_gst'],
                 'order_mode' => $data['order_mode'],
+                'delivery_slot' => $data['delivery_slot'],
                 'subtotal' => (new CartAmountService())->get_subtotal(),
                 'total_charges' => (new CartAmountService())->get_charge_price(),
                 'total_price' => (new CartAmountService())->get_total_price(),

@@ -194,6 +194,7 @@
 																																																				<th class="sort" data-sort="customer_name">Phone</th>
 																																																				<th class="sort" data-sort="customer_name">Products</th>
 																																																				<th class="sort" data-sort="customer_name">Total Amount</th>
+																																																				<th class="sort" data-sort="customer_name">Delivery Slot</th>
 																																																				<th class="sort" data-sort="customer_name">Mode Of Payment</th>
 																																																				<th class="sort" data-sort="customer_name">Payment Status</th>
 																																																				<th class="sort" data-sort="customer_name">Order Status</th>
@@ -216,6 +217,7 @@
 																																																												@endforeach
 																																																								</td>
 																																																								<td class="customer_name">&#8377;{{ $item->total_price }}</td>
+																																																								<td class="customer_name">{{ $item->delivery_slot ?? "N/A" }}</td>
 																																																								<td class="customer_name">{{ $item->payment->mode ?? "" }}</td>
 																																																								<td class="customer_name">{{ $item->payment->status ?? "" }}</td>
 																																																								<td class="customer_name">
