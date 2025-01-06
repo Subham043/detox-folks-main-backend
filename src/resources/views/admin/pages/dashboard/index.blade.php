@@ -262,6 +262,7 @@
 																																												</div><!-- end col -->
                                                                                                                                                                                 @endhasanyrole
 
+                                                                                                                                                                                @hasanyrole("Staff|Inventory Manager|Super-Admin")
 																																												<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
@@ -288,6 +289,7 @@
 																																																				</div><!-- end card body -->
 																																																</div>
 																																												</div><!-- end col -->
+                                                                                                                                                                                @endhasanyrole
 
                                                                                                                                                                                 @hasanyrole("Inventory Manager|Super-Admin")
                                                                                                                                                                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
@@ -508,6 +510,10 @@
 																																																				</div><!-- end card body -->
 																																																</div>
 																																												</div><!-- end col -->
+
+                                                                                                                                                                                @endhasanyrole
+
+                                                                                                                                                                                @hasanyrole("Super-Admin|Sales Coordinators")
 
                                                                                                                                                                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">

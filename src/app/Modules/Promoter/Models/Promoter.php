@@ -20,9 +20,11 @@ class Promoter extends Model
     protected $fillable = [
         'promoted_by_id',
         'installed_by_id',
+        'is_approved',
     ];
 
     protected $casts = [
+        'is_approved' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

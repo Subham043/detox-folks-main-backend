@@ -271,6 +271,15 @@
 																				</li>
 																@endhasanyrole
 
+																@hasanyrole("Sales Coordinators")
+																				<li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("promoter.agent.paginate.get")) !== false ? "active" : "" }}"
+																												href="{{ route("promoter.agent.paginate.get") }}">
+																												<i class="ri-user-voice-line"></i> <span data-key="t-widgets">App Promoter Agent</span>
+																								</a>
+																				</li>
+																@endhasanyrole
+
 																@hasanyrole("Super-Admin")
 																				<li class="nav-item">
 																								<a class="nav-link menu-link {{ strpos(url()->current(), "logs") !== false ? "active" : "" }}"

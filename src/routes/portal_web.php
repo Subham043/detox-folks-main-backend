@@ -307,12 +307,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/order/{order_id}/complete', [AssignedOrderForAgentPaginateController::class, 'deliver_order', 'as' => 'delivery_management.agent.order_deliver_order.post'])->name('delivery_management.agent.order_deliver_order.post');
     });
 
-    Route::middleware(['role:Super-Admin|Staff'])->prefix('/promoter-management')->group(function () {
-        Route::get('/agent', [PromoterPaginateController::class, 'get', 'as' => 'promoter.agent.paginate.get'])->name('promoter.agent.paginate.get');
-        Route::get('/agent/{user_id}/installer', [PromoterInstalledController::class, 'get', 'as' => 'promoter.agent.installer.get'])->name('promoter.agent.installer.get');
-        Route::get('/agent/{user_id}/bank-information', [PromoterBankInformationController::class, 'get', 'as' => 'promoter.agent.installer_bank.get'])->name('promoter.agent.installer_bank.get');
-        Route::post('/agent/{user_id}/bank-information', [PromoterBankInformationController::class, 'post', 'as' => 'promoter.agent.installer_bank.post'])->name('promoter.agent.installer_bank.post');
-        Route::get('/agent/{agent_id}/installer/{user_id}', [PromoterInstalledController::class, 'destroy', 'as' => 'promoter.agent.installer.delete'])->name('promoter.agent.installer.delete');
+    Route::prefix('/promoter-management')->group(function () {
+        Route::get('/agent', [PromoterPaginateController::class, 'get', 'as' => 'promoter.agent.paginate.get'])->name('promoter.agent.paginate.get')->middleware(['role:Super-Admin|Staff|Sales Coordinators']);
+        Route::get('/agent/{user_id}/installer', [PromoterInstalledController::class, 'get', 'as' => 'promoter.agent.installer.get'])->name('promoter.agent.installer.get')->middleware(['role:Super-Admin|Staff|Sales Coordinators']);
+        Route::get('/agent/{user_id}/bank-information', [PromoterBankInformationController::class, 'get', 'as' => 'promoter.agent.installer_bank.get'])->name('promoter.agent.installer_bank.get')->middleware(['role:Super-Admin|Staff']);
+        Route::post('/agent/{user_id}/bank-information', [PromoterBankInformationController::class, 'post', 'as' => 'promoter.agent.installer_bank.post'])->name('promoter.agent.installer_bank.post')->middleware(['role:Super-Admin|Staff']);
+        Route::get('/agent/{agent_id}/installer/{user_id}', [PromoterInstalledController::class, 'destroy', 'as' => 'promoter.agent.installer.delete'])->name('promoter.agent.installer.delete')->middleware(['role:Super-Admin|Staff']);
+        Route::get('/agent/{agent_id}/installer/{user_id}/toggle', [PromoterInstalledController::class, 'toggle', 'as' => 'promoter.agent.installer.toggle'])->name('promoter.agent.installer.toggle')->middleware(['role:Super-Admin|Staff|Sales Coordinators']);
     });
 
     Route::middleware(['role:App Promoter|Reward Riders|Referral Rockstars'])->prefix('/promoter')->group(function () {

@@ -34,12 +34,27 @@
                                                                                                                         <!--end row-->
                                                                                                                     </form> --}}
 																																<div class="row g-1 align-items-end justify-content-start">
-																																				<div class="col-xxl-8 col-lg-8 col-sm-12">
+																																				<div class="col-xxl-6 col-lg-6 col-sm-12">
 																																								<label class="form-label" for="">Search</label>
 																																								<div class="search-box">
 																																												<input type="text" class="form-control search" name="filter[search]"
 																																																placeholder="Search for anything..." value="{{ $search }}">
 																																												<i class="ri-search-line search-icon"></i>
+																																								</div>
+																																				</div>
+                                                                                                                                                <div class="col-xxl-2 col-lg-2 col-sm-12">
+																																								<label class="form-label" for="">Role</label>
+																																								<div>
+																																												<select class="form-control" name="filter[has_role]"
+																																																id="has_role">
+																																																<option value="all" @if (strpos("all", $role) !== false) selected @endif>all
+																																																</option>
+																																																@foreach ($roles as $v)
+																																																				<option value="{{ $v }}"
+																																																								@if (strpos($v, $role) !== false) selected @endif>
+																																																								{{ $v }}</option>
+																																																@endforeach
+																																												</select>
 																																								</div>
 																																				</div>
 																																				<!--end col-->
@@ -64,6 +79,10 @@
 																																																				<th class="sort" data-sort="customer_name">Name</th>
 																																																				<th class="sort" data-sort="customer_name">Email</th>
 																																																				<th class="sort" data-sort="customer_name">Phone</th>
+																																																				<th class="sort" data-sort="customer_name">Role</th>
+																																																				<th class="sort" data-sort="customer_name">Is Approved</th>
+																																																				<th class="sort" data-sort="customer_name">Has Placed Order</th>
+																																																				<th class="sort" data-sort="customer_name">No. Of Orders</th>
 																																																				<th class="sort" data-sort="customer_name">Installed On</th>
 																																																				<th class="sort" data-sort="action">Action</th>
 																																																</tr>
@@ -75,13 +94,56 @@
 																																																								<td class="customer_name">{{ $item->name }}</td>
 																																																								<td class="customer_name">{{ $item->email }}</td>
 																																																								<td class="customer_name">{{ $item->phone }}</td>
+																																																								<td class="customer_name">{{ $item->current_role }}</td>
+                                                                                                                                                                                                                                @if($item->current_role!='User')
+                                                                                                                                                                                                                                    @if (count($item->app_promoter)>0 && $item->app_promoter[0]->is_approved == 1)
+                                                                                                                                                                                                                                        <td class="status"><span
+                                                                                                                                                                                                                                                                        class="badge badge-soft-success text-uppercase">Yes</span>
+                                                                                                                                                                                                                                        </td>
+                                                                                                                                                                                                                                    @else
+                                                                                                                                                                                                                                        <td class="status"><span
+                                                                                                                                                                                                                                                                        class="badge badge-soft-danger text-uppercase">No</span>
+                                                                                                                                                                                                                                        </td>
+                                                                                                                                                                                                                                    @endif
+																																																								@else
+                                                                                                                                                                                                                                    <td class="status">
+                                                                                                                                                                                                                                    </td>
+																																																								@endif
+                                                                                                                                                                                                                                @if($item->current_role=='User')
+                                                                                                                                                                                                                                    @if ($item->orders_count>0)
+                                                                                                                                                                                                                                        <td class="status"><span
+                                                                                                                                                                                                                                                                        class="badge badge-soft-success text-uppercase">Yes</span>
+                                                                                                                                                                                                                                        </td>
+                                                                                                                                                                                                                                    @else
+                                                                                                                                                                                                                                        <td class="status"><span
+                                                                                                                                                                                                                                                                        class="badge badge-soft-danger text-uppercase">No</span>
+                                                                                                                                                                                                                                        </td>
+                                                                                                                                                                                                                                    @endif
+																																																								@else
+                                                                                                                                                                                                                                    <td class="status">
+                                                                                                                                                                                                                                    </td>
+																																																								@endif
+                                                                                                                                                                                                                                @if($item->current_role=='User')
+                                                                                                                                                                                                                                    <td class="customer_name">{{ $item->orders_count }}</td>
+																																																								@else
+                                                                                                                                                                                                                                    <td class="status">
+                                                                                                                                                                                                                                    </td>
+																																																								@endif
 																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
 																																																								<td>
 																																																												<div class="d-flex gap-2">
+                                                                                                                                                                                                                                                            @if($item->current_role!='User')
+                                                                                                                                                                                                                                                                <div class="remove">
+                                                                                                                                                                                                                                                                    <button class="btn btn-sm btn-warning remove-item-btn"
+                                                                                                                                                                                                                                                                                    data-link="{{ route("promoter.agent.installer.toggle", [$user_id, $item->id]) }}">Status</button>
+                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                            @endif
+                                                                                                                                                                                                                                                            @if(auth()->user()->current_role=='Super-Admin')
                                                                                                                                                                                                                                                                 <div class="remove">
                                                                                                                                                                                                                                                                     <button class="btn btn-sm btn-danger remove-item-btn"
                                                                                                                                                                                                                                                                                     data-link="{{ route("promoter.agent.installer.delete", [$user_id, $item->id]) }}">Delete</button>
                                                                                                                                                                                                                                                                 </div>
+                                                                                                                                                                                                                                                            @endif
 																																																												</div>
 																																																								</td>
 																																																				</tr>

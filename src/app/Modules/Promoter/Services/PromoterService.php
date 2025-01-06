@@ -2,6 +2,7 @@
 
 namespace App\Modules\Promoter\Services;
 
+use App\Enums\OrderEnumStatus;
 use App\Modules\Authentication\Models\User;
 use App\Modules\Promoter\Models\Promoter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -31,20 +32,32 @@ class PromoterService
 
     public function getInstallerById(Int $id): User|null
     {
-        return User::with(['roles'])->whereHas('roles', function($q) { $q->where('name', 'User'); })->findOrFail($id);
+        return User::with(['roles'])->whereHas('roles', function($q) { $q->whereIn('name', ['App Promoter', 'Reward Riders', 'Referral Rockstars', 'User']); })->findOrFail($id);
     }
 
     public function paginateInstaller($agent_id, Int $total = 10): LengthAwarePaginator
     {
-        return QueryBuilder::for(User::with(['roles', 'app_promoter'])->whereHas('roles', function($q) { $q->where('name', 'User'); })
+        return QueryBuilder::for(User::with(['roles', 'app_promoter'])->whereHas('roles', function($q) { $q->whereIn('name', ['App Promoter', 'Reward Riders', 'Referral Rockstars', 'User']); })
         ->whereHas('app_promoter', function($q) use($agent_id) {
             $q->where('promoted_by_id', $agent_id);
         }))
+        ->withCount([
+            'orders' => function ($query) {
+                $query->whereHas('current_status', function($q) {
+                    $q->where('status', '!=', OrderEnumStatus::CANCELLED);
+                });
+            }
+        ])
         ->defaultSort('-id')
         ->allowedFilters([
             AllowedFilter::callback('has_date', function (Builder $query, $value) {
                 $date = explode(' - ', $value);
                 $query->whereBetween('created_at', [...$date]);
+            }),
+            AllowedFilter::callback('has_role', function (Builder $query, $value) {
+                $query->whereHas('roles', function($q) use($value) {
+                    $q->where('name', $value);
+                });
             }),
             AllowedFilter::custom('search', new AgentFilter),
         ])
@@ -72,6 +85,15 @@ class PromoterService
     {
         $promoter = Promoter::where('installed_by_id', $user_id)->where('promoted_by_id', $agent_id)->firstOrFail();
         $promoter->delete();
+    }
+
+    public function toggle(Int $user_id, Int $agent_id)
+    {
+        $promoter = Promoter::where('installed_by_id', $user_id)->where('promoted_by_id', $agent_id)->firstOrFail();
+        if($promoter->installed_by->current_role == 'User'){
+            throw new \Exception('User can not be approved', 400);
+        }
+        $promoter->update(['is_approved' => !$promoter->is_approved]);
     }
 
 }

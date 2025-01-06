@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('promoted_by_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('installed_by_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->boolean('is_approved')->default(0);
             $table->timestamps();
             $table->index(['id', 'created_at']);
         });

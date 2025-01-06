@@ -121,12 +121,17 @@ class User extends Authenticatable
 
     public function app_promoter()
     {
-        return $this->belongsToMany(User::class, 'promoters', 'installed_by_id', 'promoted_by_id');
+        return $this->belongsToMany(User::class, 'promoters', 'installed_by_id', 'promoted_by_id')->withPivot('is_approved');
     }
 
     public function app_promoter_code()
     {
         return $this->hasOne(PromoterCode::class, 'promoter_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id');
     }
 
     /**

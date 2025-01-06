@@ -20,11 +20,13 @@
 																												<div id="customerList">
 																																<div class="row g-4 mb-3">
 																																				<div class="col-sm-auto">
+                                                                                                                                                                @if(auth()->user()->current_role=='Super-Admin')
 																																								<div>
 																																												<a href="{{ route("user.create.get") }}" type="button" target="_blank"
 																																																class="btn btn-success add-btn" id="create-btn"><i
 																																																				class="ri-add-line me-1 align-bottom"></i> Create Promoter</a>
 																																								</div>
+                                                                                                                                                                @endif
 																																				</div>
 																																				<div class="col-sm">
 																																								<x-includes.search :search="$search"
@@ -58,16 +60,19 @@
 																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
 																																																								<td>
 																																																												<div class="d-flex gap-2">
+                                                                                                                                                                                                                                                                @if(auth()->user()->current_role=='Super-Admin')
 																																																																<div class="edit">
 																																																																				<a href="{{ route("user.update.get", $item->id) }}"
 																																																																								class="btn btn-sm btn-primary edit-item-btn">Edit</a>
 																																																																</div>
+                                                                                                                                                                                                                                                                @endif
 
 																																																																<div class="edit">
 																																																																				<a href="{{ route("promoter.agent.installer.get", $item->id) }}"
 																																																																								class="btn btn-sm btn-warning edit-item-btn">App Installers</a>
 																																																																</div>
 
+                                                                                                                                                                                                                                                                @if(auth()->user()->current_role=='Super-Admin')
 																																																																<div class="edit">
 																																																																				<a href="{{ route("promoter.agent.installer_bank.get", $item->id) }}"
 																																																																								class="btn btn-sm btn-secondary edit-item-btn">Bank Information</a>
@@ -77,6 +82,7 @@
 																																																																				<button class="btn btn-sm btn-danger remove-item-btn"
 																																																																								data-link="{{ route("user.delete.get", $item->id) }}">Delete</button>
 																																																																</div>
+                                                                                                                                                                                                                                                                @endif
 																																																												</div>
 																																																								</td>
 																																																				</tr>
