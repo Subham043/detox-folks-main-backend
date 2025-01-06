@@ -33,6 +33,7 @@ use App\Modules\Cart\Controllers\CartPaginateController;
 use App\Modules\Cart\Controllers\CartUpdateController;
 use App\Modules\Category\Controllers\UserCategoryDetailController;
 use App\Modules\Category\Controllers\UserCategoryPaginateController;
+use App\Modules\DeliverySlot\Controllers\UserDeliverySlotAllController;
 use App\Modules\Enquiry\ContactForm\Controllers\ContactFormCreateController;
 use App\Modules\Enquiry\OrderForm\Controllers\OrderFormCreateController;
 use App\Modules\Feature\Controllers\UserFeatureAllController;
@@ -100,6 +101,10 @@ Route::prefix('contact-form')->group(function () {
 
 Route::prefix('testimonial')->group(function () {
     Route::get('/', [UserTestimonialAllController::class, 'get'])->name('user.testimonial.all');
+});
+
+Route::prefix('delivery-slot')->group(function () {
+    Route::get('/', [UserDeliverySlotAllController::class, 'get'])->name('delivery_slot.testimonial.all');
 });
 
 Route::prefix('feature')->group(function () {

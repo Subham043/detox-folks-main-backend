@@ -17,7 +17,7 @@ class AdminRegisterController extends Controller
     }
 
     public function get(){
-        $roles = Role::whereIn('name', ['Delivery Agent', 'App Promoter', 'Reward Riders', 'Referral Rockstars'])->get();
+        $roles = Role::whereIn('name', ['App Promoter', 'Reward Riders', 'Referral Rockstars'])->get();
         return view('admin.pages.auth.register')->with('roles', $roles);
     }
 

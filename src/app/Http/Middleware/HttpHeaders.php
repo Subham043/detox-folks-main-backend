@@ -30,7 +30,7 @@ class HttpHeaders
             if (function_exists('header_remove')) {
                 header_remove('X-Powered-By'); // PHP 5.3+
             }
-            $response->headers->set('X-Powered-By', 'DETOX FOLKS');
+            $response->headers->set('X-Powered-By', 'PARCEL COUNTER');
         }
 
 

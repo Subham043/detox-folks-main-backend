@@ -32,6 +32,10 @@ use App\Modules\DeliveryManagement\Controllers\AssignDeliveryAgentController;
 use App\Modules\DeliveryManagement\Controllers\AssignedOrderController;
 use App\Modules\DeliveryManagement\Controllers\AssignedOrderForAgentPaginateController;
 use App\Modules\DeliveryManagement\Controllers\DeliveryAgentPaginateController;
+use App\Modules\DeliverySlot\Controllers\DeliverySlotCreateController;
+use App\Modules\DeliverySlot\Controllers\DeliverySlotDeleteController;
+use App\Modules\DeliverySlot\Controllers\DeliverySlotPaginateController;
+use App\Modules\DeliverySlot\Controllers\DeliverySlotUpdateController;
 use App\Modules\Enquiry\OrderForm\Controllers\OrderFormDeleteController;
 use App\Modules\Enquiry\OrderForm\Controllers\OrderFormExcelController;
 use App\Modules\Enquiry\OrderForm\Controllers\OrderFormPaginateController;
@@ -268,6 +272,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/update/{id}', [ChargeUpdateController::class, 'get', 'as' => 'charge.update.get'])->name('charge.update.get');
         Route::post('/update/{id}', [ChargeUpdateController::class, 'post', 'as' => 'charge.update.post'])->name('charge.update.post');
         Route::get('/delete/{id}', [ChargeDeleteController::class, 'get', 'as' => 'charge.delete.get'])->name('charge.delete.get');
+    });
+
+    Route::middleware(['role:Super-Admin'])->prefix('/delivery-slots')->group(function () {
+        Route::get('/', [DeliverySlotPaginateController::class, 'get', 'as' => 'delivery_slot.paginate.get'])->name('delivery_slot.paginate.get');
+        Route::get('/create', [DeliverySlotCreateController::class, 'get', 'as' => 'delivery_slot.create.get'])->name('delivery_slot.create.get');
+        Route::post('/create', [DeliverySlotCreateController::class, 'post', 'as' => 'delivery_slot.create.post'])->name('delivery_slot.create.post');
+        Route::get('/update/{id}', [DeliverySlotUpdateController::class, 'get', 'as' => 'delivery_slot.update.get'])->name('delivery_slot.update.get');
+        Route::post('/update/{id}', [DeliverySlotUpdateController::class, 'post', 'as' => 'delivery_slot.update.post'])->name('delivery_slot.update.post');
+        Route::get('/delete/{id}', [DeliverySlotDeleteController::class, 'get', 'as' => 'delivery_slot.delete.get'])->name('delivery_slot.delete.get');
     });
 
     Route::middleware(['role:Super-Admin|Staff|Inventory Manager'])->prefix('/order')->group(function () {

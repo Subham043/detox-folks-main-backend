@@ -15,7 +15,7 @@
 				<div class="page-content">
 								<div class="container-fluid">
 
-												<x-includes.breadcrumb link="dashboard.get" page="Dashboard" :list='["DETOX FOLKS"]' />
+												<x-includes.breadcrumb link="dashboard.get" page="Dashboard" :list='["PARCEL COUNTER"]' />
 												<div class="row project-wrapper">
 																<div class="col-xxl-12">
 

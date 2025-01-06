@@ -5,19 +5,19 @@
 								<!-- Dark Logo-->
 								<a href="{{ route("dashboard.get") }}" class="logo logo-dark">
 												<span class="logo-sm">
-																<img src="{{ asset("admin/images/logo-sm.png") }}" alt="" height="22">
+																<img src="{{ asset("admin/images/logo.webp") }}" alt="" height="22">
 												</span>
 												<span class="logo-lg">
-																<img src="{{ asset("admin/images/logo.png") }}" alt="" height="17">
+																<img src="{{ asset("admin/images/logo.webp") }}" alt="" height="17">
 												</span>
 								</a>
 								<!-- Light Logo-->
 								<a href="{{ route("dashboard.get") }}" class="logo logo-light">
 												<span class="logo-sm">
-																<img src="{{ asset("admin/images/logo-sm.png") }}" alt="" height="30">
+																<img src="{{ asset("admin/images/logo.webp") }}" alt="" height="30">
 												</span>
 												<span class="logo-lg">
-																<img src="{{ asset("admin/images/logo.png") }}" alt="" height="60">
+																<img src="{{ asset("admin/images/logo.webp") }}" alt="" height="60">
 												</span>
 								</a>
 								<button type="button" class="btn btn-sm fs-20 header-item float-end btn-vertical-sm-hover p-0"
@@ -237,6 +237,12 @@
 																								<a class="nav-link menu-link {{ strpos(url()->current(), route("charge.paginate.get")) !== false ? "active" : "" }}"
 																												href="{{ route("charge.paginate.get") }}">
 																												<i class="ri-money-dollar-circle-line"></i> <span data-key="t-widgets">Cart Charges</span>
+																								</a>
+																				</li>
+                                                                                <li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("delivery_slot.paginate.get")) !== false ? "active" : "" }}"
+																												href="{{ route("delivery_slot.paginate.get") }}">
+																												<i class="ri-map-pin-time-line"></i> <span data-key="t-widgets">Delivery Slot</span>
 																								</a>
 																				</li>
 																@endhasanyrole

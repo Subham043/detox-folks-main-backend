@@ -9,7 +9,7 @@
 																<div class="card-body p-4">
 																				<div class="mt-2 text-center">
 																								<h5 class="text-primary">Registration</h5>
-																								<p class="text-muted">Sign up to continue to DETOX FOLKS.</p>
+																								<p class="text-muted">Sign up to continue to PARCEL COUNTER.</p>
 																				</div>
 																				<div class="mt-4 p-2">
 																								<form id="loginForm" method="post" action="{{ route("register.post") }}">

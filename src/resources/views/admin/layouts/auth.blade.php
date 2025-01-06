@@ -27,7 +27,7 @@
 																												<div class="mt-sm-5 text-white-50 mb-4 text-center">
 																																<div>
 																																				<a href="index.html" class="d-inline-block auth-logo">
-																																								<img src="{{ asset("admin/images/logo.png") }}" alt="">
+																																								<img src="{{ asset("admin/images/logo.webp") }}" alt="">
 																																				</a>
 																																</div>
 																												</div>
