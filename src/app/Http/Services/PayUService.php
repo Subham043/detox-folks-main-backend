@@ -118,4 +118,71 @@ class PayUService
                 ])
                 ->post();
     }
+
+    public function create_upi_order(Order $order, $successURL, $failURL)
+    {
+        $name = $order->name;
+        $email = $order->email;
+        $amount = $order->total_price;
+
+        $action = '';
+        $txnid = $order->id;
+        $posted = array();
+        $posted = array(
+            'key' => $this->MERCHANT_KEY,
+            'txnid' => $txnid,
+            'amount' => $amount,
+            'firstname' => $name,
+            'email' => $email,
+            'productinfo' => 'Webappfix',
+            // 'pg' => 'QR',
+            // 'bankcode' => 'UPIQR',
+            // 'enforce_paymethod' => 'qr',
+            'pg' => 'UPI',
+            'bankcode' => 'UPI',
+            'surl' => $successURL,
+            'furl' => $failURL,
+            'service_provider' => 'payu_paisa',
+        );
+
+        if(empty($posted['txnid'])) {
+            $txnid = $order->id;
+        }
+        else{
+            $txnid = $posted['txnid'];
+        }
+
+        $hash = '';
+        $hashSequence = "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10";
+
+        if(empty($posted['hash']) && sizeof($posted) > 0) {
+            $hashVarsSeq = explode('|', $hashSequence);
+            $hash_string = '';
+            foreach($hashVarsSeq as $hash_var) {
+                $hash_string .= isset($posted[$hash_var]) ? $posted[$hash_var] : '';
+                $hash_string .= '|';
+            }
+            $hash_string .= $this->SALT;
+            $hash = strtolower(hash('sha512', $hash_string));
+            $action = $this->PAYU_PAYMENT_URL . '/_payment';
+            $action = $this->PAYU_PAYMENT_URL . '/_payment';
+        }
+        elseif(!empty($posted['hash']))
+        {
+            $hash = $posted['hash'];
+            $action = $this->PAYU_PAYMENT_URL . '/_payment';
+            $action = $this->PAYU_PAYMENT_URL . '/_payment';
+        }
+        return [
+            'action' => $action,
+            'hash' => $hash,
+            'MERCHANT_KEY' => $this->MERCHANT_KEY,
+            'txnid' => $txnid,
+            'successURL' => $successURL,
+            'failURL' => $failURL,
+            'name' => $name,
+            'email' => $email,
+            'amount' => $amount
+        ];
+    }
 }

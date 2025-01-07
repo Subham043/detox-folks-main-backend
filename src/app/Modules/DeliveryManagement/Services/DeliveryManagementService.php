@@ -2,6 +2,7 @@
 
 namespace App\Modules\DeliveryManagement\Services;
 
+use App\Enums\PaymentMode;
 use App\Enums\PaymentStatus;
 use App\Modules\Authentication\Models\User;
 use App\Modules\DeliveryManagement\Models\DeliveryAssigned;
@@ -271,6 +272,32 @@ class DeliveryManagementService
         ])->whereHas('delivery_agent', function($q) use($agent_id, $order_id) {
             $q->where('user_id', $agent_id)->where('order_id', $order_id);
         })->findOrFail($order_id);
+    }
+
+    public function getOrderPlacedByIdPaymentPendingVia($agent_id, $order_id): Order|null
+    {
+        return Order::with([
+            'products',
+            'current_status',
+            'charges',
+            'statuses',
+            'payment',
+            'delivery_agent'
+        ])->whereHas('delivery_agent', function($q) use($agent_id, $order_id) {
+            $q->where('user_id', $agent_id)->where('order_id', $order_id);
+        })->paymentPendingFrom($order_id, PaymentMode::COD)->findOrFail($order_id);
+    }
+
+    public function getOrderPlacedById($order_id): Order|null
+    {
+        return Order::with([
+            'products',
+            'current_status',
+            'charges',
+            'statuses',
+            'payment',
+            'delivery_agent'
+        ])->paymentPendingFrom($order_id, PaymentMode::COD)->findOrFail($order_id);
     }
 
     public function assign_orders(User $agent, array $data): User

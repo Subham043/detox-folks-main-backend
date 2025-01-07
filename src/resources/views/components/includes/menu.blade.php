@@ -14,7 +14,7 @@
 								<!-- Light Logo-->
 								<a href="{{ route("dashboard.get") }}" class="logo logo-light">
 												<span class="logo-sm">
-																<img src="{{ asset("admin/images/logo.webp") }}" alt="" height="30">
+																<img src="{{ asset("admin/images/logo.webp") }}" alt="" height="20">
 												</span>
 												<span class="logo-lg">
 																<img src="{{ asset("admin/images/logo.webp") }}" alt="" height="60">

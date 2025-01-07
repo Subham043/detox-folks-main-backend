@@ -1,6 +1,7 @@
 <?php
 
 use App\Modules\Authentication\Controllers\VerifyRegisteredUserController;
+use App\Modules\DeliveryManagement\Controllers\AssignedOrderForAgentPaginateController;
 use App\Modules\Order\Controllers\CashfreeController;
 use App\Modules\Order\Controllers\PayUMoneyController;
 use App\Modules\Order\Controllers\PhonepeController;
@@ -38,7 +39,9 @@ Route::prefix('razorpay')->group(function () {
 Route::prefix('pay-u')->group(function () {
     Route::get('pay/{order_id}',[PayUMoneyController::class,'payUMoneyView'])->name('make_payu_payment');
     Route::post('response/{order_id}',[PayUMoneyController::class,'payUResponse'])->name('pay.u.response');
-    Route::post('cancel',[PayUMoneyController::class,'payUCancel'])->name('pay.u.cancel');
+    Route::post('cancel/{order_id}',[PayUMoneyController::class,'payUCancel'])->name('pay.u.cancel');
+    Route::post('order/{order_id}/payment-complete/{delivery_agent_id}',[AssignedOrderForAgentPaginateController::class,'payUResponse'])->name('pay.u.upi.success');
+    Route::post('order/{order_id}/payment-failed/{delivery_agent_id}',[AssignedOrderForAgentPaginateController::class,'payUCancel'])->name('pay.u.upi.fail');
 });
 
 Route::prefix('cashfree')->group(function () {
