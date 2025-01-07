@@ -24,6 +24,9 @@
 																																												<a href="{{ route("product.create.get") }}" type="button"
 																																																class="btn btn-success add-btn" id="create-btn"><i
 																																																				class="ri-add-line me-1 align-bottom"></i> Create</a>
+                                                                                                                                                                                <a href="{{ route("product.excel.get") }}" download type="button"
+																																												class="btn btn-info add-btn" id="create-btn"><i
+																																																class="ri-file-excel-fill me-1 align-bottom"></i> Excel Download</a>
 																																								</div>
 																																				</div>
 																																				<div class="col-sm">

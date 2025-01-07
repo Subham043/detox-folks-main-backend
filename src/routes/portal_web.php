@@ -22,6 +22,7 @@ use App\Modules\Blog\Controllers\BlogUpdateController;
 use App\Modules\Category\Controllers\CategoryApiController;
 use App\Modules\Category\Controllers\CategoryCreateController;
 use App\Modules\Category\Controllers\CategoryDeleteController;
+use App\Modules\Category\Controllers\CategoryExcelController;
 use App\Modules\Category\Controllers\CategoryPaginateController;
 use App\Modules\Category\Controllers\CategoryUpdateController;
 use App\Modules\Charge\Controllers\ChargeCreateController;
@@ -63,6 +64,7 @@ use App\Modules\Order\Controllers\OrderAdminInvoicePdfController;
 use App\Modules\Order\Controllers\OrderAdminStatusController;
 use App\Modules\Product\Controllers\ProductCreateController;
 use App\Modules\Product\Controllers\ProductDeleteController;
+use App\Modules\Product\Controllers\ProductExcelController;
 use App\Modules\Product\Controllers\ProductPaginateController;
 use App\Modules\Product\Controllers\ProductUpdateController;
 use App\Modules\ProductColor\Controllers\ProductColorCreateController;
@@ -88,9 +90,11 @@ use App\Modules\Promoter\Controllers\PromoterPaginateController;
 use App\Modules\Promoter\Controllers\PromoterSelfBankInformationController;
 use App\Modules\SubCategory\Controllers\SubCategoryCreateController;
 use App\Modules\SubCategory\Controllers\SubCategoryDeleteController;
+use App\Modules\SubCategory\Controllers\SubCategoryExcelController;
 use App\Modules\SubCategory\Controllers\SubCategoryPaginateController;
 use App\Modules\SubCategory\Controllers\SubCategoryUpdateController;
 use App\Modules\TextEditorImage\Controllers\TextEditorImageController;
+use App\Modules\User\Controllers\UserExcelController;
 use App\Modules\WarehouseManagement\Controllers\WarehouseOrderDetailController;
 use App\Modules\WarehouseManagement\Controllers\WarehouseOrderPaginateController;
 use App\Modules\WarehouseManagement\Controllers\WarehouseOrderStatusUpdateController;
@@ -197,6 +201,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['role:Super-Admin'])->prefix('/user')->group(function () {
         Route::get('/', [UserPaginateController::class, 'get', 'as' => 'user.paginate.get'])->name('user.paginate.get');
+        Route::get('/excel', [UserExcelController::class, 'get', 'as' => 'user.excel.get'])->name('user.excel.get');
         Route::get('/create', [UserCreateController::class, 'get', 'as' => 'user.create.get'])->name('user.create.get');
         Route::post('/create', [UserCreateController::class, 'post', 'as' => 'user.create.get'])->name('user.create.post');
         Route::get('/update/{id}', [UserUpdateController::class, 'get', 'as' => 'user.update.get'])->name('user.update.get');
@@ -207,6 +212,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:Super-Admin|Inventory Manager'])->prefix('/product-management')->group(function () {
         Route::prefix('/category')->group(function () {
             Route::get('/', [CategoryPaginateController::class, 'get', 'as' => 'category.paginate.get'])->name('category.paginate.get');
+            Route::get('/excel', [CategoryExcelController::class, 'get', 'as' => 'category.excel.get'])->name('category.excel.get');
             Route::get('/create', [CategoryCreateController::class, 'get', 'as' => 'category.create.get'])->name('category.create.get');
             Route::post('/create', [CategoryCreateController::class, 'post', 'as' => 'category.create.post'])->name('category.create.post');
             Route::get('/update/{id}', [CategoryUpdateController::class, 'get', 'as' => 'category.update.get'])->name('category.update.get');
@@ -217,6 +223,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::prefix('/sub-category')->group(function () {
             Route::get('/', [SubCategoryPaginateController::class, 'get', 'as' => 'sub_category.paginate.get'])->name('sub_category.paginate.get');
+            Route::get('/excel', [SubCategoryExcelController::class, 'get', 'as' => 'sub_category.excel.get'])->name('sub_category.excel.get');
             Route::get('/create', [SubCategoryCreateController::class, 'get', 'as' => 'sub_category.create.get'])->name('sub_category.create.get');
             Route::post('/create', [SubCategoryCreateController::class, 'post', 'as' => 'sub_category.create.post'])->name('sub_category.create.post');
             Route::get('/update/{id}', [SubCategoryUpdateController::class, 'get', 'as' => 'sub_category.update.get'])->name('sub_category.update.get');
@@ -226,6 +233,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::prefix('/product')->group(function () {
             Route::get('/', [ProductPaginateController::class, 'get', 'as' => 'product.paginate.get'])->name('product.paginate.get');
+            Route::get('/excel', [ProductExcelController::class, 'get', 'as' => 'product.excel.get'])->name('product.excel.get');
             Route::get('/create', [ProductCreateController::class, 'get', 'as' => 'product.create.get'])->name('product.create.get');
             Route::post('/create', [ProductCreateController::class, 'post', 'as' => 'product.create.post'])->name('product.create.post');
             Route::get('/update/{id}', [ProductUpdateController::class, 'get', 'as' => 'product.update.get'])->name('product.update.get');
