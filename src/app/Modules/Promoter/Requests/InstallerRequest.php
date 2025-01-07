@@ -34,6 +34,9 @@ class InstallerRequest extends FormRequest
                 if(!$promoter_code){
                     $fail('The '.$attribute.' entered is incorrect.');
                 }else{
+                    if($promoter_code->promoter_id == auth()->user()->id){
+                        $fail('The '.$attribute.' entered is invalid');
+                    }
                     $promoter = Promoter::where('installed_by_id', auth()->user()->id)->first();
                     if($promoter){
                         $fail('The '.$attribute.' entered is already used by you');

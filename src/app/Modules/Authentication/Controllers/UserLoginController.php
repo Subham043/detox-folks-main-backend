@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\RateLimitService;
 use App\Http\Services\SmsService;
 use App\Modules\Authentication\Requests\UserLoginOtpPostRequest;
+use App\Modules\Authentication\Requests\UserLoginPhonePasswordPostRequest;
 use App\Modules\Authentication\Requests\UserLoginPostRequest;
 use App\Modules\Authentication\Requests\UserPhonePostRequest;
 use App\Modules\Authentication\Resources\AuthCollection;
@@ -71,6 +72,25 @@ class UserLoginController extends Controller
             ], 200);
         }
 
+        return response()->json([
+            'message' => 'Oops! You have entered invalid credentials',
+        ], 400);
+    }
+
+    public function phone_password_post(UserLoginPhonePasswordPostRequest $request){
+
+        $is_authenticated = $this->authService->user_login($request->validated());
+
+        if ($is_authenticated) {
+            (new RateLimitService($request))->clearRateLimit();
+            $token = $this->authService->generate_token(auth()->user());
+            return response()->json([
+                'message' => 'Logged in successfully.',
+                'token_type' => 'Bearer',
+                'token' => $token,
+                'user' => AuthCollection::make(auth()->user()),
+            ], 200);
+        }
         return response()->json([
             'message' => 'Oops! You have entered invalid credentials',
         ], 400);

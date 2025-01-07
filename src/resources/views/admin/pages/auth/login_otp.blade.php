@@ -46,6 +46,9 @@
 																																<p class="mb-0"><a href="{{ route("login_email.get") }}"
 																																								class="fw-semibold text-primary text-decoration-underline"> Click here</a> To Login
 																																				with Email & Password</p>
+                                                                                                                                <p class="mb-0"><a href="{{ route("login_phone.get") }}"
+																																								class="fw-semibold text-primary text-decoration-underline"> Click here</a> To Login
+																																				with Phone Number & Password</p>
                                                                                                                                 <p class="mb-0"><a href="{{ route("register.get") }}"
 																																								class="fw-semibold text-primary text-decoration-underline"> Click here</a> To Register</p>
 																												</div>

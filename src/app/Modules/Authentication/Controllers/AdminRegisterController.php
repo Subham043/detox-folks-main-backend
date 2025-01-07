@@ -4,6 +4,8 @@ namespace App\Modules\Authentication\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Authentication\Requests\AdminRegisterPostRequest;
+use App\Modules\Promoter\Models\Promoter;
+use App\Modules\Promoter\Models\PromoterCode;
 use App\Modules\User\Services\UserService;
 use Spatie\Permission\Models\Role;
 
@@ -27,11 +29,21 @@ class AdminRegisterController extends Controller
             //code...
             $user = $this->userService->create(
                 [
-                    ...$request->except('role'),
+                    ...$request->except(['role', 'code']),
                     'email' =>  !empty($request->email) ? $request->email : null
                 ]
             );
             $this->userService->syncRoles([$request->role], $user);
+            if($request->code){
+                $app_promoter_codes = PromoterCode::with(['promoter'])->where('code', $request->code)->first();
+                $promoter = Promoter::where('installed_by_id', $user->id)->first();
+                if(!$promoter && $app_promoter_codes){
+                    Promoter::create([
+                        'installed_by_id' => $user->id,
+                        'promoted_by_id' => $app_promoter_codes->promoter->id
+                    ]);
+                }
+            }
             if($user->email){
                 $user->sendEmailVerificationNotification();
             }

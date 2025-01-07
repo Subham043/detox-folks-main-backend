@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\RateLimitService;
 use App\Http\Services\SmsService;
 use App\Modules\Authentication\Requests\LoginOtpPostRequest;
+use App\Modules\Authentication\Requests\LoginPhonePasswordPostRequest;
 use App\Modules\Authentication\Requests\LoginPostRequest;
 use App\Modules\Authentication\Requests\PhonePostRequest;
 use App\Modules\Authentication\Services\AuthService;
@@ -26,6 +27,10 @@ class LoginController extends Controller
 
     public function login_otp(){
         return view('admin.pages.auth.login_otp');
+    }
+
+    public function login_phone(){
+        return view('admin.pages.auth.login_phone');
     }
 
     public function post(LoginPostRequest $request){
@@ -66,5 +71,17 @@ class LoginController extends Controller
         }
 
         return redirect(route('login_otp.get'))->with('error_status', 'Oops! You have entered invalid credentials');
+    }
+
+    public function phone_post(LoginPhonePasswordPostRequest $request){
+
+        $is_authenticated = $this->authService->login($request->validated());
+
+        if ($is_authenticated) {
+            (new RateLimitService($request))->clearRateLimit();
+            return redirect()->intended(route('dashboard.get'))->with('success_status', 'Logged in successfully.');
+        }
+
+        return redirect(route('login_phone.get'))->with('error_status', 'Oops! You have entered invalid credentials');
     }
 }

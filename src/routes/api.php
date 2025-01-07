@@ -79,6 +79,7 @@ Route::prefix('auth')->group(function () {
     Route::post('/login', [UserLoginController::class, 'post'])->name('user.login');
     Route::post('/login-phone', [UserLoginController::class, 'phone_post'])->name('user.login_phone');
     Route::post('/login-phone-otp', [UserLoginController::class, 'phone_otp_post'])->name('user.login_phone_otp');
+    Route::post('/login-phone-password', [UserLoginController::class, 'phone_password_post'])->name('user.login_phone_password');
     Route::post('/register', [UserRegisterController::class, 'post'])->name('user.register');
     Route::post('/forgot-password', [UserForgotPasswordController::class, 'post'])->name('user.forgot_password');
     Route::post('/reset-password/{token}', [UserResetPasswordController::class, 'post', 'as' => 'reset_password.post'])->name('user.reset_password');

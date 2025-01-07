@@ -93,7 +93,10 @@ class PromoterService
         if($promoter->installed_by->current_role == 'User'){
             throw new \Exception('User can not be approved', 400);
         }
-        $promoter->update(['is_approved' => !$promoter->is_approved]);
+        // $promoter->update(['is_approved' => !$promoter->is_approved]);
+        $promoter->is_approved = !$promoter->is_approved;
+        $promoter->save();
+        // dd($promoter);
     }
 
 }

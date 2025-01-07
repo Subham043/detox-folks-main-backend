@@ -59,6 +59,14 @@
 																																])
 																												</div>
 
+                                                                                                                <div class="mb-3">
+																																@include("admin.includes.input", [
+																																				"key" => "code",
+																																				"label" => "Referral Code (Optional)",
+																																				"value" => old("code"),
+																																])
+																												</div>
+
 																												<div class="mt-4">
 																																<button class="btn btn-success w-100" type="submit">Sign Up</button>
 																												</div>

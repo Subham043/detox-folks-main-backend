@@ -111,6 +111,8 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/authenticate-otp', [LoginController::class, 'otp_post', 'as' => 'login_otp.post'])->name('login_otp.post');
     Route::get('/login-email', [LoginController::class, 'get', 'as' => 'login_email.get'])->name('login_email.get');
     Route::post('/authenticate', [LoginController::class, 'post', 'as' => 'login.post'])->name('login.post');
+    Route::get('/login-phone', [LoginController::class, 'login_phone', 'as' => 'login_phone.get'])->name('login_phone.get');
+    Route::post('/authenticate-phone', [LoginController::class, 'phone_post', 'as' => 'login_phone.post'])->name('login_phone.post');
     Route::post('/authenticate-send-otp', [LoginController::class, 'send_otp', 'as' => 'login_send_otp.post'])->name('login_send_otp.post');
     Route::get('/register', [AdminRegisterController::class, 'get', 'as' => 'register.get'])->name('register.get');
     Route::post('/register', [AdminRegisterController::class, 'post', 'as' => 'register.post'])->name('register.post');

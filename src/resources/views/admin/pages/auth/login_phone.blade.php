@@ -12,13 +12,13 @@
 																								<p class="text-muted">Sign in to continue to PARCEL COUNTER.</p>
 																				</div>
 																				<div class="mt-4 p-2">
-																								<form id="loginForm" method="post" action="{{ route("login.post") }}">
+																								<form id="loginForm" method="post" action="{{ route("login_phone.post") }}">
 																												@csrf
 																												<div class="mb-3">
 																																@include("admin.includes.input", [
-																																				"key" => "email",
-																																				"label" => "Email",
-																																				"value" => old("email"),
+																																				"key" => "phone",
+																																				"label" => "Phone",
+																																				"value" => old("phone"),
 																																])
 																												</div>
 
@@ -45,9 +45,9 @@
 																																<p class="mb-0"><a href="{{ route("login_otp.get") }}"
 																																								class="fw-semibold text-primary text-decoration-underline"> Click here</a> To Login
 																																				with Phone Number & OTP</p>
-                                                                                                                                <p class="mb-0"><a href="{{ route("login_phone.get") }}"
+																																<p class="mb-0"><a href="{{ route("login_email.get") }}"
 																																								class="fw-semibold text-primary text-decoration-underline"> Click here</a> To Login
-																																				with Phone Number & Password</p>
+																																				with Email & Password</p>
 																																<p class="mb-0"><a href="{{ route("register.get") }}"
 																																								class="fw-semibold text-primary text-decoration-underline"> Click here</a> To Register</p>
 																												</div>
@@ -74,15 +74,10 @@
 								});
 								// apply rules to form fields
 								validation
-												.addField('#email', [{
-																				rule: 'required',
-																				errorMessage: 'Email is required',
-																},
-																{
-																				rule: 'email',
-																				errorMessage: 'Email is invalid!',
-																},
-												])
+												.addField('#phone', [{
+																rule: 'required',
+																errorMessage: 'Phone is required',
+												}, ])
 												.addField('#password', [{
 																rule: 'required',
 																errorMessage: 'Password is required',
