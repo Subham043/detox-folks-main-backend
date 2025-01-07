@@ -123,6 +123,43 @@ class OrderService
                 ->appends(request()->query());
     }
 
+    public function excelForAdmin(): Collection
+    {
+        return QueryBuilder::for(Order::commonWith())
+        ->allowedIncludes(['products', 'charges', 'statuses', 'current_status', 'payment'])
+                ->defaultSort('-id')
+                ->allowedSorts('id', 'total_price')
+                ->allowedFilters([
+                    AllowedFilter::callback('has_status', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('current_status', function($q) use($value) {
+                                $q->where('status', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::callback('has_payment_status', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('payment', function($q) use($value) {
+                                $q->where('status', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::callback('has_payment_mode', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('payment', function($q) use($value) {
+                                $q->where('mode', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::callback('has_date', function (Builder $query, $value) {
+                        $date = explode(' - ', $value);
+                        $query->whereBetween('created_at', [...$date]);
+                    }),
+                    AllowedFilter::custom('search', new CommonFilter),
+                ])
+                ->get();
+    }
+
     public function orderCountAdmin(): int
     {
         return QueryBuilder::for(Order::commonWith())

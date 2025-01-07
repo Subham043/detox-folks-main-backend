@@ -91,9 +91,14 @@
 																								<form action="{{ route("order_admin.paginate.get") }}" method="GET">
 																												<div class="card-header d-flex justify-content-between align-items-center">
 																																<h4 class="card-title mb-0">Order</h4>
-																																<button type="submit" class="btn btn-primary">
-																																				Filter
-																																</button>
+                                                                                                                                <div class="col-auto">
+                                                                                                                                    <a href="{{ route("order_admin.excel.get") }}?{{ request()->getQueryString() }}" download type="button"
+																																												class="btn btn-info add-btn" id="create-btn"><i
+																																																class="ri-file-excel-fill me-1 align-bottom"></i> Excel Download</a>
+                                                                                                                                    <button type="submit" class="btn btn-primary">
+                                                                                                                                                    Filter
+                                                                                                                                    </button>
+                                                                                                                                </div>
 																												</div><!-- end card header -->
 
 																												<div class="card-body border-end-0 border-start-0 border border-dashed">
