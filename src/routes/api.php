@@ -201,7 +201,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
     Route::prefix('product')->group(function () {
-        Route::get('/{slug}/reviews/create', [UserProductReviewCreateController::class, 'post'])->name('user.product.reviews_create');
+        Route::post('/{slug}/reviews/create', [UserProductReviewCreateController::class, 'post'])->name('user.product.reviews_create');
     });
 
     Route::post('/auth/logout', [UserLogoutController::class, 'post', 'as' => 'logout'])->name('user.logout');
