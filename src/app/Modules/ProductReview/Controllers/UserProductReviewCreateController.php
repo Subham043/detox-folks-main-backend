@@ -4,7 +4,7 @@ namespace App\Modules\ProductReview\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Product\Services\ProductService;
-use App\Modules\ProductReview\Requests\ProductReviewRequest;
+use App\Modules\ProductReview\Requests\UserProductReviewRequest;
 use App\Modules\ProductReview\Resources\UserProductReviewCollection;
 use App\Modules\ProductReview\Services\ProductReviewService;
 
@@ -19,7 +19,7 @@ class UserProductReviewCreateController extends Controller
         $this->productService = $productService;
     }
 
-    public function post(ProductReviewRequest $request, $product_slug){
+    public function post(UserProductReviewRequest $request, $product_slug){
 
         $product = $this->productService->getBySlug($product_slug);
 
@@ -28,7 +28,8 @@ class UserProductReviewCreateController extends Controller
             $productReview = $this->productReviewService->create(
                 [
                     ...$request->validated(),
-                    'product_id' => $product->id
+                    'product_id' => $product->id,
+                    'user_id' => auth()->user()->id
                 ]
             );
             return response()->json([
