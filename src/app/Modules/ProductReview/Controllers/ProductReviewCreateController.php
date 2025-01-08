@@ -30,7 +30,8 @@ class ProductReviewCreateController extends Controller
             $productReview = $this->productReviewService->create(
                 [
                     ...$request->validated(),
-                    'product_id' => $product_id
+                    'product_id' => $product_id,
+                    'user_id' => auth()->user()->id
                 ]
             );
             return response()->json(["message" => "Product Review created successfully."], 201);
