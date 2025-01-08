@@ -49,7 +49,7 @@
 																																																<div>
 																																																				<div class="form-check form-switch form-check-right mb-2">
 																																																								<input class="form-check-input" type="checkbox" role="switch"
-																																																												id="is_draft" name="is_draft" checked>
+																																																												id="is_draft" name="is_draft">
 																																																								<label class="form-check-label" for="is_draft">Is Draft</label>
 																																																				</div>
 																																																</div>

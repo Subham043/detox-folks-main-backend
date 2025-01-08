@@ -54,8 +54,7 @@
 																																																								<input class="form-check-input" type="checkbox" role="switch"
 																																																												id="is_draft" name="is_draft"
 																																																												{{ $data->is_draft == false ? "" : "checked" }}>
-																																																								<label class="form-check-label" for="is_draft">Testimonial
-																																																												Status</label>
+																																																								<label class="form-check-label" for="is_draft">Is Draft</label>
 																																																				</div>
 																																																</div>
 
