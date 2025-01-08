@@ -53,6 +53,8 @@ use App\Modules\Order\Controllers\OrderPlacedPaginateController;
 use App\Modules\Order\Controllers\PlaceOrderController;
 use App\Modules\Product\Controllers\UserProductDetailController;
 use App\Modules\Product\Controllers\UserProductPaginateController;
+use App\Modules\ProductReview\Controllers\UserProductReviewCreateController;
+use App\Modules\ProductReview\Controllers\UserProductReviewPaginateController;
 use App\Modules\Promoter\Controllers\InstallerController;
 use App\Modules\SubCategory\Controllers\UserSubCategoryDetailController;
 use App\Modules\SubCategory\Controllers\UserSubCategoryPaginateController;
@@ -143,6 +145,7 @@ Route::prefix('search')->group(function () {
 Route::prefix('product')->group(function () {
     Route::get('/', [UserProductPaginateController::class, 'get'])->name('user.product.paginate');
     Route::get('/{slug}', [UserProductDetailController::class, 'get'])->name('user.product.detail');
+    Route::get('/{slug}/reviews', [UserProductReviewPaginateController::class, 'get'])->name('user.product.reviews');
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -195,6 +198,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/pdf/{id}', [OrderInvoicePdfController::class, 'get', 'as' => 'order.pdf.get'])->name('order.pdf.get');
         Route::get('/placed-detail/{id}', [OrderPlacedDetailController::class, 'get', 'as' => 'order.placed_detail.get'])->name('order.placed_detail.get');
         Route::post('/enquiry/{order_id}', [OrderFormCreateController::class, 'post', 'as' => 'order.enquiry.post'])->name('order.enquiry.post');
+    });
+
+    Route::prefix('product')->group(function () {
+        Route::get('/{slug}/reviews/create', [UserProductReviewCreateController::class, 'post'])->name('user.product.reviews_create');
     });
 
     Route::post('/auth/logout', [UserLogoutController::class, 'post', 'as' => 'logout'])->name('user.logout');

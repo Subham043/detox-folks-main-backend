@@ -90,6 +90,11 @@
 																																																																								class="btn btn-sm btn-warning edit-item-btn">Images</a>
 																																																																</div>
 
+                                                                                                                                                                                                                                                                <div class="edit">
+																																																																				<a href="{{ route("product_review.paginate.get", $item->id) }}"
+																																																																								class="btn btn-sm btn-warning edit-item-btn">Reviews</a>
+																																																																</div>
+
 																																																																<div class="remove">
 																																																																				<button class="btn btn-sm btn-danger remove-item-btn"
 																																																																								data-link="{{ route("product.delete.get", $item->id) }}">Delete</button>

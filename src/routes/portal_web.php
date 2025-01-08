@@ -79,6 +79,10 @@ use App\Modules\ProductPrice\Controllers\ProductPriceCreateController;
 use App\Modules\ProductPrice\Controllers\ProductPriceDeleteController;
 use App\Modules\ProductPrice\Controllers\ProductPricePaginateController;
 use App\Modules\ProductPrice\Controllers\ProductPriceUpdateController;
+use App\Modules\ProductReview\Controllers\ProductReviewCreateController;
+use App\Modules\ProductReview\Controllers\ProductReviewDeleteController;
+use App\Modules\ProductReview\Controllers\ProductReviewPaginateController;
+use App\Modules\ProductReview\Controllers\ProductReviewUpdateController;
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationCreateController;
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationDeleteController;
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationPaginateController;
@@ -247,6 +251,14 @@ Route::middleware(['auth'])->group(function () {
                     Route::get('/update/{id}', [ProductSpecificationUpdateController::class, 'get', 'as' => 'product_specification.update.get'])->name('product_specification.update.get');
                     Route::post('/update/{id}', [ProductSpecificationUpdateController::class, 'post', 'as' => 'product_specification.update.post'])->name('product_specification.update.post');
                     Route::get('/delete/{id}', [ProductSpecificationDeleteController::class, 'get', 'as' => 'product_specification.delete.get'])->name('product_specification.delete.get');
+                });
+                Route::prefix('/review')->group(function () {
+                    Route::get('/', [ProductReviewPaginateController::class, 'get', 'as' => 'product_review.paginate.get'])->name('product_review.paginate.get');
+                    Route::get('/create', [ProductReviewCreateController::class, 'get', 'as' => 'product_review.create.get'])->name('product_review.create.get');
+                    Route::post('/create', [ProductReviewCreateController::class, 'post', 'as' => 'product_review.create.post'])->name('product_review.create.post');
+                    Route::get('/update/{id}', [ProductReviewUpdateController::class, 'get', 'as' => 'product_review.update.get'])->name('product_review.update.get');
+                    Route::post('/update/{id}', [ProductReviewUpdateController::class, 'post', 'as' => 'product_review.update.post'])->name('product_review.update.post');
+                    Route::get('/delete/{id}', [ProductReviewDeleteController::class, 'get', 'as' => 'product_review.delete.get'])->name('product_review.delete.get');
                 });
                 Route::prefix('/color')->group(function () {
                     Route::get('/', [ProductColorPaginateController::class, 'get', 'as' => 'product_color.paginate.get'])->name('product_color.paginate.get');
