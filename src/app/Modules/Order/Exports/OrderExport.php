@@ -26,7 +26,9 @@ class OrderExport implements FromCollection,WithHeadings,WithMapping
             'Name',
             'Email',
             'Phone',
-            'Products',
+            'Product/Price/Quantity/Amount',
+            'Sub-Total',
+            'Charges',
             'Total Amount',
             'Delivery Slot',
             'Mode Of Payment',
@@ -37,12 +39,21 @@ class OrderExport implements FromCollection,WithHeadings,WithMapping
     }
     public function map($data): array
     {
+        $products = $data->products->map(function($product) {
+            return $product->name.'/'.$product->discount_in_price.'/'.$product->quantity.'/'.$product->amount;
+        });
+        $charges = $data->charges->map(function($charge) {
+            return $charge->charges_name.'/'.$charge->total_charge_in_amount;
+        });
          return[
             $data->id,
             $data->name,
             $data->email,
             $data->phone,
-            $data->products->pluck('name')->implode(', '),
+            // $data->products->pluck('name')->implode(', '),
+            $products->implode(', '),
+            $data->subtotal,
+            $charges->implode(', '),
             $data->total_price,
             $data->delivery_slot ?? "N/A",
             $data->payment->mode->value ?? "",
