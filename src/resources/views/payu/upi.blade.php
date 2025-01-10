@@ -50,9 +50,15 @@
 																								<input type="hidden" name="firstname" id="firstname" value="{{ $name }}" /><br />
 																								<input type="hidden" name="email" id="email" value="{{ $email }}" /><br />
 																								<input type="hidden" name="productinfo" value="Webappfix"><br />
-                                                                                                {{-- <input type="hidden" name="pg" value="QR" /><br />
-                                                                                                <input type="hidden" name="bankcode" value="UPIQR" /><br />
-                                                                                                <input type="hidden" name="enforce_paymethod" value="qr" /><br /> --}}
+
+                                                                                                {{-- <input type="hidden" name="pg" value="DBQR" /><br />
+                                                                                                <input type="hidden" name="bankcode" value="UPIDBQR" /><br />
+																								<input type="hidden" name="qrId" id="qrId" value="{{ $qrId }}" /><br />
+                                                                                                <input type="hidden" name="txn_s2s_flow" value="4" /><br />
+                                                                                                <input type="hidden" name="s2s_client_ip" value="{{request()->ip()}}" /><br />
+                                                                                                <input type="hidden" name="s2s_device_info" value="Mozilla Firefox" /><br />
+                                                                                                <input type="hidden" name="expiry_time" value="3600" /><br /> --}}
+                                                                                                <input type="hidden" name="enforce_paymethod" value="qr" /><br />
                                                                                                 <input type="hidden" name="pg" value="UPI" /><br />
                                                                                                 <input type="hidden" name="bankcode" value="UPI" /><br />
 																								<input type="hidden" name="surl" value="{{ $successURL }}" /><br />

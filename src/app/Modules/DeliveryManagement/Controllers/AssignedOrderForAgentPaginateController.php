@@ -118,6 +118,7 @@ class AssignedOrderForAgentPaginateController extends Controller
             'failURL' => $data['failURL'],
             'name' => $data['name'],
             'email' => $data['email'],
+            // 'qrId' => $data['qrId'],
             'amount' => $data['amount']
         ]);
     }

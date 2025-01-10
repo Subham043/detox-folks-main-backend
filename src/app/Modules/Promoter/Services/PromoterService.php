@@ -90,10 +90,6 @@ class PromoterService
     public function toggle(Int $user_id, Int $agent_id)
     {
         $promoter = Promoter::where('installed_by_id', $user_id)->where('promoted_by_id', $agent_id)->firstOrFail();
-        if($promoter->installed_by->current_role == 'User'){
-            throw new \Exception('User can not be approved', 400);
-        }
-        // $promoter->update(['is_approved' => !$promoter->is_approved]);
         $promoter->is_approved = !$promoter->is_approved;
         $promoter->save();
         // dd($promoter);

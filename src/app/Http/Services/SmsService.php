@@ -50,4 +50,22 @@ class SmsService
         return $this->send('91'.$phone, $message);
     }
 
+    public function sendLoginOtpLocal(string $phone, string $otp)
+    {
+        $message = "Your OTP is: ".$otp.". @localhost #".$otp.". Please do not share it with anyone. Parcel Counter.";
+        return $this->send('91'.$phone, $message);
+    }
+
+    public function sendLoginOtpWeb(string $phone, string $otp)
+    {
+        $message = "Your OTP is: ".$otp.". @parcelcounter.in #".$otp.". Please do not share it with anyone. Parcel Counter.";
+        return $this->send('91'.$phone, $message);
+    }
+
+    public function sendLoginOtpAutoRead(string $phone, string $otp)
+    {
+        $message = "Your OTP code is: ".$otp.". Please do not share it with anyone. ".$otp.". Parcel Counter.";
+        return $this->send('91'.$phone, $message);
+    }
+
 }

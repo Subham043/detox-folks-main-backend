@@ -81,6 +81,9 @@ Route::prefix('auth')->group(function () {
     Route::post('/login', [UserLoginController::class, 'post'])->name('user.login');
     Route::post('/login-phone', [UserLoginController::class, 'phone_post'])->name('user.login_phone');
     Route::post('/login-phone-otp', [UserLoginController::class, 'phone_otp_post'])->name('user.login_phone_otp');
+    Route::post('/login-phone-otp-local', [UserLoginController::class, 'local_phone_otp_post'])->name('user.local_phone_otp_post');
+    Route::post('/login-phone-otp-web', [UserLoginController::class, 'web_phone_otp_post'])->name('user.web_phone_otp_post');
+    Route::post('/login-phone-otp-auto-read', [UserLoginController::class, 'auto_read_phone_otp_post'])->name('user.auto_read_phone_otp_post');
     Route::post('/login-phone-password', [UserLoginController::class, 'phone_password_post'])->name('user.login_phone_password');
     Route::post('/register', [UserRegisterController::class, 'post'])->name('user.register');
     Route::post('/forgot-password', [UserForgotPasswordController::class, 'post'])->name('user.forgot_password');

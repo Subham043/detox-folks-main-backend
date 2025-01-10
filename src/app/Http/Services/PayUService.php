@@ -119,6 +119,83 @@ class PayUService
                 ->post();
     }
 
+    // public function create_upi_order(Order $order, $successURL, $failURL)
+    // {
+    //     $name = $order->name;
+    //     $email = $order->email;
+    //     // $amount = (string) $order->total_price;
+    //     $amount = "1.00";
+    //     // dd($amount);
+
+    //     $action = '';
+    //     $txnid = $order->id;
+    //     $posted = array();
+    //     $posted = array(
+    //         'key' => $this->MERCHANT_KEY,
+    //         'txnid' => $txnid,
+    //         'amount' => $amount,
+    //         'firstname' => $name,
+    //         'email' => $email,
+    //         'qrId' => 'STQI-test-'.$order->id,
+    //         'productinfo' => 'Webappfix',
+    //         'pg' => 'DBQR',
+    //         'bankcode' => 'UPIDBQR',
+    //         // 'enforce_paymethod' => 'qr',
+    //         // 'pg' => 'UPI',
+    //         // 'bankcode' => 'UPI',
+    //         'surl' => $successURL,
+    //         'furl' => $failURL,
+    //         'service_provider' => 'payu_paisa',
+    //         'txn_s2s_flow' => '4',
+    //         's2s_client_ip' => request()->ip(),
+    //         's2s_device_info' => "Mozilla Firefox",
+    //         'expirytime' => "3600",
+    //     );
+
+    //     if(empty($posted['txnid'])) {
+    //         $txnid = $order->id;
+    //     }
+    //     else{
+    //         $txnid = $posted['txnid'];
+    //     }
+
+    //     $hash = '';
+    //     $hashSequence = "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|||||";
+
+    //     if(empty($posted['hash']) && sizeof($posted) > 0) {
+    //         $hashVarsSeq = explode('|', $hashSequence);
+    //         $hash_string = '';
+    //         foreach($hashVarsSeq as $hash_var) {
+    //             $hash_string .= isset($posted[$hash_var]) ? $posted[$hash_var] : '';
+    //             $hash_string .= '|';
+    //         }
+    //         $hash_string .= $this->SALT;
+    //         $hash = strtolower(hash('sha512', $hash_string));
+    //         // $action = $this->PAYU_PAYMENT_URL . '/_payment';
+    //         $action = $this->PAYU_PAYMENT_URL;
+    //         // $action = 'https://secure.payu.in/QrPayment';
+    //     }
+    //     elseif(!empty($posted['hash']))
+    //     {
+    //         $hash = $posted['hash'];
+    //         // $action = $this->PAYU_PAYMENT_URL . '/_payment';
+    //         $action = $this->PAYU_PAYMENT_URL;
+    //         // $action = 'https://secure.payu.in/QrPayment';
+    //     }
+    //     return [
+    //         'action' => $action,
+    //         'hash' => $hash,
+    //         'MERCHANT_KEY' => $this->MERCHANT_KEY,
+    //         'txnid' => $txnid,
+    //         'successURL' => $successURL,
+    //         'failURL' => $failURL,
+    //         'name' => $name,
+    //         'email' => $email,
+    //         'amount' => $amount,
+    //         'qrId' => 'STQI-test-'.$order->id
+    //     ];
+    // }
+
     public function create_upi_order(Order $order, $successURL, $failURL)
     {
         $name = $order->name;
@@ -135,14 +212,18 @@ class PayUService
             'firstname' => $name,
             'email' => $email,
             'productinfo' => 'Webappfix',
-            // 'pg' => 'QR',
-            // 'bankcode' => 'UPIQR',
-            // 'enforce_paymethod' => 'qr',
+            'enforce_paymethod' => 'qr',
             'pg' => 'UPI',
             'bankcode' => 'UPI',
             'surl' => $successURL,
             'furl' => $failURL,
             'service_provider' => 'payu_paisa',
+
+            // 'pg' => 'DBQR',
+            // 'bankcode' => 'UPIDBQR',
+            // 'txn_s2s_flow' => '4',
+            // 's2s_client_ip' => request()->ip(),
+            // 's2s_device_info' => "Mozilla Firefox",
         );
 
         if(empty($posted['txnid'])) {

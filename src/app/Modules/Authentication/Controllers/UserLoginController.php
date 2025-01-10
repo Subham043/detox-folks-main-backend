@@ -53,6 +53,42 @@ class UserLoginController extends Controller
         return response()->json(["message" => "OTP sent successfully"], 200);
     }
 
+    public function local_phone_otp_post(UserPhonePostRequest $request){
+        $request->validated();
+        $user = $this->authService->getByPhone($request->phone);
+        if ($user) {
+            $user->otp = random_int(1000, 9999);
+            $user->save();
+            (new SmsService)->sendLoginOtpLocal($user->phone, $user->otp);
+            (new RateLimitService($request))->clearRateLimit();
+        }
+        return response()->json(["message" => "OTP sent successfully"], 200);
+    }
+
+    public function web_phone_otp_post(UserPhonePostRequest $request){
+        $request->validated();
+        $user = $this->authService->getByPhone($request->phone);
+        if ($user) {
+            $user->otp = random_int(1000, 9999);
+            $user->save();
+            (new SmsService)->sendLoginOtpWeb($user->phone, $user->otp);
+            (new RateLimitService($request))->clearRateLimit();
+        }
+        return response()->json(["message" => "OTP sent successfully"], 200);
+    }
+
+    public function auto_read_phone_otp_post(UserPhonePostRequest $request){
+        $request->validated();
+        $user = $this->authService->getByPhone($request->phone);
+        if ($user) {
+            $user->otp = random_int(1000, 9999);
+            $user->save();
+            (new SmsService)->sendLoginOtpAutoRead($user->phone, $user->otp);
+            (new RateLimitService($request))->clearRateLimit();
+        }
+        return response()->json(["message" => "OTP sent successfully"], 200);
+    }
+
     public function phone_post(UserLoginOtpPostRequest $request){
 
         $request->validated();
