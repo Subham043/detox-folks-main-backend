@@ -64,7 +64,7 @@ class SmsService
 
     public function sendLoginOtpAutoRead(string $phone, string $otp)
     {
-        $message = "Your OTP code is: ".$otp.". Please do not share it with anyone. ".$otp.". Parcel Counter.";
+        $message = "Your OTP code is: ".$otp.". Please do not share it with anyone. 3mMcJoyf93g. Parcel Counter.";
         return $this->send('91'.$phone, $message);
     }
 
