@@ -58,7 +58,7 @@ class SmsService
 
     public function sendLoginOtpWeb(string $phone, string $otp)
     {
-        $message = "Your OTP is: ".$otp.". @parcelcounter.in #".$otp.". Please do not share it with anyone. Parcel Counter.";
+        $message = "Your OTP is: ".$otp.". @parcelcounter.in #".$otp." Please do not share it with anyone. Parcel Counter.";
         return $this->send('91'.$phone, $message);
     }
 
