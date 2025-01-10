@@ -78,9 +78,9 @@
 																																																												{{ $item->current_status ? $item->current_status->status : "" }}
 																																																								</td>
 																																																								<td class="customer_name">
-																																																												{{ $item->current_status ? $item->current_status->created_at->diffForHumans() : "" }}
+																																																												{{ $item->current_status ? $item->current_status->created_at->format("d M Y h:i A") : "" }}
 																																																								</td>
-																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
+																																																								<td class="date">{{ $item->created_at->format("d M Y h:i A") }}</td>
 																																																								<td>
 																																																												<div class="d-flex gap-2">
 																																																																<div class="edit">

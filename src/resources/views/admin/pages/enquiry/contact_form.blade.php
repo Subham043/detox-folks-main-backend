@@ -52,7 +52,7 @@
 																																																																target="_blank"
 																																																																rel="noopener noreferrer">{{ $item->page_url }}</a></td>
 																																																								<td class="customer_name">{{ $item->message }}</td>
-																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
+																																																								<td class="date">{{ $item->created_at->format("d M Y h:i A") }}</td>
 																																																								<td>
 																																																												<div class="d-flex gap-2">
 

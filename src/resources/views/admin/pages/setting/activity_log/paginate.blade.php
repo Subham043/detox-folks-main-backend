@@ -44,7 +44,7 @@
 																																																								<td class="customer_name">{{ $item->log_name }}</td>
 																																																								<td class="customer_name">{{ $item->description }}</td>
 																																																								<td class="customer_name">{{ $item->event }}</td>
-																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
+																																																								<td class="date">{{ $item->created_at->format("d M Y h:i A") }}</td>
 																																																								<td>
 																																																												<div class="d-flex gap-2">
 																																																																<div class="edit">

@@ -1,14 +1,21 @@
 <?php
 
-namespace App\Modules\User\Exports;
+namespace App\Modules\Promoter\Exports;
 
-use App\Modules\Authentication\Models\User;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Illuminate\Database\Eloquent\Collection;
 
-class UserExport implements FromCollection,WithHeadings,WithMapping
+class PromoterExport implements FromCollection,WithHeadings,WithMapping
 {
+
+    protected $promoters;
+
+    public function __construct(Collection $promoters)
+    {
+        $this->promoters = $promoters;
+    }
 
     /**
     * @return \Illuminate\Support\Collection
@@ -20,7 +27,10 @@ class UserExport implements FromCollection,WithHeadings,WithMapping
             'Email',
             'Phone',
             'Role',
-            'Created At',
+            'Is Approved',
+            'Has Placed Order',
+            'No. of Orders',
+            'Installed On',
         ];
     }
     public function map($data): array
@@ -31,11 +41,14 @@ class UserExport implements FromCollection,WithHeadings,WithMapping
             $data->email,
             $data->phone,
             $data->current_role,
+            (count($data->app_promoter)>0 && $data->app_promoter[0]->pivot->is_approved) ? "Yes" : "No",
+            ($data->orders_count>0) ? "Yes" : "No",
+            $data->orders_count ?? 0,
             $data->created_at->format("d M Y h:i A"),
          ];
     }
     public function collection()
     {
-        return User::with('roles')->get();
+        return $this->promoters;
     }
 }

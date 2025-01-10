@@ -33,8 +33,8 @@ class OrderCollection extends JsonResource
             'charges' => OrderChargeCollection::collection($this->charges),
             'statuses' => OrderStatusCollection::collection($this->statuses),
             'payment' => OrderPaymentCollection::make($this->payment),
-            'created_at' => $this->created_at->diffForHumans(),
-            'updated_at' => $this->updated_at->diffForHumans(),
+            'created_at' => $this->created_at->format("d M Y h:i A"),
+            'updated_at' => $this->updated_at->format("d M Y h:i A"),
         ];
     }
 }

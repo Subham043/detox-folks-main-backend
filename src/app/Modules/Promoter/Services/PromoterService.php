@@ -10,6 +10,7 @@ use Spatie\QueryBuilder\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\AllowedFilter;
+use Illuminate\Database\Eloquent\Collection;
 
 class PromoterService
 {
@@ -63,6 +64,35 @@ class PromoterService
         ])
         ->paginate($total)
         ->appends(request()->query());
+    }
+
+    public function exportInstaller($agent_id): Collection
+    {
+        return QueryBuilder::for(User::with(['roles', 'app_promoter'])->whereHas('roles', function($q) { $q->whereIn('name', ['App Promoter', 'Reward Riders', 'Referral Rockstars', 'User']); })
+        ->whereHas('app_promoter', function($q) use($agent_id) {
+            $q->where('promoted_by_id', $agent_id);
+        }))
+        ->withCount([
+            'orders' => function ($query) {
+                $query->whereHas('current_status', function($q) {
+                    $q->where('status', '!=', OrderEnumStatus::CANCELLED);
+                });
+            }
+        ])
+        ->defaultSort('-id')
+        ->allowedFilters([
+            AllowedFilter::callback('has_date', function (Builder $query, $value) {
+                $date = explode(' - ', $value);
+                $query->whereBetween('created_at', [...$date]);
+            }),
+            AllowedFilter::callback('has_role', function (Builder $query, $value) {
+                $query->whereHas('roles', function($q) use($value) {
+                    $q->where('name', $value);
+                });
+            }),
+            AllowedFilter::custom('search', new AgentFilter),
+        ])
+        ->get();
     }
 
     public function promote(String $email, Int $agent_id)

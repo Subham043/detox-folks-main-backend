@@ -23,8 +23,8 @@ class CartCollection extends JsonResource
             'color' => $this->color,
             'product' => UserProductCollection::make($this->product),
             'product_price' => UserProductPriceCollection::make($this->product_price),
-            'created_at' => $this->created_at->diffForHumans(),
-            'updated_at' => $this->updated_at->diffForHumans(),
+            'created_at' => $this->created_at->format("d M Y h:i A"),
+            'updated_at' => $this->updated_at->format("d M Y h:i A"),
         ];
     }
 }

@@ -50,7 +50,7 @@
 																																																								<td class="customer_name">{{ $item->title }}</td>
 																																																								<td class="customer_name">{{ Str::limit($item->description, 20) }}
 																																																								</td>
-																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
+																																																								<td class="date">{{ $item->created_at->format("d M Y h:i A") }}</td>
 																																																								<td>
 																																																												<div class="d-flex gap-2">
 																																																																<div class="edit">

@@ -28,8 +28,8 @@ class UserCategoryCollection extends JsonResource
             'meta_description' => $this->meta_description,
             'meta_keywords' => $this->meta_keywords,
             'sub_categories' => UserSubCategoryCollection::collection($this->sub_categories),
-            'created_at' => $this->created_at->diffForHumans(),
-            'updated_at' => $this->updated_at->diffForHumans(),
+            'created_at' => $this->created_at->format("d M Y h:i A"),
+            'updated_at' => $this->updated_at->format("d M Y h:i A"),
         ];
     }
 }

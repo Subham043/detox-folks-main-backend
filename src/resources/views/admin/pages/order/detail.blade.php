@@ -199,7 +199,7 @@
 																																																																								@foreach ($order->statuses as $v)
 																																																																												@if (\App\Enums\OrderEnumStatus::PLACED == $v->status)
 																																																																																<span
-																																																																																				class="fw-normal">{{ $v->created_at->diffForHumans() }}</span>
+																																																																																				class="fw-normal">{{ $v->created_at->format("d M Y h:i A") }}</span>
 																																																																												@endif
 																																																																								@endforeach
 																																																																				@endif
@@ -235,7 +235,7 @@
 																																																																												@foreach ($order->statuses as $v)
 																																																																																@if (\App\Enums\OrderEnumStatus::CONFIRMED == $v->status)
 																																																																																				<span
-																																																																																								class="fw-normal">{{ $v->created_at->diffForHumans() }}</span>
+																																																																																								class="fw-normal">{{ $v->created_at->format("d M Y h:i A") }}</span>
 																																																																																@endif
 																																																																												@endforeach
 																																																																								@endif
@@ -270,7 +270,7 @@
 																																																																												@foreach ($order->statuses as $v)
 																																																																																@if (\App\Enums\OrderEnumStatus::PACKED == $v->status)
 																																																																																				<span
-																																																																																								class="fw-normal">{{ $v->created_at->diffForHumans() }}</span>
+																																																																																								class="fw-normal">{{ $v->created_at->format("d M Y h:i A") }}</span>
 																																																																																@endif
 																																																																												@endforeach
 																																																																								@endif
@@ -305,7 +305,7 @@
 																																																																												@foreach ($order->statuses as $v)
 																																																																																@if (\App\Enums\OrderEnumStatus::READY == $v->status)
 																																																																																				<span
-																																																																																								class="fw-normal">{{ $v->created_at->diffForHumans() }}</span>
+																																																																																								class="fw-normal">{{ $v->created_at->format("d M Y h:i A") }}</span>
 																																																																																@endif
 																																																																												@endforeach
 																																																																								@endif
@@ -338,7 +338,7 @@
 																																																																												@foreach ($order->statuses as $v)
 																																																																																@if (\App\Enums\OrderEnumStatus::OFD == $v->status)
 																																																																																				<span
-																																																																																								class="fw-normal">{{ $v->created_at->diffForHumans() }}</span>
+																																																																																								class="fw-normal">{{ $v->created_at->format("d M Y h:i A") }}</span>
 																																																																																@endif
 																																																																												@endforeach
 																																																																								@endif
@@ -373,7 +373,7 @@
 																																																																												@foreach ($order->statuses as $v)
 																																																																																@if (\App\Enums\OrderEnumStatus::DELIVERED == $v->status)
 																																																																																				<span
-																																																																																								class="fw-normal">{{ $v->created_at->diffForHumans() }}</span>
+																																																																																								class="fw-normal">{{ $v->created_at->format("d M Y h:i A") }}</span>
 																																																																																@endif
 																																																																												@endforeach
 																																																																								@endif
@@ -401,7 +401,7 @@
 																																																																												@foreach ($order->statuses as $v)
 																																																																																@if (\App\Enums\OrderEnumStatus::DELIVERED == $v->status)
 																																																																																				<span
-																																																																																								class="fw-normal">{{ $v->created_at->diffForHumans() }}</span>
+																																																																																								class="fw-normal">{{ $v->created_at->format("d M Y h:i A") }}</span>
 																																																																																@endif
 																																																																												@endforeach
 																																																																								@endif

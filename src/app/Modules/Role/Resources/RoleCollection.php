@@ -17,8 +17,8 @@ class RoleCollection extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'created_at' => $this->created_at->diffForHumans(),
-            'updated_at' => $this->updated_at->diffForHumans(),
+            'created_at' => $this->created_at->format("d M Y h:i A"),
+            'updated_at' => $this->updated_at->format("d M Y h:i A"),
         ];
     }
 }

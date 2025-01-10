@@ -321,7 +321,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/agent/{user_id}/assign', [AssignDeliveryAgentController::class, 'get', 'as' => 'delivery_management.agent.assign_order.get'])->name('delivery_management.agent.assign_order.get');
         Route::post('/agent/{user_id}/assign', [AssignDeliveryAgentController::class, 'post', 'as' => 'delivery_management.agent.assign_order.post'])->name('delivery_management.agent.assign_order.post');
         Route::get('/agent/{user_id}/order-assigned', [AssignedOrderController::class, 'get', 'as' => 'delivery_management.agent.assigned_order.get'])->name('delivery_management.agent.assigned_order.get');
-        Route::post('/agent/{user_id}/order-unassigned', [AssignedOrderController::class, 'post', 'as' => 'delivery_management.agent.unassign_order.post'])->name('delivery_management.agent.unassign_order.post');
+        Route::get('/agent/{user_id}/order-assigned/export', [AssignedOrderController::class, 'export', 'as' => 'delivery_management.agent.assigned_order.export'])->name('delivery_management.agent.assigned_order.export');
+        Route::post('/agent/{user_id}/order-unassign', [AssignedOrderController::class, 'post', 'as' => 'delivery_management.agent.unassign_order.post'])->name('delivery_management.agent.unassign_order.post');
     });
 
     Route::middleware(['role:Delivery Agent'])->prefix('/delivery')->group(function () {
@@ -335,6 +336,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/promoter-management')->group(function () {
         Route::get('/agent', [PromoterPaginateController::class, 'get', 'as' => 'promoter.agent.paginate.get'])->name('promoter.agent.paginate.get')->middleware(['role:Super-Admin|Staff|Sales Coordinators']);
         Route::get('/agent/{user_id}/installer', [PromoterInstalledController::class, 'get', 'as' => 'promoter.agent.installer.get'])->name('promoter.agent.installer.get')->middleware(['role:Super-Admin|Staff|Sales Coordinators']);
+        Route::get('/agent/{user_id}/installer/export', [PromoterInstalledController::class, 'export', 'as' => 'promoter.agent.installer.export'])->name('promoter.agent.installer.export')->middleware(['role:Super-Admin|Staff|Sales Coordinators']);
         Route::get('/agent/{user_id}/bank-information', [PromoterBankInformationController::class, 'get', 'as' => 'promoter.agent.installer_bank.get'])->name('promoter.agent.installer_bank.get')->middleware(['role:Super-Admin|Staff']);
         Route::post('/agent/{user_id}/bank-information', [PromoterBankInformationController::class, 'post', 'as' => 'promoter.agent.installer_bank.post'])->name('promoter.agent.installer_bank.post')->middleware(['role:Super-Admin|Staff']);
         Route::get('/agent/{agent_id}/installer/{user_id}', [PromoterInstalledController::class, 'destroy', 'as' => 'promoter.agent.installer.delete'])->name('promoter.agent.installer.delete')->middleware(['role:Super-Admin|Staff']);

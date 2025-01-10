@@ -60,7 +60,7 @@
 																																																								<td class="customer_name">{{ $item->name }}</td>
 																																																								<td class="customer_name"><input type="color" value="{{ $item->code }}" class="color_input"> {{ $item->code }}
 																																																								</td>
-																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
+																																																								<td class="date">{{ $item->created_at->format("d M Y h:i A") }}</td>
 																																																								<td>
 																																																												<div class="d-flex gap-2">
 																																																																<div class="edit">

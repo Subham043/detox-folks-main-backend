@@ -23,8 +23,8 @@ class UserChargeCollection extends JsonResource
             'is_active' => $this->is_active,
             'is_percentage' => $this->is_percentage,
             'total_charge_in_amount' => $this->total_charge_in_amount,
-            'created_at' => $this->created_at->diffForHumans(),
-            'updated_at' => $this->updated_at->diffForHumans(),
+            'created_at' => $this->created_at->format("d M Y h:i A"),
+            'updated_at' => $this->updated_at->format("d M Y h:i A"),
         ];
     }
 }

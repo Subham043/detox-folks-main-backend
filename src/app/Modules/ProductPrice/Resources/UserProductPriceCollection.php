@@ -20,8 +20,8 @@ class UserProductPriceCollection extends JsonResource
             'price' => $this->price,
             'discount' => $this->discount,
             'discount_in_price' => $this->discount_in_price,
-            'created_at' => $this->created_at->diffForHumans(),
-            'updated_at' => $this->updated_at->diffForHumans(),
+            'created_at' => $this->created_at->format("d M Y h:i A"),
+            'updated_at' => $this->updated_at->format("d M Y h:i A"),
         ];
     }
 }

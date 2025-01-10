@@ -21,8 +21,8 @@ class BillingInformationCollection extends JsonResource
             'phone' => $this->phone,
             'gst' => $this->gst,
             'is_active' => $this->is_active,
-            'created_at' => $this->created_at->diffForHumans(),
-            'updated_at' => $this->updated_at->diffForHumans(),
+            'created_at' => $this->created_at->format("d M Y h:i A"),
+            'updated_at' => $this->updated_at->format("d M Y h:i A"),
         ];
     }
 }

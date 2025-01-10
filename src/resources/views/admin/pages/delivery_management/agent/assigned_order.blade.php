@@ -90,12 +90,15 @@
 												<div class="row">
 																<div class="col-lg-12">
 																				<div class="card">
-																								<form action="{{ route("delivery_management.agent.assign_order.get", $user_id) }}" method="GET">
+																								<form action="{{ route("delivery_management.agent.assigned_order.get", $user_id) }}" method="GET">
 																												<div class="card-header d-flex justify-content-between align-items-center">
 																																<h4 class="card-title mb-0">Assigned Order</h4>
 																																<div class="d-flex align-items-center col-auto gap-2">
 																																				<button id="unassign_order" type="button"
 																																								class="btn btn-warning d-none">Remove</button>
+                                                                                                                                                <a href="{{ route("delivery_management.agent.assigned_order.export", $user_id) }}?{{ request()->getQueryString() }}" download type="button"
+																																												class="btn btn-info add-btn" id="create-btn"><i
+																																																class="ri-file-excel-fill me-1 align-bottom"></i> Excel Download</a>
 																																				<button type="submit" class="btn btn-primary">
 																																								Filter
 																																				</button>
@@ -239,9 +242,9 @@
 																																																												{{ $item->current_status ? $item->current_status->status : "" }}
 																																																								</td>
 																																																								<td class="customer_name">
-																																																												{{ $item->current_status ? $item->current_status->created_at->diffForHumans() : "" }}
+																																																												{{ $item->current_status ? $item->current_status->created_at->format("d M Y h:i A") : "" }}
 																																																								</td>
-																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
+																																																								<td class="date">{{ $item->created_at->format("d M Y h:i A") }}</td>
 																																																								<td>
 																																																												<div class="d-flex gap-2">
 																																																																<div class="edit">

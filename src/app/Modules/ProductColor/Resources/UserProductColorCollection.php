@@ -18,8 +18,8 @@ class UserProductColorCollection extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'code' => $this->code,
-            'created_at' => $this->created_at->diffForHumans(),
-            'updated_at' => $this->updated_at->diffForHumans(),
+            'created_at' => $this->created_at->format("d M Y h:i A"),
+            'updated_at' => $this->updated_at->format("d M Y h:i A"),
         ];
     }
 }

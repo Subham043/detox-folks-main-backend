@@ -20,8 +20,8 @@ class UserProductReviewCollection extends JsonResource
             'comment' => $this->comment,
             'is_draft' => $this->is_draft,
             'user_name' => $this->user->name ?? '',
-            'created_at' => $this->created_at->diffForHumans(),
-            'updated_at' => $this->updated_at->diffForHumans(),
+            'created_at' => $this->created_at->format("d M Y h:i A"),
+            'updated_at' => $this->updated_at->format("d M Y h:i A"),
         ];
     }
 }

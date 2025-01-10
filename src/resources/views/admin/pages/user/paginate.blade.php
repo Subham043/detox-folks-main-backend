@@ -53,7 +53,7 @@
 																																																								<td class="customer_name">{{ $item->email }}</td>
 																																																								<td class="customer_name">{{ $item->phone }}</td>
 																																																								<td class="customer_name">{{ $item->current_role }}</td>
-																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
+																																																								<td class="date">{{ $item->created_at->format("d M Y h:i A") }}</td>
 																																																								<td>
 																																																												<div class="d-flex gap-2">
 																																																																<div class="edit">

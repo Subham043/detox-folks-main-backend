@@ -8,8 +8,10 @@ use App\Enums\PaymentStatus;
 use App\Http\Controllers\Controller;
 use App\Modules\DeliveryManagement\Requests\UnassignDeliveryAgentRequest;
 use App\Modules\DeliveryManagement\Services\DeliveryManagementService;
+use App\Modules\Order\Exports\OrderExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AssignedOrderController extends Controller
 {
@@ -37,6 +39,12 @@ class AssignedOrderController extends Controller
             'payment_statuses' => Arr::map(PaymentStatus::cases(), fn($enum) => $enum->value),
             'payment_modes' => Arr::map(PaymentMode::cases(), fn($enum) => $enum->value),
         ]);
+    }
+
+    public function export(Request $request, $user_id){
+        $this->service->getDeliveryAgentById($user_id);
+        $order = $this->service->exportOrderAssigend($user_id, $request->total ?? 10);
+        return Excel::download(new OrderExport($order), 'orders_assigned.xlsx');
     }
 
     public function post(UnassignDeliveryAgentRequest $request, $user_id){

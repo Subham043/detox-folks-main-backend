@@ -87,7 +87,7 @@
 																																																								<td class="customer_name">{{ $item->name }}</td>
 																																																								<td class="customer_name">{{ $item->email }}</td>
 																																																								<td class="customer_name">{{ $item->phone }}</td>
-																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
+																																																								<td class="date">{{ $item->created_at->format("d M Y h:i A") }}</td>
 																																																				</tr>
 																																																@endforeach
 

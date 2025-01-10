@@ -59,7 +59,7 @@ class OrderExport implements FromCollection,WithHeadings,WithMapping
             $data->payment->mode->value ?? "",
             $data->payment->status->value ?? "",
             $data->current_status->status->value ?? "",
-            !empty($data->current_status->created_at) ? $data->current_status->created_at->diffForHumans() : "",
+            !empty($data->current_status->created_at) ? $data->current_status->created_at->format("d M Y h:i A") : "",
          ];
     }
     public function collection()

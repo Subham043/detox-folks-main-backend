@@ -21,8 +21,9 @@
 																												<div class="card-header d-flex justify-content-between align-items-center">
 																																<h4 class="card-title mb-0">App Promoted By {{$agent->name}}</h4>
 																																<div class="d-flex align-items-center col-auto gap-2">
-																																				<button id="unassign_order" type="button"
-																																								class="btn btn-warning d-none">Remove</button>
+																																				<a href="{{ route("promoter.agent.installer.export", $user_id) }}?{{ request()->getQueryString() }}" download type="button"
+																																												class="btn btn-info add-btn" id="create-btn"><i
+																																																class="ri-file-excel-fill me-1 align-bottom"></i> Excel Download</a>
 																																				<button type="submit" class="btn btn-primary">
 																																								Filter
 																																				</button>
@@ -114,7 +115,7 @@
                                                                                                                                                                                                                                     </td>
                                                                                                                                                                                                                                 @endif
                                                                                                                                                                                                                                 <td class="customer_name">{{ $item->orders_count }}</td>
-																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
+																																																								<td class="date">{{ $item->created_at->format("d M Y h:i A") }}</td>
 																																																								<td>
 																																																												<div class="d-flex gap-2">
                                                                                                                                                                                                                                                             <div class="remove">

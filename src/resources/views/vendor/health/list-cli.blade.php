@@ -7,7 +7,7 @@
                 @if ($lastRanAt->diffInMinutes() < 1)
                     just now
                 @else
-                    {{ $lastRanAt->diffForHumans() }}
+                    {{ $lastRanAt->format("d M Y h:i A") }}
                 @endif
             </span>
         </div>

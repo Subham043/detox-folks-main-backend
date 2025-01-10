@@ -45,8 +45,8 @@ class UserProductCollection extends JsonResource
             'product_images' => UserProductImageCollection::collection($this->product_images),
             'categories' => UserCategoryMainCollection::collection($this->categories),
             'sub_categories' => UserSubCategoryCollection::collection($this->sub_categories),
-            'created_at' => $this->created_at->diffForHumans(),
-            'updated_at' => $this->updated_at->diffForHumans(),
+            'created_at' => $this->created_at->format("d M Y h:i A"),
+            'updated_at' => $this->updated_at->format("d M Y h:i A"),
         ];
     }
 }

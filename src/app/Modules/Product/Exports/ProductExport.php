@@ -17,27 +17,32 @@ class ProductExport implements FromCollection,WithHeadings,WithMapping
         return[
             'ID',
             'Name',
-            'Slug',
-            'Heading',
-            'Description',
             'Category',
             'Sub-Category',
+            'Minimum Cart Quantity',
+            'Cart Quantity Interval',
+            'Cart Quantity Specification',
+            'Minimum Quantity / Price / Discount(%)',
             'Status',
             'Created At',
         ];
     }
     public function map($data): array
     {
+        $product_prices = $data->product_prices->map(function($item){
+            return $item->min_quantity."/".$item->price."/".$item->discount;
+        });
          return[
             $data->id,
             $data->name,
-            $data->slug,
-            $data->heading,
-            $data->brief_description,
             $data->categories->pluck('name')->implode(', ') ?? "",
             $data->sub_categories->pluck('name')->implode(', ') ?? "",
-            $data->status ? "Active" : "Inactive",
-            $data->created_at->diffForHumans(),
+            $data->min_cart_quantity,
+            $data->cart_quantity_specification,
+            $data->cart_quantity_interval,
+            $product_prices->implode(', '),
+            $data->is_draft ? "Active" : "Inactive",
+            $data->created_at->format("d M Y h:i A"),
          ];
     }
     public function collection()
@@ -45,12 +50,9 @@ class ProductExport implements FromCollection,WithHeadings,WithMapping
         return Product::with([
             'categories',
             'sub_categories',
-            // 'product_specifications',
-            // 'product_images',
-            // 'product_colors',
-            // 'product_prices'=>function($q){
-            //     $q->orderBy('min_quantity', 'asc');
-            // },
+            'product_prices'=>function($q){
+                $q->orderBy('min_quantity', 'asc');
+            },
         ])->get();
     }
 }

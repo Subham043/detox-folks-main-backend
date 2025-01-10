@@ -12,6 +12,7 @@ use Spatie\QueryBuilder\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\AllowedFilter;
+use Illuminate\Database\Eloquent\Collection;
 
 class DeliveryManagementService
 {
@@ -122,6 +123,50 @@ class DeliveryManagementService
                 ])
                 ->paginate($total)
                 ->appends(request()->query());
+    }
+
+    public function exportOrderAssigend($agent_id): Collection
+    {
+        return QueryBuilder::for(Order::with([
+            'products',
+            'current_status',
+            'payment',
+            'delivery_agent'
+        ])->whereHas('delivery_agent', function($q) use($agent_id) {
+            $q->where('user_id', $agent_id);
+        }))
+        ->allowedIncludes(['products', 'current_status', 'payment'])
+                ->defaultSort('-id')
+                ->allowedSorts('id', 'total_price')
+                ->allowedFilters([
+                    AllowedFilter::callback('has_status', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('current_status', function($q) use($value) {
+                                $q->where('status', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::callback('has_payment_status', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('payment', function($q) use($value) {
+                                $q->where('status', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::callback('has_payment_mode', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('payment', function($q) use($value) {
+                                $q->where('mode', $value);
+                            });
+                        }
+                    }),
+                    AllowedFilter::callback('has_date', function (Builder $query, $value) {
+                        $date = explode(' - ', $value);
+                        $query->whereBetween('created_at', [...$date]);
+                    }),
+                    AllowedFilter::custom('search', new OrderFilter),
+                ])
+                ->get();
     }
 
     public function orderCount($agent_id): int

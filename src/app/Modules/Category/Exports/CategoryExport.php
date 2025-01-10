@@ -32,8 +32,8 @@ class CategoryExport implements FromCollection,WithHeadings,WithMapping
             $data->slug,
             $data->heading,
             $data->description,
-            $data->status ? "Active" : "Inactive",
-            $data->created_at->diffForHumans(),
+            $data->is_draft ? "Active" : "Inactive",
+            $data->created_at->format("d M Y h:i A"),
          ];
     }
     public function collection()

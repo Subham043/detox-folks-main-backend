@@ -34,8 +34,8 @@ class SubCategoryExport implements FromCollection,WithHeadings,WithMapping
             $data->heading,
             $data->description,
             $data->categories->pluck('name')->implode(', ') ?? "",
-            $data->status ? "Active" : "Inactive",
-            $data->created_at->diffForHumans(),
+            $data->is_draft ? "Active" : "Inactive",
+            $data->created_at->format("d M Y h:i A"),
          ];
     }
     public function collection()

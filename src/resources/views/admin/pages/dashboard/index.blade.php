@@ -779,7 +779,7 @@
 																																																								<h6
 																																																												class="{{ $lastRanAt->diffInMinutes() > 5 ? "text-danger" : "text-success" }} mb-0">
 																																																												<span class="text-dark">Last Updated :
-																																																												</span>{{ $lastRanAt->diffForHumans() }}
+																																																												</span>{{ $lastRanAt->format("d M Y h:i A") }}
 																																																								</h6>
 																																																				</div>
 																																																				<h6

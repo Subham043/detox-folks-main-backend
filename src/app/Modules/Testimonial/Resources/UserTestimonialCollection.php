@@ -22,8 +22,8 @@ class UserTestimonialCollection extends JsonResource
             'message' => $this->message,
             'image' => asset($this->image),
             'is_draft' => $this->is_draft,
-            'created_at' => $this->created_at->diffForHumans(),
-            'updated_at' => $this->updated_at->diffForHumans(),
+            'created_at' => $this->created_at->format("d M Y h:i A"),
+            'updated_at' => $this->updated_at->format("d M Y h:i A"),
         ];
     }
 }

@@ -57,7 +57,7 @@
 																																																								<td class="customer_name">{{ $item->phone }}</td>
 																																																								<td class="customer_name">{{ $item->app_installer_count }}</td>
                                                                                                                                                                                                                                 <td class="customer_name">{{ $item->current_role }}</td>
-																																																								<td class="date">{{ $item->created_at->diffForHumans() }}</td>
+																																																								<td class="date">{{ $item->created_at->format("d M Y h:i A") }}</td>
 																																																								<td>
 																																																												<div class="d-flex gap-2">
                                                                                                                                                                                                                                                                 @if(auth()->user()->current_role=='Super-Admin')

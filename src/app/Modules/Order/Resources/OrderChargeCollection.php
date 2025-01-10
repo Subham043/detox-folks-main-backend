@@ -22,8 +22,8 @@ class OrderChargeCollection extends JsonResource
             'is_percentage' => $this->is_percentage,
             'include_charges_for_cart_price_below' => round($this->include_charges_for_cart_price_below, 2),
             'total_charge_in_amount' => $this->total_charge_in_amount,
-            'created_at' => $this->created_at->diffForHumans(),
-            'updated_at' => $this->updated_at->diffForHumans(),
+            'created_at' => $this->created_at->format("d M Y h:i A"),
+            'updated_at' => $this->updated_at->format("d M Y h:i A"),
         ];
     }
 }

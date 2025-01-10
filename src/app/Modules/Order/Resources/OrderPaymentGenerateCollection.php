@@ -25,8 +25,8 @@ class OrderPaymentGenerateCollection extends JsonResource
             'razorpay_payment_link' => $this->mode==PaymentMode::RAZORPAY ? route('make_razorpay_payment', $this->order->id) : null,
             'payu_payment_link' => $this->mode==PaymentMode::PAYU ? route('make_payu_payment', $this->order->id) : null,
             'cashfree_payment_link' => $this->mode==PaymentMode::CASHFREE ? route('make_cashfree_payment', $this->order->id) : null,
-            'created_at' => $this->created_at->diffForHumans(),
-            'updated_at' => $this->updated_at->diffForHumans(),
+            'created_at' => $this->created_at->format("d M Y h:i A"),
+            'updated_at' => $this->updated_at->format("d M Y h:i A"),
         ];
     }
 }

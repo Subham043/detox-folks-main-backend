@@ -3,8 +3,10 @@
 namespace App\Modules\Promoter\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Promoter\Exports\PromoterExport;
 use App\Modules\Promoter\Services\PromoterService;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PromoterInstalledController extends Controller
 {
@@ -23,6 +25,12 @@ class PromoterInstalledController extends Controller
         ->with('role', $request->query('filter')['has_role'] ?? 'all')
         ->with('search', $request->query('filter')['search'] ?? '')
         ->with('has_date', explode(' - ', ($request->query('filter')['has_date']) ?? ''));
+    }
+
+    public function export(Request $request, $user_id){
+        $this->service->getPromoterById($user_id);
+        $installer = $this->service->exportInstaller($user_id);
+        return Excel::download(new PromoterExport($installer), 'installers.xlsx');
     }
 
     public function destroy($agent_id, $user_id){
