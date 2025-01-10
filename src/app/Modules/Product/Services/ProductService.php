@@ -48,12 +48,12 @@ class ProductService
         ])->where('is_draft', true);
         return QueryBuilder::for($query)
                 ->allowedIncludes(['categories', 'sub_categories', 'product_specifications', 'product_prices', 'product_images', 'product_colors'])
-                ->defaultSort('-id')
-                // ->allowedSorts('id', 'name')
-                ->allowedSorts([
-                    AllowedSort::custom('name', new StringLengthSort(), 'name'),
-                    AllowedSort::custom('id', new StringLengthSort(), 'id'),
-                ])
+                ->defaultSort('name')
+                ->allowedSorts('id', 'name')
+                // ->allowedSorts([
+                //     AllowedSort::custom('name', new StringLengthSort(), 'name'),
+                //     AllowedSort::custom('id', new StringLengthSort(), 'id'),
+                // ])
                 ->allowedFilters([
                     'is_new',
                     'is_on_sale',
@@ -217,6 +217,8 @@ class StringLengthSort implements Sort
     {
         $direction = $descending ? 'DESC' : 'ASC';
 
-        $query->orderByRaw("LENGTH(`{$property}`) {$direction}")->orderBy($property, $direction);
+        $query
+        ->orderByRaw("LENGTH(`{$property}`) {$direction}");
+        // ->orderBy($property, $direction);
     }
 }
