@@ -62,9 +62,9 @@ class SmsService
         return $this->send('91'.$phone, $message);
     }
 
-    public function sendLoginOtpAutoRead(string $phone, string $otp)
+    public function sendLoginOtpAutoRead(string $phone, string $otp, string $hash)
     {
-        $message = "Your OTP code is: ".$otp.". Please do not share it with anyone. 3mMcJoyf93g. Parcel Counter.";
+        $message = "Your OTP code is: ".$otp.". Please do not share it with anyone. ".$hash.". Parcel Counter.";
         return $this->send('91'.$phone, $message);
     }
 

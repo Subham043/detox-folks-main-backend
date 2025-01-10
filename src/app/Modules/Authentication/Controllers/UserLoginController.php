@@ -8,6 +8,7 @@ use App\Http\Services\SmsService;
 use App\Modules\Authentication\Requests\UserLoginOtpPostRequest;
 use App\Modules\Authentication\Requests\UserLoginPhonePasswordPostRequest;
 use App\Modules\Authentication\Requests\UserLoginPostRequest;
+use App\Modules\Authentication\Requests\UserPhoneHashPostRequest;
 use App\Modules\Authentication\Requests\UserPhonePostRequest;
 use App\Modules\Authentication\Resources\AuthCollection;
 use App\Modules\Authentication\Services\AuthService;
@@ -77,13 +78,13 @@ class UserLoginController extends Controller
         return response()->json(["message" => "OTP sent successfully"], 200);
     }
 
-    public function auto_read_phone_otp_post(UserPhonePostRequest $request){
+    public function auto_read_phone_otp_post(UserPhoneHashPostRequest $request){
         $request->validated();
         $user = $this->authService->getByPhone($request->phone);
         if ($user) {
             $user->otp = random_int(1000, 9999);
             $user->save();
-            (new SmsService)->sendLoginOtpAutoRead($user->phone, $user->otp);
+            (new SmsService)->sendLoginOtpAutoRead($user->phone, $user->otp, $request->hash);
             (new RateLimitService($request))->clearRateLimit();
         }
         return response()->json(["message" => "OTP sent successfully"], 200);
