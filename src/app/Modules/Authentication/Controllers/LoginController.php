@@ -51,7 +51,7 @@ class LoginController extends Controller
         if ($user) {
             $user->otp = random_int(1000, 9999);
             $user->save();
-            (new SmsService)->sendLoginOtp($user->phone, $user->otp);
+            (new SmsService)->sendLoginOtpWeb($user->phone, $user->otp);
             (new RateLimitService($request))->clearRateLimit();
         }
         return response()->json(["message" => "OTP sent successfully"], 200);

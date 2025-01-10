@@ -32,6 +32,8 @@ class ProductService
                 ])
                 ->paginate($total)
                 ->appends(request()->query());
+                // ->toSql();
+                // dd($q);
     }
 
     public function paginateMain(Int $total = 10): LengthAwarePaginator
@@ -45,7 +47,18 @@ class ProductService
             'product_prices'=>function($q){
                 $q->orderBy('min_quantity', 'asc');
             },
-        ])->where('is_draft', true);
+        ])
+        ->orderByRaw("
+            CASE
+                WHEN name REGEXP '^[0-9]' THEN 1  -- Names starting with numbers
+                WHEN name REGEXP '^[A-Za-z]+$' THEN 2  -- Names with only letters
+                WHEN name REGEXP '^[A-Za-z0-9]+$' THEN 3  -- Alphanumeric names
+                ELSE 4  -- Any other case
+            END ASC,
+            LENGTH(name) ASC,
+            name ASC
+        ")
+        ->where('is_draft', true);
         return QueryBuilder::for($query)
                 ->allowedIncludes(['categories', 'sub_categories', 'product_specifications', 'product_prices', 'product_images', 'product_colors'])
                 ->defaultSort('name')
@@ -220,11 +233,21 @@ class StringLengthSort implements Sort
         $query
         ->orderByRaw("
             CASE
-                WHEN `{$property}` REGEXP '^[0-9]' THEN 1
-                ELSE 0
-            END,
+                WHEN `{$property}` REGEXP '^[0-9]' THEN 1  -- Names starting with numbers
+                WHEN `{$property}` REGEXP '^[A-Za-z]+$' THEN 2  -- Names with only letters
+                WHEN `{$property}` REGEXP '^[A-Za-z0-9]+$' THEN 3  -- Alphanumeric names
+                ELSE 4  -- Any other case
+            END {$direction},
+            LENGTH(`{$property}`) {$direction},
             `{$property}` {$direction}
         ");
+        // ->orderByRaw("
+        //     CASE
+        //         WHEN `{$property}` REGEXP '^[0-9]' THEN 1
+        //         ELSE 0
+        //     END,
+        //     `{$property}` {$direction}
+        // ");
         // $query
         // ->orderByRaw("LENGTH(`{$property}`) {$direction}");
         // ->orderBy($property, $direction);

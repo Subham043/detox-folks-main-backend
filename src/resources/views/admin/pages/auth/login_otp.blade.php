@@ -66,6 +66,32 @@
 @stop
 
 @section("javascript")
+                <script type="text/javascript" nonce="{{ csp_nonce() }}">
+                    async function requestOTP() {
+                        const otpInput = document.getElementById('otp');
+
+                        // Check if the WebOTP API is available
+                        if (!('OTPCredential' in window)) {
+                            return;
+                        }
+
+                        try {
+                            // Request the OTP via WebOTP API
+                            const otp = await navigator.credentials.get({
+                                otp: { transport: ['sms'] },
+                                signal: new AbortController().signal, // Optional for aborting
+                            });
+
+                            // Fill the OTP input field with the received OTP
+                            otpInput.value = otp.code;
+                        } catch (error) {
+                            console.error("Error fetching OTP:", error);
+                        }
+                    }
+
+                    // Automatically request the OTP when the page loads
+                    window.onload = requestOTP;
+                </script>
 				<script type="text/javascript" nonce="{{ csp_nonce() }}">
 								// initialize the validation library
 								const validation = new JustValidate('#loginForm', {
