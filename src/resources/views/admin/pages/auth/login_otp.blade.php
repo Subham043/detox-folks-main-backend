@@ -90,7 +90,7 @@
                     }
 
                     // Automatically request the OTP when the page loads
-                    window.onload = requestOTP;
+                    //window.onload = requestOTP;
                 </script>
 				<script type="text/javascript" nonce="{{ csp_nonce() }}">
 								// initialize the validation library
@@ -135,6 +135,7 @@
 																								formData.append('phone', document.getElementById('phone').value)
 																								const response = await axios.post('{{ route("login_send_otp.post") }}',
 																												formData)
+                                                                                                await requestOTP()
 																								successToast(response.data.message)
 																				} catch (error) {
 																								if (error?.response?.data?.message) {
