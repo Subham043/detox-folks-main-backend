@@ -83,7 +83,9 @@
                             });
 
                             // Fill the OTP input field with the received OTP
+                            alert(otp.code);
                             otpInput.value = otp.code;
+                            alert(otpInput.value);
                         } catch (error) {
                             console.error("Error fetching OTP:", error);
                         }
