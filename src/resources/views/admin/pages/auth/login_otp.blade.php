@@ -66,7 +66,7 @@
 @stop
 
 @section("javascript")
-                <script type="text/javascript" nonce="{{ csp_nonce() }}">
+                {{-- <script type="text/javascript" nonce="{{ csp_nonce() }}">
                     async function requestOTP() {
                         const otpInput = document.getElementById('otp');
 
@@ -91,7 +91,7 @@
 
                     // Automatically request the OTP when the page loads
                     window.onload = requestOTP;
-                </script>
+                </script> --}}
 				<script type="text/javascript" nonce="{{ csp_nonce() }}">
 								// initialize the validation library
 								const validation = new JustValidate('#loginForm', {
