@@ -85,7 +85,6 @@
                             // Fill the OTP input field with the received OTP
                             otpInput.value = otp.code;
                         } catch (error) {
-                            alert('Failed to request OTP. Please try again.: ' + error);
                             console.error("Error fetching OTP:", error);
                         }
                     }
@@ -136,7 +135,7 @@
 																								formData.append('phone', document.getElementById('phone').value)
 																								const response = await axios.post('{{ route("login_send_otp.post") }}',
 																												formData)
-                                                                                                await requestOTP()
+                                                                                                requestOTP()
 																								successToast(response.data.message)
 																				} catch (error) {
 																								if (error?.response?.data?.message) {
