@@ -83,16 +83,14 @@
                             });
 
                             // Fill the OTP input field with the received OTP
-                            alert(otp.code);
                             otpInput.value = otp.code;
-                            alert(otpInput.value);
                         } catch (error) {
                             console.error("Error fetching OTP:", error);
                         }
                     }
 
                     // Automatically request the OTP when the page loads
-                    //window.onload = requestOTP;
+                    window.onload = requestOTP;
                 </script>
 				<script type="text/javascript" nonce="{{ csp_nonce() }}">
 								// initialize the validation library
@@ -137,7 +135,7 @@
 																								formData.append('phone', document.getElementById('phone').value)
 																								const response = await axios.post('{{ route("login_send_otp.post") }}',
 																												formData)
-                                                                                                requestOTP()
+                                                                                                // requestOTP()
 																								successToast(response.data.message)
 																				} catch (error) {
 																								if (error?.response?.data?.message) {
