@@ -42,8 +42,10 @@
 																																																				<th class="sort" data-sort="customer_name">Code</th>
 																																																				<th class="sort" data-sort="customer_name">Email</th>
 																																																				<th class="sort" data-sort="customer_name">Phone</th>
-																																																				<th class="sort" data-sort="customer_name">Total App Installed</th>
 																																																				<th class="sort" data-sort="customer_name">Role</th>
+																																																				<th class="sort" data-sort="customer_name">Total App Installed</th>
+																																																				<th class="sort" data-sort="customer_name">Orders Count</th>
+																																																				<th class="sort" data-sort="customer_name">Has Installer Completed 3 Order</th>
 																																																				<th class="sort" data-sort="date">Created On</th>
 																																																				<th class="sort" data-sort="action">Action</th>
 																																																</tr>
@@ -55,8 +57,18 @@
 																																																								<td class="customer_name"><code>{{ $item->app_promoter_code->code }}</code></td>
 																																																								<td class="customer_name">{{ $item->email }}</td>
 																																																								<td class="customer_name">{{ $item->phone }}</td>
-																																																								<td class="customer_name">{{ $item->app_installer_count }}</td>
                                                                                                                                                                                                                                 <td class="customer_name">{{ $item->current_role }}</td>
+																																																								<td class="customer_name">{{ $item->app_installer_count }}</td>
+																																																								<td class="customer_name">{{ $item->no_of_orders }}</td>
+                                                                                                                                                                                                                                @if ($item->no_of_orders >= 3)
+                                                                                                                                                                                                                                    <td class="status"><span
+                                                                                                                                                                                                                                                                    class="badge badge-soft-success text-uppercase">Yes</span>
+                                                                                                                                                                                                                                    </td>
+                                                                                                                                                                                                                                @else
+                                                                                                                                                                                                                                    <td class="status"><span
+                                                                                                                                                                                                                                                                    class="badge badge-soft-danger text-uppercase">No</span>
+                                                                                                                                                                                                                                    </td>
+                                                                                                                                                                                                                                @endif
 																																																								<td class="date">{{ $item->created_at->format("d M Y h:i A") }}</td>
 																																																								<td>
 																																																												<div class="d-flex gap-2">

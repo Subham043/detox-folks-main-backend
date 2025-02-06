@@ -17,7 +17,33 @@ class PromoterService
 
     public function paginatePromoter(Int $total = 10): LengthAwarePaginator
     {
-        $query = User::with(['roles', 'app_promoter_code'])->whereHas('app_promoter_code')->whereHas('roles', function($q) { $q->whereIn('name', ['App Promoter', 'Reward Riders', 'Referral Rockstars']); })->withCount('app_installer')->latest();
+        $query = User::with([
+            'roles',
+            'app_promoter_code',
+            'app_installer' => function ($query) {
+                $query->withCount([
+                    'orders' => function ($query) {
+                        $query->whereHas('current_status', function($qr) {
+                            $qr->where('status', '!=', OrderEnumStatus::CANCELLED);
+                        })->whereHas('user', function($q) {
+                            $q->whereHas('roles', function($qr) {
+                                $qr->whereIn('name', ['App Promoter', 'Reward Riders', 'Referral Rockstars', 'User']);
+                            });
+                        });
+                    }
+                ])->whereHas('roles', function($q) {
+                    $q->whereIn('name', ['App Promoter', 'Reward Riders', 'Referral Rockstars', 'User']);
+                });
+            },
+        ])->whereHas('app_promoter_code')->whereHas('roles', function($q) { $q->whereIn('name', ['App Promoter', 'Reward Riders', 'Referral Rockstars']); })
+        ->withCount([
+            'app_installer' => function ($query) {
+                $query->whereHas('roles', function($q) {
+                    $q->whereIn('name', ['App Promoter', 'Reward Riders', 'Referral Rockstars', 'User']);
+                });
+            },
+        ])
+        ->latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
                     AllowedFilter::custom('search', new AgentFilter),

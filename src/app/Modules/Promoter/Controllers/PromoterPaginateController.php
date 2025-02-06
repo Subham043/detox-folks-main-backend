@@ -17,7 +17,19 @@ class PromoterPaginateController extends Controller
 
     public function get(Request $request){
         $data = $this->service->paginatePromoter($request->total ?? 10);
-        return view('admin.pages.promoter.agent.paginate', compact(['data']))
+        $users = $data->through(function ($user) {
+            $no_of_orders = 0;
+            $orders_count = $user->app_installer->pluck('orders_count')->toArray();
+            foreach ($orders_count as $key => $value) {
+                if($value > 0){
+                    $no_of_orders++;
+                }
+            }
+            $user->no_of_orders = $no_of_orders;
+            return $user;
+        });
+        return view('admin.pages.promoter.agent.paginate')
+            ->with('data', $users)
             ->with('search', $request->query('filter')['search'] ?? '');
     }
 
