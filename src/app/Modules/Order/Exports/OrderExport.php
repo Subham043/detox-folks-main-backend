@@ -28,6 +28,7 @@ class OrderExport implements FromCollection,WithHeadings,WithMapping
             'Phone',
             'Product/Price/Quantity/Amount',
             'Sub-Total',
+            'Taxes',
             'Charges',
             'Total Amount',
             'Delivery Slot',
@@ -45,6 +46,9 @@ class OrderExport implements FromCollection,WithHeadings,WithMapping
         $charges = $data->charges->map(function($charge) {
             return $charge->charges_name.'/'.$charge->total_charge_in_amount;
         });
+        $taxes = $data->taxes->map(function($tax) {
+            return $tax->tax_name.'/'.$tax->tax_value.'/'.$tax->total_tax_in_amount;
+        });
          return[
             $data->id,
             $data->name,
@@ -53,6 +57,7 @@ class OrderExport implements FromCollection,WithHeadings,WithMapping
             // $data->products->pluck('name')->implode(', '),
             $products->implode(', '),
             $data->subtotal,
+            $taxes->implode(', '),
             $charges->implode(', '),
             $data->total_price,
             $data->delivery_slot ?? "N/A",

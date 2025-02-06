@@ -16,6 +16,7 @@ class MapAutoCompleteController extends Controller
             return array(
                 'description' => $item->description,
                 'geometry' => $item->geometry,
+                'place_id' => $item->place_id,
             );
         }, $data);
         return response()->json(['data' => $result], 200);

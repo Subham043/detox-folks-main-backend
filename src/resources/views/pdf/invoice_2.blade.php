@@ -338,6 +338,15 @@
 																								<td class="charge_name">Subtotal</td>
 																								<td class="charge_total">Rs. {{ $order->subtotal }}</td>
 																				</tr>
+																				@foreach ($order->taxes as $ke => $va)
+                                                                                                <tr>
+                                                                                                                <td></td>
+                                                                                                                <td></td>
+                                                                                                                <td></td>
+                                                                                                                <td class="charge_name">{{ $va->tax_name }} ({{ $va->tax_value }}%)</td>
+																												<td class="charge_total">Rs. {{ $va->total_tax_in_amount }}</td>
+                                                                                                </tr>
+																				@endforeach
 																				@foreach ($order->charges as $k => $v)
                                                                                                 <tr>
                                                                                                                 <td></td>

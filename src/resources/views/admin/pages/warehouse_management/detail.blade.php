@@ -101,7 +101,7 @@
                                                                                                                                                                                                 @foreach ($order->taxes as $ke => $va)
 																																																				<tr class="border-top border-top-dashed">
 																																																								<th>
-																																																												{{ $va->tax_name }} :
+																																																												{{ $va->tax_name }} ({{ $va->tax_value }}%) :
 																																																								</th>
 																																																								<td></td>
 																																																								<th class="text-end" colspan="4">&#8377;
