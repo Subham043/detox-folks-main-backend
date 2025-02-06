@@ -4,6 +4,7 @@ namespace App\Modules\Cart\Services;
 
 use App\Modules\Cart\Models\Cart;
 use App\Modules\Charge\Services\ChargeService;
+use App\Modules\Tax\Services\TaxService;
 
 class CartAmountService
 {
@@ -17,7 +18,7 @@ class CartAmountService
     }
 
     public function get_all_taxes() {
-        return (new ChargeService)->main_exclude_all();
+        return (new TaxService)->main_exclude_all();
     }
 
     public function get_charge_price() {
