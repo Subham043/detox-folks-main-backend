@@ -93,6 +93,16 @@
 																																																				<td></td>
 																																																				<th class="text-end" colspan="4">&#8377; {{ $order->subtotal }}</th>
 																																																</tr>
+																																																@foreach ($order->taxes as $ke => $va)
+																																																				<tr class="border-top border-top-dashed">
+																																																								<th>
+																																																												{{ $va->tax_name }} :
+																																																								</th>
+																																																								<td></td>
+																																																								<th class="text-end" colspan="4">&#8377;
+																																																												{{ $va->total_tax_in_amount }}</th>
+																																																				</tr>
+																																																@endforeach
 																																																@foreach ($order->charges as $k => $v)
 																																																				<tr class="border-top border-top-dashed">
 																																																								<th>

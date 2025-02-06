@@ -16,11 +16,19 @@ class CartAmountService
         return (new ChargeService)->main_exclude_all();
     }
 
+    public function get_all_taxes() {
+        return (new ChargeService)->main_exclude_all();
+    }
+
     public function get_charge_price() {
         return round(array_sum($this->get_all_charges()->pluck('total_charge_in_amount')->toArray()), 2);
     }
 
+    public function get_tax_price() {
+        return round(array_sum($this->get_all_taxes()->pluck('total_tax_in_amount')->toArray()), 2);
+    }
+
     public function get_total_price() {
-        return round(($this->get_subtotal() + $this->get_charge_price()), 2);
+        return round(($this->get_subtotal() + $this->get_tax_price() + $this->get_charge_price()), 2);
     }
 }

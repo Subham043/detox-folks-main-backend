@@ -28,6 +28,7 @@ return new class extends Migration
             $table->text('map_information')->nullable();
             $table->string('subtotal', 500)->default(0)->nullable();
             $table->string('total_charges', 500)->default(0)->nullable();
+            $table->string('total_taxes', 500)->default(0)->nullable();
             $table->string('total_price', 500)->default(0)->nullable();
             $table->boolean('accept_terms')->default(0);
             $table->boolean('include_gst')->default(0);
@@ -48,3 +49,5 @@ return new class extends Migration
 // ALTER TABLE `orders` ADD `map_information` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL AFTER `address`;
 
 // ALTER TABLE `orders` ADD `delivery_slot` VARCHAR(255) NULL DEFAULT NULL AFTER `order_mode`;
+
+//ALTER TABLE `orders` ADD `total_taxes` VARCHAR(500) NOT NULL DEFAULT '0' AFTER `total_charges`;

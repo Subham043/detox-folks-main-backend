@@ -39,6 +39,7 @@ class WarehouseManagementService
             'products',
             'current_status',
             'charges',
+            'taxes',
             'statuses',
             'payment',
         ])->whereHas('current_status', function($q) {

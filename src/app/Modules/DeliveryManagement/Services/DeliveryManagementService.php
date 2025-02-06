@@ -311,6 +311,7 @@ class DeliveryManagementService
             'products',
             'current_status',
             'charges',
+            'taxes',
             'statuses',
             'payment',
             'delivery_agent'
@@ -325,6 +326,7 @@ class DeliveryManagementService
             'products',
             'current_status',
             'charges',
+            'taxes',
             'statuses',
             'payment',
             'delivery_agent'
@@ -339,6 +341,7 @@ class DeliveryManagementService
             'products',
             'current_status',
             'charges',
+            'taxes',
             'statuses',
             'payment',
             'delivery_agent'

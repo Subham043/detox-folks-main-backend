@@ -239,6 +239,12 @@
 																												<i class="ri-money-dollar-circle-line"></i> <span data-key="t-widgets">Cart Charges</span>
 																								</a>
 																				</li>
+																				<li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("tax.paginate.get")) !== false ? "active" : "" }}"
+																												href="{{ route("tax.paginate.get") }}">
+																												<i class="ri-money-dollar-circle-line"></i> <span data-key="t-widgets">Taxes</span>
+																								</a>
+																				</li>
                                                                                 <li class="nav-item">
 																								<a class="nav-link menu-link {{ strpos(url()->current(), route("delivery_slot.paginate.get")) !== false ? "active" : "" }}"
 																												href="{{ route("delivery_slot.paginate.get") }}">

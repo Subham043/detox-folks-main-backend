@@ -97,6 +97,10 @@ use App\Modules\SubCategory\Controllers\SubCategoryDeleteController;
 use App\Modules\SubCategory\Controllers\SubCategoryExcelController;
 use App\Modules\SubCategory\Controllers\SubCategoryPaginateController;
 use App\Modules\SubCategory\Controllers\SubCategoryUpdateController;
+use App\Modules\Tax\Controllers\TaxCreateController;
+use App\Modules\Tax\Controllers\TaxDeleteController;
+use App\Modules\Tax\Controllers\TaxPaginateController;
+use App\Modules\Tax\Controllers\TaxUpdateController;
 use App\Modules\TextEditorImage\Controllers\TextEditorImageController;
 use App\Modules\User\Controllers\UserExcelController;
 use App\Modules\WarehouseManagement\Controllers\WarehouseOrderDetailController;
@@ -295,6 +299,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/update/{id}', [ChargeUpdateController::class, 'get', 'as' => 'charge.update.get'])->name('charge.update.get');
         Route::post('/update/{id}', [ChargeUpdateController::class, 'post', 'as' => 'charge.update.post'])->name('charge.update.post');
         Route::get('/delete/{id}', [ChargeDeleteController::class, 'get', 'as' => 'charge.delete.get'])->name('charge.delete.get');
+    });
+
+    Route::middleware(['role:Super-Admin'])->prefix('/taxes')->group(function () {
+        Route::get('/', [TaxPaginateController::class, 'get', 'as' => 'tax.paginate.get'])->name('tax.paginate.get');
+        Route::get('/create', [TaxCreateController::class, 'get', 'as' => 'tax.create.get'])->name('tax.create.get');
+        Route::post('/create', [TaxCreateController::class, 'post', 'as' => 'tax.create.post'])->name('tax.create.post');
+        Route::get('/update/{id}', [TaxUpdateController::class, 'get', 'as' => 'tax.update.get'])->name('tax.update.get');
+        Route::post('/update/{id}', [TaxUpdateController::class, 'post', 'as' => 'tax.update.post'])->name('tax.update.post');
+        Route::get('/delete/{id}', [TaxDeleteController::class, 'get', 'as' => 'tax.delete.get'])->name('tax.delete.get');
     });
 
     Route::middleware(['role:Super-Admin'])->prefix('/delivery-slots')->group(function () {
