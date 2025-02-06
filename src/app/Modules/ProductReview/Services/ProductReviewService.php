@@ -22,6 +22,7 @@ class ProductReviewService
     {
         $query = ProductReview::with(['product', 'user'])->where('product_id', $product_id)->latest();
         return QueryBuilder::for($query)
+                ->defaultSort('-rating')
                 ->allowedFilters([
                     AllowedFilter::custom('search', new CommonFilter),
                 ])
@@ -33,6 +34,7 @@ class ProductReviewService
     {
         $query = ProductReview::with(['product', 'user'])->where('product_id', $product_id)->where('is_draft', false)->latest();
         return QueryBuilder::for($query)
+                ->defaultSort('-rating')
                 ->allowedFilters([
                     AllowedFilter::custom('search', new CommonFilter),
                 ])

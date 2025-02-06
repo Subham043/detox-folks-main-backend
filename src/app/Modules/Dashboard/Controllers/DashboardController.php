@@ -66,6 +66,7 @@ class DashboardController extends Controller
             'inventory_manager_users' => User::whereHas('roles', function($q) { $q->whereIn('name', ['Inventory Manager']); })->count(),
             'warehouse_manager_users' => User::whereHas('roles', function($q) { $q->whereIn('name', ['Warehouse Manager']); })->count(),
             'delivery_agent_users' => User::whereHas('roles', function($q) { $q->whereIn('name', ['Delivery Agent']); })->count(),
+            'app_promoter_users' => User::whereHas('roles', function($q) { $q->whereIn('name', ['App Promoter']); })->count(),
             'reward_rider_users' => User::whereHas('roles', function($q) { $q->whereIn('name', ['Reward Riders']); })->count(),
             'referral_rockstar_users' => User::whereHas('roles', function($q) { $q->whereIn('name', ['Referral Rockstars']); })->count(),
             'normal_users' => User::whereHas('roles', function($q) { $q->whereIn('name', ['User']); })->count(),

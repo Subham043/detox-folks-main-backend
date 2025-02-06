@@ -18,7 +18,7 @@
 
 																								<div class="card-body">
 																												<div id="customerList">
-																																<div class="row g-4 mb-3">
+																																<div class="row justify-content-between g-4 mb-3">
 																																				<div class="col-sm-auto">
 																																								<div>
 																																												<a href="{{ route("user.create.get") }}" type="button"
@@ -29,9 +29,30 @@
 																																																class="ri-file-excel-fill me-1 align-bottom"></i> Excel Download</a>
 																																								</div>
 																																				</div>
-																																				<div class="col-sm">
-																																								<x-includes.search :search="$search" link="user.paginate.get" />
-																																				</div>
+																																				<form action="{{route('user.paginate.get')}}" method="GET" class="col-md-auto col-sm-12 d-flex gap-2 justify-content-end align-items-center">
+                                                                                                                                                                <div class="col-xxl-4 col-lg-4 col-sm-12">
+                                                                                                                                                                    <select class="form-control" name="filter[has_role]"
+                                                                                                                                                                                    id="has_role">
+                                                                                                                                                                                    <option value="all" @if (strpos("all", $has_role) !== false) selected @endif>all
+                                                                                                                                                                                    </option>
+                                                                                                                                                                                    @foreach ($roles as $v)
+                                                                                                                                                                                                    <option value="{{ $v }}"
+                                                                                                                                                                                                                    @if (strpos($v, $has_role) !== false) selected @endif>
+                                                                                                                                                                                                                    {{ $v }}</option>
+                                                                                                                                                                                    @endforeach
+                                                                                                                                                                    </select>
+                                                                                                                                                                </div>
+                                                                                                                                                                <div class="col-xxl-auto col-lg-auto col-sm-12">
+                                                                                                                                                                                <div class="search-box">
+                                                                                                                                                                                                <input type="text" class="form-control search" name="filter[search]"
+                                                                                                                                                                                                                placeholder="Search for anything..." value="{{ $search }}">
+                                                                                                                                                                                                <i class="ri-search-line search-icon"></i>
+                                                                                                                                                                                </div>
+                                                                                                                                                                </div>
+                                                                                                                                                                <button type="submit" class="btn btn-primary w-auto">
+                                                                                                                                                                                Filter
+                                                                                                                                                                </button>
+																																				</form>
 																																</div>
 																																<div class="table-responsive table-card mb-1 mt-3">
 																																				@if ($data->total() > 0)

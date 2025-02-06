@@ -176,6 +176,14 @@
 																																																				@if (request()->has("sort") && (request()->has("sort") && strpos("-total_price", request()->input("sort")) !== false)) selected @endif>higher amount</option>
 																																																<option value="total_price"
 																																																				@if (request()->has("sort") && (request()->has("sort") && strpos("total_price", request()->input("sort")) !== false)) selected @endif>lower amount</option>
+                                                                                                                                                                                                <option value="-delivery_slot"
+																																																				@if (request()->has("sort") && (request()->has("sort") && strpos("-delivery_slot", request()->input("sort")) !== false)) selected @endif>delivery slot (z-a)</option>
+																																																<option value="delivery_slot"
+																																																				@if (request()->has("sort") && (request()->has("sort") && strpos("delivery_slot", request()->input("sort")) !== false)) selected @endif>delivery slot (a-z)</option>
+																																																<option value="-pin"
+																																																				@if (request()->has("sort") && (request()->has("sort") && strpos("-pin", request()->input("sort")) !== false)) selected @endif>higher pincode</option>
+																																																<option value="pin"
+																																																				@if (request()->has("sort") && (request()->has("sort") && strpos("pin", request()->input("sort")) !== false)) selected @endif>lower pincode</option>
 																																												</select>
 																																								</div>
 																																				</div>
@@ -208,6 +216,7 @@
 																																																				<th class="sort" data-sort="customer_name">Products</th>
 																																																				<th class="sort" data-sort="customer_name">Total Amount</th>
 																																																				<th class="sort" data-sort="customer_name">Delivery Slot</th>
+																																																				<th class="sort" data-sort="customer_name">Delivery Pincode</th>
 																																																				<th class="sort" data-sort="customer_name">Mode Of Payment</th>
 																																																				<th class="sort" data-sort="customer_name">Payment Status</th>
 																																																				<th class="sort" data-sort="customer_name">Order Status</th>
@@ -236,6 +245,7 @@
 																																																								</td>
 																																																								<td class="customer_name">&#8377;{{ $item->total_price }}</td>
 																																																								<td class="customer_name">{{ $item->delivery_slot ?? "N/A" }}</td>
+																																																								<td class="customer_name">{{ $item->pin ?? "N/A" }}</td>
 																																																								<td class="customer_name">{{ $item->payment->mode ?? "" }}</td>
 																																																								<td class="customer_name">{{ $item->payment->status ?? "" }}</td>
 																																																								<td class="customer_name">

@@ -25,7 +25,7 @@ class WarehouseManagementService
         }))
         ->allowedIncludes(['products', 'current_status', 'statuses', 'payment'])
         ->defaultSort('-id')
-        ->allowedSorts('id', 'total_price')
+        ->allowedSorts('id', 'total_price', 'delivery_slot', 'pin')
         ->allowedFilters([
             AllowedFilter::custom('search', new OrderFilter),
         ])

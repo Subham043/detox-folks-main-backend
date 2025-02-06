@@ -47,7 +47,7 @@ class DeliveryManagementService
         ])->doesntHave('delivery_agent'))
         ->allowedIncludes(['products', 'current_status', 'payment'])
                 ->defaultSort('-id')
-                ->allowedSorts('id', 'total_price')
+                ->allowedSorts('id', 'total_price', 'delivery_slot', 'pin')
                 ->allowedFilters([
                     AllowedFilter::callback('has_status', function (Builder $query, $value) {
                         if($value!='all'){
@@ -92,7 +92,7 @@ class DeliveryManagementService
         }))
         ->allowedIncludes(['products', 'current_status', 'payment'])
                 ->defaultSort('-id')
-                ->allowedSorts('id', 'total_price')
+                ->allowedSorts('id', 'total_price', 'delivery_slot', 'pin')
                 ->allowedFilters([
                     AllowedFilter::callback('has_status', function (Builder $query, $value) {
                         if($value!='all'){
@@ -137,7 +137,7 @@ class DeliveryManagementService
         }))
         ->allowedIncludes(['products', 'current_status', 'payment'])
                 ->defaultSort('-id')
-                ->allowedSorts('id', 'total_price')
+                ->allowedSorts('id', 'total_price', 'delivery_slot', 'pin')
                 ->allowedFilters([
                     AllowedFilter::callback('has_status', function (Builder $query, $value) {
                         if($value!='all'){
@@ -181,7 +181,7 @@ class DeliveryManagementService
         }))
         ->allowedIncludes(['products', 'current_status', 'payment'])
                 ->defaultSort('-id')
-                ->allowedSorts('id', 'total_price')
+                ->allowedSorts('id', 'total_price', 'delivery_slot', 'pin')
                 ->allowedFilters([
                     AllowedFilter::callback('has_status', function (Builder $query, $value) {
                         if($value!='all'){
@@ -227,7 +227,7 @@ class DeliveryManagementService
         }))
         ->allowedIncludes(['products', 'current_status', 'payment'])
                 ->defaultSort('-id')
-                ->allowedSorts('id', 'total_price')
+                ->allowedSorts('id', 'total_price', 'delivery_slot', 'pin')
                 ->allowedFilters([
                     AllowedFilter::callback('has_status', function (Builder $query, $value) {
                         if($value!='all'){
@@ -273,7 +273,7 @@ class DeliveryManagementService
         }))
         ->allowedIncludes(['products', 'current_status', 'payment'])
                 ->defaultSort('-id')
-                ->allowedSorts('id', 'total_price')
+                ->allowedSorts('id', 'total_price', 'delivery_slot', 'pin')
                 ->allowedFilters([
                     AllowedFilter::callback('has_status', function (Builder $query, $value) {
                         if($value!='all'){

@@ -28,7 +28,7 @@
 																																				<div class="p-3">
 																																								<div class="row">
                                                                                                                                                                                 @hasanyrole("Staff|Super-Admin|Inventory Manager")
-																																												<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																												<a href="{{ route("order_admin.paginate.get") }}" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -51,9 +51,9 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
 
-																																												<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																												<a href="{{ route("order_admin.paginate.get") }}?filter[has_status]=CONFIRMED" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -76,9 +76,9 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
 
-																																												<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																												<a href="{{ route("order_admin.paginate.get") }}?filter[has_status]=PACKED" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -102,9 +102,9 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
 
-																																												<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																												<a href="{{ route("order_admin.paginate.get") }}?filter[has_status]=OUT FOR DELIVERY" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -127,9 +127,9 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
 
-																																												<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																												<a href="{{ route("order_admin.paginate.get") }}?filter[has_status]=DELIVERED" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -152,9 +152,9 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
 
-																																												<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																												<a href="{{ route("order_admin.paginate.get") }}?filter[has_status]=CANCELLED" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -177,11 +177,11 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
                                                                                                                                                                                 @endhasanyrole
 
                                                                                                                                                                                 @hasanyrole("Staff|Super-Admin")
-																																												<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																												<a href="{{ route("order_admin.paginate.get") }}?filter[has_payment_status]=PENDING" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -205,9 +205,9 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
 
-																																												<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																												<a href="{{ route("order_admin.paginate.get") }}?filter[has_payment_status]=PAID" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -232,9 +232,9 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
 
-																																												<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																												<a href="{{ route("order_admin.paginate.get") }}?filter[has_payment_status]=REFUND" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -259,11 +259,11 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
                                                                                                                                                                                 @endhasanyrole
 
                                                                                                                                                                                 @hasanyrole("Staff|Inventory Manager|Super-Admin")
-																																												<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																												<a href="{{ route("product.paginate.get") }}" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -288,11 +288,11 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
                                                                                                                                                                                 @endhasanyrole
 
                                                                                                                                                                                 @hasanyrole("Inventory Manager|Super-Admin")
-                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                                                                                                                                                                                <a href="{{ route("category.paginate.get") }}" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -306,7 +306,7 @@
 																																																												<div class="flex-grow-1 ms-3">
 																																																																<div class="d-flex align-items-center">
 																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
-																																																																												class="text-uppercase">&#8377;
+																																																																												class="text-uppercase">
 																																																																												{{ $categories }}</span>
 																																																																				</h4>
 																																																																</div>
@@ -317,9 +317,9 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
 
-                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                                                                                                                                                                                <a href="{{ route("sub_category.paginate.get") }}" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -333,7 +333,7 @@
 																																																												<div class="flex-grow-1 ms-3">
 																																																																<div class="d-flex align-items-center">
 																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
-																																																																												class="text-uppercase">&#8377;
+																																																																												class="text-uppercase">
 																																																																												{{ $sub_categories }}</span>
 																																																																				</h4>
 																																																																</div>
@@ -344,12 +344,12 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
 
                                                                                                                                                                                 @endhasanyrole
 
                                                                                                                                                                                 @hasanyrole("Super-Admin")
-                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                                                                                                                                                                                <a href="{{ route("user.paginate.get") }}?filter[has_role]=Super-Admin" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -363,7 +363,7 @@
 																																																												<div class="flex-grow-1 ms-3">
 																																																																<div class="d-flex align-items-center">
 																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
-																																																																												class="text-uppercase">&#8377;
+																																																																												class="text-uppercase">
 																																																																												{{ $admin_users }}</span>
 																																																																				</h4>
 																																																																</div>
@@ -374,9 +374,9 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
 
-                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                                                                                                                                                                                <a href="{{ route("user.paginate.get") }}?filter[has_role]=Staff" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -390,7 +390,7 @@
 																																																												<div class="flex-grow-1 ms-3">
 																																																																<div class="d-flex align-items-center">
 																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
-																																																																												class="text-uppercase">&#8377;
+																																																																												class="text-uppercase">
 																																																																												{{ $staff_users }}</span>
 																																																																				</h4>
 																																																																</div>
@@ -401,9 +401,9 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
 
-                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                                                                                                                                                                                <a href="{{ route("user.paginate.get") }}?filter[has_role]=Content Manager" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -417,7 +417,7 @@
 																																																												<div class="flex-grow-1 ms-3">
 																																																																<div class="d-flex align-items-center">
 																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
-																																																																												class="text-uppercase">&#8377;
+																																																																												class="text-uppercase">
 																																																																												{{ $content_manager_users }}</span>
 																																																																				</h4>
 																																																																</div>
@@ -428,9 +428,9 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
 
-                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                                                                                                                                                                                <a href="{{ route("user.paginate.get") }}?filter[has_role]=Inventory Manager" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -444,7 +444,7 @@
 																																																												<div class="flex-grow-1 ms-3">
 																																																																<div class="d-flex align-items-center">
 																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
-																																																																												class="text-uppercase">&#8377;
+																																																																												class="text-uppercase">
 																																																																												{{ $inventory_manager_users }}</span>
 																																																																				</h4>
 																																																																</div>
@@ -455,9 +455,9 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
 
-                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                                                                                                                                                                                <a href="{{ route("user.paginate.get") }}?filter[has_role]=Warehouse Manager" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -471,7 +471,7 @@
 																																																												<div class="flex-grow-1 ms-3">
 																																																																<div class="d-flex align-items-center">
 																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
-																																																																												class="text-uppercase">&#8377;
+																																																																												class="text-uppercase">
 																																																																												{{ $warehouse_manager_users }}</span>
 																																																																				</h4>
 																																																																</div>
@@ -482,9 +482,9 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
 
-                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                                                                                                                                                                                <a href="{{ route("delivery_management.agent.paginate.get") }}" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -498,7 +498,7 @@
 																																																												<div class="flex-grow-1 ms-3">
 																																																																<div class="d-flex align-items-center">
 																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
-																																																																												class="text-uppercase">&#8377;
+																																																																												class="text-uppercase">
 																																																																												{{ $delivery_agent_users }}</span>
 																																																																				</h4>
 																																																																</div>
@@ -509,13 +509,9 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
 
-                                                                                                                                                                                @endhasanyrole
-
-                                                                                                                                                                                @hasanyrole("Super-Admin|Sales Coordinators")
-
-                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                                                                                                                                                                                <a href="{{ route("user.paginate.get") }}?filter[has_role]=User" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -529,61 +525,7 @@
 																																																												<div class="flex-grow-1 ms-3">
 																																																																<div class="d-flex align-items-center">
 																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
-																																																																												class="text-uppercase">&#8377;
-																																																																												{{ $reward_rider_users }}</span>
-																																																																				</h4>
-																																																																</div>
-																																																																<p class="text-muted mb-0">
-																																																																				Reward Riders
-																																																																</p>
-																																																												</div>
-																																																								</div>
-																																																				</div><!-- end card body -->
-																																																</div>
-																																												</div><!-- end col -->
-
-                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-																																																<div class="card card-animate no-box-shadow">
-																																																				<div class="card-body">
-																																																								<div class="d-flex align-items-center">
-																																																												<div class="avatar-sm flex-shrink-0">
-																																																																<span
-																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
-																																																																				<i
-																																																																								class="ri-money-dollar-circle-line text-success"></i>
-																																																																</span>
-																																																												</div>
-																																																												<div class="flex-grow-1 ms-3">
-																																																																<div class="d-flex align-items-center">
-																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
-																																																																												class="text-uppercase">&#8377;
-																																																																												{{ $referral_rockstar_users }}</span>
-																																																																				</h4>
-																																																																</div>
-																																																																<p class="text-muted mb-0">
-																																																																				Referral Rockstars
-																																																																</p>
-																																																												</div>
-																																																								</div>
-																																																				</div><!-- end card body -->
-																																																</div>
-																																												</div><!-- end col -->
-
-                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-																																																<div class="card card-animate no-box-shadow">
-																																																				<div class="card-body">
-																																																								<div class="d-flex align-items-center">
-																																																												<div class="avatar-sm flex-shrink-0">
-																																																																<span
-																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
-																																																																				<i
-																																																																								class="ri-money-dollar-circle-line text-success"></i>
-																																																																</span>
-																																																												</div>
-																																																												<div class="flex-grow-1 ms-3">
-																																																																<div class="d-flex align-items-center">
-																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
-																																																																												class="text-uppercase">&#8377;
+																																																																												class="text-uppercase">
 																																																																												{{ $normal_users }}</span>
 																																																																				</h4>
 																																																																</div>
@@ -594,11 +536,13 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
+
                                                                                                                                                                                 @endhasanyrole
 
-                                                                                                                                                                                @hasanyrole("Staff|Super-Admin")
-                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                                                                                                                                                                                @hasanyrole("Super-Admin|Sales Coordinators")
+
+                                                                                                                                                                                <a href="{{ route("promoter.agent.paginate.get") }}" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -612,7 +556,90 @@
 																																																												<div class="flex-grow-1 ms-3">
 																																																																<div class="d-flex align-items-center">
 																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
-																																																																												class="text-uppercase">&#8377;
+																																																																												class="text-uppercase">
+																																																																												{{ $reward_rider_users }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Reward Riders
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</a><!-- end col -->
+
+                                                                                                                                                                                <a href="{{ route("promoter.agent.paginate.get") }}" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">
+																																																																												{{ $referral_rockstar_users }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				Referral Rockstars
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</a><!-- end col -->
+
+                                                                                                                                                                                <a href="{{ route("promoter.agent.paginate.get") }}" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">
+																																																																												{{ $app_promoter_users }}</span>
+																																																																				</h4>
+																																																																</div>
+																																																																<p class="text-muted mb-0">
+																																																																				App Promoters
+																																																																</p>
+																																																												</div>
+																																																								</div>
+																																																				</div><!-- end card body -->
+																																																</div>
+																																												</a><!-- end col -->
+                                                                                                                                                                                @endhasanyrole
+
+                                                                                                                                                                                @hasanyrole("Staff|Super-Admin")
+                                                                                                                                                                                <a href="{{ route("enquiry.contact_form.paginate.get") }}" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+																																																<div class="card card-animate no-box-shadow">
+																																																				<div class="card-body">
+																																																								<div class="d-flex align-items-center">
+																																																												<div class="avatar-sm flex-shrink-0">
+																																																																<span
+																																																																				class="avatar-title bg-soft-success text-success rounded-2 fs-2">
+																																																																				<i
+																																																																								class="ri-money-dollar-circle-line text-success"></i>
+																																																																</span>
+																																																												</div>
+																																																												<div class="flex-grow-1 ms-3">
+																																																																<div class="d-flex align-items-center">
+																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
+																																																																												class="text-uppercase">
 																																																																												{{ $contact_enquiry }}</span>
 																																																																				</h4>
 																																																																</div>
@@ -623,9 +650,9 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
 
-                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                                                                                                                                                                                <a href="{{ route("enquiry.order_form.paginate.get") }}" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -639,7 +666,7 @@
 																																																												<div class="flex-grow-1 ms-3">
 																																																																<div class="d-flex align-items-center">
 																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
-																																																																												class="text-uppercase">&#8377;
+																																																																												class="text-uppercase">
 																																																																												{{ $order_enquiry }}</span>
 																																																																				</h4>
 																																																																</div>
@@ -650,11 +677,11 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
                                                                                                                                                                                 @endhasanyrole
 
                                                                                                                                                                                 @hasanyrole("Super-Admin|Content Manager")
-                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                                                                                                                                                                                <a href="{{ route("testimonial.paginate.get") }}" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -668,7 +695,7 @@
 																																																												<div class="flex-grow-1 ms-3">
 																																																																<div class="d-flex align-items-center">
 																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
-																																																																												class="text-uppercase">&#8377;
+																																																																												class="text-uppercase">
 																																																																												{{ $testimonials }}</span>
 																																																																				</h4>
 																																																																</div>
@@ -679,9 +706,9 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
 
-                                                                                                                                                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                                                                                                                                                                                <a href="{{ route("legal.paginate.get") }}" class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
 																																																<div class="card card-animate no-box-shadow">
 																																																				<div class="card-body">
 																																																								<div class="d-flex align-items-center">
@@ -695,7 +722,7 @@
 																																																												<div class="flex-grow-1 ms-3">
 																																																																<div class="d-flex align-items-center">
 																																																																				<h4 class="fs-4 flex-grow-1 mb-0"><span
-																																																																												class="text-uppercase">&#8377;
+																																																																												class="text-uppercase">
 																																																																												{{ $legal_pages }}</span>
 																																																																				</h4>
 																																																																</div>
@@ -706,7 +733,7 @@
 																																																								</div>
 																																																				</div><!-- end card body -->
 																																																</div>
-																																												</div><!-- end col -->
+																																												</a><!-- end col -->
                                                                                                                                                                                 @endhasanyrole
 
                                                                                                                                                                                 @hasanyrole("App Promoter|Reward Riders|Referral Rockstars")

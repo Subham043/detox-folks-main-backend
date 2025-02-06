@@ -25,6 +25,13 @@ class UserService
         return QueryBuilder::for($query)
                 ->allowedFilters([
                     AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::callback('has_role', function (Builder $query, $value) {
+                        if($value!='all'){
+                            $query->whereHas('roles', function($q) use($value) {
+                                $q->where('name', $value);
+                            });
+                        }
+                    }),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());
@@ -98,6 +105,7 @@ class CommonFilter implements Filter
     {
         $query->where(function($q) use($value){
             $q->where('name', 'LIKE', '%' . $value . '%')
+            ->orWhere('phone', 'LIKE', '%' . $value . '%')
             ->orWhere('email', 'LIKE', '%' . $value . '%');
         });
     }
