@@ -301,7 +301,7 @@
                                                     <div class="invoice_to_name_text">{{ $order->name }}</div>
                                                     <div>+91-{{ $order->phone }}</div>
                                                     <div><a href="mailto:{{ $order->email }}">{{ $order->email }}</a></div>
-                                                    <div>{{ $order->address }},<br/> {{ $order->city }} - {{ $order->pin }},<br/>
+                                                    <div style="max-width: 250px;">{{ $order->address }},<br/> {{ $order->city }} - {{ $order->pin }},<br/>
                                                         {{ $order->state }}, {{ $order->country }}</div>
                                                 </div>
                                                 <div id="project">
@@ -321,7 +321,7 @@
 																								<th>PRICE</th>
 																								<th>TAXES</th>
 																								<th>TOTAL<br/> TAX</th>
-																								<th>PRICE<br/> AFTER<br/> TAX</th>
+																								<th>PRICE<br/> (Incl. Tax)</th>
 																								<th>QTY</th>
 																								<th class="text-right">TOTAL</th>
 																				</tr>
@@ -331,11 +331,11 @@
 																								<tr>
 																												{{-- <td class="service">{{ $k + 1 }}</td> --}}
 																												<td class="desc">{{ $v->name }}</td>
-																												<td class="unit">{{ $v->discounted_price==0 ? $v->discount_in_price : $v->discounted_price }}</td>
+																												<td class="unit">{{ $v->discounted_price==0 ? $v->discount_in_price : $v->discounted_price }}/{{ $v->unit }}</td>
 																												<td class="unit">
                                                                                                                     @if($v->taxes->count() > 0)
                                                                                                                         @foreach($v->taxes as $tax)
-                                                                                                                            <span class="badge badge-soft-primary">{{$tax->tax_name}} ({{ $tax->value }}%)</span><br/>
+                                                                                                                            <span>{{$tax->tax_name}} ({{ $tax->tax_value }}%)</span><br/>
                                                                                                                         @endforeach
                                                                                                                     @else
                                                                                                                         N/A

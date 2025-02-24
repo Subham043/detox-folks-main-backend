@@ -49,10 +49,10 @@
 																																												<thead class="table-light text-muted">
 																																																<tr>
 																																																				<th scope="col">Product Details</th>
-																																																				<th scope="col">Item Price</th>
+																																																				<th scope="col">Price</th>
 																																																				<th scope="col">Taxes</th>
 																																																				<th scope="col">Total Tax</th>
-																																																				<th scope="col">Total Price</th>
+																																																				<th scope="col">Price (Incl. Tax)</th>
 																																																				<th scope="col">Quantity</th>
 																																																				<th scope="col" class="text-end">Total Amount</th>
 																																																</tr>
@@ -85,7 +85,7 @@
 																																																								<td>
                                                                                                                                                                                                                                     @if($v->taxes->count() > 0)
                                                                                                                                                                                                                                     @foreach($v->taxes as $tax)
-                                                                                                                                                                                                                                        <span class="badge badge-soft-primary">{{$tax->tax_name}} ({{ $tax->value }}%)</span><br/>
+                                                                                                                                                                                                                                        <span class="badge badge-soft-primary">{{$tax->tax_name}} ({{ $tax->tax_value }}%)</span><br/>
                                                                                                                                                                                                                                     @endforeach
                                                                                                                                                                                                                                     @else
                                                                                                                                                                                                                                     N/A
