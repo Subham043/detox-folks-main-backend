@@ -30,7 +30,6 @@ class OrderCollection extends JsonResource
             'order_mode' => $this->order_mode,
             'delivery_slot' => $this->delivery_slot,
             'products' => OrderProductCollection::collection($this->products),
-            'taxes' => OrderTaxCollection::collection($this->taxes),
             'charges' => OrderChargeCollection::collection($this->charges),
             'statuses' => OrderStatusCollection::collection($this->statuses),
             'payment' => OrderPaymentCollection::make($this->payment),

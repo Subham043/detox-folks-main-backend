@@ -19,7 +19,6 @@ class OrderTaxCollection extends JsonResource
             'tax_name' => $this->tax_name,
             'tax_slug' => $this->tax_slug,
             'tax_value' => round($this->tax_value, 2),
-            'total_tax_in_amount' => $this->total_tax_in_amount,
             'created_at' => $this->created_at->format("d M Y h:i A"),
             'updated_at' => $this->updated_at->format("d M Y h:i A"),
         ];

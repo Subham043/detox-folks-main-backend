@@ -32,7 +32,6 @@ class RecentlyOrderedProductCollection extends JsonResource
             'order_mode' => $this->order_mode,
             'products' => OrderProductCollection::collection($this->products),
             'charges' => OrderChargeCollection::collection($this->charges),
-            'taxes' => OrderTaxCollection::collection($this->taxes),
             'statuses' => OrderStatusCollection::collection($this->statuses),
             'payment' => OrderPaymentCollection::make($this->payment),
             'created_at' => $this->created_at->format("d M Y h:i A"),

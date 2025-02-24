@@ -30,6 +30,7 @@ class OrderProductCollection extends JsonResource
             'color' => $this->color,
             'amount' => $this->amount,
             'unit' => $this->unit,
+            'taxes' => OrderTaxCollection::collection($this->taxes),
             'created_at' => $this->created_at->format("d M Y h:i A"),
             'updated_at' => $this->updated_at->format("d M Y h:i A"),
         ];
