@@ -19,6 +19,8 @@ class UserProductPriceCollection extends JsonResource
             'min_quantity' => $this->min_quantity,
             'price' => $this->price,
             'discount' => $this->discount,
+            'discounted_price' => $this->discounted_price,
+            'tax_in_price' => $this->tax_in_price,
             'discount_in_price' => $this->discount_in_price,
             'created_at' => $this->created_at->format("d M Y h:i A"),
             'updated_at' => $this->updated_at->format("d M Y h:i A"),

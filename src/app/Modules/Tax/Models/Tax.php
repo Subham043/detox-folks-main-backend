@@ -39,15 +39,6 @@ class Tax extends Model
         'tax_value' => 0.0,
     ];
 
-    protected function totalTaxInAmount(): Attribute
-    {
-        return new Attribute(
-            get: function(){
-                return round((new CartAmountService)->get_subtotal() * ($this->tax_value/100), 2);
-            },
-        );
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id')->withDefault();

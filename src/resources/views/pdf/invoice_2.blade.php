@@ -316,9 +316,12 @@
 												<table>
 																<thead>
 																				<tr>
-																								<th class="service">SL. NO.</th>
+																								{{-- <th class="service">SL. NO.</th> --}}
 																								<th class="desc">NAME</th>
 																								<th>PRICE</th>
+																								<th>TAXES</th>
+																								<th>TOTAL<br/> TAX</th>
+																								<th>PRICE<br/> AFTER<br/> TAX</th>
 																								<th>QTY</th>
 																								<th class="text-right">TOTAL</th>
 																				</tr>
@@ -326,42 +329,48 @@
 																<tbody>
 																				@foreach ($order->products as $k => $v)
 																								<tr>
-																												<td class="service">{{ $k + 1 }}</td>
+																												{{-- <td class="service">{{ $k + 1 }}</td> --}}
 																												<td class="desc">{{ $v->name }}</td>
-																												<td class="unit">Rs. {{ $v->discount_in_price }}/{{ $v->unit }}</td>
+																												<td class="unit">{{ $v->discounted_price==0 ? $v->discount_in_price : $v->discounted_price }}</td>
+																												<td class="unit">
+                                                                                                                    @if($v->taxes->count() > 0)
+                                                                                                                        @foreach($v->taxes as $tax)
+                                                                                                                            <span class="badge badge-soft-primary">{{$tax->tax_name}} ({{ $tax->value }}%)</span><br/>
+                                                                                                                        @endforeach
+                                                                                                                    @else
+                                                                                                                        N/A
+                                                                                                                    @endif
+                                                                                                                </td>
+																												<td class="unit">{{ $v->tax_in_price }}</td>
+																												<td class="unit">{{ $v->discount_in_price }}/{{ $v->unit }}</td>
 																												<td class="qty">{{ $v->quantity }}</td>
-																												<td class="total">Rs. {{ $v->amount }}</td>
+																												<td class="total">{{ $v->amount }}</td>
 																								</tr>
 																				@endforeach
 																				<tr class="charge_row_first">
-																								<td colspan="3" class="payment_method"><span>Payment Method</span> : {{ $order->payment ? $order->payment->mode : "" }}</td>
+																								<td colspan="5" class="payment_method"><span>Payment Method</span> : {{ $order->payment ? $order->payment->mode : "" }}</td>
 																								<td class="charge_name">Subtotal</td>
-																								<td class="charge_total">Rs. {{ $order->subtotal }}</td>
+																								<td class="charge_total">{{ $order->subtotal }}</td>
 																				</tr>
-																				@foreach ($order->taxes as $ke => $va)
-                                                                                                <tr>
-                                                                                                                <td></td>
-                                                                                                                <td></td>
-                                                                                                                <td></td>
-                                                                                                                <td class="charge_name">{{ $va->tax_name }} ({{ $va->tax_value }}%)</td>
-																												<td class="charge_total">Rs. {{ $va->total_tax_in_amount }}</td>
-                                                                                                </tr>
-																				@endforeach
 																				@foreach ($order->charges as $k => $v)
                                                                                                 <tr>
                                                                                                                 <td></td>
                                                                                                                 <td></td>
                                                                                                                 <td></td>
+                                                                                                                <td></td>
+                                                                                                                <td></td>
                                                                                                                 <td class="charge_name">{{ $v->charges_name }}</td>
-																												<td class="charge_total">Rs. {{ $v->total_charge_in_amount }}</td>
+																												<td class="charge_total">{{ $v->total_charge_in_amount }}</td>
                                                                                                 </tr>
 																				@endforeach
 																				<tr class="charge_row_last">
                                                                                                 <td></td>
 																								<td></td>
 																								<td></td>
+																								<td></td>
+																								<td></td>
 																								<td class="charge_name">Total</td>
-																								<td class="charge_total">Rs. {{ $order->total_price }}</td>
+																								<td class="charge_total">Rs.{{ $order->total_price }}</td>
 																				</tr>
 																</tbody>
 												</table>

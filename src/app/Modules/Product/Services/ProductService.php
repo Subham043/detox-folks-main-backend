@@ -20,12 +20,12 @@ class ProductService
 
     public function all(): Collection
     {
-        return Product::with('categories')->get();
+        return Product::with(['categories', 'taxes'])->get();
     }
 
     public function paginate(Int $total = 10): LengthAwarePaginator
     {
-        $query = Product::with('categories')->latest();
+        $query = Product::with(['categories', 'taxes'])->latest();
         return QueryBuilder::for($query)
                 ->allowedFilters([
                     AllowedFilter::custom('search', new CommonFilter),
@@ -41,6 +41,7 @@ class ProductService
         $query = Product::with([
             'categories',
             'sub_categories',
+            'taxes',
             'product_specifications',
             'product_images',
             'product_colors',
@@ -60,7 +61,7 @@ class ProductService
         ")
         ->where('is_draft', true);
         return QueryBuilder::for($query)
-                ->allowedIncludes(['categories', 'sub_categories', 'product_specifications', 'product_prices', 'product_images', 'product_colors'])
+                ->allowedIncludes(['categories', 'sub_categories', 'product_specifications', 'product_prices', 'product_images', 'product_colors', 'taxes'])
                 ->defaultSort('name')
                 // ->allowedSorts('id', 'name')
                 ->allowedSorts([
@@ -100,7 +101,7 @@ class ProductService
 
     public function getById(Int $id): Product|null
     {
-        return Product::with(['categories', 'product_specifications', 'product_colors', 'product_prices'])->findOrFail($id);
+        return Product::with(['categories', 'product_specifications', 'product_colors', 'product_prices', 'taxes'])->findOrFail($id);
     }
 
     public function getBySlug(String $slug): Product|null
@@ -115,6 +116,7 @@ class ProductService
             'product_specifications',
             'product_images',
             'product_colors',
+            'taxes',
             'product_prices'=>function($q){
                 $q->orderBy('min_quantity', 'asc');
             },
@@ -154,6 +156,12 @@ class ProductService
             $path = str_replace("storage","app/public",$product->image);
             (new FileService)->delete_file($path);
         }
+    }
+
+    public function save_taxes(Product $product, array $data): Product
+    {
+        $product->taxes()->sync($data);
+        return $product;
     }
 
     public function save_categories(Product $product, array $data): Product

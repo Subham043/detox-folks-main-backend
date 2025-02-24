@@ -28,7 +28,6 @@ return new class extends Migration
             $table->text('map_information')->nullable();
             $table->string('subtotal', 500)->default(0)->nullable();
             $table->string('total_charges', 500)->default(0)->nullable();
-            $table->string('total_taxes', 500)->default(0)->nullable();
             $table->string('total_price', 500)->default(0)->nullable();
             $table->boolean('accept_terms')->default(0);
             $table->boolean('include_gst')->default(0);

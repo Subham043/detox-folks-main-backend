@@ -8,6 +8,7 @@ use App\Modules\ProductImage\Resources\UserProductImageCollection;
 use App\Modules\ProductPrice\Resources\UserProductPriceCollection;
 use App\Modules\ProductSpecification\Resources\UserProductSpecificationCollection;
 use App\Modules\SubCategory\Resources\UserSubCategoryCollection;
+use App\Modules\Tax\Resources\UserTaxCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserProductCollection extends JsonResource
@@ -45,6 +46,7 @@ class UserProductCollection extends JsonResource
             'product_images' => UserProductImageCollection::collection($this->product_images),
             'categories' => UserCategoryMainCollection::collection($this->categories),
             'sub_categories' => UserSubCategoryCollection::collection($this->sub_categories),
+            'taxes' => UserTaxCollection::collection($this->taxes),
             'created_at' => $this->created_at->format("d M Y h:i A"),
             'updated_at' => $this->updated_at->format("d M Y h:i A"),
         ];

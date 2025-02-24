@@ -17,8 +17,8 @@ use App\Modules\Order\Models\Order;
 use App\Modules\Order\Models\OrderCharge;
 use App\Modules\Order\Models\OrderPayment;
 use App\Modules\Order\Models\OrderProduct;
+use App\Modules\Order\Models\OrderProductTax;
 use App\Modules\Order\Models\OrderStatus;
-use App\Modules\Order\Models\OrderTax;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -61,6 +61,7 @@ class OrderService
                     'product_specifications',
                     'product_images',
                     'product_colors',
+                    'taxes',
                     'product_prices'=>function($q){
                         $q->orderBy('min_quantity', 'asc');
                     },
@@ -76,6 +77,7 @@ class OrderService
                 'product_specifications',
                 'product_images',
                 'product_colors',
+                'taxes',
                 'product_prices'=>function($q){
                     $q->orderBy('min_quantity', 'asc');
                 },
@@ -89,7 +91,7 @@ class OrderService
     public function paginateForAdmin(Int $total = 10): LengthAwarePaginator
     {
         return QueryBuilder::for(Order::commonWith())
-        ->allowedIncludes(['products', 'charges', 'taxes', 'statuses', 'current_status', 'payment'])
+        ->allowedIncludes(['products', 'charges', 'statuses', 'current_status', 'payment'])
                 ->defaultSort('-id')
                 ->allowedSorts('id', 'total_price', 'delivery_slot', 'pin')
                 ->allowedFilters([
@@ -127,7 +129,7 @@ class OrderService
     public function excelForAdmin(): Collection
     {
         return QueryBuilder::for(Order::commonWith())
-        ->allowedIncludes(['products', 'charges', 'taxes', 'statuses', 'current_status', 'payment'])
+        ->allowedIncludes(['products', 'charges', 'statuses', 'current_status', 'payment'])
                 ->defaultSort('-id')
                 ->allowedSorts('id', 'total_price', 'delivery_slot', 'pin')
                 ->allowedFilters([
@@ -164,7 +166,7 @@ class OrderService
     public function orderCountAdmin(): int
     {
         return QueryBuilder::for(Order::commonWith())
-        ->allowedIncludes(['products', 'charges', 'taxes', 'statuses', 'current_status', 'payment'])
+        ->allowedIncludes(['products', 'charges', 'statuses', 'current_status', 'payment'])
                 ->defaultSort('-id')
                 ->allowedSorts('id', 'total_price', 'delivery_slot', 'pin')
                 ->allowedFilters([
@@ -203,7 +205,7 @@ class OrderService
         return QueryBuilder::for(Order::commonWith()->whereHas('payment', function($q) {
             $q->where('status', PaymentStatus::PAID);
         }))
-        ->allowedIncludes(['products', 'charges', 'taxes', 'statuses', 'current_status', 'payment'])
+        ->allowedIncludes(['products', 'charges', 'statuses', 'current_status', 'payment'])
                 ->defaultSort('-id')
                 ->allowedSorts('id', 'total_price', 'delivery_slot', 'pin')
                 ->allowedFilters([
@@ -242,7 +244,7 @@ class OrderService
         return QueryBuilder::for(Order::commonWith()->whereHas('payment', function($q) {
             $q->where('status', PaymentStatus::REFUND);
         }))
-        ->allowedIncludes(['products', 'charges', 'taxes', 'statuses', 'current_status', 'payment'])
+        ->allowedIncludes(['products', 'charges', 'statuses', 'current_status', 'payment'])
                 ->defaultSort('-id')
                 ->allowedSorts('id', 'total_price', 'delivery_slot', 'pin')
                 ->allowedFilters([
@@ -319,7 +321,6 @@ class OrderService
                 'order_mode' => $data['order_mode'],
                 'delivery_slot' => $data['delivery_slot'],
                 'subtotal' => (new CartAmountService())->get_subtotal(),
-                'total_taxes' => (new CartAmountService())->get_tax_price(),
                 'total_charges' => (new CartAmountService())->get_charge_price(),
                 'total_price' => (new CartAmountService())->get_total_price(),
             ]);
@@ -328,7 +329,7 @@ class OrderService
             $carts = (new CartService)->all();
             foreach ($carts as $cart) {
                 # code...
-                OrderProduct::create([
+                $order_product = OrderProduct::create([
                     'name' => $cart->product->name,
                     'slug' => $cart->product->slug,
                     'brief_description' => $cart->product->brief_description,
@@ -336,6 +337,8 @@ class OrderService
                     'min_quantity' => $cart->product_price->min_quantity,
                     'price' => $cart->product_price->price,
                     'discount' => $cart->product_price->discount,
+                    'discounted_price' => $cart->product_price->discounted_price,
+                    'tax_in_price' => $cart->product_price->tax_in_price,
                     'discount_in_price' => $cart->product_price->discount_in_price,
                     'quantity' => $cart->quantity,
                     'amount' => $cart->amount,
@@ -343,16 +346,14 @@ class OrderService
                     'unit' => $cart->product->cart_quantity_specification,
                     'order_id' => $order->id,
                 ]);
-            }
-            $taxes = (new CartAmountService())->get_all_taxes();
-            foreach ($taxes as $tax) {
-                # code...
-                OrderTax::create([
-                    'tax_name' => $tax->tax_name,
-                    'tax_slug' => $tax->tax_slug,
-                    'tax_value' => $tax->tax_value,
-                    'order_id' => $order->id,
-                ]);
+                foreach ($cart->product->taxes as $tax) {
+                    OrderProductTax::create([
+                        'tax_name' => $tax->tax_name,
+                        'tax_slug' => $tax->tax_slug,
+                        'tax_value' => $tax->tax_value,
+                        'order_product_id' => $order_product->id,
+                    ]);
+                }
             }
             $charges = (new CartAmountService())->get_all_charges();
             foreach ($charges as $charge) {

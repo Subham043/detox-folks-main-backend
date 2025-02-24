@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 500);
             $table->string('slug', 500)->unique();
+            $table->string('hsn', 500)->nullable();
             $table->text('description')->nullable();
             $table->text('description_unfiltered')->nullable();
             $table->text('brief_description')->nullable();
@@ -43,3 +44,6 @@ return new class extends Migration
         Schema::dropIfExists('products');
     }
 };
+
+
+// ALTER TABLE `products` ADD `hsn` VARCHAR(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL AFTER `slug`;

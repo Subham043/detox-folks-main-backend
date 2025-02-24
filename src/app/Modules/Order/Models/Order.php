@@ -38,7 +38,6 @@ class Order extends Model
         'map_information',
         'subtotal',
         'total_charges',
-        'total_taxes',
         'total_price',
         'accept_terms',
         'include_gst',
@@ -52,7 +51,6 @@ class Order extends Model
         'updated_at' => 'datetime',
         'subtotal' => 'float',
         'total_charges' => 'float',
-        'total_taxes' => 'float',
         'total_price' => 'float',
         'accept_terms' => 'boolean',
         'include_gst' => 'boolean',
@@ -63,15 +61,6 @@ class Order extends Model
         'order_mode' => OrderMode::WEBSITE,
         'map_information' => null,
         'delivery_slot' => null,
-    ];
-
-    protected array $orderWith = [
-        'products',
-        'charges',
-        'taxes',
-        'statuses',
-        'current_status',
-        'payment',
     ];
 
     protected function mapInformation(): Attribute
@@ -90,11 +79,6 @@ class Order extends Model
     public function charges()
     {
         return $this->hasMany(OrderCharge::class, 'order_id');
-    }
-
-    public function taxes()
-    {
-        return $this->hasMany(OrderTax::class, 'order_id');
     }
 
     public function products()
@@ -124,7 +108,17 @@ class Order extends Model
 
     public function scopeCommonWith(Builder $query): Builder
     {
-        return $query->with($this->orderWith);
+        return $query->with([
+        'products' => function ($q) {
+            $q->with([
+                'taxes'
+            ]);
+        },
+        'charges',
+        'statuses',
+        'current_status',
+        'payment',
+    ]);
     }
 
     public function scopePlacedByUser(Builder $query): Builder

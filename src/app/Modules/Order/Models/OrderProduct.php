@@ -26,6 +26,8 @@ class OrderProduct extends Model
         'min_quantity',
         'price',
         'discount',
+        'discounted_price',
+        'tax_in_price',
         'discount_in_price',
         'quantity',
         'amount',
@@ -40,6 +42,8 @@ class OrderProduct extends Model
         'min_quantity' => 'float',
         'price' => 'float',
         'discount' => 'float',
+        'discounted_price' => 'float',
+        'tax_in_price' => 'float',
         'discount_in_price' => 'float',
         'quantity' => 'float',
         'amount' => 'float',
@@ -69,5 +73,11 @@ class OrderProduct extends Model
     public function product()
     {
         return $this->belongsTo(Product::class, 'slug', 'slug')->withDefault();
+    }
+
+
+    public function taxes()
+    {
+        return $this->hasMany(OrderProductTax::class, 'order_product_id');
     }
 }

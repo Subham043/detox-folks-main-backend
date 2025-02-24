@@ -257,6 +257,19 @@
 																																																"value" => $data->cart_quantity_specification,
 																																												])
 																																								</div>
+                                                                                                                                                                <div class="col-xxl-6 col-md-6">
+																																												@include("admin.includes.select_multiple", [
+																																																"key" => "tax",
+																																																"label" => "Taxes",
+																																												])
+																																								</div>
+                                                                                                                                                                <div class="col-xxl-6 col-md-6">
+																																												@include("admin.includes.input", [
+																																																"key" => "hsn",
+																																																"label" => "HSN Code",
+																																																"value" => $data->hsn,
+																																												])
+																																								</div>
 																																				</div>
 																																				<!--end row-->
 																																</div>
@@ -514,6 +527,10 @@
 																rule: 'required',
 																errorMessage: 'Cart quantity specification is required',
 												}, ])
+												.addField('#tax', [{
+																rule: 'required',
+																errorMessage: 'Tax is required',
+												}, ])
 												.addField('#category', [{
 																rule: 'required',
 																errorMessage: 'Category is required',
@@ -538,6 +555,9 @@
 																				},
 																},
 												])
+												.addField('#hsn', [{
+																validator: (value, fields) => true,
+												}, ])
 												.addField('#sub_category', [{
 																validator: (value, fields) => true,
 												}, ])
@@ -572,8 +592,14 @@
 																				formData.append('meta_title', document.getElementById('meta_title').value)
 																				formData.append('meta_keywords', document.getElementById('meta_keywords').value)
 																				formData.append('meta_description', document.getElementById('meta_description').value)
+																				formData.append('hsn', document.getElementById('hsn').value)
 																				if ((document.getElementById('image').files).length > 0) {
 																								formData.append('image', document.getElementById('image').files[0])
+																				}
+																				if (document.getElementById('tax')?.length > 0) {
+																								for (let index = 0; index < document.getElementById('tax').length; index++) {
+																												formData.append('tax[]', document.getElementById('tax')[index].value)
+																								}
 																				}
 																				if (document.getElementById('category')?.length > 0) {
 																								for (let index = 0; index < document.getElementById('category').length; index++) {
@@ -669,6 +695,11 @@
 																												'#description': error?.response?.data?.errors?.description[0]
 																								})
 																				}
+																				if (error?.response?.data?.errors?.tax) {
+																								validation.showErrors({
+																												'#tax': error?.response?.data?.errors?.tax[0]
+																								})
+																				}
 																				if (error?.response?.data?.errors?.category) {
 																								validation.showErrors({
 																												'#category': error?.response?.data?.errors?.category[0]
@@ -677,6 +708,11 @@
 																				if (error?.response?.data?.errors?.sub_category) {
 																								validation.showErrors({
 																												'#sub_category': error?.response?.data?.errors?.sub_category[0]
+																								})
+																				}
+																				if (error?.response?.data?.errors?.hsn) {
+																								validation.showErrors({
+																												'#hsn': error?.response?.data?.errors?.hsn[0]
 																								})
 																				}
 																				if (error?.response?.data?.errors?.image) {
@@ -806,6 +842,22 @@
 																@endforeach
 												],
 												placeholderValue: 'Select categories',
+												...CHOICE_CONFIG,
+												shouldSort: false,
+												shouldSortItems: false,
+								});
+
+                                const taxChoice = new Choices('#tax', {
+												choices: [
+																@foreach ($tax as $tax)
+																				{
+																								value: '{{ $tax->id }}',
+																								label: '{{ $tax->tax_name }} ({{$tax->tax_value}}%)',
+																								selected: {{ in_array($tax->id, $taxes) ? "true" : "false" }}
+																				},
+																@endforeach
+												],
+												placeholderValue: 'Select taxes',
 												...CHOICE_CONFIG,
 												shouldSort: false,
 												shouldSortItems: false,

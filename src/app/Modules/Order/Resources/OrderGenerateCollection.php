@@ -26,7 +26,6 @@ class OrderGenerateCollection extends JsonResource
             'address' => $this->address,
             'subtotal' => $this->subtotal,
             'total_charges' => $this->total_charges,
-            'total_taxes' => $this->total_taxes,
             'total_price' => $this->total_price,
             'order_mode' => $this->order_mode,
             'products' => OrderProductCollection::collection($this->products),

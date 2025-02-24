@@ -34,12 +34,26 @@ class ProductPrice extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-    protected $appends = ['discount_in_price'];
+    protected $appends = ['discounted_price', 'tax_in_price', 'discount_in_price'];
+
+    protected function discountedPrice(): Attribute
+    {
+        return new Attribute(
+            get: fn () => round($this->price - ($this->price * ($this->discount/100)), 2),
+        );
+    }
+
+    protected function taxInPrice(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->product->taxes->sum(fn($tax) => $this->discounted_price * ($tax->tax_value / 100)),
+        );
+    }
 
     protected function discountInPrice(): Attribute
     {
         return new Attribute(
-            get: fn () => round($this->price - ($this->price * ($this->discount/100)), 2),
+            get: fn () => round(($this->discounted_price + $this->tax_in_price), 2),
         );
     }
 

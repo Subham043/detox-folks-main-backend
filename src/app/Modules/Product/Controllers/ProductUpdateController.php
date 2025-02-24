@@ -7,6 +7,7 @@ use App\Modules\Category\Services\CategoryService;
 use App\Modules\Product\Requests\ProductUpdateRequest;
 use App\Modules\Product\Services\ProductService;
 use App\Modules\SubCategory\Services\SubCategoryService;
+use App\Modules\Tax\Services\TaxService;
 use Illuminate\Support\Facades\DB;
 
 class ProductUpdateController extends Controller
@@ -14,12 +15,14 @@ class ProductUpdateController extends Controller
     private $productService;
     private $categoryService;
     private $subcategoryService;
+    private $taxService;
 
-    public function __construct(ProductService $productService, CategoryService $categoryService, SubCategoryService $subcategoryService)
+    public function __construct(ProductService $productService, CategoryService $categoryService, SubCategoryService $subcategoryService, TaxService $taxService)
     {
         $this->productService = $productService;
         $this->categoryService = $categoryService;
         $this->subcategoryService = $subcategoryService;
+        $this->taxService = $taxService;
     }
 
     public function get($id){
@@ -28,7 +31,9 @@ class ProductUpdateController extends Controller
         $categories =$data->categories->pluck('id')->toArray();
         $sub_categories =$data->sub_categories->pluck('id')->toArray();
         $sub_category = $this->subcategoryService->get_subcategories($categories);
-        return view('admin.pages.product.update', compact(['data', 'category', 'categories', 'sub_category', 'sub_categories']));
+        $tax = $this->taxService->all();
+        $taxes =$data->taxes->pluck('id')->toArray();
+        return view('admin.pages.product.update', compact(['data', 'category', 'categories', 'sub_category', 'sub_categories', 'tax', 'taxes']));
     }
 
     public function post(ProductUpdateRequest $request, $id){
@@ -38,11 +43,14 @@ class ProductUpdateController extends Controller
         try {
             //code...
             $this->productService->update(
-                $request->except(['image', 'specifications', 'prices']),
+                $request->except(['image', 'specifications', 'prices', 'tax', 'category', 'sub_category']),
                 $product
             );
             if($request->hasFile('image')){
                 $this->productService->saveImage($product);
+            }
+            if($request->tax && count($request->tax)>0){
+                $this->productService->save_taxes($product, $request->tax);
             }
             if($request->category && count($request->category)>0){
                 $this->productService->save_categories($product, $request->category);

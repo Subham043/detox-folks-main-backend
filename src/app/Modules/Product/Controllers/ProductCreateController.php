@@ -6,22 +6,26 @@ use App\Http\Controllers\Controller;
 use App\Modules\Category\Services\CategoryService;
 use App\Modules\Product\Requests\ProductCreateRequest;
 use App\Modules\Product\Services\ProductService;
+use App\Modules\Tax\Services\TaxService;
 use Illuminate\Support\Facades\DB;
 
 class ProductCreateController extends Controller
 {
     private $productService;
     private $categoryService;
+    private $taxService;
 
-    public function __construct(ProductService $productService, CategoryService $categoryService)
+    public function __construct(ProductService $productService, CategoryService $categoryService, TaxService $taxService)
     {
         $this->productService = $productService;
         $this->categoryService = $categoryService;
+        $this->taxService = $taxService;
     }
 
     public function get(){
         $category = $this->categoryService->all();
-        return view('admin.pages.product.create', compact(['category']));
+        $tax = $this->taxService->all();
+        return view('admin.pages.product.create', compact(['category', 'tax']));
     }
 
     public function post(ProductCreateRequest $request){
@@ -29,10 +33,13 @@ class ProductCreateController extends Controller
         try {
             //code...
             $product = $this->productService->create(
-                $request->except(['image', 'specifications', 'prices'])
+                $request->except(['image', 'specifications', 'prices', 'tax', 'category', 'sub_category'])
             );
             if($request->hasFile('image')){
                 $this->productService->saveImage($product);
+            }
+            if($request->tax && count($request->tax)>0){
+                $this->productService->save_taxes($product, $request->tax);
             }
             if($request->category && count($request->category)>0){
                 $this->productService->save_categories($product, $request->category);

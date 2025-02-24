@@ -15,6 +15,7 @@ class ProductUpdateRequest extends ProductCreateRequest
         return [
             'name' => 'required|string|max:500',
             'slug' => 'required|string|max:500|unique:products,slug,'.$this->route('id'),
+            'hsn' => 'nullable|string|max:500',
             'brief_description' => 'required|string',
             'description' => 'required|string',
             'description_unfiltered' => 'required|string',
@@ -29,6 +30,8 @@ class ProductUpdateRequest extends ProductCreateRequest
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string',
+            'tax' => 'required|array|min:1',
+            'tax.*' => 'required|numeric|exists:taxes,id',
             'category' => 'required|array|min:1',
             'category.*' => 'required|numeric|exists:categories,id',
             'sub_category' => 'nullable|array|min:0',

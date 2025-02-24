@@ -50,6 +50,9 @@
 																																																<tr>
 																																																				<th scope="col">Product Details</th>
 																																																				<th scope="col">Item Price</th>
+																																																				<th scope="col">Taxes</th>
+																																																				<th scope="col">Total Tax</th>
+																																																				<th scope="col">Total Price</th>
 																																																				<th scope="col">Quantity</th>
 																																																				<th scope="col" class="text-end">Total Amount</th>
 																																																</tr>
@@ -78,6 +81,17 @@
 																																																																</div>
 																																																												</div>
 																																																								</td>
+																																																								<td>&#8377; {{ $v->discounted_price==0 ? $v->discount_in_price : $v->discounted_price }}/{{ $v->unit }}</td>
+																																																								<td>
+                                                                                                                                                                                                                                    @if($v->taxes->count() > 0)
+                                                                                                                                                                                                                                    @foreach($v->taxes as $tax)
+                                                                                                                                                                                                                                        <span class="badge badge-soft-primary">{{$tax->tax_name}} ({{ $tax->value }}%)</span><br/>
+                                                                                                                                                                                                                                    @endforeach
+                                                                                                                                                                                                                                    @else
+                                                                                                                                                                                                                                    N/A
+                                                                                                                                                                                                                                    @endif
+                                                                                                                                                                                                                                </td>
+																																																								<td>&#8377; {{ $v->tax_in_price }}</td>
 																																																								<td>&#8377; {{ $v->discount_in_price }}/{{ $v->unit }}</td>
 																																																								<td>{{ $v->quantity }}</td>
 																																																								<td class="fw-medium text-end">
@@ -91,25 +105,15 @@
 																																																								Sub-Total :
 																																																				</th>
 																																																				<td></td>
-																																																				<th class="text-end" colspan="4">&#8377; {{ $order->subtotal }}</th>
+																																																				<th class="text-end" colspan="7">&#8377; {{ $order->subtotal }}</th>
 																																																</tr>
-																																																@foreach ($order->taxes as $ke => $va)
-																																																				<tr class="border-top border-top-dashed">
-																																																								<th>
-																																																												{{ $va->tax_name }} ({{ $va->tax_value }}%) :
-																																																								</th>
-																																																								<td></td>
-																																																								<th class="text-end" colspan="4">&#8377;
-																																																												{{ $va->total_tax_in_amount }}</th>
-																																																				</tr>
-																																																@endforeach
 																																																@foreach ($order->charges as $k => $v)
 																																																				<tr class="border-top border-top-dashed">
 																																																								<th>
 																																																												{{ $v->charges_name }} :
 																																																								</th>
 																																																								<td></td>
-																																																								<th class="text-end" colspan="4">&#8377;
+																																																								<th class="text-end" colspan="7">&#8377;
 																																																												{{ $v->total_charge_in_amount }}</th>
 																																																				</tr>
 																																																@endforeach
@@ -118,7 +122,7 @@
 																																																								Total :
 																																																				</th>
 																																																				<td></td>
-																																																				<th class="text-end" colspan="4">&#8377; {{ $order->total_price }}
+																																																				<th class="text-end" colspan="7">&#8377; {{ $order->total_price }}
 																																																				</th>
 																																																</tr>
 																																												</tbody>

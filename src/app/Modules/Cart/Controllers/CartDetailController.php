@@ -24,8 +24,6 @@ class CartDetailController extends Controller
             'message' => "Cart recieved successfully.",
             'cart' => CartCollection::make($cart),
             'cart_subtotal' => (new CartAmountService())->get_subtotal(),
-            'tax_charges' => UserTaxCollection::collection((new CartAmountService())->get_all_taxes()),
-            'total_taxes' => (new CartAmountService())->get_tax_price(),
             'cart_charges' => UserChargeCollection::collection((new CartAmountService())->get_all_charges()),
             'total_charges' => (new CartAmountService())->get_charge_price(),
             'total_price' => (new CartAmountService())->get_total_price(),

@@ -23,6 +23,8 @@ class OrderProductCollection extends JsonResource
             'min_quantity' => $this->min_quantity,
             'price' => $this->price,
             'discount' => $this->discount,
+            'discounted_price' => $this->discounted_price,
+            'tax_in_price' => $this->tax_in_price,
             'discount_in_price' => $this->discount_in_price,
             'quantity' => $this->quantity,
             'color' => $this->color,

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('min_quantity', 500);
             $table->string('price', 500);
             $table->string('discount', 500);
+            $table->string('discounted_price', 500)->default(0);
+            $table->string('tax_in_price', 500)->default(0);
             $table->string('discount_in_price', 500);
             $table->string('quantity', 500);
             $table->string('amount', 500);
@@ -41,3 +43,5 @@ return new class extends Migration
 };
 
 // ALTER TABLE `order_products` ADD `color` VARCHAR(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL AFTER `amount`;
+
+// ALTER TABLE `order_products` ADD `discounted_price` VARCHAR(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' AFTER `discount`, ADD `tax_in_price` VARCHAR(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' AFTER `discounted_price`;

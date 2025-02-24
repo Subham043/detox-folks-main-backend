@@ -9,6 +9,7 @@ use App\Modules\ProductImage\Models\ProductImage;
 use App\Modules\ProductPrice\Models\ProductPrice;
 use App\Modules\ProductSpecification\Models\ProductSpecification;
 use App\Modules\SubCategory\Models\SubCategory;
+use App\Modules\Tax\Models\Tax;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -29,6 +30,7 @@ class Product extends Model
     protected $fillable = [
         'name',
         'slug',
+        'hsn',
         'brief_description',
         'description',
         'description_unfiltered',
@@ -94,6 +96,11 @@ class Product extends Model
         return Attribute::make(
             set: fn (string $value) => str()->slug($value),
         );
+    }
+
+    public function taxes()
+    {
+        return $this->belongsToMany(Tax::class, 'product_taxes', 'product_id', 'tax_id');
     }
 
     public function categories()

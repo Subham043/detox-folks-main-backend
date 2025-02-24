@@ -4,13 +4,12 @@ namespace App\Modules\Order\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
-class OrderTax extends Model
+class OrderProductTax extends Model
 {
     use HasFactory;
 
-    protected $table = 'order_taxes';
+    protected $table = 'order_product_taxes';
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +20,7 @@ class OrderTax extends Model
         'tax_name',
         'tax_slug',
         'tax_value',
-        'order_id',
+        'order_product_id',
     ];
 
     protected $casts = [
@@ -34,18 +33,9 @@ class OrderTax extends Model
         'tax_value' => 0.0,
     ];
 
-    public function order()
+    public function order_product()
     {
-        return $this->belongsTo(Order::class, 'order_id')->withDefault();
+        return $this->belongsTo(OrderProduct::class, 'order_product_id')->withDefault();
     }
 
-
-    protected function totalTaxInAmount(): Attribute
-    {
-        return new Attribute(
-            get: function(){
-                return round($this->order->subtotal * ($this->tax_value/100), 2);
-            },
-        );
-    }
 }
