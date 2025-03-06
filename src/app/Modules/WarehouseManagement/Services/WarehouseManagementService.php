@@ -36,10 +36,13 @@ class WarehouseManagementService
     public function getOrderById($order_id): Order
     {
         return Order::with([
-            'products',
+            'products' => function ($q) {
+                $q->with([
+                    'taxes'
+                ]);
+            },
             'current_status',
             'charges',
-            'taxes',
             'statuses',
             'payment',
         ])->whereHas('current_status', function($q) {

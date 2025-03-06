@@ -109,6 +109,7 @@ class AssignedOrderForAgentPaginateController extends Controller
         $successURL = route('pay.u.upi.success', ['order_id' => $order->id, 'delivery_agent_id' => auth()->user()->id]);
         $failURL = route('pay.u.upi.fail', ['order_id' => $order->id, 'delivery_agent_id' => auth()->user()->id]);
         $data = (new PayUService)->create_upi_order($order, $successURL, $failURL);
+
         return view('payu.upi')->with([
             'action' => $data['action'],
             'hash' => $data['hash'],
@@ -118,6 +119,7 @@ class AssignedOrderForAgentPaginateController extends Controller
             'failURL' => $data['failURL'],
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
             // 'qrId' => $data['qrId'],
             'amount' => $data['amount']
         ]);

@@ -200,6 +200,7 @@ class PayUService
     {
         $name = $order->name;
         $email = $order->email;
+        $phone = $order->phone;
         $amount = $order->total_price;
 
         $action = '';
@@ -211,10 +212,14 @@ class PayUService
             'amount' => $amount,
             'firstname' => $name,
             'email' => $email,
+            'phone' => $phone,
             'productinfo' => 'Webappfix',
             'enforce_paymethod' => 'qr',
-            'pg' => 'UPI',
-            'bankcode' => 'UPI',
+            'pg' => 'QR',
+            'bankcode' => 'UPIQR',
+            // 'enforce_paymethod' => 'qr',
+            // 'pg' => 'UPI',
+            // 'bankcode' => 'UPI',
             'surl' => $successURL,
             'furl' => $failURL,
             'service_provider' => 'payu_paisa',
@@ -263,6 +268,7 @@ class PayUService
             'failURL' => $failURL,
             'name' => $name,
             'email' => $email,
+            'phone' => $phone,
             'amount' => $amount
         ];
     }

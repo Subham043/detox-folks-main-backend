@@ -308,10 +308,13 @@ class DeliveryManagementService
     public function getOrderAssigendById($agent_id, $order_id): Order
     {
         return Order::with([
-            'products',
+            'products' => function ($q) {
+                $q->with([
+                    'taxes'
+                ]);
+            },
             'current_status',
             'charges',
-            'taxes',
             'statuses',
             'payment',
             'delivery_agent'
@@ -323,10 +326,13 @@ class DeliveryManagementService
     public function getOrderPlacedByIdPaymentPendingVia($agent_id, $order_id): Order|null
     {
         return Order::with([
-            'products',
+            'products' => function ($q) {
+                $q->with([
+                    'taxes'
+                ]);
+            },
             'current_status',
             'charges',
-            'taxes',
             'statuses',
             'payment',
             'delivery_agent'
@@ -338,10 +344,13 @@ class DeliveryManagementService
     public function getOrderPlacedById($order_id): Order|null
     {
         return Order::with([
-            'products',
+            'products' => function ($q) {
+                $q->with([
+                    'taxes'
+                ]);
+            },
             'current_status',
             'charges',
-            'taxes',
             'statuses',
             'payment',
             'delivery_agent'
