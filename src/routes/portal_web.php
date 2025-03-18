@@ -356,15 +356,17 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/agent/{agent_id}/installer/{user_id}', [PromoterInstalledController::class, 'destroy', 'as' => 'promoter.agent.installer.delete'])->name('promoter.agent.installer.delete')->middleware(['role:Super-Admin|Staff']);
         Route::get('/agent/{agent_id}/installer/{user_id}/toggle', [PromoterInstalledController::class, 'toggle', 'as' => 'promoter.agent.installer.toggle'])->name('promoter.agent.installer.toggle')->middleware(['role:Super-Admin|Staff|Sales Coordinators']);
         Route::prefix('/report')->group(function () {
-            Route::get('/', [PromoterReportController::class, 'list', 'as' => 'promoter.report.paginate.get'])->name('promoter.report.paginate.get')->middleware(['role:Super-Admin|Staff|Sales Coordinators']);
-            Route::get('/excel', [PromoterReportController::class, 'excel', 'as' => 'promoter.report.excel.get'])->name('promoter.report.excel.get')->middleware(['role:Super-Admin|Staff|Sales Coordinators']);
-            Route::get('/create', [PromoterReportController::class, 'create', 'as' => 'promoter.report.create.get'])->name('promoter.report.create.get')->middleware(['role:Super-Admin|Staff|Sales Coordinators']);
-            Route::post('/create', [PromoterReportController::class, 'store', 'as' => 'promoter.report.create.post'])->name('promoter.report.create.post')->middleware(['role:Super-Admin|Staff|Sales Coordinators']);
-            Route::get('/update/{id}', [PromoterReportController::class, 'edit', 'as' => 'promoter.report.update.get'])->name('promoter.report.update.get')->middleware(['role:Super-Admin|Staff|Sales Coordinators']);
-            Route::post('/update/{id}', [PromoterReportController::class, 'update', 'as' => 'promoter.report.update.post'])->name('promoter.report.update.post')->middleware(['role:Super-Admin|Staff|Sales Coordinators']);
-            Route::get('/delete/{id}', [PromoterReportController::class, 'delete', 'as' => 'promoter.report.delete.get'])->name('promoter.report.delete.get')->middleware(['role:Super-Admin|Staff|Sales Coordinators']);
-            Route::get('/list', [PromoterReportController::class, 'report', 'as' => 'promoter.report.list.get'])->name('promoter.report.list.get')->middleware(['role:Super-Admin|Staff|Sales Coordinators']);
-            Route::get('/list/export', [PromoterReportController::class, 'list_excel', 'as' => 'promoter.report.list.excel'])->name('promoter.report.list.excel')->middleware(['role:Super-Admin|Staff|Sales Coordinators']);
+            Route::get('/', [PromoterReportController::class, 'list', 'as' => 'promoter.report.paginate.get'])->name('promoter.report.paginate.get')->middleware(['role:Super-Admin|Staff|Sales Coordinators|App Promoter']);
+            Route::get('/excel', [PromoterReportController::class, 'excel', 'as' => 'promoter.report.excel.get'])->name('promoter.report.excel.get')->middleware(['role:Super-Admin|Staff|Sales Coordinators|App Promoter']);
+            Route::middleware(['role:App Promoter'])->group(function () {
+                Route::get('/create', [PromoterReportController::class, 'create', 'as' => 'promoter.report.create.get'])->name('promoter.report.create.get');
+                Route::post('/create', [PromoterReportController::class, 'store', 'as' => 'promoter.report.create.post'])->name('promoter.report.create.post');
+                Route::get('/update/{id}', [PromoterReportController::class, 'edit', 'as' => 'promoter.report.update.get'])->name('promoter.report.update.get');
+                Route::post('/update/{id}', [PromoterReportController::class, 'update', 'as' => 'promoter.report.update.post'])->name('promoter.report.update.post');
+            });
+            Route::get('/delete/{id}', [PromoterReportController::class, 'delete', 'as' => 'promoter.report.delete.get'])->name('promoter.report.delete.get')->middleware(['role:Super-Admin|Staff|Sales Coordinators|App Promoter']);
+            Route::get('/list', [PromoterReportController::class, 'report', 'as' => 'promoter.report.list.get'])->name('promoter.report.list.get')->middleware(['role:Super-Admin|Staff|Sales Coordinators|App Promoter']);
+            Route::get('/list/export', [PromoterReportController::class, 'list_excel', 'as' => 'promoter.report.list.excel'])->name('promoter.report.list.excel')->middleware(['role:Super-Admin|Staff|Sales Coordinators|App Promoter']);
         });
     });
 

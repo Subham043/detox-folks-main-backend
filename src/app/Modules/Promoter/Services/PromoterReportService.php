@@ -16,7 +16,10 @@ class PromoterReportService
 
     public function paginate(Int $total = 10): LengthAwarePaginator
     {
-        $query = PromoterReport::latest();
+        $query = PromoterReport::with('promoter')->latest();
+        if(auth()->user()->hasRole('App Promoter')){
+            $query = $query->where('user_id', auth()->user()->id);
+        }
         return QueryBuilder::for($query)
                 ->allowedFilters([
                     AllowedFilter::custom('search', new AgentFilter),
@@ -65,7 +68,11 @@ class PromoterReportService
 
     public function getById(Int $id): PromoterReport|null
     {
-        return PromoterReport::findOrFail($id);
+        $query = PromoterReport::query();
+        if(auth()->user()->hasRole('App Promoter')){
+            $query = $query->where('user_id', auth()->user()->id);
+        }
+        return $query->findOrFail($id);
     }
 
     public function update(PromoterReport $promoterReport, array $data): PromoterReport|null

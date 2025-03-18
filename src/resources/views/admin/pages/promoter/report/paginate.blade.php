@@ -21,11 +21,15 @@
 																																<div class="row g-4 mb-3">
 																																				<div class="col-sm-auto">
 																																								<div>
+                                                                                                                                                                                @hasanyrole("App Promoter")
 																																												<a href="{{ route("promoter.report.create.get") }}" type="button"
 																																																class="btn btn-success add-btn" id="create-btn"><i
 																																																				class="ri-add-line me-1 align-bottom"></i> Create</a>
+                                                                                                                                                                                @endhasanyrole
+                                                                                                                                                                                @hasanyrole("Sales Coordinators|Super-Admin|Staff")
                                                                                                                                                                                 <a href="{{ route("promoter.report.list.get") }}" type="button" class="btn btn-dark add-btn" id="create-btn"><i
                                                                                                                                                                                         class="ri-file-chart-line me-1 align-bottom"></i> Report</a>
+                                                                                                                                                                                @endhasanyrole
                                                                                                                                                                                 <a href="{{ route("promoter.report.excel.get") }}?{{ request()->getQueryString() }}" download type="button"
 																																												class="btn btn-info add-btn" id="create-btn"><i
 																																																class="ri-file-excel-fill me-1 align-bottom"></i> Excel Download</a>
@@ -45,6 +49,9 @@
 																																																				<th class="sort" data-sort="customer_name">Location</th>
 																																																				<th class="sort" data-sort="customer_name">Is App Installed?</th>
 																																																				<th class="sort" data-sort="customer_name">Remark</th>
+                                                                                                                                                                                                                @hasanyrole("Sales Coordinators|Super-Admin|Staff")
+																																																				<th class="sort" data-sort="date">Created By</th>
+                                                                                                                                                                                                                @endhasanyrole
 																																																				<th class="sort" data-sort="date">Created On</th>
 																																																				<th class="sort" data-sort="action">Action</th>
 																																																</tr>
@@ -65,13 +72,18 @@
 																																																												</td>
 																																																								@endif
                                                                                                                                                                                                                                 <td class="customer_name">{{ $item->remarks ?? 'N/A' }}</td>
+                                                                                                                                                                                                                                @hasanyrole("Sales Coordinators|Super-Admin|Staff")
+                                                                                                                                                                                                                                <td class="customer_name">{{ $item->promoter->name ?? 'N/A' }}</td>
+                                                                                                                                                                                                                                @endhasanyrole
 																																																								<td class="date">{{ $item->created_at->format("d M Y h:i A") }}</td>
 																																																								<td>
 																																																												<div class="d-flex gap-2">
+                                                                                                                                                                                                                                                                @hasanyrole("App Promoter")
 																																																																<div class="edit">
 																																																																				<a href="{{ route("promoter.report.update.get", $item->id) }}"
 																																																																								class="btn btn-sm btn-primary edit-item-btn">Edit</a>
 																																																																</div>
+                                                                                                                                                                                                                                                                @endhasanyrole
 																																																																<div class="remove">
 																																																																				<button class="btn btn-sm btn-danger remove-item-btn"
 																																																																								data-link="{{ route("promoter.report.delete.get", $item->id) }}">Delete</button>

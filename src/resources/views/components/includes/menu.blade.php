@@ -95,6 +95,15 @@
 																				</li>
 																@endhasanyrole
 
+																@hasanyrole("App Promoter")
+																				<li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("promoter.report.paginate.get")) !== false ? "active" : "" }}"
+																												href="{{ route("promoter.report.paginate.get") }}">
+																												<i class="ri-file-chart-line"></i> <span data-key="t-widgets">App Promoter Report</span>
+																								</a>
+																				</li>
+																@endhasanyrole
+
 																@hasanyrole("Warehouse Manager")
 																				<li class="nav-item">
 																								<a class="nav-link menu-link {{ strpos(url()->current(), route("warehouse_management.order.get")) !== false ? "active" : "" }}"
