@@ -55,7 +55,7 @@
 																								@if ($order->current_status->status == \App\Enums\OrderEnumStatus::OFD)
 																												<div class="col-sm-auto px-0">
 																																<div>
-                                                                                                                                                @if ($order->payment && $order->payment->status != \App\Enums\PaymentStatus::PAID)
+                                                                                                                                                @if ($order->payment && $order->payment->status != \App\Enums\PaymentStatus::PAID && $order->payment->mode == \App\Enums\PaymentMode::COD)
 																																				<a type="button" href="{{route("delivery_management.agent.order_generate_qr_code.get", $order->id)}}" class="btn btn-warning"><i
 																																												class="ri-map-pin-user-line me-1 align-bottom"></i> Generate Payment QR Code</a>
                                                                                                                                                 @endif

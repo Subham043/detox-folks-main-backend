@@ -11,14 +11,18 @@
 								@vite(["resources/admin/css/main.css"])
 								<link rel="stylesheet" type="text/css" href="{{ asset("payment/iofrm-style.css") }}">
 								<link rel="stylesheet" type="text/css" href="{{ asset("payment/iofrm-theme11.css") }}">
+                                @vite(['resources/admin/css/main.css'])
 
 								<style>
-												body,
-												.form-body,
-												.form-content {
-																background-color: #eee;
-												}
+                                    body,
+                                    .form-body,
+                                    .form-content {
+                                                    background-color: #eee;
+                                    }
 								</style>
+                                <script src="{{asset('payment/qr.min.js')}}"></script>
+                                <script src="{{ asset('admin/js/pages/iziToast.min.js') }}"></script>
+                                <script src="{{ asset('admin/js/pages/axios.min.js') }}"></script>
 
 				</head>
 
@@ -36,42 +40,18 @@
 																				</div>
 																				<div class="p-2 text-center">
 																								<div class="mt-3">
-																												<h5 class="mb-3">Please wait while we process your payment</h5>
-																												<div class="hstack justify-content-center gap-2">
+																												<h5 class="mb-3">Please scan the code and make the payment.</h5>
+																												{{-- <div class="hstack justify-content-center gap-2">
 																																<div class="spinner-border text-dark" role="status"></div>
-																												</div>
+																												</div> --}}
+																												<div class="hstack justify-content-center gap-2">
+                                                                                                                    <img id="qrcode-img" />
+                                                                                                                </div>
+                                                                                                                <div class="text-center mt-3">
+                                                                                                                    <button class="btn btn-dark" id="submitBtn">Check Payment Status</button>
+                                                                                                                </div>
 																								</div>
 																				</div>
-																				<form action="{{ $action }}" method="post" name="payuForm" nonce="{{ csp_nonce() }}"><br />
-																								<input type="hidden" name="key" value="{{ $MERCHANT_KEY }}" /><br />
-																								<input type="hidden" name="hash" value="{{ $hash }}" /><br />
-																								<input type="hidden" name="txnid" value="{{ $txnid }}" /><br />
-																								<input type="hidden" name="amount" value="{{ $amount }}" /><br />
-																								<input type="hidden" name="firstname" id="firstname" value="{{ $name }}" /><br />
-																								<input type="hidden" name="email" id="email" value="{{ $email }}" /><br />
-																								<input type="hidden" name="phone" value="{{ $phone }}" />"><br />
-																								<input type="hidden" name="productinfo" value="Webappfix"><br />
-
-                                                                                                {{-- <input type="hidden" name="pg" value="DBQR" /><br />
-                                                                                                <input type="hidden" name="bankcode" value="UPIDBQR" /><br />
-																								<input type="hidden" name="qrId" id="qrId" value="{{ $qrId }}" /><br />
-                                                                                                <input type="hidden" name="txn_s2s_flow" value="4" /><br />
-                                                                                                <input type="hidden" name="s2s_client_ip" value="{{request()->ip()}}" /><br />
-                                                                                                <input type="hidden" name="s2s_device_info" value="Mozilla Firefox" /><br />
-                                                                                                <input type="hidden" name="expiry_time" value="3600" /><br /> --}}
-                                                                                                <input type="hidden" name="enforce_paymethod" value="qr" /><br />
-                                                                                                <input type="hidden" name="pg" value="QR" /><br />
-                                                                                                <input type="hidden" name="bankcode" value="UPIQR" /><br />
-                                                                                                {{-- <input type="hidden" name="enforce_paymethod" value="qr" /><br />
-                                                                                                <input type="hidden" name="pg" value="UPI" /><br />
-                                                                                                <input type="hidden" name="bankcode" value="UPI" /><br /> --}}
-																								<input type="hidden" name="surl" value="{{ $successURL }}" /><br />
-																								<input type="hidden" name="furl" value="{{ $failURL }}" /><br />
-																								<input type="hidden" name="service_provider" value="payu_paisa" /><br />
-																								<?php if(!$hash) { ?>
-																								<input type="submit" value="Submit" />
-																								<?php } ?>
-																				</form>
 
 																</div>
 
@@ -79,11 +59,70 @@
 								</div>
 				</body>
 				<script type="text/javascript" nonce="{{ csp_nonce() }}">
-								function submitPayuForm() {
-												var payuForm = document.forms.payuForm;
-												payuForm.submit();
-								}
-								window.onload = submitPayuForm;
+                    const upiString = "{!!$upi!!}";
+                    const encodedUpi = encodeURI(upiString);
+
+                    QRCode.toDataURL(encodedUpi, { errorCorrectionLevel: 'H' }, function (err, url) {
+                        if (err) {
+                        console.error(err);
+                        } else {
+                        document.getElementById('qrcode-img').src = url;
+                        }
+                    });
+
+                    const errorToast = (message) =>{
+                        iziToast.error({
+                            title: 'Error',
+                            message: message,
+                            position: 'bottomCenter',
+                            timeout:7000
+                        });
+                    }
+                    const successToast = (message) =>{
+                        iziToast.success({
+                            title: 'Success',
+                            message: message,
+                            position: 'bottomCenter',
+                            timeout:6000
+                        });
+                    }
+
+                    const spinner = `
+                        <span class="d-flex align-items-center">
+                            <span class="spinner-border flex-shrink-0" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </span>
+                            <span class="flex-grow-1 ms-2">
+                                Loading...
+                            </span>
+                        </span>
+                    `;
+
+                    document.querySelectorAll('#submitBtn').forEach(el => {
+                        el.addEventListener('click', function() {
+                            verifyPayment()
+                        })
+                    });
+
+                    const verifyPayment = async () => {
+                        var submitBtn = document.getElementById('submitBtn')
+                        submitBtn.innerHTML = spinner
+                        submitBtn.disabled = true;
+                        try {
+                            const response = await axios.get("{{route('delivery_management.agent.order_generate_qr_code_verify.get', $order_id)}}");
+                            if(response.data.data.payment.status==='PAID'){
+                                successToast('Payment completed successfully.');
+                                window.location.href = "{{route('delivery_management.agent.order_detail.get', $order_id)}}";
+                            }else{
+                                errorToast('Payment Pending');
+                            }
+                        } catch (error) {
+                            errorToast('Something went wrong. Please try again.');
+                        } finally {
+                            submitBtn.innerHTML = `Check Payment Status`
+                            submitBtn.disabled = false;
+                        }
+                    }
 				</script>
 
 </html>

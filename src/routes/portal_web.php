@@ -345,6 +345,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/order/{order_id}/send-otp', [AssignedOrderForAgentPaginateController::class, 'send_otp', 'as' => 'delivery_management.agent.order_send_otp.get'])->middleware(['throttle:3,1'])->name('delivery_management.agent.order_send_otp.get');
         Route::post('/order/{order_id}/complete', [AssignedOrderForAgentPaginateController::class, 'deliver_order', 'as' => 'delivery_management.agent.order_deliver_order.post'])->name('delivery_management.agent.order_deliver_order.post');
         Route::get('/order/{order_id}/generate-qr-code', [AssignedOrderForAgentPaginateController::class, 'payUMoneyView', 'as' => 'delivery_management.agent.order_generate_qr_code.get'])->middleware(['throttle:3,1'])->name('delivery_management.agent.order_generate_qr_code.get');
+        Route::get('/order/{order_id}/verify', [AssignedOrderForAgentPaginateController::class, 'verifyPayUQRPayment', 'as' => 'delivery_management.agent.order_generate_qr_code_verify.get'])->middleware(['throttle:3,1'])->name('delivery_management.agent.order_generate_qr_code_verify.get');
     });
 
     Route::prefix('/promoter-management')->group(function () {

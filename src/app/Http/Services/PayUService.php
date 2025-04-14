@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Modules\Order\Models\Order;
 use Ixudra\Curl\Facades\Curl;
+use Illuminate\Support\Facades\Http;
 
 class PayUService
 {
@@ -196,27 +197,28 @@ class PayUService
     //     ];
     // }
 
-    public function create_upi_order(Order $order, $successURL, $failURL)
+    public function create_upi_order(Order $order, $successURL, $failURL): string|null
     {
         $name = $order->name;
         $email = $order->email;
         $phone = $order->phone;
-        $amount = $order->total_price;
+        $amount = number_format($order->total_price, 2, '.', '');
 
         $action = '';
-        $txnid = $order->id;
+        $txnid = (string) $order->id;
         $posted = array();
         $posted = array(
             'key' => $this->MERCHANT_KEY,
-            'txnid' => $txnid,
+            'txnid' => (string) $txnid,
             'amount' => $amount,
             'firstname' => $name,
             'email' => $email,
             'phone' => $phone,
             'productinfo' => 'Webappfix',
             'enforce_paymethod' => 'qr',
-            'pg' => 'QR',
-            'bankcode' => 'UPIQR',
+            // 'pg' => 'QR',
+            // 'bankcode' => 'UPIQR',
+
             // 'enforce_paymethod' => 'qr',
             // 'pg' => 'UPI',
             // 'bankcode' => 'UPI',
@@ -224,18 +226,18 @@ class PayUService
             'furl' => $failURL,
             'service_provider' => 'payu_paisa',
 
-            // 'pg' => 'DBQR',
-            // 'bankcode' => 'UPIDBQR',
-            // 'txn_s2s_flow' => '4',
-            // 's2s_client_ip' => request()->ip(),
-            // 's2s_device_info' => "Mozilla Firefox",
+            'pg' => 'DBQR',
+            'bankcode' => 'UPIDBQR',
+            'txn_s2s_flow' => '4',
+            's2s_client_ip' => request()->ip(),
+            's2s_device_info' => "Mozilla Firefox",
         );
 
         if(empty($posted['txnid'])) {
-            $txnid = $order->id;
+            $txnid = (string) $order->id;
         }
         else{
-            $txnid = $posted['txnid'];
+            $txnid = (string) $posted['txnid'];
         }
 
         $hash = '';
@@ -259,17 +261,52 @@ class PayUService
             $action = $this->PAYU_PAYMENT_URL . '/_payment';
             $action = $this->PAYU_PAYMENT_URL . '/_payment';
         }
-        return [
-            'action' => $action,
-            'hash' => $hash,
-            'MERCHANT_KEY' => $this->MERCHANT_KEY,
-            'txnid' => $txnid,
-            'successURL' => $successURL,
-            'failURL' => $failURL,
-            'name' => $name,
-            'email' => $email,
-            'phone' => $phone,
-            'amount' => $amount
-        ];
+
+        $var1 = json_encode([
+                "transactionId" => (string) $txnid,
+                "product_type" => "DBQR"
+        ]);
+
+        $postData = array(
+            'key'     => $this->MERCHANT_KEY,
+            'command' => 'cancel_qr_payment',
+            'hash'    => strtolower(hash('sha512', $this->MERCHANT_KEY."|cancel_qr_payment|".$var1."|".$this->SALT)),
+            'var1'    => $var1,
+        );
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://info.payu.in/merchant/postservice.php');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+
+        $res = curl_exec($ch);
+
+        $response = Http::asForm()
+        ->withHeaders([
+            'Accept'=> 'application/json',
+            'Content-Type'=> 'application/x-www-form-urlencoded',
+        ])
+        ->post('https://secure.payu.in/_payment/_payment',[
+            'key'=>$this->MERCHANT_KEY,
+            'txnid'=>(string) $txnid,
+            'amount'=>(string) $amount,
+            'firstname'=>$name,
+            'email'=>$email,
+            'phone'=>$phone,
+            'productinfo'=>'Webappfix',
+            'pg'=>'DBQR',
+            'bankcode'=>'UPIDBQR',
+            'surl'=>$successURL,
+            'furl'=>$failURL,
+            'hash'=>$hash,
+            'txn_s2s_flow'=>'4',
+        ]);
+
+
+        $data = $response->json();
+
+        return $data['result']["qrString"] ?? null;
     }
 }

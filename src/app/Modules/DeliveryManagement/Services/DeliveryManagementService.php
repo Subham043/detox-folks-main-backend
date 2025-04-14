@@ -357,6 +357,24 @@ class DeliveryManagementService
         ])->paymentPendingFrom($order_id, PaymentMode::COD)->findOrFail($order_id);
     }
 
+    public function getOrderPlacedByIdPaymentStatus($agent_id, $order_id): Order|null
+    {
+        return Order::with([
+            'products' => function ($q) {
+                $q->with([
+                    'taxes'
+                ]);
+            },
+            'current_status',
+            'charges',
+            'statuses',
+            'payment',
+            'delivery_agent'
+        ])->whereHas('delivery_agent', function($q) use($agent_id, $order_id) {
+            $q->where('user_id', $agent_id)->where('order_id', $order_id);
+        })->findOrFail($order_id);
+    }
+
     public function assign_orders(User $agent, array $data): User
     {
         $agent->order_assigned()->attach($data);

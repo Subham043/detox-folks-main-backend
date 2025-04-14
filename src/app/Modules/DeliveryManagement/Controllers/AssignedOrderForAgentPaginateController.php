@@ -110,19 +110,14 @@ class AssignedOrderForAgentPaginateController extends Controller
         $failURL = route('pay.u.upi.fail', ['order_id' => $order->id, 'delivery_agent_id' => auth()->user()->id]);
         $data = (new PayUService)->create_upi_order($order, $successURL, $failURL);
 
-        return view('payu.upi')->with([
-            'action' => $data['action'],
-            'hash' => $data['hash'],
-            'MERCHANT_KEY' => $data['MERCHANT_KEY'],
-            'txnid' => $data['txnid'],
-            'successURL' => $data['successURL'],
-            'failURL' => $data['failURL'],
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            // 'qrId' => $data['qrId'],
-            'amount' => $data['amount']
-        ]);
+        if($data){
+            return view('payu.upi')->with([
+                'upi' => $data,
+                'order_id' => $order_id
+            ]);
+        }
+        return redirect(route('delivery_management.agent.order_detail.get', $order_id))->with('error_status', "QR Code generation failed");
+
     }
 
     public function payUResponse($order_id, $delivery_agent_id, Request $request)
@@ -166,5 +161,13 @@ class AssignedOrderForAgentPaginateController extends Controller
             }
         }
         return redirect(route('delivery_management.agent.order_detail.get', $order_id))->with('error_status', "Payment failed");
+    }
+
+    public function verifyPayUQRPayment($order_id)
+    {
+        $order = $this->service->getOrderPlacedByIdPaymentStatus(auth()->user()->id, $order_id);
+        return response()->json([
+            'data' => $order
+        ], 200);
     }
 }
