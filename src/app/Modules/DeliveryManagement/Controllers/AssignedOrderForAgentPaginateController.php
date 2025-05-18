@@ -16,6 +16,7 @@ use App\Modules\Order\Models\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class AssignedOrderForAgentPaginateController extends Controller
 {
@@ -120,6 +121,30 @@ class AssignedOrderForAgentPaginateController extends Controller
 
     }
 
+    public function payUMoneyView2()
+    {
+
+        $successURL = route('pay.u.upi.test');
+        $failURL = route('pay.u.upi.test');
+        $data = (new PayUService)->create_upi_order2($successURL, $failURL);
+
+        if($data){
+            return view('payu.upi_test')->with([
+                'upi' => $data,
+                'order_id' => "abc6160"
+            ]);
+        }
+        return redirect(route('delivery_management.agent.order_detail.get', "abc6160"))->with('error_status', "QR Code generation failed");
+
+    }
+
+    public function payUResponse2(Request $request)
+    {
+        $dt = json_encode($request->all());
+        DB::insert('insert into test_upi (data) values (?)', [$dt]);
+        return response()->json(['message'=> "done"], 200);
+    }
+
     public function payUResponse($order_id, $delivery_agent_id, Request $request)
     {
         $order = $this->service->getOrderPlacedByIdPaymentPendingVia($delivery_agent_id, $order_id);
@@ -168,6 +193,14 @@ class AssignedOrderForAgentPaginateController extends Controller
         $order = $this->service->getOrderPlacedByIdPaymentStatus(auth()->user()->id, $order_id);
         return response()->json([
             'data' => $order
+        ], 200);
+    }
+
+    public function verifyPayUQRPayment2()
+    {
+        $resp = (new PayUService)->verify_upi_payment();
+        return response()->json([
+            'data' => $resp
         ], 200);
     }
 }

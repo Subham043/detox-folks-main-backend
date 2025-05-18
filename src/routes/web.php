@@ -42,6 +42,11 @@ Route::prefix('pay-u')->group(function () {
     Route::post('cancel/{order_id}',[PayUMoneyController::class,'payUCancel'])->name('pay.u.cancel');
     Route::post('order/{order_id}/payment-complete/{delivery_agent_id}',[AssignedOrderForAgentPaginateController::class,'payUResponse'])->name('pay.u.upi.success');
     Route::post('order/{order_id}/payment-failed/{delivery_agent_id}',[AssignedOrderForAgentPaginateController::class,'payUCancel'])->name('pay.u.upi.fail');
+
+    //test_upi
+    Route::get('/test-generate-qr-code', [AssignedOrderForAgentPaginateController::class, 'payUMoneyView2'])->name('pay.u.upi.test_generate');
+    Route::post('/test-qr-code-payment', [AssignedOrderForAgentPaginateController::class, 'payUResponse2'])->name('pay.u.upi.test');
+    Route::get('/verify-qr-code-payment', [AssignedOrderForAgentPaginateController::class, 'verifyPayUQRPayment2'])->name('pay.u.upi.test_verify');
 });
 
 Route::prefix('cashfree')->group(function () {
