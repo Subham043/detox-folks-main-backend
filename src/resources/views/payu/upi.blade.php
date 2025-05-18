@@ -110,7 +110,7 @@
                         submitBtn.disabled = true;
                         try {
                             const response = await axios.get("{{route('delivery_management.agent.order_generate_qr_code_verify.get', $order_id)}}");
-                            if(response.data.data.payment.status==='PAID'){
+                            if(response.data.status===true){
                                 successToast('Payment completed successfully.');
                                 window.location.href = "{{route('delivery_management.agent.order_detail.get', $order_id)}}";
                             }else{

@@ -16,7 +16,6 @@ use App\Modules\Order\Models\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 
 class AssignedOrderForAgentPaginateController extends Controller
 {
@@ -121,30 +120,6 @@ class AssignedOrderForAgentPaginateController extends Controller
 
     }
 
-    public function payUMoneyView2()
-    {
-
-        $successURL = route('pay.u.upi.test');
-        $failURL = route('pay.u.upi.test');
-        $data = (new PayUService)->create_upi_order2($successURL, $failURL);
-
-        if($data){
-            return view('payu.upi_test')->with([
-                'upi' => $data,
-                'order_id' => "abh6160"
-            ]);
-        }
-        return redirect(route('delivery_management.agent.order_detail.get', "abh6160"))->with('error_status', "QR Code generation failed");
-
-    }
-
-    public function payUResponse2(Request $request)
-    {
-        $dt = json_encode($request->all());
-        DB::insert('insert into test_upi (data) values (?)', [$dt]);
-        return response()->json(['message'=> "done"], 200);
-    }
-
     public function payUResponse($order_id, $delivery_agent_id, Request $request)
     {
         $order = $this->service->getOrderPlacedByIdPaymentPendingVia($delivery_agent_id, $order_id);
@@ -190,21 +165,20 @@ class AssignedOrderForAgentPaginateController extends Controller
 
     public function verifyPayUQRPayment($order_id)
     {
-        $order = $this->service->getOrderPlacedByIdPaymentStatus(auth()->user()->id, $order_id);
-        return response()->json([
-            'data' => $order
-        ], 200);
-    }
-
-    public function verifyPayUQRPayment2()
-    {
-        $resp = (new PayUService)->verify_upi_payment();
+        $resp = (new PayUService)->verify_upi_payment($order_id);
         if($resp['msg']=="Transaction is Successful"){
-            $rData = (new PayUService)->get_order((string) "abh6160");
+            $rData = (new PayUService)->get_order((string) $order_id);
             if($rData->status == 1){
                 $dtt = json_decode(json_encode($rData), true);;
-                $dt = $dtt['transaction_details']['abh6160'];
-                DB::insert('insert into test_upi (data) values (?)', [json_encode($dt)]);
+                $dt = $dtt['transaction_details'][$order_id];
+                OrderPayment::updateOrCreate(
+                    ['order_id' => $order_id],
+                    [
+                        'mode' => PaymentMode::PAYU->value,
+                        'status' => PaymentStatus::PAID->value,
+                        'payment_data' => json_encode($dt),
+                    ]
+                );
             }
             return response()->json([
                 'status' => true
