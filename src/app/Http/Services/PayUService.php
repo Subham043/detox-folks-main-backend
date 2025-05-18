@@ -318,7 +318,7 @@ class PayUService
         $amount = number_format("1.00", 2, '.', '');
 
         $action = '';
-        $txnid = (string) "abf6160";
+        $txnid = (string) "abg6160";
         $posted = array();
         $posted = array(
             'key' => $this->MERCHANT_KEY,
@@ -347,7 +347,7 @@ class PayUService
         );
 
         if(empty($posted['txnid'])) {
-            $txnid = (string) "abf6160";
+            $txnid = (string) "abg6160";
         }
         else{
             $txnid = (string) $posted['txnid'];
@@ -426,13 +426,13 @@ class PayUService
     public function verify_upi_payment()
     {
 
-        // $hash = strtolower(hash('sha512', $this->MERCHANT_KEY.'|check_bqr_txn_status|'."abf6160".'|'.$this->SALT));
+        // $hash = strtolower(hash('sha512', $this->MERCHANT_KEY.'|check_bqr_txn_status|'."abg6160".'|'.$this->SALT));
 
         // $postData = array(
         //     'key'     => $this->MERCHANT_KEY,
         //     'command' => 'check_bqr_txn_status',
-        //     'hash'    => strtolower(hash('sha512', $this->MERCHANT_KEY."|check_bqr_txn_status|abf6160|".$this->SALT)),
-        //     'var1'    => 'abf6160',
+        //     'hash'    => strtolower(hash('sha512', $this->MERCHANT_KEY."|check_bqr_txn_status|abg6160|".$this->SALT)),
+        //     'var1'    => 'abg6160',
         // );
 
         // $ch = curl_init();
@@ -451,9 +451,9 @@ class PayUService
                 ->withHeader('accept:application/json')
                 ->withData([
                     'key' => $this->MERCHANT_KEY,
-                    'var1' => "abf6160",
+                    'var1' => "abg6160",
                     'command' => 'check_bqr_txn_status',
-                    'hash' => strtolower(hash('sha512', $this->MERCHANT_KEY."|check_bqr_txn_status|abf6160|".$this->SALT)),
+                    'hash' => strtolower(hash('sha512', $this->MERCHANT_KEY."|check_bqr_txn_status|abg6160|".$this->SALT)),
                 ])
                 ->post();
         return unserialize($response);
@@ -463,9 +463,9 @@ class PayUService
         //     'Content-Type' => 'application/application/x-www-form-urlencoded'
         // ])->post('https://info.payu.in/merchant/postservice.php', [
         //     'key' => $this->MERCHANT_KEY,
-        //     'var1' => "abf6160",
+        //     'var1' => "abg6160",
         //     'command' => 'check_bqr_txn_status',
-        //     'hash' => strtolower(hash('sha512', $this->MERCHANT_KEY."|check_bqr_txn_status|abf6160|".$this->SALT)),
+        //     'hash' => strtolower(hash('sha512', $this->MERCHANT_KEY."|check_bqr_txn_status|abg6160|".$this->SALT)),
         // ]);
 
         // return $response;
