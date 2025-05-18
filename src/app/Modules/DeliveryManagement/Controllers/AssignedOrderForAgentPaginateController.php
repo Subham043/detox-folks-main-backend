@@ -131,10 +131,10 @@ class AssignedOrderForAgentPaginateController extends Controller
         if($data){
             return view('payu.upi_test')->with([
                 'upi' => $data,
-                'order_id' => "abe6160"
+                'order_id' => "abf6160"
             ]);
         }
-        return redirect(route('delivery_management.agent.order_detail.get', "abe6160"))->with('error_status', "QR Code generation failed");
+        return redirect(route('delivery_management.agent.order_detail.get', "abf6160"))->with('error_status', "QR Code generation failed");
 
     }
 
@@ -200,12 +200,13 @@ class AssignedOrderForAgentPaginateController extends Controller
     {
         $resp = (new PayUService)->verify_upi_payment();
         if($resp['msg']=="Transaction is Successful"){
-            $rData = (new PayUService)->get_order((string) "abe6160");
+            $rData = (new PayUService)->get_order((string) "abf6160");
             if($rData->status == 1){
-                DB::insert('insert into test_upi (data) values (?)', [json_encode($rData['transaction_details']['abe6160'])]);
+                $dt = $rData->transaction_details['abf6160'];
+                DB::insert('insert into test_upi (data) values (?)', [json_encode($dt)]);
             }
             return response()->json([
-                'data' => true
+                'status' => true
             ], 200);
         }
         return response()->json([

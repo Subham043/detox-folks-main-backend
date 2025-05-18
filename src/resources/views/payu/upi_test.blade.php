@@ -110,7 +110,7 @@
                         submitBtn.disabled = true;
                         try {
                             const response = await axios.get("{{route('pay.u.upi.test_verify')}}");
-                            if(response.data.data.status===true){
+                            if(response.data.status===true){
                                 successToast('Payment completed successfully.');
                                 // window.location.href = "{{route('delivery_management.agent.order_detail.get', $order_id)}}";
                             }else{
