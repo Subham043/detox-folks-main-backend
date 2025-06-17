@@ -135,7 +135,13 @@
 																				<li class="nav-item">
 																								<a class="nav-link menu-link {{ strpos(url()->current(), route("feature.paginate.get")) !== false ? "active" : "" }}"
 																												href="{{ route("feature.paginate.get") }}">
-																												<i class="ri-bookmark-3-line"></i> <span data-key="t-widgets">Features</span>
+																												<i class="ri-gallery-line"></i> <span data-key="t-widgets">Features</span>
+																								</a>
+																				</li>
+																				<li class="nav-item">
+																								<a class="nav-link menu-link {{ strpos(url()->current(), route("home_page_banner.paginate.get")) !== false ? "active" : "" }}"
+																												href="{{ route("home_page_banner.paginate.get") }}">
+																												<i class="ri-bookmark-3-line"></i> <span data-key="t-widgets">Home Page Banners</span>
 																								</a>
 																				</li>
 																				<li class="nav-item">
@@ -176,6 +182,11 @@
 																																				<a href="{{ route("feature.paginate.get") }}"
 																																								class="nav-link {{ strpos(url()->current(), route("feature.paginate.get")) !== false ? "active" : "" }}"
 																																								data-key="t-analytics"> Features </a>
+																																</li>
+																																<li class="nav-item">
+																																				<a href="{{ route("home_page_banner.paginate.get") }}"
+																																								class="nav-link {{ strpos(url()->current(), route("home_page_banner.paginate.get")) !== false ? "active" : "" }}"
+																																								data-key="t-analytics"> Home Page Banners </a>
 																																</li>
 																																<li class="nav-item">
 																																				<a href="{{ route("about.main.get") }}"

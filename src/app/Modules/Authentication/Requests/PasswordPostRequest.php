@@ -35,12 +35,10 @@ class PasswordPostRequest extends FormRequest
             }],
             'password' => ['required',
                 'string',
-                Password::min(8)
+                Password::min(6)
                         ->letters()
                         ->mixedCase()
                         ->numbers()
-                        ->symbols()
-                        ->uncompromised()
             ],
             'confirm_password' => 'string|min:6|required_with:password|same:password',
         ];

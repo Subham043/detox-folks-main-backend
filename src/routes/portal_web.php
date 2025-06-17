@@ -44,6 +44,10 @@ use App\Modules\Feature\Controllers\FeatureCreateController;
 use App\Modules\Feature\Controllers\FeatureDeleteController;
 use App\Modules\Feature\Controllers\FeaturePaginateController;
 use App\Modules\Feature\Controllers\FeatureUpdateController;
+use App\Modules\HomePageBanner\Controllers\HomePageBannerCreateController;
+use App\Modules\HomePageBanner\Controllers\HomePageBannerDeleteController;
+use App\Modules\HomePageBanner\Controllers\HomePageBannerPaginateController;
+use App\Modules\HomePageBanner\Controllers\HomePageBannerUpdateController;
 use App\Modules\Settings\Controllers\ActivityLog\ActivityLogDetailController;
 use App\Modules\Settings\Controllers\ActivityLog\ActivityLogPaginateController;
 use App\Modules\Settings\Controllers\ErrorLogController;
@@ -87,6 +91,10 @@ use App\Modules\ProductSpecification\Controllers\ProductSpecificationCreateContr
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationDeleteController;
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationPaginateController;
 use App\Modules\ProductSpecification\Controllers\ProductSpecificationUpdateController;
+use App\Modules\ProductVideo\Controllers\ProductVideoCreateController;
+use App\Modules\ProductVideo\Controllers\ProductVideoDeleteController;
+use App\Modules\ProductVideo\Controllers\ProductVideoPaginateController;
+use App\Modules\ProductVideo\Controllers\ProductVideoUpdateController;
 use App\Modules\Promoter\Controllers\PromoterBankInformationController;
 use App\Modules\Promoter\Controllers\PromoterInstalledController;
 use App\Modules\Promoter\Controllers\PromoterInstallerPaginateController;
@@ -197,6 +205,14 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/update/{id}', [FeatureUpdateController::class, 'post', 'as' => 'feature.update.post'])->name('feature.update.post');
             Route::get('/delete/{id}', [FeatureDeleteController::class, 'get', 'as' => 'feature.delete.get'])->name('feature.delete.get');
         });
+        Route::prefix('/home-page-banner')->group(function () {
+            Route::get('/', [HomePageBannerPaginateController::class, 'get', 'as' => 'home_page_banner.paginate.get'])->name('home_page_banner.paginate.get');
+            Route::get('/create', [HomePageBannerCreateController::class, 'get', 'as' => 'home_page_banner.create.get'])->name('home_page_banner.create.get');
+            Route::post('/create', [HomePageBannerCreateController::class, 'post', 'as' => 'home_page_banner.create.post'])->name('home_page_banner.create.post');
+            Route::get('/update/{id}', [HomePageBannerUpdateController::class, 'get', 'as' => 'home_page_banner.update.get'])->name('home_page_banner.update.get');
+            Route::post('/update/{id}', [HomePageBannerUpdateController::class, 'post', 'as' => 'home_page_banner.update.post'])->name('home_page_banner.update.post');
+            Route::get('/delete/{id}', [HomePageBannerDeleteController::class, 'get', 'as' => 'home_page_banner.delete.get'])->name('home_page_banner.delete.get');
+        });
     });
 
 
@@ -288,6 +304,14 @@ Route::middleware(['auth'])->group(function () {
                     Route::get('/update/{id}', [ProductImageUpdateController::class, 'get', 'as' => 'product_image.update.get'])->name('product_image.update.get');
                     Route::post('/update/{id}', [ProductImageUpdateController::class, 'post', 'as' => 'product_image.update.post'])->name('product_image.update.post');
                     Route::get('/delete/{id}', [ProductImageDeleteController::class, 'get', 'as' => 'product_image.delete.get'])->name('product_image.delete.get');
+                });
+                Route::prefix('/video')->group(function () {
+                    Route::get('/', [ProductVideoPaginateController::class, 'get', 'as' => 'product_video.paginate.get'])->name('product_video.paginate.get');
+                    Route::get('/create', [ProductVideoCreateController::class, 'get', 'as' => 'product_video.create.get'])->name('product_video.create.get');
+                    Route::post('/create', [ProductVideoCreateController::class, 'post', 'as' => 'product_video.create.post'])->name('product_video.create.post');
+                    Route::get('/update/{id}', [ProductVideoUpdateController::class, 'get', 'as' => 'product_video.update.get'])->name('product_video.update.get');
+                    Route::post('/update/{id}', [ProductVideoUpdateController::class, 'post', 'as' => 'product_video.update.post'])->name('product_video.update.post');
+                    Route::get('/delete/{id}', [ProductVideoDeleteController::class, 'get', 'as' => 'product_video.delete.get'])->name('product_video.delete.get');
                 });
             });
         });

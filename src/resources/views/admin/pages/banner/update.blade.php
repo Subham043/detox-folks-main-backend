@@ -6,66 +6,52 @@
 								<div class="container-fluid">
 
 												<!-- start page title -->
-												<x-includes.breadcrumb link="testimonial.paginate.get" page="Testimonial" :list='["Update"]' />
+												<x-includes.breadcrumb link="home_page_banner.paginate.get" page="Home Page Banner" :list='["Update"]' />
 												<!-- end page title -->
 
 												<div class="row" id="image-container">
-																<x-includes.back-button link="testimonial.paginate.get" />
+																<x-includes.back-button link="home_page_banner.paginate.get" />
 																<div class="col-lg-12">
-																				<form id="countryForm" method="post" action="{{ route("testimonial.update.post", $data->id) }}"
+																				<form id="countryForm" method="post" action="{{ route("home_page_banner.update.post", $data->id) }}"
 																								enctype="multipart/form-data">
 																								@csrf
 																								<div class="card">
 																												<div class="card-header align-items-center d-flex">
-																																<h4 class="card-title flex-grow-1 mb-0">Testimonial Detail</h4>
+																																<h4 class="card-title flex-grow-1 mb-0">Home Page Banner Detail</h4>
 																												</div><!-- end card header -->
 																												<div class="card-body">
 																																<div class="live-preview">
 																																				<div class="row gy-4">
-																																								<div class="col-xxl-3 col-md-3">
-																																												@include("admin.includes.input", [
-																																																"key" => "name",
-																																																"label" => "Name",
-																																																"value" => $data->name,
-																																												])
-																																								</div>
-																																								<div class="col-xxl-3 col-md-3">
-																																												@include("admin.includes.input", [
-																																																"key" => "designation",
-																																																"label" => "Designation",
-																																																"value" => $data->designation,
-																																												])
-																																								</div>
-																																								<div class="col-xxl-3 col-md-3">
-																																												<div>
-																																																<label for="star" class="form-label">Stars</label>
-																																																<select class="form-control" name="star" id="star">
-																																																				@for ($i = 1; $i <= 5; $i++)
-																																																								<option value="{{ $i }}"
-																																																												{{ $i == $data->star ? "selected" : "" }}>{{ $i }}
-																																																												star
-																																																								</option>
-																																																				@endfor
-																																																</select>
-																																																@error("star")
-																																																				<div class="invalid-message">{{ $message }}</div>
-																																																@enderror
-																																												</div>
-																																								</div>
-																																								<div class="col-xxl-3 col-md-3">
+                                                                                                                                                                <div class="col-xxl-6 col-md-6">
 																																												@include("admin.includes.file_input", [
-																																																"key" => "image",
-																																																"label" => "Image",
+																																																"key" => "desktop_image",
+																																																"label" => "Desktop Image",
 																																												])
-																																												@if (!empty($data->image))
-																																																<img src="{{ asset($data->image) }}" alt="" class="img-preview">
+																																												@if (!empty($data->desktop_image))
+																																																<img src="{{ asset($data->desktop_image) }}" alt="" class="img-preview">
 																																												@endif
 																																								</div>
-																																								<div class="col-xxl-12 col-md-12">
-																																												@include("admin.includes.textarea", [
-																																																"key" => "message",
-																																																"label" => "Message",
-																																																"value" => $data->message,
+                                                                                                                                                                <div class="col-xxl-6 col-md-6">
+																																												@include("admin.includes.file_input", [
+																																																"key" => "mobile_image",
+																																																"label" => "Mobile Image",
+																																												])
+																																												@if (!empty($data->mobile_image))
+																																																<img src="{{ asset($data->mobile_image) }}" alt="" class="img-preview">
+																																												@endif
+																																								</div>
+																																								<div class="col-xxl-6 col-md-6">
+																																												@include("admin.includes.input", [
+																																																"key" => "image_title",
+																																																"label" => "Image Title",
+																																																"value" => $data->image_title,
+																																												])
+																																								</div>
+																																								<div class="col-xxl-6 col-md-6">
+																																												@include("admin.includes.input", [
+																																																"key" => "image_alt",
+																																																"label" => "Image Alt",
+																																																"value" => $data->image_alt,
 																																												])
 																																								</div>
 																																								<div class="col-lg-12 col-md-12">
@@ -75,7 +61,7 @@
 																																																								<input class="form-check-input" type="checkbox" role="switch"
 																																																												id="is_draft" name="is_draft"
 																																																												{{ $data->is_draft == false ? "" : "checked" }}>
-																																																								<label class="form-check-label" for="is_draft">Testimonial
+																																																								<label class="form-check-label" for="is_draft">Home Page Banner
 																																																												Status</label>
 																																																				</div>
 																																																</div>
@@ -137,35 +123,35 @@
 								});
 								// apply rules to form fields
 								validation
-												.addField('#name', [{
-																				rule: 'required',
-																				errorMessage: 'Name is required',
+												.addField('#image_title', [{
+																rule: 'required',
+																errorMessage: 'Image Title is required',
+												}, ])
+												.addField('#image_alt', [{
+																rule: 'required',
+																errorMessage: 'Image Alt is required',
+												}, ])
+												.addField('#desktop_image', [{
+																				rule: 'minFilesCount',
+																				value: 0,
 																},
 																{
-																				rule: 'customRegexp',
-																				value: COMMON_REGEX,
-																				errorMessage: 'Name is invalid',
-																},
-												])
-												.addField('#designation', [{
-																				rule: 'required',
-																				errorMessage: 'Designation is required',
+																				rule: 'maxFilesCount',
+																				value: 1,
 																},
 																{
-																				rule: 'customRegexp',
-																				value: COMMON_REGEX,
-																				errorMessage: 'Designation is invalid',
+																				rule: 'files',
+																				value: {
+																								files: {
+																												extensions: ['jpeg', 'jpg', 'png', 'webp'],
+																												maxSize: 500000,
+																												minSize: 1,
+																												types: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'],
+																								},
+																				},
 																},
 												])
-												.addField('#message', [{
-																rule: 'required',
-																errorMessage: 'Message is required',
-												}, ])
-												.addField('#star', [{
-																rule: 'required',
-																errorMessage: 'Star is required',
-												}, ])
-												.addField('#image', [{
+												.addField('#mobile_image', [{
 																				rule: 'minFilesCount',
 																				value: 0,
 																},
@@ -192,39 +178,35 @@
 																try {
 																				var formData = new FormData();
 																				formData.append('is_draft', document.getElementById('is_draft').checked ? 1 : 0)
-																				formData.append('name', document.getElementById('name').value)
-																				formData.append('designation', document.getElementById('designation').value)
-																				formData.append('message', document.getElementById('message').value)
-																				formData.append('star', document.getElementById('star').value)
-																				if ((document.getElementById('image').files).length > 0) {
-																								formData.append('image', document.getElementById('image').files[0])
+																				formData.append('image_title', document.getElementById('image_title').value)
+																				formData.append('image_alt', document.getElementById('image_alt').value)
+																				if ((document.getElementById('desktop_image').files).length > 0) {
+																								formData.append('desktop_image', document.getElementById('desktop_image').files[0])
 																				}
-																				const response = await axios.post('{{ route("testimonial.update.post", $data->id) }}', formData)
+																				if ((document.getElementById('mobile_image').files).length > 0) {
+																								formData.append('mobile_image', document.getElementById('mobile_image').files[0])
+																				}
+																				const response = await axios.post('{{ route("home_page_banner.update.post", $data->id) }}', formData)
 																				successToast(response.data.message)
 																} catch (error) {
-																				if (error?.response?.data?.errors?.name) {
+																				if (error?.response?.data?.errors?.image_title) {
 																								validation.showErrors({
-																												'#name': error?.response?.data?.errors?.name[0]
+																												'#image_title': error?.response?.data?.errors?.image_title[0]
 																								})
 																				}
-																				if (error?.response?.data?.errors?.designation) {
+																				if (error?.response?.data?.errors?.image_alt) {
 																								validation.showErrors({
-																												'#designation': error?.response?.data?.errors?.designation[0]
+																												'#image_alt': error?.response?.data?.errors?.image_alt[0]
 																								})
 																				}
-																				if (error?.response?.data?.errors?.message) {
+																				if (error?.response?.data?.errors?.desktop_image) {
 																								validation.showErrors({
-																												'#message': error?.response?.data?.errors?.message[0]
+																												'#desktop_image': error?.response?.data?.errors?.desktop_image[0]
 																								})
 																				}
-																				if (error?.response?.data?.errors?.star) {
+																				if (error?.response?.data?.errors?.mobile_image) {
 																								validation.showErrors({
-																												'#star': error?.response?.data?.errors?.star[0]
-																								})
-																				}
-																				if (error?.response?.data?.errors?.image) {
-																								validation.showErrors({
-																												'#image': error?.response?.data?.errors?.image[0]
+																												'#mobile_image': error?.response?.data?.errors?.mobile_image[0]
 																								})
 																				}
 																				if (error?.response?.data?.message) {

@@ -32,12 +32,10 @@ class UserResetPasswordPostRequest extends FormRequest
             'password_confirmation' => 'string|min:8|required_with:password|same:password',
             'password' => ['required',
                 'string',
-                Password::min(8)
+                Password::min(6)
                         ->letters()
                         ->mixedCase()
                         ->numbers()
-                        ->symbols()
-                        ->uncompromised()
             ],
         ];
     }

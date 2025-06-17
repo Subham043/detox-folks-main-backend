@@ -38,6 +38,7 @@ use App\Modules\Enquiry\ContactForm\Controllers\ContactFormCreateController;
 use App\Modules\Enquiry\OrderForm\Controllers\OrderFormCreateController;
 use App\Modules\Feature\Controllers\UserFeatureAllController;
 use App\Modules\GlobalSearch\Controllers\UserGlobalSearchPaginateController;
+use App\Modules\HomePageBanner\Controllers\UserHomePageBannerAllController;
 use App\Modules\Legal\Controllers\UserLegalAllController;
 use App\Modules\Legal\Controllers\UserLegalDetailController;
 use App\Modules\Map\Controllers\MapAutoCompleteController;
@@ -115,6 +116,10 @@ Route::prefix('delivery-slot')->group(function () {
 
 Route::prefix('feature')->group(function () {
     Route::get('/', [UserFeatureAllController::class, 'get'])->name('user.feature.all');
+});
+
+Route::prefix('home-page-banner')->group(function () {
+    Route::get('/', [UserHomePageBannerAllController::class, 'get'])->name('user.home_page_banner.all');
 });
 
 Route::prefix('about-section')->group(function () {

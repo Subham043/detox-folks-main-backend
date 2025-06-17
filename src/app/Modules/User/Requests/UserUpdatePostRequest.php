@@ -23,12 +23,10 @@ class UserUpdatePostRequest extends UserCreatePostRequest
             'password_confirmation' => 'nullable|string|min:8|required_with:password|same:password',
             'password' => ['nullable',
                 'string',
-                Password::min(8)
+                Password::min(6)
                         ->letters()
                         ->mixedCase()
                         ->numbers()
-                        ->symbols()
-                        ->uncompromised()
             ],
         ];
     }

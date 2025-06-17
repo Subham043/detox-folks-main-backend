@@ -39,12 +39,10 @@ class AdminRegisterPostRequest extends FormRequest
             'role' => 'required|string|exists:Spatie\Permission\Models\Role,name',
             'password' => ['required',
                 'string',
-                PasswordValidation::min(8)
+                PasswordValidation::min(6)
                         ->letters()
                         ->mixedCase()
                         ->numbers()
-                        ->symbols()
-                        ->uncompromised()
             ],
             'confirm_password' => ['required_with:password','same:password'],
             'code' => ['nullable', 'string', 'max:6', 'exists:app_promoter_codes,code', function ($attribute, $value, $fail) use ($email, $phone){

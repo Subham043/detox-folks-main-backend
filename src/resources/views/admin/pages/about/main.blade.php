@@ -52,8 +52,8 @@
 																																												<p>
 																																																<code>Note: </code> Banner Size : 350 x 450
 																																												</p>
-																																												@if (!empty($data->image_link))
-																																																<img src="{{ $data->image_link }}" alt="" class="img-preview">
+																																												@if (!empty($data->image))
+																																																<img src="{{ asset($data->image) }}" alt="" class="img-preview">
 																																												@endif
 																																								</div>
 																																								<div class="col-xxl-12 col-md-12">
