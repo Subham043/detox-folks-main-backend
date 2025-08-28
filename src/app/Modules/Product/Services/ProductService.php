@@ -29,6 +29,15 @@ class ProductService
         return QueryBuilder::for($query)
                 ->allowedFilters([
                     AllowedFilter::custom('search', new CommonFilter),
+                    AllowedFilter::callback('stock_status', function (Builder $query, $value) {
+                        if($value=='OUT OF STOCK'){
+                            $query->where('available_stock', '<=', 0);
+                        }elseif($value=='FEW ITEMS LEFT'){
+                            $query->where('available_stock', '>', 0)->whereColumn('available_stock', '<=', 'min_stock');
+                        }elseif($value=='IN STOCK'){
+                            $query->where('available_stock', '>', 0)->whereColumn('available_stock', '>', 'min_stock');
+                        }
+                    }),
                 ])
                 ->paginate($total)
                 ->appends(request()->query());
@@ -44,6 +53,7 @@ class ProductService
             'taxes',
             'product_specifications',
             'product_images',
+            'product_videos',
             'product_colors',
             'product_prices'=>function($q){
                 $q->orderBy('min_quantity', 'asc');
@@ -61,7 +71,7 @@ class ProductService
         ")
         ->where('is_draft', true);
         return QueryBuilder::for($query)
-                ->allowedIncludes(['categories', 'sub_categories', 'product_specifications', 'product_prices', 'product_images', 'product_colors', 'taxes'])
+                ->allowedIncludes(['categories', 'sub_categories', 'product_specifications', 'product_prices', 'product_images', 'product_videos', 'product_colors', 'taxes'])
                 ->defaultSort('name')
                 // ->allowedSorts('id', 'name')
                 ->allowedSorts([
@@ -115,6 +125,7 @@ class ProductService
             },
             'product_specifications',
             'product_images',
+            'product_videos',
             'product_colors',
             'taxes',
             'product_prices'=>function($q){

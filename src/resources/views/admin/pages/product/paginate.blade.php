@@ -18,7 +18,7 @@
 
 																								<div class="card-body">
 																												<div id="customerList">
-																																<div class="row g-4 mb-3">
+																																<div class="row justify-content-between g-4 mb-3">
 																																				<div class="col-sm-auto">
 																																								<div>
 																																												<a href="{{ route("product.create.get") }}" type="button"
@@ -29,9 +29,34 @@
 																																																class="ri-file-excel-fill me-1 align-bottom"></i> Excel Download</a>
 																																								</div>
 																																				</div>
-																																				<div class="col-sm">
-																																								<x-includes.search :search="$search" link="product.paginate.get" />
-																																				</div>
+                                                                                                                                                <form action="{{route('product.paginate.get')}}" method="GET" class="col-md-auto col-sm-12 d-flex gap-2 justify-content-end align-items-center">
+                                                                                                                                                                <div class="col-xxl-4 col-lg-4 col-sm-12">
+                                                                                                                                                                    <select class="form-control" name="filter[stock_status]"
+                                                                                                                                                                                    id="stock_status">
+                                                                                                                                                                                    <option value="all" @if (strpos("all", $stock_status) !== false) selected @endif>ALL
+                                                                                                                                                                                    </option>
+                                                                                                                                                                                    <option value="IN STOCK"
+                                                                                                                                                                                                    @if (strpos("IN STOCK", $stock_status) !== false) selected @endif>
+                                                                                                                                                                                                    IN STOCK</option>
+                                                                                                                                                                                    <option value="FEW ITEMS LEFT"
+                                                                                                                                                                                                    @if (strpos("FEW ITEMS LEFT", $stock_status) !== false) selected @endif>
+                                                                                                                                                                                                    FEW ITEMS LEFT</option>
+                                                                                                                                                                                    <option value="OUT OF STOCK"
+                                                                                                                                                                                                    @if (strpos("OUT OF STOCK", $stock_status) !== false) selected @endif>
+                                                                                                                                                                                                    OUT OF STOCK</option>
+                                                                                                                                                                    </select>
+                                                                                                                                                                </div>
+                                                                                                                                                                <div class="col-xxl-auto col-lg-auto col-sm-12">
+                                                                                                                                                                                <div class="search-box">
+                                                                                                                                                                                                <input type="text" class="form-control search" name="filter[search]"
+                                                                                                                                                                                                                placeholder="Search for anything..." value="{{ $search }}">
+                                                                                                                                                                                                <i class="ri-search-line search-icon"></i>
+                                                                                                                                                                                </div>
+                                                                                                                                                                </div>
+                                                                                                                                                                <button type="submit" class="btn btn-primary w-auto">
+                                                                                                                                                                                Filter
+                                                                                                                                                                </button>
+																																				</form>
 																																</div>
 																																<div class="table-responsive table-card mb-1 mt-3">
 																																				@if ($data->total() > 0)
@@ -41,6 +66,7 @@
 																																																				<th class="sort" data-sort="customer_name">Name</th>
 																																																				<th class="sort" data-sort="customer_name">Slug</th>
 																																																				<th class="sort" data-sort="customer_name">Description</th>
+																																																				<th class="sort" data-sort="customer_name">Stock Status</th>
 																																																				<th class="sort" data-sort="customer_name">Status</th>
 																																																				<th class="sort" data-sort="date">Created On</th>
 																																																				<th class="sort" data-sort="action">Action</th>
@@ -53,6 +79,7 @@
 																																																								<td class="customer_name">{{ $item->slug }}</td>
 																																																								<td class="customer_name">
 																																																												{{ Str::limit($item->description_unfiltered, 20) }}</td>
+                                                                                                                                                                                                                                <td class="status"><span class="badge {{$item->available_stock<=0 ? 'badge-soft-danger' : ($item->available_stock<=$item->min_stock ? 'badge-soft-warning' : 'badge-soft-success')}} text-uppercase">{{$item->available_stock<=0 ? 'OUT OF STOCK' : ($item->available_stock<=$item->min_stock ? 'FEW ITEMS LEFT' : 'IN STOCK')}}</span></td>
 																																																								@if ($item->is_draft == 1)
 																																																												<td class="status"><span
 																																																																				class="badge badge-soft-success text-uppercase">Active</span>

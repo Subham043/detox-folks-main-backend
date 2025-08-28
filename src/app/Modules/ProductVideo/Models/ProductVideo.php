@@ -35,7 +35,7 @@ class ProductVideo extends Model
     protected function videoLink(): Attribute
     {
         return new Attribute(
-            get: fn () => 'https://www.youtube.com/watch?v='.$this->video,
+            get: fn () => 'https://www.youtube.com/embed/'.$this->video,
         );
     }
 

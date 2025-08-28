@@ -3,6 +3,7 @@
 namespace App\Modules\User\Services;
 
 use App\Modules\Authentication\Models\User;
+use App\Modules\BillingInformation\Models\BillingInformation;
 use App\Modules\Promoter\Models\PromoterCode;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -54,6 +55,14 @@ class UserService
         PromoterCode::create([
             'promoter_id' => $user->id,
             'code' => $code,
+        ]);
+        BillingInformation::create([
+            'name' => $user->name,
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'gst' => null,
+            'is_active' => true,
+            'user_id' => $user->id,
         ]);
         return $user;
     }

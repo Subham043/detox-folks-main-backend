@@ -70,6 +70,7 @@ class Cart extends Model
                     },
                     'product_specifications',
                     'product_images',
+                    'product_videos',
                     'product_colors',
                     'taxes',
                     'product_prices'=>function($q){

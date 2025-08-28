@@ -23,6 +23,10 @@ class ProductExport implements FromCollection,WithHeadings,WithMapping
             'Cart Quantity Interval',
             'Cart Quantity Specification',
             'Minimum Quantity / Price / Discount(%)',
+            'Minimum Stock',
+            'Available Stock',
+            'Purchase Price',
+            'Stock Status',
             'Status',
             'Created At',
         ];
@@ -41,6 +45,10 @@ class ProductExport implements FromCollection,WithHeadings,WithMapping
             $data->cart_quantity_specification,
             $data->cart_quantity_interval,
             $product_prices->implode(', '),
+            $data->min_stock,
+            $data->available_stock,
+            $data->purchase_price,
+            $data->available_stock<=0 ? 'OUT OF STOCK' : ($data->available_stock<=$data->min_stock ? 'FEW ITEMS LEFT' : 'IN STOCK'),
             $data->is_draft ? "Active" : "Inactive",
             $data->created_at->format("d M Y h:i A"),
          ];

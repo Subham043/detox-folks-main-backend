@@ -18,7 +18,8 @@ class ProductPaginateController extends Controller
     public function get(Request $request){
         $data = $this->productService->paginate($request->total ?? 10);
         return view('admin.pages.product.paginate', compact(['data']))
-            ->with('search', $request->query('filter')['search'] ?? '');
+            ->with('search', $request->query('filter')['search'] ?? '')
+            ->with('stock_status', $request->query('filter')['stock_status'] ?? 'all');;
     }
 
 }

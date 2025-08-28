@@ -257,6 +257,27 @@
 																																																"value" => $data->cart_quantity_specification,
 																																												])
 																																								</div>
+																																								<div class="col-xxl-4 col-md-4">
+																																												@include("admin.includes.input", [
+																																																"key" => "min_stock",
+																																																"label" => "Minimum Stock",
+																																																"value" => $data->min_stock,
+																																												])
+																																								</div>
+																																								<div class="col-xxl-4 col-md-4">
+																																												@include("admin.includes.input", [
+																																																"key" => "available_stock",
+																																																"label" => "Available Stock",
+																																																"value" => $data->available_stock,
+																																												])
+																																								</div>
+																																								<div class="col-xxl-4 col-md-4">
+																																												@include("admin.includes.input", [
+																																																"key" => "purchase_price",
+																																																"label" => "Purchase Price",
+																																																"value" => $data->purchase_price,
+																																												])
+																																								</div>
                                                                                                                                                                 <div class="col-xxl-6 col-md-6">
 																																												@include("admin.includes.select_multiple", [
 																																																"key" => "tax",
@@ -527,6 +548,18 @@
 																rule: 'required',
 																errorMessage: 'Cart quantity specification is required',
 												}, ])
+                                                .addField('#min_stock', [{
+																rule: 'required',
+																errorMessage: 'Minimum stock is required',
+												}, ])
+												.addField('#available_stock', [{
+																rule: 'required',
+																errorMessage: 'Available stock is required',
+												}, ])
+												.addField('#purchase_price', [{
+																rule: 'required',
+																errorMessage: 'Purchase price is required',
+												}, ])
 												.addField('#tax', [{
 																rule: 'required',
 																errorMessage: 'Tax is required',
@@ -586,6 +619,9 @@
 																				formData.append('cart_quantity_interval', document.getElementById('cart_quantity_interval').value)
 																				formData.append('cart_quantity_specification', document.getElementById(
 																								'cart_quantity_specification').value)
+                                                                                formData.append('min_stock', document.getElementById('min_stock').value)
+                                                                                formData.append('available_stock', document.getElementById('available_stock').value)
+                                                                                formData.append('purchase_price', document.getElementById('purchase_price').value)
 																				formData.append('brief_description', document.getElementById('brief_description').value)
 																				formData.append('description', quillDescription.root.innerHTML)
 																				formData.append('description_unfiltered', quillDescription.getText())
@@ -749,6 +785,24 @@
 																								validation.showErrors({
 																												'#cart_quantity_specification': error?.response?.data?.errors
 																																?.cart_quantity_specification[0]
+																								})
+																				}
+                                                                                if (error?.response?.data?.errors?.min_stock) {
+																								validation.showErrors({
+																												'#min_stock': error?.response?.data?.errors
+																																?.min_stock[0]
+																								})
+																				}
+																				if (error?.response?.data?.errors?.available_stock) {
+																								validation.showErrors({
+																												'#available_stock': error?.response?.data?.errors
+																																?.available_stock[0]
+																								})
+																				}
+																				if (error?.response?.data?.errors?.purchase_price) {
+																								validation.showErrors({
+																												'#purchase_price': error?.response?.data?.errors
+																																?.purchase_price[0]
 																								})
 																				}
 																				const repeater_price_row_selector = document.querySelectorAll('.repeater-price-row');

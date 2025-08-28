@@ -7,6 +7,7 @@ use App\Modules\ProductColor\Resources\UserProductColorCollection;
 use App\Modules\ProductImage\Resources\UserProductImageCollection;
 use App\Modules\ProductPrice\Resources\UserProductPriceCollection;
 use App\Modules\ProductSpecification\Resources\UserProductSpecificationCollection;
+use App\Modules\ProductVideo\Resources\UserProductVideoCollection;
 use App\Modules\SubCategory\Resources\UserSubCategoryCollection;
 use App\Modules\Tax\Resources\UserTaxCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -37,6 +38,10 @@ class UserProductCollection extends JsonResource
             'cart_quantity_specification' => $this->cart_quantity_specification,
             'min_cart_quantity' => $this->min_cart_quantity,
             'cart_quantity_interval' => $this->cart_quantity_interval,
+            'min_stock' => $this->min_stock,
+            'available_stock' => $this->available_stock,
+            'purchase_price' => $this->purchase_price,
+            'stock_status' => $this->available_stock<=0 ? 'OUT OF STOCK' : ($this->available_stock<$this->min_stock ? 'FEW ITEMS LEFT' : 'IN STOCK'),
             'meta_title' => $this->meta_title,
             'meta_description' => $this->meta_description,
             'meta_keywords' => $this->meta_keywords,
@@ -44,6 +49,7 @@ class UserProductCollection extends JsonResource
             'product_specifications' => UserProductSpecificationCollection::collection($this->product_specifications),
             'product_colors' => UserProductColorCollection::collection($this->product_colors),
             'product_images' => UserProductImageCollection::collection($this->product_images),
+            'product_videos' => UserProductVideoCollection::collection($this->product_videos),
             'categories' => UserCategoryMainCollection::collection($this->categories),
             'sub_categories' => UserSubCategoryCollection::collection($this->sub_categories),
             'taxes' => UserTaxCollection::collection($this->taxes),

@@ -27,6 +27,9 @@ return new class extends Migration
             $table->string('min_cart_quantity', 500)->default(1);
             $table->string('cart_quantity_interval', 500)->default(1);
             $table->string('cart_quantity_specification', 500)->default('pieces');
+            $table->string('min_stock', 500)->default(1);
+            $table->string('available_stock', 500)->default(1);
+            $table->string('purchase_price', 500)->default(1);
             $table->text('meta_title')->nullable();
             $table->text('meta_description')->nullable();
             $table->text('meta_keywords')->nullable();
@@ -47,3 +50,5 @@ return new class extends Migration
 
 
 // ALTER TABLE `products` ADD `hsn` VARCHAR(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL AFTER `slug`;
+
+//ALTER TABLE `products` ADD `min_stock` VARCHAR(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1' AFTER `cart_quantity_specification`, ADD `available_stock` VARCHAR(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1' AFTER `min_stock`, ADD `purchase_price` VARCHAR(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1' AFTER `available_stock`;

@@ -8,6 +8,7 @@ use App\Modules\ProductColor\Models\ProductColor;
 use App\Modules\ProductImage\Models\ProductImage;
 use App\Modules\ProductPrice\Models\ProductPrice;
 use App\Modules\ProductSpecification\Models\ProductSpecification;
+use App\Modules\ProductVideo\Models\ProductVideo;
 use App\Modules\SubCategory\Models\SubCategory;
 use App\Modules\Tax\Models\Tax;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -42,6 +43,9 @@ class Product extends Model
         'min_cart_quantity',
         'cart_quantity_specification',
         'cart_quantity_interval',
+        'min_stock',
+        'available_stock',
+        'purchase_price',
         'meta_title',
         'meta_description',
         'meta_keywords',
@@ -56,6 +60,9 @@ class Product extends Model
         'updated_at' => 'datetime',
         'min_cart_quantity' => 'int',
         'cart_quantity_interval' => 'int',
+        'min_stock' => 'int',
+        'available_stock' => 'int',
+        'purchase_price' => 'float',
     ];
 
     public $image_path = 'products';
@@ -136,6 +143,11 @@ class Product extends Model
     public function product_images()
     {
         return $this->hasMany(ProductImage::class, 'product_id');
+    }
+
+    public function product_videos()
+    {
+        return $this->hasMany(ProductVideo::class, 'product_id');
     }
 
     public function getActivitylogOptions(): LogOptions

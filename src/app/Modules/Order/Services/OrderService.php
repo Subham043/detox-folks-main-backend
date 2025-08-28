@@ -60,6 +60,7 @@ class OrderService
                     'sub_categories',
                     'product_specifications',
                     'product_images',
+                    'product_videos',
                     'product_colors',
                     'taxes',
                     'product_prices'=>function($q){
@@ -76,6 +77,7 @@ class OrderService
                 'sub_categories',
                 'product_specifications',
                 'product_images',
+                'product_videos',
                 'product_colors',
                 'taxes',
                 'product_prices'=>function($q){
@@ -466,8 +468,16 @@ class OrderService
                     'status' => OrderEnumStatus::DELIVERED->value,
                     'order_id' => $id,
                 ]);
+                $order = $this->getByIdForAdmin($id);
+                DB::transaction(function () use ($order) {
+                    foreach ($order->products as $product) {
+                        if(!empty($product->product)){
+                            $product->product->decrement('available_stock', $product->quantity);
+                        }
+                    }
+                });
                 return 'Order delivered successfully.';
-                }
+            }
             return 'Order already delivered successfully.';
         }
     }
@@ -505,6 +515,15 @@ class OrderService
                     (new PayUService)->refund($order);
                 }else if($order->payment->mode==PaymentMode::CASHFREE){
                     (new CashfreeService)->refund($order);
+                }
+                if($this->checkOrderStatus($order_status, OrderEnumStatus::DELIVERED)){
+                    DB::transaction(function () use ($order) {
+                        foreach ($order->products as $product) {
+                            if(!empty($product->product)){
+                                $product->product->increment('available_stock', $product->quantity);
+                            }
+                        }
+                    });
                 }
                 OrderStatus::create([
                     'status' => OrderEnumStatus::CANCELLED->value,

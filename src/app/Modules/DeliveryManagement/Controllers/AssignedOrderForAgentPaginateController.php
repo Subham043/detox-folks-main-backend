@@ -16,6 +16,7 @@ use App\Modules\Order\Models\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class AssignedOrderForAgentPaginateController extends Controller
 {
@@ -82,6 +83,13 @@ class AssignedOrderForAgentPaginateController extends Controller
                 'status' => OrderEnumStatus::DELIVERED->value,
                 'order_id' => $order_id,
             ]);
+            DB::transaction(function () use ($order) {
+                foreach ($order->products as $product) {
+                    if(!empty($product->product)){
+                        $product->product->decrement('available_stock', $product->quantity);
+                    }
+                }
+            });
             return response()->json(["message" => "Order delivered successfully"], 200);
         }
         return response()->json(["message" => "Invalid OTP"], 400);
