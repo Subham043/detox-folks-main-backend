@@ -50,7 +50,10 @@ class UserService
 
     public function create(array $data): User
     {
-        $user = User::create($data);
+        $user = User::create([
+            ...$data,
+            'email' => empty($data['email']) ? null : $data['email']
+        ]);
         $code = $this->generateUniqueCode();
         PromoterCode::create([
             'promoter_id' => $user->id,
@@ -92,7 +95,10 @@ class UserService
 
     public function update(array $data, User $user): User
     {
-        $user->update($data);
+        $user->update([
+            ...$data,
+            'email' => empty($data['email']) ? null : $data['email']
+        ]);
         return $user;
     }
 
